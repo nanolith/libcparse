@@ -1,8 +1,7 @@
 /**
- * \file libcparse/preproclexer.h
+ * \file libcparse/event.h
  *
- * \brief The preprocessor lexer interface returns tokens associated with the
- * C preprocessor.
+ * \brief The event type represents an individual lexer or parser event.
  *
  * \copyright 2023 Justin Handville.  Please see license.txt in this
  * distribution for the license terms under which this software is distributed.
@@ -10,17 +9,15 @@
 
 #pragma once
 
-#include <libcparse/event.h>
-
 /* C++ compatibility. */
 # ifdef   __cplusplus
 extern "C" {
 # endif /*__cplusplus*/
 
 /**
- * \brief The preproclexer type returns tokens read from an input buffer.
+ * \brief The event type abstracts individual lexer or parser events.
  */
-typedef struct preproclexer preproclexer;
+typedef struct event event;
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
