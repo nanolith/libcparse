@@ -2,13 +2,22 @@ cmake_minimum_required(VERSION 3.22)
 cmake_policy(SET CMP0048 NEW)
 PROJECT(libcparse VERSION 0.0.1)
 
+string(REPLACE "." ";" CPARSE_VERSION_LIST "${CMAKE_PROJECT_VERSION}")
+list(GET CPARSE_VERSION_LIST 0 CPARSE_VERSION_MAJOR)
+list(GET CPARSE_VERSION_LIST 1 CPARSE_VERSION_MINOR)
+list(GET CPARSE_VERSION_LIST 2 CPARSE_VERSION_REL)
+
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
 #minunit package
 find_package(minunit REQUIRED)
 
+#Build config.h
+configure_file(config.h.cmake include/libcparse/config.h)
+
 #includes
 INCLUDE_DIRECTORIES(include)
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/include)
 
 #source files
 AUX_SOURCE_DIRECTORY(src/preproclexer LIBCPARSE_PREPROCLEXER_SOURCES)
@@ -60,7 +69,10 @@ INSTALL(FILES ${CPARSE_PC} DESTINATION lib/pkgconfig)
 
 FILE(GLOB CPARSE_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/include/libcparse/*.h")
 
-INSTALL(FILES ${CPARSE_INCLUDES} DESTINATION include/rcpr)
+INSTALL(FILES ${CPARSE_INCLUDES} DESTINATION include/libcparse)
+INSTALL(
+    FILES ${CMAKE_BINARY_DIR}/include/libcparse/config.h
+    DESTINATION include/libcparse)
 
 #Install library
 INSTALL(TARGETS cparse
