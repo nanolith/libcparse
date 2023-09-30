@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <libcparse/function_decl.h>
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 extern "C" {
@@ -17,7 +19,20 @@ extern "C" {
 /**
  * \brief The event type abstracts individual lexer or parser events.
  */
-typedef struct event event;
+typedef struct CPARSE_SYM(event) CPARSE_SYM(event);
+
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+#define __INTERNAL_CPARSE_IMPORT_event_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(event) sym ## event; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_event_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_event_sym(sym ## _)
+#define CPARSE_IMPORT_event \
+    __INTERNAL_CPARSE_IMPORT_event_sym()
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
