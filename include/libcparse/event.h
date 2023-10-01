@@ -68,6 +68,11 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
 #define __INTERNAL_CPARSE_IMPORT_event_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event) sym ## event; \
+    static inline int sym ## event_get_type(const CPARSE_SYM(event)* x) { \
+        return CPARSE_SYM(event_get_type)(x); } \
+    static inline const CPARSE_SYM(cursor)* \
+    sym ## event_get_cursor(const CPARSE_SYM(event)* x) { \
+        return CPARSE_SYM(event_get_cursor)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_as(sym) \
