@@ -52,6 +52,16 @@ CPARSE_SYM(event_release)(CPARSE_SYM(event)* ev);
  */
 int CPARSE_SYM(event_get_type)(const CPARSE_SYM(event)* ev);
 
+/**
+ * \brief Get the cursor for the given event.
+ *
+ * \param ev                    The event to query.
+ *
+ * \returns the \ref cursor for this event.
+ */
+const CPARSE_SYM(cursor)*
+CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
