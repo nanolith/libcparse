@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <libcparse/cursor.h>
 #include <libcparse/event_type.h>
 #include <libcparse/function_decl.h>
 
