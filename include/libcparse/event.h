@@ -39,6 +39,19 @@ int FN_DECL_MUST_CHECK
 CPARSE_SYM(event_release)(CPARSE_SYM(event)* ev);
 
 /******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the event type for the given event.
+ *
+ * \param ev                    The event to query.
+ *
+ * \returns the \ref event_type for this event.
+ */
+int CPARSE_SYM(event_get_type)(const CPARSE_SYM(event)* ev);
+
+/******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
 #define __INTERNAL_CPARSE_IMPORT_event_sym(sym) \
