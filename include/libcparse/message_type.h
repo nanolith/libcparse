@@ -19,7 +19,7 @@ extern "C" {
 /**
  * \brief The message type abstracts individual lexer or parser messages.
  */
-enum CPARSE_SYM(messag_type)
+enum CPARSE_SYM(message_type)
 {
     CPARSE_MESSAGE_TYPE_UNKNOWN =                   0xFFFF,
 };
