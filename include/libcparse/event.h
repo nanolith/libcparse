@@ -24,22 +24,6 @@ extern "C" {
 typedef struct CPARSE_SYM(event) CPARSE_SYM(event);
 
 /******************************************************************************/
-/* Start of constructors.                                                     */
-/******************************************************************************/
-
-/**
- * \brief Release an event instance.
- *
- * \param ev                    The event instance to release.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-int FN_DECL_MUST_CHECK
-CPARSE_SYM(event_release)(CPARSE_SYM(event)* ev);
-
-/******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
 
