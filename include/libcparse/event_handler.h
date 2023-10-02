@@ -23,6 +23,10 @@ extern "C" {
  * \param context               A user-supplied context pointer given to the
  *                              callback.
  * \param ev                    An event to which this callback is subscribed.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
  */
 typedef int (*CPARSE_SYM(event_callback_fn))(
     void* context, const CPARSE_SYM(event)* ev);
