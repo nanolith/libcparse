@@ -1,5 +1,5 @@
 /**
- * \file libcparse/curor.h
+ * \file libcparse/cursor.h
  *
  * \brief The cursor type describes location data for an event.
  *
