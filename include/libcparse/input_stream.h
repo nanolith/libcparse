@@ -23,6 +23,30 @@ extern "C" {
 typedef struct CPARSE_SYM(input_stream) CPARSE_SYM(input_stream);
 
 /******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create an input stream instance from a Unix file descriptor.
+ *
+ * \note This allocates the instance, storing the result in \p stream. This is a
+ * resource that must be released by calling \ref input_stream_release when it
+ * is no longer needed. This stream takes ownership of the Unix file descriptor
+ * provided in \p desc and will close it when it is released.
+ *
+ * \param stream                Pointer to the \ref input_stream pointer to be
+ *                              populated with the created input stream on
+ *                              success.
+ * \param desc                  The Unix file descriptor for this stream.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(input_stream_create_from_descriptor)(
+    CPARSE_SYM(input_stream)** stream, int desc);
+
+/******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
 
