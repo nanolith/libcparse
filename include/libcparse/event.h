@@ -41,6 +41,17 @@ typedef struct CPARSE_SYM(event) CPARSE_SYM(event);
 int CPARSE_SYM(event_init)(
     CPARSE_SYM(event)* ev, int event_type, const CPARSE_SYM(cursor)* cursor);
 
+/**
+ * \brief Perform an in-place disposable of an event instance.
+ *
+ * \param ev                    Pointer to the event to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero failure code on failure.
+ */
+int CPARSE_SYM(event_dispose)(CPARSE_SYM(event)* ev);
+
 /******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
