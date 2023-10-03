@@ -66,6 +66,18 @@ int CPARSE_SYM(input_stream_create_from_descriptor)(
 int CPARSE_SYM(input_stream_create_from_string)(
     CPARSE_SYM(input_stream)** stream, const char* str);
 
+/**
+ * \brief Release an input stream instance, releasing any internal resources it
+ * may own.
+ *
+ * \param stream                The input stream instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(input_stream_release)(CPARSE_SYM(input_stream)* stream);
+
 /******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
