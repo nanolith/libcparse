@@ -65,10 +65,10 @@ int CPARSE_SYM(message_handler_send)(
             return CPARSE_SYM(message_handler_send)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
-#define CPARSE_IMPORT_event_as(sym) \
-    __INTERNAL_CPARSE_IMPORT_event_sym(sym ## _)
-#define CPARSE_IMPORT_event \
-    __INTERNAL_CPARSE_IMPORT_event_sym()
+#define CPARSE_IMPORT_message_handler_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_message_handler_sym(sym ## _)
+#define CPARSE_IMPORT_message_handler \
+    __INTERNAL_CPARSE_IMPORT_message_handler_sym()
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
