@@ -31,6 +31,19 @@ extern "C" {
 typedef int (*CPARSE_SYM(event_callback_fn))(
     void* context, const CPARSE_SYM(event)* ev);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+#define __INTERNAL_CPARSE_IMPORT_event_handler_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(event_handler) sym ## event_handler; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_event_handler_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_event_handler_sym(sym ## _)
+#define CPARSE_IMPORT_event_handler \
+    __INTERNAL_CPARSE_IMPORT_event_handler_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
