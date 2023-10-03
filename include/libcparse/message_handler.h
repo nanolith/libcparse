@@ -31,6 +31,11 @@ extern "C" {
 typedef int (*CPARSE_SYM(message_callback_fn))(
     void* context, const CPARSE_SYM(message)* ev);
 
+/**
+ * \brief A message handler accepts a message.
+ */
+typedef struct CPARSE_SYM(message_handler) CPARSE_SYM(message_handler);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
