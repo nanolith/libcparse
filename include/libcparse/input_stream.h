@@ -46,6 +46,26 @@ typedef struct CPARSE_SYM(input_stream) CPARSE_SYM(input_stream);
 int CPARSE_SYM(input_stream_create_from_descriptor)(
     CPARSE_SYM(input_stream)** stream, int desc);
 
+/**
+ * \brief Create an input stream instance from a string.
+ *
+ * \note This allocates the instance, storing the result in \p stream. This is a
+ * resource that must be released by calling \ref input_stream_release when it
+ * is no longer needed. This stream copies the given string internally; the
+ * string parameter remains owned by the caller.
+ *
+ * \param stream                Pointer to the \ref input_stream pointer to be
+ *                              populated with the created input stream on
+ *                              success.
+ * \param str                   The string to copy for use as input.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(input_stream_create_from_strting)(
+    CPARSE_SYM(input_stream)** stream, const char* str);
+
 /******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
