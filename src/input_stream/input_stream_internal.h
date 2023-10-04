@@ -88,6 +88,22 @@ int CPARSE_SYM(input_stream_from_descriptor_read)(
 int CPARSE_SYM(input_stream_from_string_release)(
     CPARSE_SYM(input_stream)* stream);
 
+/**
+ * \brief Read a character from the input stream from string instance.
+ *
+ * \param stream                The input stream from which this character is
+ *                              read.
+ * \param ch                    Pointer to be populated with the character read
+ *                              on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - ERROR_LIBCPARSE_INPUT_STREAM_EOF on EOF.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(input_stream_from_string_read)(
+    CPARSE_SYM(input_stream)* stream, int* ch);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
