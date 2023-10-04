@@ -60,6 +60,18 @@ struct CPARSE_SYM(input_stream_from_string)
 int CPARSE_SYM(input_stream_from_descriptor_release)(
     CPARSE_SYM(input_stream)* stream);
 
+/**
+ * \brief Release an input stream from string instance.
+ *
+ * \param stream                The input stream instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(input_stream_from_string_release)(
+    CPARSE_SYM(input_stream)* stream);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
