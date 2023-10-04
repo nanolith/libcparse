@@ -34,6 +34,20 @@ struct CPARSE_SYM(input_stream_from_descriptor)
     int desc;
 };
 
+/**
+ * \brief input stream from string derived type.
+ */
+typedef struct CPARSE_SYM(input_stream_from_string)
+CPARSE_SYM(input_stream_from_string);
+
+struct CPARSE_SYM(input_stream_from_string)
+{
+    CPARSE_SYM(input_stream) hdr;
+    char* str;
+    size_t curr;
+    size_t max;
+};
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
