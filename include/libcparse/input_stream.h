@@ -110,7 +110,7 @@ int CPARSE_SYM(input_stream_read)(CPARSE_SYM(input_stream)* stream, int* ch);
         CPARSE_SYM(input_stream)** x, const char* y) { \
             return CPARSE_SYM(input_stream_create_from_string)(x,y); } \
     static inline int sym ## input_stream_release( \
-        CPARSE_SYM(input_stream)** x) { \
+        CPARSE_SYM(input_stream)* x) { \
             return CPARSE_SYM(input_stream_release)(x); } \
     static inline int sym ## input_stream_read( \
         CPARSE_SYM(input_stream)* x, int* y) { \
