@@ -10,6 +10,7 @@
 #pragma once
 
 #include <libcparse/input_stream.h>
+#include <stddef.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
