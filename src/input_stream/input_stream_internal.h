@@ -105,6 +105,34 @@ int CPARSE_SYM(input_stream_from_string_release)(
 int CPARSE_SYM(input_stream_from_string_read)(
     CPARSE_SYM(input_stream)* stream, int* ch);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+#define __INTERNAL_CPARSE_IMPORT_input_stream_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+        typedef CPARSE_SYM(input_stream_from_descriptor) \
+        sym ## input_stream_from_descriptor; \
+        typedef CPARSE_SYM(input_stream_from_string) \
+        sym ## input_stream_from_string; \
+        static inline int sym ## input_stream_from_descriptor_release ( \
+            CPARSE_SYM(input_stream)* x) { \
+                return CPARSE_SYM(input_stream_from_descriptor_release)(x); } \
+        static inline int sym ## input_stream_from_descriptor_read( \
+            CPARSE_SYM(input_stream)* x, int* y) { \
+                return CPARSE_SYM(input_stream_from_descriptor_read)(x,y); } \
+        static inline int sym ## input_stream_from_string_release( \
+            CPARSE_SYM(input_stream)* x) { \
+                return CPARSE_SYM(input_stream_from_string_release)(x); } \
+        static inline int sym ## input_stream_from_string_read( \
+            CPARSE_SYM(input_stream)* x, int* y) { \
+                return CPARSE_SYM(input_stream_from_string_read)(x,y); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_input_stream_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_input_stream_internal_sym(sym ## _)
+#define CPARSE_IMPORT_input_stream_internal \
+    __INTERNAL_CPARSE_IMPORT_input_stream_internal_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
