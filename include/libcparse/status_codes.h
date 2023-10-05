@@ -9,4 +9,5 @@
 
 #pragma once
 
-#define STATUS_SUCCESS                                          0
+#define STATUS_SUCCESS                                             0
+#define ERROR_LIBCPARSE_INPUT_STREAM_DESCRIPTOR_CLOSE           1000
