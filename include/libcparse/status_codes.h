@@ -12,3 +12,4 @@
 #define STATUS_SUCCESS                                             0
 #define ERROR_LIBCPARSE_OUT_OF_MEMORY                           1000
 #define ERROR_LIBCPARSE_INPUT_STREAM_DESCRIPTOR_CLOSE           1001
+#define ERROR_LIBCPARSE_INPUT_STREAM_READ_ERROR                 1002
