@@ -33,3 +33,28 @@ TEST(empty_EOF)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == input_stream_release(stream));
 }
+
+/**
+ * We can read a character from the string input_stream.
+ */
+TEST(read_character)
+{
+    input_stream* stream = nullptr;
+    int ch;
+
+    /* Creating an empty string input stream should succeed. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_create_from_string(&stream, "a"));
+
+    /* We can read a character. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_EXPECT('a' == ch);
+
+    /* Trying to read any more characters results in an EOF. */
+    TEST_EXPECT(
+        ERROR_LIBCPARSE_INPUT_STREAM_EOF == input_stream_read(stream, &ch));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == input_stream_release(stream));
+}
