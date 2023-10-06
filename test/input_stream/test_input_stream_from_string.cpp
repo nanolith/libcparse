@@ -58,3 +58,44 @@ TEST(read_character)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == input_stream_release(stream));
 }
+
+/**
+ * We can read multiple characters from the string input_stream.
+ */
+TEST(read_multiple_characters)
+{
+    input_stream* stream = nullptr;
+    int ch;
+
+    /* Creating an empty string input stream should succeed. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, "abcdef"));
+
+    /* We can characters. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_EXPECT('a' == ch);
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_EXPECT('b' == ch);
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_EXPECT('c' == ch);
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_EXPECT('d' == ch);
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_EXPECT('e' == ch);
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_EXPECT('f' == ch);
+
+    /* Trying to read any more characters results in an EOF. */
+    TEST_EXPECT(
+        ERROR_LIBCPARSE_INPUT_STREAM_EOF == input_stream_read(stream, &ch));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == input_stream_release(stream));
+}
