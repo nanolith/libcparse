@@ -43,7 +43,7 @@ typedef struct CPARSE_SYM(raw_stack_scanner) CPARSE_SYM(raw_stack_scanner);
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(raw_stack_scanner_create)(
-    CPARSE_SYM(raw_stack_scanner)* scanner);
+    CPARSE_SYM(raw_stack_scanner)** scanner);
 
 /******************************************************************************/
 /* Start of public exports.                                                   */
@@ -51,6 +51,9 @@ int CPARSE_SYM(raw_stack_scanner_create)(
 #define __INTERNAL_CPARSE_IMPORT_raw_stack_scanner_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(raw_stack_scanner) sym ## raw_stack_scanner; \
+    static inline int sym ## raw_stack_scanner_create( \
+        CPARSE_SYM(raw_stack_scanner)** x) { \
+            return CPARSE_SYM(raw_stack_scanner_create)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_raw_stack_scanner_as(sym) \
