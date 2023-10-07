@@ -117,6 +117,10 @@ CPARSE_SYM(raw_stack_scanner_message_handler_override)(
     static inline int sym ## raw_stack_scanner_release( \
         CPARSE_SYM(raw_stack_scanner)* x) { \
             return CPARSE_SYM(raw_stack_scanner_release)(x); } \
+    static inline CPARSE_SYM(message_handler)* \
+    sym ## raw_stack_scanner_message_handler_get( \
+        CPARSE_SYM(raw_stack_scanner)* x) { \
+            return CPARSE_SYM(raw_stack_scanner_message_handler_get(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_raw_stack_scanner_as(sym) \
