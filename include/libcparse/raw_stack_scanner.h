@@ -120,7 +120,13 @@ CPARSE_SYM(raw_stack_scanner_message_handler_override)(
     static inline CPARSE_SYM(message_handler)* \
     sym ## raw_stack_scanner_message_handler_get( \
         CPARSE_SYM(raw_stack_scanner)* x) { \
-            return CPARSE_SYM(raw_stack_scanner_message_handler_get(x); } \
+            return CPARSE_SYM(raw_stack_scanner_message_handler_get)(x); } \
+    static inline int sym ## raw_stack_scanner_message_handler_override ( \
+        CPARSE_SYM(message_handler)** x, CPARSE_SYM(raw_stack_scanner)* y, \
+        CPARSE_SYM(message_handler)* z) { \
+            return \
+                CPARSE_SYM(raw_stack_scanner_message_handler_override)( \
+                    x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_raw_stack_scanner_as(sym) \
