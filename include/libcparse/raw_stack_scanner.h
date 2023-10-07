@@ -16,6 +16,7 @@
 #include <libcparse/event_type.h>
 #include <libcparse/function_decl.h>
 #include <libcparse/input_stream.h>
+#include <libcparse/message_handler.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -56,6 +57,25 @@ int CPARSE_SYM(raw_stack_scanner_create)(
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(raw_stack_scanner_release)(
+    CPARSE_SYM(raw_stack_scanner)* scanner);
+
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the message handler for the given raw stack scanner instance.
+ *
+ * \note This method maintains the ownership that this scanner instance has of
+ * this message handler instance. The caller does not own the returned
+ * instance.
+ *
+ * \param scanner           The \ref raw_stack_scanner instance to query.
+ *
+ * \returns the \ref message_handler instance for this scanner instance.
+ */
+CPARSE_SYM(message_handler)*
+CPARSE_SYM(raw_stack_scanner_message_handler_get)(
     CPARSE_SYM(raw_stack_scanner)* scanner);
 
 /******************************************************************************/
