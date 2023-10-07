@@ -45,6 +45,19 @@ typedef struct CPARSE_SYM(raw_stack_scanner) CPARSE_SYM(raw_stack_scanner);
 int CPARSE_SYM(raw_stack_scanner_create)(
     CPARSE_SYM(raw_stack_scanner)** scanner);
 
+/**
+ * \brief Release a raw stack scanner instance, releasing any internal resources
+ * it may own.
+ *
+ * \param scanner           The \ref raw_stack_scanner instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(raw_stack_scanner_release)(
+    CPARSE_SYM(raw_stack_scanner)* scanner);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
