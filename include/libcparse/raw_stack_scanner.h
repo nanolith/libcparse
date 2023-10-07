@@ -28,6 +28,24 @@ extern "C" {
 typedef struct CPARSE_SYM(raw_stack_scanner) CPARSE_SYM(raw_stack_scanner);
 
 /******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a raw stack scanner.
+ *
+ * \param scanner           Pointer to the \ref raw_stack_scanner pointer to be
+ *                          populated with the created raw stack scanner on
+ *                          success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(raw_stack_scanner_create)(
+    CPARSE_SYM(raw_stack_scanner)* scanner);
+
+/******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
 #define __INTERNAL_CPARSE_IMPORT_raw_stack_scanner_sym(sym) \
