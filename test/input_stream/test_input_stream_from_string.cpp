@@ -47,8 +47,7 @@ TEST(read_character)
         STATUS_SUCCESS == input_stream_create_from_string(&stream, "a"));
 
     /* We can read a character. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_ASSERT(STATUS_SUCCESS == input_stream_read(stream, &ch));
     TEST_EXPECT('a' == ch);
 
     /* Trying to read any more characters results in an EOF. */
@@ -72,24 +71,18 @@ TEST(read_multiple_characters)
         STATUS_SUCCESS
             == input_stream_create_from_string(&stream, "abcdef"));
 
-    /* We can characters. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    /* We can read characters. */
+    TEST_ASSERT(STATUS_SUCCESS == input_stream_read(stream, &ch));
     TEST_EXPECT('a' == ch);
-    TEST_ASSERT(
-        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_ASSERT(STATUS_SUCCESS == input_stream_read(stream, &ch));
     TEST_EXPECT('b' == ch);
-    TEST_ASSERT(
-        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_ASSERT(STATUS_SUCCESS == input_stream_read(stream, &ch));
     TEST_EXPECT('c' == ch);
-    TEST_ASSERT(
-        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_ASSERT(STATUS_SUCCESS == input_stream_read(stream, &ch));
     TEST_EXPECT('d' == ch);
-    TEST_ASSERT(
-        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_ASSERT(STATUS_SUCCESS == input_stream_read(stream, &ch));
     TEST_EXPECT('e' == ch);
-    TEST_ASSERT(
-        STATUS_SUCCESS == input_stream_read(stream, &ch));
+    TEST_ASSERT(STATUS_SUCCESS == input_stream_read(stream, &ch));
     TEST_EXPECT('f' == ch);
 
     /* Trying to read any more characters results in an EOF. */
