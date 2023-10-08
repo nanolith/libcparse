@@ -61,6 +61,21 @@ int CPARSE_SYM(message_rss_add_input_stream_dispose)(
     CPARSE_SYM(message_rss_add_input_stream)* msg);
 
 /******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the filename associated with a \ref message_rss_add_input_stream
+ * instance.
+ *
+ * \param msg               The message to query.
+ *
+ * \returns the filename associated with this message.
+ */
+const char* CPARSE_SYM(message_rss_add_input_stream_filename_get)(
+    const CPARSE_SYM(message_rss_add_input_stream)* msg);
+
+/******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
 #define __INTERNAL_CPARSE_IMPORT_message_raw_stack_scanner_sym(sym) \
