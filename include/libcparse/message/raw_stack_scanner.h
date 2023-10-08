@@ -145,10 +145,10 @@ CPARSE_SYM(message)* CPARSE_SYM(message_rss_add_input_stream_upcast)(
         CPARSE_SYM(message_rss_add_input_stream)** x, \
         CPARSE_SYM(message)* y) { \
             return \
-                CPARSE_SYM(message_downcast_to_message_rss_add_input_stream( \
+                CPARSE_SYM(message_downcast_to_message_rss_add_input_stream)( \
                     x,y); } \
     static inline CPARSE_SYM(message)* \
-    CPARSE_SYM(message_rss_add_input_stream_upcast)( \
+    sym ## message_rss_add_input_stream_upcast( \
         CPARSE_SYM(message_rss_add_input_stream)* x) { \
             return CPARSE_SYM(message_rss_add_input_stream_upcast)(x); } \
     CPARSE_END_EXPORT \
