@@ -11,6 +11,7 @@
 
 #include <libcparse/function_decl.h>
 #include <libcparse/input_stream.h>
+#include <stdbool.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -46,6 +47,18 @@ CPARSE_SYM(message_rss_add_input_stream);
 int CPARSE_SYM(message_rss_add_input_stream_init)(
     CPARSE_SYM(message_rss_add_input_stream)* msg, const char* name,
     CPARSE_SYM(input_stream)* stream);
+
+/**
+ * \brief Dispose of a \ref message_rss_add_input_stream message.
+ *
+ * \param msg               The message to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_rss_add_input_stream_dispose)(
+    CPARSE_SYM(message_rss_add_input_stream)* msg);
 
 /******************************************************************************/
 /* Start of public exports.                                                   */
