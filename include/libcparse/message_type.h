@@ -21,7 +21,9 @@ extern "C" {
  */
 enum CPARSE_SYM(message_type)
 {
-    CPARSE_MESSAGE_TYPE_UNKNOWN =                   0xFFFF,
+    /* Messages supported by \ref raw_stack_scanner. */
+    CPARSE_MESSAGE_TYPE_RSS_ADD_INPUT_STREAM =                          0x0001,
+    CPARSE_MESSAGE_TYPE_UNKNOWN =                                       0xFFFF,
 };
 
 /* C++ compatibility. */
