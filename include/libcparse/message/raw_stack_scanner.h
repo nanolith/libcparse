@@ -10,6 +10,7 @@
 #pragma once
 
 #include <libcparse/function_decl.h>
+#include <libcparse/input_stream.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -22,6 +23,29 @@ extern "C" {
  */
 typedef struct CPARSE_SYM(message_rss_add_input_stream)
 CPARSE_SYM(message_rss_add_input_stream);
+
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Initialize a \ref message_rss_add_input_stream.
+ *
+ * \note On a successful send of this message, ownership of this input stream is
+ * transferred to the accepting message handler.
+ *
+ * \param msg               The message to initialize.
+ * \param name              The name of the stream, used for cursor reporting.
+ * \param stream            The input stream to send to the
+ *                          \ref raw_stack_scanner.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_rss_add_input_stream_init)(
+    CPARSE_SYM(message_rss_add_input_stream)* msg, const char* name,
+    CPARSE_SYM(input_stream)* stream);
 
 /******************************************************************************/
 /* Start of public exports.                                                   */
