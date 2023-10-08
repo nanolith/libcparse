@@ -75,6 +75,22 @@ int CPARSE_SYM(message_rss_add_input_stream_dispose)(
 const char* CPARSE_SYM(message_rss_add_input_stream_filename_get)(
     const CPARSE_SYM(message_rss_add_input_stream)* msg);
 
+/**
+ * \brief Transfer the \ref input_stream associated with this message to the
+ * caller, transferring ownership of this stream to the caller as well.
+ *
+ * \param stream            Pointer to the \ref input_stream pointer to hold
+ *                          this stream on success.
+ * \param msg               The message for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+const char* CPARSE_SYM(message_rss_add_input_stream_xfer)(
+    CPARSE_SYM(input_stream)** stream,
+    const CPARSE_SYM(message_rss_add_input_stream)* msg);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
