@@ -11,6 +11,7 @@
 
 #include <libcparse/function_decl.h>
 #include <libcparse/input_stream.h>
+#include <libcparse/message.h>
 #include <stdbool.h>
 
 /* C++ compatibility. */
@@ -90,6 +91,23 @@ const char* CPARSE_SYM(message_rss_add_input_stream_filename_get)(
 const char* CPARSE_SYM(message_rss_add_input_stream_xfer)(
     CPARSE_SYM(input_stream)** stream,
     const CPARSE_SYM(message_rss_add_input_stream)* msg);
+
+/**
+ * \brief Attempt to downcast a \ref message to a
+ * \ref message_rss_add_input_stream.
+ *
+ * \param rss_msg           Pointer to the message pointer to receive the
+ *                          downcast instance on success.
+ * \param msg               The \ref message pointer to attempt to downcast to
+ *                          the derived type.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_downcast_to_message_rss_add_input_stream)(
+    CPARSE_SYM(message_rss_add_input_stream)** rss_msg,
+    CPARSE_SYM(message)* msg);
 
 /******************************************************************************/
 /* Start of public exports.                                                   */
