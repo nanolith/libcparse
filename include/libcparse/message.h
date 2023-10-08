@@ -23,6 +23,22 @@ extern "C" {
 typedef struct CPARSE_SYM(message) CPARSE_SYM(message);
 
 /******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Initialize a \ref message.
+ *
+ * \param msg                   The message to initialize.
+ * \param msg_type              The message type.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_init)(CPARSE_SYM(message)* msg, int msg_type);
+
+/******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
 
