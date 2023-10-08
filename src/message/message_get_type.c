@@ -7,7 +7,7 @@
  * distribution for the license terms under which this software is distributed.
  */
 
-#include "message_internal.h"
+#include <libcparse/message.h>
 
 /**
  * \brief Get the message type for the given message.

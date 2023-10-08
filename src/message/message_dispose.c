@@ -7,10 +7,9 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <libcparse/message.h>
 #include <libcparse/status_codes.h>
 #include <string.h>
-
-#include "message_internal.h"
 
 /**
  * \brief Dispose a \ref message.

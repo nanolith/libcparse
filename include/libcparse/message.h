@@ -9,8 +9,9 @@
 
 #pragma once
 
-#include <libcparse/message_type.h>
 #include <libcparse/function_decl.h>
+#include <libcparse/message/detail.h>
+#include <libcparse/message_type.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
