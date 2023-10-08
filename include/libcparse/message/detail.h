@@ -10,6 +10,7 @@
 #pragma once
 
 #include <libcparse/function_decl.h>
+#include <libcparse/input_stream.h>
 #include <libcparse/message.h>
 
 /* C++ compatibility. */
@@ -20,6 +21,15 @@ extern "C" {
 struct CPARSE_SYM(message)
 {
     int msg_type;
+};
+
+typedef struct CPARSE_SYM(message) CPARSE_SYM(message);
+
+struct CPARSE_SYM(message_rss_add_input_stream)
+{
+    CPARSE_SYM(message) hdr;
+    CPARSE_SYM(input_stream)* stream;
+    char* name;
 };
 
 /* C++ compatibility. */
