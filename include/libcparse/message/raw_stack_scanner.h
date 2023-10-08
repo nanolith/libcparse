@@ -142,11 +142,15 @@ CPARSE_SYM(message)* CPARSE_SYM(message_rss_add_input_stream_upcast)(
         CPARSE_SYM(message_rss_add_input_stream)* y) { \
             return CPARSE_SYM(message_rss_add_input_stream_xfer)(x,y); } \
     static inline int sym ## message_downcast_to_message_rss_add_input_stream( \
-        CPARSE_SYM(message_rss_add_input_stream)** rss_msg, \
-        CPARSE_SYM(message)* msg) { \
+        CPARSE_SYM(message_rss_add_input_stream)** x, \
+        CPARSE_SYM(message)* y) { \
             return \
                 CPARSE_SYM(message_downcast_to_message_rss_add_input_stream( \
                     x,y); } \
+    static CPARSE_SYM(message)* \
+    CPARSE_SYM(message_rss_add_input_stream_upcast)( \
+        CPARSE_SYM(message_rss_add_input_stream)* x) { \
+            return CPARSE_SYM(message_rss_add_input_stream_upcast)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_message_raw_stack_scanner_as(sym) \
