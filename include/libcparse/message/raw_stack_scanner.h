@@ -88,7 +88,7 @@ const char* CPARSE_SYM(message_rss_add_input_stream_filename_get)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-const char* CPARSE_SYM(message_rss_add_input_stream_xfer)(
+int CPARSE_SYM(message_rss_add_input_stream_xfer)(
     CPARSE_SYM(input_stream)** stream,
     const CPARSE_SYM(message_rss_add_input_stream)* msg);
 
