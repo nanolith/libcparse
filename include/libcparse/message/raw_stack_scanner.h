@@ -90,7 +90,7 @@ const char* CPARSE_SYM(message_rss_add_input_stream_filename_get)(
  */
 int CPARSE_SYM(message_rss_add_input_stream_xfer)(
     CPARSE_SYM(input_stream)** stream,
-    const CPARSE_SYM(message_rss_add_input_stream)* msg);
+    CPARSE_SYM(message_rss_add_input_stream)* msg);
 
 /**
  * \brief Attempt to downcast a \ref message to a
@@ -137,6 +137,10 @@ CPARSE_SYM(message)* CPARSE_SYM(message_rss_add_input_stream_upcast)(
     sym ## message_rss_add_input_stream_filename_get( \
         CPARSE_SYM(message_rss_add_input_stream)* x) { \
             return CPARSE_SYM(message_rss_add_input_stream_filename_get)(x); } \
+    static inline int sym ## message_rss_add_input_stream_xfer( \
+        CPARSE_SYM(input_stream)** x, \
+        CPARSE_SYM(message_rss_add_input_stream)* y) { \
+            return CPARSE_SYM(message_rss_add_input_stream_xfer)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_message_raw_stack_scanner_as(sym) \
