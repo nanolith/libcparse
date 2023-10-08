@@ -109,6 +109,16 @@ int CPARSE_SYM(message_downcast_to_message_rss_add_input_stream)(
     CPARSE_SYM(message_rss_add_input_stream)** rss_msg,
     CPARSE_SYM(message)* msg);
 
+/**
+ * \brief Upcast a \ref message_rss_add_input_stream to a \ref message.
+ *
+ * \param msg               The \ref message_rss_add_input_stream to upcast.
+ *
+ * \returns the \ref message instance for this message.
+ */
+CPARSE_SYM(message)* CPARSE_SYM(message_rss_add_input_stream_upcast)(
+    CPARSE_SYM(message_rss_add_input_stream)* msg);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
