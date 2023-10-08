@@ -1,7 +1,7 @@
 /**
- * \file src/message/message_internal.h
+ * \file libcparse/message/detail.h
  *
- * \brief Internal header for the \ref message interface.
+ * \brief Private \ref message interface details.
  *
  * \copyright 2023 Justin Handville.  Please see license.txt in this
  * distribution for the license terms under which this software is distributed.
@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <libcparse/function_decl.h>
 #include <libcparse/message.h>
 
 /* C++ compatibility. */
