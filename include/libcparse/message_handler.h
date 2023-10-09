@@ -56,6 +56,20 @@ int CPARSE_SYM(message_handler_init)(
     CPARSE_SYM(message_handler)* mh, CPARSE_SYM(message_callback_fn) mcb,
     void* mctx);
 
+/**
+ * \brief Initialize a \ref message_handler by copying another
+ * \ref message_handler.
+ *
+ * \param mh                    The message handler instance to initialize.
+ * \param mhc                   The message handler to copy.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_handler_init_copy)(
+    CPARSE_SYM(message_handler)* mh, const CPARSE_SYM(message_handler)* mhc);
+
 /******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
