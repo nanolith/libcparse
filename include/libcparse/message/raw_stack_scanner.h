@@ -157,6 +157,7 @@ CPARSE_SYM(message)* CPARSE_SYM(message_rss_add_input_stream_upcast)(
     __INTERNAL_CPARSE_IMPORT_message_raw_stack_scanner_sym(sym ## _)
 #define CPARSE_IMPORT_message_raw_stack_scanner \
     __INTERNAL_CPARSE_IMPORT_message_raw_stack_scanner_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
