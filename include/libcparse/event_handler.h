@@ -31,6 +31,11 @@ extern "C" {
 typedef int (*CPARSE_SYM(event_callback_fn))(
     void* context, const CPARSE_SYM(event)* ev);
 
+/**
+ * \brief An event handler accepts an event.
+ */
+typedef struct CPARSE_SYM(event_handler) CPARSE_SYM(event_handler);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
