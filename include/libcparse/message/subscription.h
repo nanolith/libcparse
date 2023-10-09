@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <libcparse/event_handler.h>
 #include <libcparse/function_decl.h>
 #include <libcparse/message.h>
 
@@ -22,6 +23,25 @@ extern "C" {
  */
 typedef struct CPARSE_SYM(message_subscribe)
 CPARSE_SYM(message_subscribe);
+
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Initialize a \ref message_subscribe.
+ *
+ * \param msg               The message to initialize.
+ * \param msg_type          The type of subscription message.
+ * \param handler           The \ref event_handler to add to this endpoint.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_subscribe_init)(
+    CPARSE_SYM(message_subscribe)* msg, int msg_type,
+    CPARSE_SYM(event_handler)* handler);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
