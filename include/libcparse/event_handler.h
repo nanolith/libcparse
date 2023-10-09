@@ -37,6 +37,23 @@ typedef int (*CPARSE_SYM(event_callback_fn))(
 typedef struct CPARSE_SYM(event_handler) CPARSE_SYM(event_handler);
 
 /******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Send an event to the given event handler.
+ *
+ * \param eh                    The event handler to receive this event.
+ * \param ev                    The event to send.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_handler_send)(
+    CPARSE_SYM(event_handler)* eh, const CPARSE_SYM(event)* ev);
+
+/******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
 #define __INTERNAL_CPARSE_IMPORT_event_handler_sym(sym) \
