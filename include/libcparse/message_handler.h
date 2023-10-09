@@ -37,6 +37,26 @@ typedef int (*CPARSE_SYM(message_callback_fn))(
 typedef struct CPARSE_SYM(message_handler) CPARSE_SYM(message_handler);
 
 /******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Initialize a \ref message_handler from a callback function and
+ * context.
+ *
+ * \param mh                    The message handler instance to initialize.
+ * \param mcb                   The message callback function.
+ * \param mctx                  The message handler user context.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_handler_init)(
+    CPARSE_SYM(message_handler)* mh, CPARSE_SYM(message_callback_fn) mcb,
+    void* mctx);
+
+/******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
 
