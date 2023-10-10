@@ -1,5 +1,5 @@
 /**
- * \file src/message/message_handler_send.c
+ * \file src/message_handler/message_handler_send.c
  *
  * \brief Send a \ref message to this \ref message_handler instance.
  *
