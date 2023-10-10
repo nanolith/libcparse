@@ -1,5 +1,5 @@
 /**
- * \file src/message/message_handler_init.c
+ * \file src/message_handler/message_handler_init.c
  *
  * \brief Init method for the \ref message_handler type.
  *
