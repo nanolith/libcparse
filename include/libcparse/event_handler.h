@@ -70,6 +70,17 @@ int CPARSE_SYM(event_handler_init)(
 int CPARSE_SYM(event_handler_init_copy)(
     CPARSE_SYM(event_handler)* eh, const CPARSE_SYM(event_handler)* ehc);
 
+/**
+ * \brief Dispose a \ref event_handler instance.
+ *
+ * \param eh                    The event handler instance to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_handler_dispose)(CPARSE_SYM(event_handler)* eh);
+
 /******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
