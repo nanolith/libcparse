@@ -92,6 +92,7 @@ int CPARSE_SYM(event_handler_send)(
 /******************************************************************************/
 #define __INTERNAL_CPARSE_IMPORT_event_handler_sym(sym) \
     CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(event_callback_fn) sym ## event_callback_fn; \
     typedef CPARSE_SYM(event_handler) sym ## event_handler; \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
