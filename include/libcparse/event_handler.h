@@ -56,6 +56,20 @@ int CPARSE_SYM(event_handler_init)(
     CPARSE_SYM(event_handler)* eh, CPARSE_SYM(event_callback_fn) ecb,
     void* ectx);
 
+/**
+ * \brief Initialize a \ref event_handler by copying another
+ * \ref event_handler.
+ *
+ * \param eh                    The event handler instance to initialize.
+ * \param ehc                   The event handler to copy.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_handler_init_copy)(
+    CPARSE_SYM(event_handler)* eh, const CPARSE_SYM(event_handler)* ehc);
+
 /******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
