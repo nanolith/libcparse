@@ -101,6 +101,9 @@ int CPARSE_SYM(event_handler_send)(
     static inline int sym ## event_handler_init_copy( \
         CPARSE_SYM(event_handler)* x, const CPARSE_SYM(event_handler)* y) { \
             return CPARSE_SYM(event_handler_init_copy)(x,y); } \
+    static inline int sym ## event_handler_send( \
+        CPARSE_SYM(event_handler)* x, const CPARSE_SYM(event)* y) { \
+            return CPARSE_SYM(event_handler_send)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_handler_as(sym) \
