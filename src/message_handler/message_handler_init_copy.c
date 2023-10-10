@@ -1,5 +1,5 @@
 /**
- * \file src/message/message_handler_init_copy.c
+ * \file src/message_handler/message_handler_init_copy.c
  *
  * \brief Initialize a \ref message_handler as a copy of another
  * \ref message_handler.
