@@ -98,6 +98,9 @@ int CPARSE_SYM(message_handler_send)(
         CPARSE_SYM(message_handler)* x, CPARSE_SYM(message_callback_fn) y, \
         void* z) { \
             return CPARSE_SYM(message_handler_init)(x,y,z); } \
+    static inline int sym ## message_handler_init_copy(\
+        CPARSE_SYM(message_handler)* x, const CPARSE_SYM(message_handler)* y) {\
+            return CPARSE_SYM(message_handler_init_copy)(x,y); } \
     static inline int sym ## message_handler_send(\
         CPARSE_SYM(message_handler)* x, const CPARSE_SYM(message)* y) { \
             return CPARSE_SYM(message_handler_send)(x,y); } \
