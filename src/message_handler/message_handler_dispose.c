@@ -1,5 +1,5 @@
 /**
- * \file src/message/message_handler_dispose.c
+ * \file src/message_handler/message_handler_dispose.c
  *
  * \brief Dispose of a \ref message_handler instance.
  *
