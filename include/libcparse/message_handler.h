@@ -70,6 +70,17 @@ int CPARSE_SYM(message_handler_init)(
 int CPARSE_SYM(message_handler_init_copy)(
     CPARSE_SYM(message_handler)* mh, const CPARSE_SYM(message_handler)* mhc);
 
+/**
+ * \brief Dispose a \ref message_handler instance.
+ *
+ * \param mh                    The message handler instance to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_handler_dispose)(CPARSE_SYM(message_handler)* mh);
+
 /******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
