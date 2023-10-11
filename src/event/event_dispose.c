@@ -7,10 +7,9 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <libcparse/event.h>
 #include <libcparse/status_codes.h>
 #include <string.h>
-
-#include "event_internal.h"
 
 /**
  * \brief Perform an in-place disposable of an event instance.
