@@ -41,6 +41,20 @@ enum CPARSE_SYM(message_type)
  */
 bool CPARSE_SYM(message_type_valid_subscription_type)(int msg_type);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+#define __INTERNAL_CPARSE_IMPORT_message_type_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    static inline bool sym ## message_type_valid_subscription_type(int x) { \
+            return CPARSE_SYM(message_type_valid_subscription_type)(x); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_message_type_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_message_type_sym(sym ## _)
+#define CPARSE_IMPORT_message_type \
+    __INTERNAL_CPARSE_IMPORT_message_type_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
