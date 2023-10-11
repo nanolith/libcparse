@@ -50,3 +50,29 @@ TEST(basics)
     /* dispose the message. */
     TEST_ASSERT(STATUS_SUCCESS == message_subscribe_dispose(&msg));
 }
+
+/**
+ * Get the event handler.
+ */
+TEST(event_handler_get)
+{
+    message_subscribe msg;
+    event_handler handler;
+
+    /* we can init the event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_handler_init(&handler, &dummy_event_callback_fn, nullptr));
+
+    /* we can initialize the message. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == message_subscribe_init(
+                    &msg, CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE, &handler));
+
+    /* we can get the event handler. */
+    TEST_EXPECT(nullptr != message_subscribe_event_handler_get(&msg));
+
+    /* dispose the message. */
+    TEST_ASSERT(STATUS_SUCCESS == message_subscribe_dispose(&msg));
+}
