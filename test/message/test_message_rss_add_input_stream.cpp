@@ -49,3 +49,33 @@ TEST(basics)
     /* we can dispose the message. */
     TEST_ASSERT(STATUS_SUCCESS == message_rss_add_input_stream_dispose(&msg));
 }
+
+/**
+ * Test that we can transfer an input stream to the caller.
+ */
+TEST(input_stream_xfer)
+{
+    message_rss_add_input_stream msg;
+    input_stream* stream;
+    const char* FILENAME = "test.input";
+
+    /* we can create a string input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_create_from_string(&stream, "test"));
+
+    /* we can initialize the message. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == message_rss_add_input_stream_init(&msg, FILENAME, stream));
+
+    /* we can transfer the input stream to the caller. */
+    stream = nullptr;
+    TEST_ASSERT(
+        STATUS_SUCCESS == message_rss_add_input_stream_xfer(&stream, &msg));
+    TEST_ASSERT(nullptr != stream);
+
+    /* we can dispose the message. */
+    TEST_ASSERT(STATUS_SUCCESS == message_rss_add_input_stream_dispose(&msg));
+    /* we can release the stream. */
+    TEST_ASSERT(STATUS_SUCCESS == input_stream_release(stream));
+}
