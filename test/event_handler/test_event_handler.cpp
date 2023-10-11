@@ -10,6 +10,7 @@
 #include <libcparse/event_handler.h>
 #include <libcparse/status_codes.h>
 #include <minunit/minunit.h>
+#include <string.h>
 
 CPARSE_IMPORT_event_handler;
 
@@ -43,4 +44,27 @@ TEST(basics)
 
     /* we can dispose the event_handler. */
     TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
+
+/**
+ * Test that the copy init method works.
+ */
+TEST(copy)
+{
+    event_handler eh;
+    event_handler eh2;
+
+    /* we can initialize the event_handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, nullptr));
+
+    /* we can copy this event_handler. */
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_init_copy(&eh2, &eh));
+
+    /* the two are identical. */
+    TEST_EXPECT(0 == memcmp(&eh, &eh, sizeof(eh)));
+
+    /* we can dispose the event_handler. */
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh2));
 }
