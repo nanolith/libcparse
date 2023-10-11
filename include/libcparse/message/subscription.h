@@ -96,6 +96,20 @@ int CPARSE_SYM(message_downcast_to_message_subscribe)(
 CPARSE_SYM(message)* CPARSE_SYM(message_subscribe_upcast)(
     CPARSE_SYM(message_subscribe)* msg);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_message_subscription_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(message_subscribe) sym ## message_subscribe; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_message_subscription_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_message_subscription_sym(sym ## _)
+#define CPARSE_IMPORT_message_subscription \
+    __INTERNAL_CPARSE_IMPORT_message_subscription_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
