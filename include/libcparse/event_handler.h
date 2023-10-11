@@ -10,6 +10,7 @@
 #pragma once
 
 #include <libcparse/event.h>
+#include <libcparse/event_handler_fwd.h>
 #include <libcparse/event_handler/detail.h>
 #include <libcparse/function_decl.h>
 

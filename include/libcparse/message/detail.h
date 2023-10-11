@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <libcparse/event_handler.h>
 #include <libcparse/function_decl.h>
 #include <libcparse/input_stream.h>
 #include <libcparse/message.h>
@@ -30,6 +31,12 @@ struct CPARSE_SYM(message_rss_add_input_stream)
     CPARSE_SYM(message) hdr;
     CPARSE_SYM(input_stream)* stream;
     char* name;
+};
+
+struct CPARSE_SYM(message_subscribe)
+{
+    CPARSE_SYM(message) hdr;
+    CPARSE_SYM(event_handler) handler;
 };
 
 /* C++ compatibility. */

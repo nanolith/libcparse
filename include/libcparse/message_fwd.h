@@ -1,7 +1,7 @@
 /**
- * \file libcparse/event_handler/detail.h
+ * \file libcparse/message_fwd.h
  *
- * \brief \ref event_handler details.
+ * \brief Forward decls for message.
  *
  * \copyright 2023 Justin Handville.  Please see license.txt in this
  * distribution for the license terms under which this software is distributed.
@@ -9,21 +9,17 @@
 
 #pragma once
 
-#include <libcparse/message_handler_fwd.h>
+#include <libcparse/function_decl.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
 extern "C" {
 # endif /*__cplusplus*/
 
-typedef int (*CPARSE_SYM(event_callback_fn))(
-    void* context, const CPARSE_SYM(event)* ev);
-
-struct CPARSE_SYM(event_handler)
-{
-    CPARSE_SYM(event_callback_fn) event_callback;
-    void* context;
-};
+/**
+ * \brief The message type abstracts individual lexer or parser messages.
+ */
+typedef struct CPARSE_SYM(message) CPARSE_SYM(message);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus

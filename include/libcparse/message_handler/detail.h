@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <libcparse/message_fwd.h>
 #include <libcparse/message_handler.h>
 
 /* C++ compatibility. */
