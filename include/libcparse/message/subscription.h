@@ -70,6 +70,22 @@ const CPARSE_SYM(event_handler)*
 CPARSE_SYM(message_subscribe_event_handler_get)(
     const CPARSE_SYM(message_subscribe)* msg);
 
+/**
+ * \brief Attempt to downcast a \ref message to a
+ * \ref message_subscribe.
+ *
+ * \param sub_msg           Pointer to the message pointer to receive the
+ *                          downcast instance on success.
+ * \param msg               The \ref message pointer to attempt to downcast to
+ *                          the derived type.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_downcast_to_message_subscribe)(
+    CPARSE_SYM(message_subscribe)** sub_msg, CPARSE_SYM(message)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
