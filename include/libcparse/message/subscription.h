@@ -29,7 +29,7 @@ CPARSE_SYM(message_subscribe);
 /******************************************************************************/
 
 /**
- * \brief Initialize a \ref message_subscribe.
+ * \brief Initialize a \ref message_subscribe instance.
  *
  * \param msg               The message to initialize.
  * \param msg_type          The type of subscription message.
@@ -42,6 +42,17 @@ CPARSE_SYM(message_subscribe);
 int CPARSE_SYM(message_subscribe_init)(
     CPARSE_SYM(message_subscribe)* msg, int msg_type,
     CPARSE_SYM(event_handler)* handler);
+
+/**
+ * \brief Dispose of a \ref message_subscribe instance.
+ *
+ * \param msg               The message to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_subscribe_dispose)(CPARSE_SYM(message_subscribe)* msg);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
