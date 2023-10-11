@@ -3,3 +3,4 @@
 #include <stdio.h>
 
 CPARSE_IMPORT_message;
+CPARSE_IMPORT_message_subscription;
