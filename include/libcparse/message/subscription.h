@@ -54,6 +54,22 @@ int CPARSE_SYM(message_subscribe_init)(
  */
 int CPARSE_SYM(message_subscribe_dispose)(CPARSE_SYM(message_subscribe)* msg);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the \ref event_handler associated with a \ref message_subscribe
+ * instance.
+ *
+ * \param msg               The message to query.
+ *
+ * \returns the \ref event_handler associated with this message.
+ */
+const CPARSE_SYM(event_handler)*
+CPARSE_SYM(message_subscribe_event_handler_get)(
+    const CPARSE_SYM(message_subscribe)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
