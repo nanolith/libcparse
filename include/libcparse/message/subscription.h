@@ -114,6 +114,9 @@ CPARSE_SYM(message)* CPARSE_SYM(message_subscribe_upcast)(
     sym ## message_subscribe_event_handler_get( \
         const CPARSE_SYM(message_subscribe)* x) { \
             return CPARSE_SYM(message_subscribe_event_handler_get)(x); } \
+    static inline int sym ## message_downcast_to_message_subscribe( \
+        CPARSE_SYM(message_subscribe)** x, CPARSE_SYM(message)* y) { \
+            return CPARSE_SYM(message_downcast_to_message_subscribe)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_message_subscription_as(sym) \
