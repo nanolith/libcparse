@@ -85,6 +85,9 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
     static inline int sym ## event_init( \
         CPARSE_SYM(event)* x, int y, const CPARSE_SYM(cursor)* z) { \
             return CPARSE_SYM(event_init)(x,y,z); } \
+    static inline int sym ## event_dispose( \
+        CPARSE_SYM(event)* x) { \
+            return CPARSE_SYM(event_dispose)(x); } \
     static inline int sym ## event_get_type(const CPARSE_SYM(event)* x) { \
         return CPARSE_SYM(event_get_type)(x); } \
     static inline const CPARSE_SYM(cursor)* \
