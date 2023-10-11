@@ -10,6 +10,7 @@
 #pragma once
 
 #include <libcparse/function_decl.h>
+#include <stdbool.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -26,6 +27,19 @@ enum CPARSE_SYM(message_type)
     CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE =                                 0x0002,
     CPARSE_MESSAGE_TYPE_UNKNOWN =                                       0xFFFF,
 };
+
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Verify that a message type is a valid subscription type.
+ *
+ * \param msg_type                  The message type to check.
+ *
+ * \returns true if this is a subscription message type, or false otherwise.
+ */
+bool CPARSE_SYM(message_type_valid_subscription_type)(int msg_type);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
