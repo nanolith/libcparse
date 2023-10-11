@@ -79,3 +79,37 @@ TEST(input_stream_xfer)
     /* we can release the stream. */
     TEST_ASSERT(STATUS_SUCCESS == input_stream_release(stream));
 }
+
+/**
+ * Test that we can upcast and downcast this message.
+ */
+TEST(upcast_downcast)
+{
+    message_rss_add_input_stream msg;
+    message* upcast_msg;
+    message_rss_add_input_stream* downcast_msg;
+    input_stream* stream;
+    const char* FILENAME = "test.input";
+
+    /* we can create a string input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_create_from_string(&stream, "test"));
+
+    /* we can initialize the message. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == message_rss_add_input_stream_init(&msg, FILENAME, stream));
+
+    /* we can upcast the message. */
+    upcast_msg = message_rss_add_input_stream_upcast(&msg);
+    TEST_ASSERT(NULL != upcast_msg);
+
+    /* we can downcast the message. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == message_downcast_to_message_rss_add_input_stream(
+                    &downcast_msg, upcast_msg));
+
+    /* we can dispose the message. */
+    TEST_ASSERT(STATUS_SUCCESS == message_rss_add_input_stream_dispose(&msg));
+}
