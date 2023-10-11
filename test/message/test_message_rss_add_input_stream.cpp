@@ -17,7 +17,7 @@ CPARSE_IMPORT_input_stream;
 CPARSE_IMPORT_message;
 CPARSE_IMPORT_message_raw_stack_scanner;
 
-TEST_SUITE(message);
+TEST_SUITE(message_rss_add_input_stream);
 
 /**
  * Test the basics of the message_rss_add_input_stream type.
