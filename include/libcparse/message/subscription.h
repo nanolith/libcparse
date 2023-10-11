@@ -107,6 +107,9 @@ CPARSE_SYM(message)* CPARSE_SYM(message_subscribe_upcast)(
         CPARSE_SYM(message_subscribe)* x, int y, \
         CPARSE_SYM(event_handler)* z) { \
             return CPARSE_SYM(message_subscribe_init)(x,y,z); } \
+    static inline int sym ## message_subscribe_dispose(\
+        CPARSE_SYM(message_subscribe)* x) { \
+            return CPARSE_SYM(message_subscribe_dispose)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_message_subscription_as(sym) \
