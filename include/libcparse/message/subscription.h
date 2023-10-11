@@ -103,6 +103,10 @@ CPARSE_SYM(message)* CPARSE_SYM(message_subscribe_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_message_subscription_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(message_subscribe) sym ## message_subscribe; \
+    static inline int sym ## message_subscribe_init(\
+        CPARSE_SYM(message_subscribe)* x, int y, \
+        CPARSE_SYM(event_handler)* z) { \
+            return CPARSE_SYM(message_subscribe_init)(x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_message_subscription_as(sym) \
