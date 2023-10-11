@@ -30,6 +30,19 @@ struct CPARSE_SYM(cursor)
     int end_col;
 };
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+#define __INTERNAL_CPARSE_IMPORT_cursor_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(cursor) sym ## cursor; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_cursor_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_cursor_sym(sym ## _)
+#define CPARSE_IMPORT_cursor \
+    __INTERNAL_CPARSE_IMPORT_cursor_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
