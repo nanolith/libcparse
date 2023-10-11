@@ -86,6 +86,16 @@ CPARSE_SYM(message_subscribe_event_handler_get)(
 int CPARSE_SYM(message_downcast_to_message_subscribe)(
     CPARSE_SYM(message_subscribe)** sub_msg, CPARSE_SYM(message)* msg);
 
+/**
+ * \brief Upcast a \ref message_subscribe to a \ref message.
+ *
+ * \param msg               The \ref message_subscribe to upcast.
+ *
+ * \returns the \ref message instance for this message.
+ */
+CPARSE_SYM(message)* CPARSE_SYM(message_subscribe_upcast)(
+    CPARSE_SYM(message_subscribe)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
