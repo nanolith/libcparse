@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <libcparse/abstract_parser.h>
 #include <libcparse/event.h>
 #include <libcparse/event_handler.h>
 #include <libcparse/event_type.h>
