@@ -47,3 +47,26 @@ TEST(basics)
     /* we can dispose the message_handler. */
     TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
 }
+
+/**
+ * Test that the copy init method works.
+ */
+TEST(copy)
+{
+    message_handler mh;
+    message_handler mh2;
+
+    /* We can initialize the message_handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == message_handler_init(&mh, &dummy_callback, nullptr));
+
+    /* we can copy this message_handler. */
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_init_copy(&mh2, &mh));
+
+    /* the two are identical. */
+    TEST_EXPECT(0 == memcmp(&mh, &mh2, sizeof(mh)));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh2));
+}
