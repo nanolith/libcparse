@@ -70,3 +70,36 @@ TEST(copy)
     TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
     TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh2));
 }
+
+/**
+ * Test that we can send a message to the handler.
+ */
+TEST(send)
+{
+    message_handler mh;
+    message msg;
+    test_context t;
+
+    /* we can initialize the message_handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == message_handler_init(&mh, &dummy_callback, &t));
+
+    /* clear the test context. */
+    memset(&t, 0, sizeof(t));
+
+    /* initialize a dummy message. */
+    TEST_ASSERT(STATUS_SUCCESS == message_init(&msg, 17));
+
+    /* precondition: test_context count is zero. */
+    TEST_ASSERT(0 == t.count);
+
+    /* send this message. */
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_send(&mh, &msg));
+
+    /* postcondition: test_context count is 1. */
+    TEST_EXPECT(1 == t.count);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
+    TEST_ASSERT(STATUS_SUCCESS == message_dispose(&msg));
+}
