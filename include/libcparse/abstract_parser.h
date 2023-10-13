@@ -77,6 +77,30 @@ CPARSE_SYM(message_handler)*
 CPARSE_SYM(abstract_parser_message_handler_get)(
     CPARSE_SYM(abstract_parser)* ap);
 
+/**
+ * \brief Override the message handler for the given message handler instance
+ * with the given message handler.
+ *
+ * \note When a message event is sent to \p new_handler, it is up to this
+ * handler to publish this message event to \p old_handler if it does not
+ * override the message, so that the message chain is maintained.
+ *
+ * \param old_handler       Pointer to a \ref message handler to be set to the
+ *                          old handler.
+ * \param ap                The \ref abstract_parser instance for this
+ *                          operation.
+ * \param new_handler       The \ref message_handler instance to install.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int
+CPARSE_SYM(abstract_parser_message_handler_override)(
+    CPARSE_SYM(message_handler)* old_handler,
+    CPARSE_SYM(abstract_parser)* ap,
+    CPARSE_SYM(message_handler)* new_handler);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
