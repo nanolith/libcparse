@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <libcparse/abstract_parser/detail.h>
 #include <libcparse/event_handler_fwd.h>
 #include <libcparse/function_decl.h>
 #include <libcparse/input_stream_fwd.h>
