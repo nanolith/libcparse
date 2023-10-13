@@ -161,6 +161,10 @@ CPARSE_SYM(abstract_parser_raw_stack_scanner_subscribe)(
         CPARSE_SYM(message_handler)* z) { \
             return \
                 CPARSE_SYM(abstract_parser_message_handler_override)(x,y,z); } \
+    static inline int sym ## abstract_parser_push_input_stream( \
+        CPARSE_SYM(abstract_parser)* x, const char* y, \
+        CPARSE_SYM(input_stream)* z) { \
+            return CPARSE_SYM(abstract_parser_push_input_stream)(x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_abstract_parser_as(sym) \
