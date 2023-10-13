@@ -137,6 +137,19 @@ int
 CPARSE_SYM(abstract_parser_raw_stack_scanner_subscribe)(
     CPARSE_SYM(abstract_parser)* ap, CPARSE_SYM(event_handler)* eh);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+#define __INTERNAL_CPARSE_IMPORT_abstract_parser_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(abstract_parser) sym ## abstract_parser; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_abstract_parser_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_abstract_parser_sym(sym ## _)
+#define CPARSE_IMPORT_abstract_parser \
+    __INTERNAL_CPARSE_IMPORT_abstract_parser_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
