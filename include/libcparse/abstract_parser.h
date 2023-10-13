@@ -40,6 +40,16 @@ typedef struct CPARSE_SYM(abstract_parser) CPARSE_SYM(abstract_parser);
 int CPARSE_SYM(abstract_parser_init)(
     CPARSE_SYM(abstract_parser)* ap, const CPARSE_SYM(message_handler)* mh);
 
+/**
+ * \brief Dispose a \ref abstract_parser instance.
+ *
+ * \param ap                    The abstract parser instance to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(abstract_parser_dispose)(CPARSE_SYM(abstract_parser)* ap);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
