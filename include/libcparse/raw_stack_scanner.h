@@ -71,7 +71,7 @@ int CPARSE_SYM(raw_stack_scanner_release)(
  *
  * \returns the \ref abstract_parser interface for this scanner.
  */
-int CPARSE_SYM(raw_stack_scanner_upcast)(
+CPARSE_SYM(abstract_parser)* CPARSE_SYM(raw_stack_scanner_upcast)(
     CPARSE_SYM(raw_stack_scanner)* scanner);
 
 /******************************************************************************/
