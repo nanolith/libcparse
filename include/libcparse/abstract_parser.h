@@ -143,6 +143,9 @@ CPARSE_SYM(abstract_parser_raw_stack_scanner_subscribe)(
 #define __INTERNAL_CPARSE_IMPORT_abstract_parser_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(abstract_parser) sym ## abstract_parser; \
+    static inline int sym ## abstract_parser_init( \
+        CPARSE_SYM(abstract_parser)* x, const CPARSE_SYM(message_handler)* y) {\
+            return CPARSE_SYM(abstract_parser_init)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_abstract_parser_as(sym) \
