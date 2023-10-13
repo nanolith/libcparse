@@ -64,6 +64,16 @@ int CPARSE_SYM(raw_stack_scanner_release)(
 /* Start of public methods.                                                   */
 /******************************************************************************/
 
+/**
+ * \brief Get the \ref abstract_parser interface for this scanner.
+ *
+ * \param scanner           The \ref raw_stack_scanner instance to query.
+ *
+ * \returns the \ref abstract_parser interface for this scanner.
+ */
+int CPARSE_SYM(raw_stack_scanner_upcast)(
+    CPARSE_SYM(raw_stack_scanner)* scanner);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
