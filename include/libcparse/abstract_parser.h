@@ -66,6 +66,17 @@ int CPARSE_SYM(abstract_parser_dispose)(CPARSE_SYM(abstract_parser)* ap);
  */
 int CPARSE_SYM(abstract_parser_run)(CPARSE_SYM(abstract_parser)* ap);
 
+/**
+ * \brief Get the message handler for this abstract parser.
+ *
+ * \param ap                    The abstract parser instance to query.
+ *
+ * \returns the \ref message_handler instance for this abstract parser instance.
+ */
+CPARSE_SYM(message_handler)*
+CPARSE_SYM(abstract_parser_message_handler_get)(
+    CPARSE_SYM(abstract_parser)* ap);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
