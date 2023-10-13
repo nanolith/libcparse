@@ -64,21 +64,6 @@ int CPARSE_SYM(raw_stack_scanner_release)(
 /******************************************************************************/
 
 /**
- * \brief Get the message handler for the given raw stack scanner instance.
- *
- * \note This method maintains the ownership that this scanner instance has of
- * this message handler instance. The caller does not own the returned
- * instance.
- *
- * \param scanner           The \ref raw_stack_scanner instance to query.
- *
- * \returns the \ref message_handler instance for this scanner instance.
- */
-CPARSE_SYM(message_handler)*
-CPARSE_SYM(raw_stack_scanner_message_handler_get)(
-    CPARSE_SYM(raw_stack_scanner)* scanner);
-
-/**
  * \brief Override the message handler for the given raw stack scanner instance
  * with the given message handler.
  *
@@ -117,10 +102,6 @@ CPARSE_SYM(raw_stack_scanner_message_handler_override)(
     static inline int sym ## raw_stack_scanner_release( \
         CPARSE_SYM(raw_stack_scanner)* x) { \
             return CPARSE_SYM(raw_stack_scanner_release)(x); } \
-    static inline CPARSE_SYM(message_handler)* \
-    sym ## raw_stack_scanner_message_handler_get( \
-        CPARSE_SYM(raw_stack_scanner)* x) { \
-            return CPARSE_SYM(raw_stack_scanner_message_handler_get)(x); } \
     static inline int sym ## raw_stack_scanner_message_handler_override ( \
         CPARSE_SYM(message_handler)** x, CPARSE_SYM(raw_stack_scanner)* y, \
         CPARSE_SYM(message_handler)* z) { \
