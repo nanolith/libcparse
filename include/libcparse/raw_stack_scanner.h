@@ -63,33 +63,6 @@ int CPARSE_SYM(raw_stack_scanner_release)(
 /* Start of public methods.                                                   */
 /******************************************************************************/
 
-/**
- * \brief Override the message handler for the given raw stack scanner instance
- * with the given message handler.
- *
- * \note On success, this method transfers ownership of \p new_handler to this
- * scanner instance, and ownership of \p old_handler is transferred to the
- * caller. The caller is responsible for releasing \p old_handler when it is no
- * longer used. When a message event is sent to \p new_handler, it is up to this
- * handler to also publish this message event to \p old_handler so that the
- * message chain is maintained.
- *
- * \param old_handler       Pointer to the \ref message_handler pointer to
- *                          receive the old handler instance on success.
- * \param scanner           The \ref raw_stack_scanner instance for this
- *                          operation.
- * \param new_handler       The \ref message_handler instance to install.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-int
-CPARSE_SYM(raw_stack_scanner_message_handler_override)(
-    CPARSE_SYM(message_handler)** old_handler,
-    CPARSE_SYM(raw_stack_scanner)* scanner,
-    CPARSE_SYM(message_handler)* new_handler);
-
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
@@ -102,12 +75,6 @@ CPARSE_SYM(raw_stack_scanner_message_handler_override)(
     static inline int sym ## raw_stack_scanner_release( \
         CPARSE_SYM(raw_stack_scanner)* x) { \
             return CPARSE_SYM(raw_stack_scanner_release)(x); } \
-    static inline int sym ## raw_stack_scanner_message_handler_override ( \
-        CPARSE_SYM(message_handler)** x, CPARSE_SYM(raw_stack_scanner)* y, \
-        CPARSE_SYM(message_handler)* z) { \
-            return \
-                CPARSE_SYM(raw_stack_scanner_message_handler_override)( \
-                    x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_raw_stack_scanner_as(sym) \
