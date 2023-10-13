@@ -11,6 +11,7 @@
 #pragma once
 
 #include <libcparse/function_decl.h>
+#include <libcparse/input_stream_fwd.h>
 #include <libcparse/message_handler_fwd.h>
 
 /* C++ compatibility. */
@@ -100,6 +101,25 @@ CPARSE_SYM(abstract_parser_message_handler_override)(
     CPARSE_SYM(message_handler)* old_handler,
     CPARSE_SYM(abstract_parser)* ap,
     CPARSE_SYM(message_handler)* new_handler);
+
+/**
+ * \brief Push an \ref input_stream onto the \ref raw_stack_scanner stream.
+ *
+ * \note Ownership of this \ref input_stream is passed to the \ref
+ * abstract_parser.
+ *
+ * \param ap                The \ref abstract_parser to add this stream to.
+ * \param name              The name of this stream.
+ * \param stream            The stream to push onto the stack.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int
+CPARSE_SYM(abstract_parser_push_input_stream)(
+    CPARSE_SYM(abstract_parser)* ap, const char* name,
+    CPARSE_SYM(input_stream)* input_stream);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
