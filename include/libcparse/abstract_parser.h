@@ -51,6 +51,21 @@ int CPARSE_SYM(abstract_parser_init)(
  */
 int CPARSE_SYM(abstract_parser_dispose)(CPARSE_SYM(abstract_parser)* ap);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Run an abstract parser instance.
+ *
+ * \param ap                    The abstract parser instance to run.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(abstract_parser_run)(CPARSE_SYM(abstract_parser)* ap);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
