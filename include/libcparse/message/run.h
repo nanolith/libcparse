@@ -49,6 +49,20 @@ int CPARSE_SYM(message_run_init)(CPARSE_SYM(message_run)* msg);
  */
 int CPARSE_SYM(message_run_dispose)(CPARSE_SYM(message_run)* msg);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Upcast a \ref message_run to a \ref message.
+ *
+ * \param msg               The \ref message_run to upcast.
+ *
+ * \returns the \ref message instance for this message.
+ */
+CPARSE_SYM(message)* CPARSE_SYM(message_run_upcast)(
+    CPARSE_SYM(message_run)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
