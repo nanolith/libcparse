@@ -29,7 +29,7 @@ typedef struct CPARSE_SYM(event) CPARSE_SYM(event);
 /******************************************************************************/
 
 /**
- * \brief Perform an in-place initialization of an event_type instance.
+ * \brief Perform an in-place initialization of an event instance.
  *
  * \param ev                    Pointer to the event to initialize.
  * \param event_type            The type of the event.
