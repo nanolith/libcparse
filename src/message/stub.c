@@ -1,4 +1,5 @@
 #include <libcparse/message.h>
+#include <libcparse/message/run.h>
 #include <libcparse/message/subscription.h>
 #include <stdio.h>
 
