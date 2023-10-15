@@ -8,7 +8,6 @@
  */
 
 #include <libcparse/message/run.h>
-#include <libcparse/status_codes.h>
 #include <string.h>
 
 CPARSE_IMPORT_message;
