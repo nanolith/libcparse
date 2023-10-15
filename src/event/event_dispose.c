@@ -18,7 +18,7 @@
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
- *      - a non-zero failure code on failure.
+ *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(event_dispose)(CPARSE_SYM(event)* ev)
 {
