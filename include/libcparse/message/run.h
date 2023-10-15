@@ -38,6 +38,17 @@ CPARSE_SYM(message_run);
  */
 int CPARSE_SYM(message_run_init)(CPARSE_SYM(message_run)* msg);
 
+/**
+ * \brief Dispose of a \ref message_run instance.
+ *
+ * \param msg               The message to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_run_dispose)(CPARSE_SYM(message_run)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
