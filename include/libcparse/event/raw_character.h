@@ -87,6 +87,16 @@ int CPARSE_SYM(event_raw_character_get)(
 int CPARSE_SYM(event_downcast_to_event_raw_character)(
     CPARSE_SYM(event_raw_character)** rc_ev, CPARSE_SYM(event)* ev);
 
+/**
+ * \brief Upcast an \ref event_raw_character to an \ref event.
+ *
+ * \param ev                The \ref event_raw_character to upcast.
+ *
+ * \returns the \ref event instance for this event.
+ */
+CPARSE_SYM(event)* CPARSE_SYM(event_raw_character_upcast)(
+    CPARSE_SYM(event_raw_character)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
