@@ -63,6 +63,21 @@ int CPARSE_SYM(message_run_dispose)(CPARSE_SYM(message_run)* msg);
 CPARSE_SYM(message)* CPARSE_SYM(message_run_upcast)(
     CPARSE_SYM(message_run)* msg);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_message_run_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(message_run) sym ## message_run; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_message_run_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_message_run_sym(sym ## _)
+#define CPARSE_IMPORT_message_run \
+    __INTERNAL_CPARSE_IMPORT_message_run_sym()
+
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
