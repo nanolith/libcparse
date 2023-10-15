@@ -23,7 +23,7 @@ CPARSE_IMPORT_message;
  */
 int CPARSE_SYM(message_run_dispose)(CPARSE_SYM(message_run)* msg)
 {
-    int message_dispose_retval = STATUS_SUCCESS;
+    int message_dispose_retval;
 
     /* dispose the base message type. */
     message_dispose_retval = message_dispose(&msg->hdr);
