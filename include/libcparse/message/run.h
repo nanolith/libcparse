@@ -70,6 +70,9 @@ CPARSE_SYM(message)* CPARSE_SYM(message_run_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_message_run_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(message_run) sym ## message_run; \
+    static inline int sym ## message_run_init( \
+        CPARSE_SYM(message_run)* x) { \
+            return CPARSE_SYM(message_run_init)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_message_run_as(sym) \
