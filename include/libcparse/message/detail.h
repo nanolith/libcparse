@@ -39,6 +39,11 @@ struct CPARSE_SYM(message_subscribe)
     CPARSE_SYM(event_handler) handler;
 };
 
+struct CPARSE_SYM(message_run)
+{
+    CPARSE_SYM(message) hdr;
+};
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
