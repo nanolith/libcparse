@@ -76,6 +76,10 @@ CPARSE_SYM(message)* CPARSE_SYM(message_run_upcast)(
     static inline int sym ## message_run_dispose( \
         CPARSE_SYM(message_run)* x) { \
             return CPARSE_SYM(message_run_dispose)(x); } \
+    static inline CPARSE_SYM(message)* \
+    sym ## message_run_upcast( \
+        CPARSE_SYM(message_run)* x) { \
+            return CPARSE_SYM(message_run_upcast)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_message_run_as(sym) \
