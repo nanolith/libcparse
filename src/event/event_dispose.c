@@ -12,7 +12,7 @@
 #include <string.h>
 
 /**
- * \brief Perform an in-place disposable of an event instance.
+ * \brief Perform an in-place disposal of an event instance.
  *
  * \param ev                    Pointer to the event to dispose.
  *
