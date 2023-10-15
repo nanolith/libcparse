@@ -45,6 +45,18 @@ int CPARSE_SYM(event_raw_character_init)(
     CPARSE_SYM(event_raw_character)* ev, int event_type,
     const CPARSE_SYM(cursor)* cursor, int ch);
 
+/**
+ * \brief Perform an in-place disposal of an \ref event_raw_character instance.
+ *
+ * \param ev                Pointer to the event to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_raw_character_dispose)(
+    CPARSE_SYM(event_raw_character)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
