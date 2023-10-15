@@ -37,7 +37,7 @@ typedef struct CPARSE_SYM(event) CPARSE_SYM(event);
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
- *      - a non-zero failure code on failure.
+ *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(event_init)(
     CPARSE_SYM(event)* ev, int event_type, const CPARSE_SYM(cursor)* cursor);
