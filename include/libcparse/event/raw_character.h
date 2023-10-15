@@ -104,6 +104,10 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_character_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_event_raw_character_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_raw_character) sym ## event_raw_character; \
+    static inline int sym ## event_raw_character_init( \
+        CPARSE_SYM(event_raw_character)* w, int x, const CPARSE_SYM(cursor)* y,\
+        int z) { \
+            return CPARSE_SYM(event_raw_character_init)(w,x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_raw_character_as(sym) \
