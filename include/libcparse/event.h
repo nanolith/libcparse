@@ -43,7 +43,7 @@ int CPARSE_SYM(event_init)(
     CPARSE_SYM(event)* ev, int event_type, const CPARSE_SYM(cursor)* cursor);
 
 /**
- * \brief Perform an in-place disposable of an event instance.
+ * \brief Perform an in-place disposal of an event instance.
  *
  * \param ev                    Pointer to the event to dispose.
  *
