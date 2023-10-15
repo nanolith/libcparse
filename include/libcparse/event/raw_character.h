@@ -57,6 +57,20 @@ int CPARSE_SYM(event_raw_character_init)(
 int CPARSE_SYM(event_raw_character_dispose)(
     CPARSE_SYM(event_raw_character)* ev);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the character value for this event.
+ *
+ * \param ev                The event instance to query.
+ *
+ * \returns the character value for this event.
+ */
+int CPARSE_SYM(event_raw_character_get)(
+    const CPARSE_SYM(event_raw_character)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
