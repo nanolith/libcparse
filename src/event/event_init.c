@@ -12,7 +12,7 @@
 #include <string.h>
 
 /**
- * \brief Perform an in-place initialization of an event_type instance.
+ * \brief Perform an in-place initialization of an event instance.
  *
  * \param ev                    Pointer to the event to initialize.
  * \param event_type            The type of the event.
