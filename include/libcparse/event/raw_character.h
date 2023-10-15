@@ -97,6 +97,20 @@ int CPARSE_SYM(event_downcast_to_event_raw_character)(
 CPARSE_SYM(event)* CPARSE_SYM(event_raw_character_upcast)(
     CPARSE_SYM(event_raw_character)* ev);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_event_raw_character_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(event_raw_character) sym ## event_raw_character; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_event_raw_character_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_event_raw_character_sym(sym ## _)
+#define CPARSE_IMPORT_event_raw_character \
+    __INTERNAL_CPARSE_IMPORT_event_raw_character_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
