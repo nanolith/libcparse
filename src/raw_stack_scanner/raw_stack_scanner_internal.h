@@ -58,6 +58,17 @@ int CPARSE_SYM(raw_stack_entry_create)(
     CPARSE_SYM(raw_stack_entry)** ent, CPARSE_SYM(input_stream)* stream,
     const char* name);
 
+/**
+ * \brief Release a \ref raw_stack_entry instance.
+ *
+ * \param ent               The instance to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(raw_stack_entry_release)(CPARSE_SYM(raw_stack_entry)* ent);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
