@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <libcparse/function_decl.h>
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 extern "C" {
