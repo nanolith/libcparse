@@ -24,8 +24,13 @@ typedef struct CPARSE_SYM(event_reactor_entry) CPARSE_SYM(event_reactor_entry);
 
 struct CPARSE_SYM(event_reactor_entry)
 {
-    CPARSE_SYM(event_reactor)* next;
+    CPARSE_SYM(event_reactor_entry)* next;
     CPARSE_SYM(event_handler) handler;
+};
+
+struct CPARSE_SYM(event_reactor)
+{
+    CPARSE_SYM(event_reactor_entry)* head;
 };
 
 /* C++ compatibility. */
