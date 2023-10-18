@@ -50,6 +50,32 @@ TEST(basics)
 }
 
 /**
+ * Test that we can broadcast an event to zero handlers.
+ */
+TEST(broadcast_zero)
+{
+    event_reactor* er;
+    event ev;
+    cursor c;
+
+    /* we can create an event_reactor. */
+    TEST_ASSERT(STATUS_SUCCESS == event_reactor_create(&er));
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* initialize a dummy event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_init(&ev, 17, &c));
+
+    /* broadcast this event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_reactor_broadcast(er, &ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_reactor_release(er));
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
+
+/**
  * Test that we can broadcast an event to a single handler.
  */
 TEST(broadcast_one)
