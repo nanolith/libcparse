@@ -65,7 +65,7 @@ int CPARSE_SYM(event_reactor_release)(CPARSE_SYM(event_reactor)* er);
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(event_reactor_add)(
-    CPARSE_SYM(event_reactor)* er, CPARSE_SYM(event_handler)* eh);
+    CPARSE_SYM(event_reactor)* er, const CPARSE_SYM(event_handler)* eh);
 
 /**
  * \brief Broadcast an event to all event handlers in this event reactor.
@@ -94,7 +94,7 @@ int CPARSE_SYM(event_reactor_broadcast)(
         CPARSE_SYM(event_reactor)* x) { \
             return CPARSE_SYM(event_reactor_release)(x); } \
     static inline int sym ## event_reactor_add( \
-        CPARSE_SYM(event_reactor)* x, CPARSE_SYM(event_handler)* y) { \
+        CPARSE_SYM(event_reactor)* x, const CPARSE_SYM(event_handler)* y) { \
             return CPARSE_SYM(event_reactor_add)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
