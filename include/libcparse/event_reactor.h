@@ -90,6 +90,9 @@ int CPARSE_SYM(event_reactor_broadcast)(
     static inline int sym ## event_reactor_create( \
         CPARSE_SYM(event_reactor)** x) { \
             return CPARSE_SYM(event_reactor_create)(x); } \
+    static inline int sym ## event_reactor_release( \
+        CPARSE_SYM(event_reactor)* x) { \
+            return CPARSE_SYM(event_reactor_release)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_reactor_as(sym) \
