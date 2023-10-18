@@ -25,7 +25,7 @@ typedef struct CPARSE_SYM(event_reactor) CPARSE_SYM(event_reactor);
 /******************************************************************************/
 
 /**
- * \brief Create a \ref event_reactor instance.
+ * \brief Create an \ref event_reactor instance.
  *
  * \param er                Pointer to the event reactor pointer to receive the
  *                          created instance on success.
@@ -35,6 +35,17 @@ typedef struct CPARSE_SYM(event_reactor) CPARSE_SYM(event_reactor);
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(event_reactor_create)(CPARSE_SYM(event_reactor)** er);
+
+/**
+ * \brief Release an \ref event_reactor instance.
+ *
+ * \param er                The event reactor instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_reactor_release)(CPARSE_SYM(event_reactor)* er);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
