@@ -67,6 +67,19 @@ int CPARSE_SYM(event_reactor_release)(CPARSE_SYM(event_reactor)* er);
 int CPARSE_SYM(event_reactor_add)(
     CPARSE_SYM(event_reactor)* er, CPARSE_SYM(event_handler)* eh);
 
+/**
+ * \brief Broadcast an event to all event handlers in this event reactor.
+ *
+ * \param er                The event reactor for this operation.
+ * \param ev                The event to broadcast.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_reactor_broadcast)(
+    CPARSE_SYM(event_reactor)* er, const CPARSE_SYM(event)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
