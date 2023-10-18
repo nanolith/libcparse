@@ -50,7 +50,7 @@ int CPARSE_SYM(event_reactor_add)(
 
     /* Push the entry onto the list. */
     tmp->next = er->head;
-    er->head = tmp->next;
+    er->head = tmp;
 
     /* success. */
     retval = STATUS_SUCCESS;
