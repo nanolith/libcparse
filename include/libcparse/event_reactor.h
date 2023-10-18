@@ -20,6 +20,22 @@ extern "C" {
  */
 typedef struct CPARSE_SYM(event_reactor) CPARSE_SYM(event_reactor);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a \ref event_reactor instance.
+ *
+ * \param er                Pointer to the event reactor pointer to receive the
+ *                          created instance on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_reactor_create)(CPARSE_SYM(event_reactor)** er);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
