@@ -92,3 +92,62 @@ TEST(broadcast_one)
     TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
     TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
 }
+
+/**
+ * Test that we can broadcast an event to multiple handlers.
+ */
+TEST(broadcast_multiple)
+{
+    event_reactor* er;
+    event_handler eh1, eh2, eh3;
+    event ev;
+    test_context t1, t2, t3;
+    cursor c;
+
+    /* we can create an event_reactor. */
+    TEST_ASSERT(STATUS_SUCCESS == event_reactor_create(&er));
+
+    /* initialize the event_handlers. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh1, &dummy_callback, &t1));
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh2, &dummy_callback, &t2));
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh3, &dummy_callback, &t3));
+
+    /* add these handlers to the reactor. */
+    TEST_ASSERT(STATUS_SUCCESS == event_reactor_add(er, &eh1));
+    TEST_ASSERT(STATUS_SUCCESS == event_reactor_add(er, &eh2));
+    TEST_ASSERT(STATUS_SUCCESS == event_reactor_add(er, &eh3));
+
+    /* clear the test contexts. */
+    memset(&t1, 0, sizeof(t1));
+    memset(&t2, 0, sizeof(t2));
+    memset(&t3, 0, sizeof(t3));
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* initialize a dummy event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_init(&ev, 17, &c));
+
+    /* precondition: test_context counts are zero. */
+    TEST_ASSERT(0 == t1.count);
+    TEST_ASSERT(0 == t2.count);
+    TEST_ASSERT(0 == t3.count);
+
+    /* broadcast this event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_reactor_broadcast(er, &ev));
+
+    /* postcondition: test_context counts are 1. */
+    TEST_EXPECT(1 == t1.count);
+    TEST_EXPECT(1 == t2.count);
+    TEST_EXPECT(1 == t3.count);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_reactor_release(er));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh1));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh2));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh3));
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
