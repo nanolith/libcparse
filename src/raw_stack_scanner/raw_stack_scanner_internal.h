@@ -87,6 +87,19 @@ int CPARSE_SYM(raw_stack_entry_release)(CPARSE_SYM(raw_stack_entry)* ent);
 int CPARSE_SYM(raw_stack_scanner_message_callback)(
     void* context, const CPARSE_SYM(message)* msg);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+#define __INTERNAL_CPARSE_IMPORT_raw_stack_scanner_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(raw_stack_entry) sym ## raw_stack_entry; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_raw_stack_scanner_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_raw_stack_scanner_internal_sym(sym ## _)
+#define CPARSE_IMPORT_raw_stack_scanner_internal \
+    __INTERNAL_CPARSE_IMPORT_raw_stack_scanner_internal_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
