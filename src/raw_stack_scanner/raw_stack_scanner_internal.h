@@ -93,6 +93,10 @@ int CPARSE_SYM(raw_stack_scanner_message_callback)(
 #define __INTERNAL_CPARSE_IMPORT_raw_stack_scanner_internal_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(raw_stack_entry) sym ## raw_stack_entry; \
+    static inline int sym ## raw_stack_entry_create( \
+        CPARSE_SYM(raw_stack_entry)** x, CPARSE_SYM(input_stream)* y, \
+        const char* z) { \
+            return CPARSE_SYM(raw_stack_entry_create)(x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_raw_stack_scanner_internal_as(sym) \
