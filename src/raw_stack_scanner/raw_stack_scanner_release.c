@@ -7,6 +7,7 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <libcparse/event_reactor.h>
 #include <libcparse/raw_stack_scanner.h>
 #include <libcparse/status_codes.h>
 #include <stdlib.h>
@@ -15,6 +16,7 @@
 #include "raw_stack_scanner_internal.h"
 
 CPARSE_IMPORT_abstract_parser;
+CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_raw_stack_scanner;
 CPARSE_IMPORT_raw_stack_scanner_internal;
 
@@ -41,6 +43,16 @@ int CPARSE_SYM(raw_stack_scanner_release)(
 
         /* release entry. */
         release_retval = raw_stack_entry_release(tmp);
+        if (STATUS_SUCCESS != release_retval)
+        {
+            retval = release_retval;
+        }
+    }
+
+    /* release event reactor. */
+    if (NULL != scanner->reactor)
+    {
+        release_retval = event_reactor_release(scanner->reactor);
         if (STATUS_SUCCESS != release_retval)
         {
             retval = release_retval;
