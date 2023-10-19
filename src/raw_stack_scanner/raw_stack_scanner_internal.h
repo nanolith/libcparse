@@ -29,6 +29,8 @@ struct CPARSE_SYM(raw_stack_entry)
     CPARSE_SYM(cursor) pos;
 };
 
+typedef struct CPARSE_SYM(raw_stack_scanner) CPARSE_SYM(raw_stack_scanner);
+
 struct CPARSE_SYM(raw_stack_scanner)
 {
     CPARSE_SYM(abstract_parser) hdr;
