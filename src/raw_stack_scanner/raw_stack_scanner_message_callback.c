@@ -7,21 +7,28 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <libcparse/event_handler.h>
+#include <libcparse/event_reactor.h>
 #include <libcparse/input_stream.h>
 #include <libcparse/message.h>
 #include <libcparse/message/raw_stack_scanner.h>
+#include <libcparse/message/subscription.h>
 #include <libcparse/raw_stack_scanner.h>
 #include <libcparse/status_codes.h>
 
 #include "raw_stack_scanner_internal.h"
 
+CPARSE_IMPORT_event_handler;
+CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_input_stream;
 CPARSE_IMPORT_message;
 CPARSE_IMPORT_message_raw_stack_scanner;
+CPARSE_IMPORT_message_subscription;
 CPARSE_IMPORT_raw_stack_scanner;
 CPARSE_IMPORT_raw_stack_scanner_internal;
 
 static int add_input_stream(raw_stack_scanner* scanner, message* msg);
+static int subscribe(raw_stack_scanner* scanner, const message* msg);
 
 /**
  * \brief Message handler callback for \ref raw_stack_scanner.
@@ -43,6 +50,9 @@ int CPARSE_SYM(raw_stack_scanner_message_callback)(
     {
     case CPARSE_MESSAGE_TYPE_RSS_ADD_INPUT_STREAM:
         return add_input_stream(scanner, (message*)msg);
+
+    case CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE:
+        return subscribe(scanner, msg);
 
     default:
         return ERROR_LIBCPARSE_UNHANDLED_MESSAGE;
@@ -103,6 +113,47 @@ cleanup_stream:
     {
         retval = release_retval;
     }
+
+done:
+    return retval;
+}
+
+/**
+ * \brief Subscribe to the raw_stack_scanner.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param msg               The message for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int subscribe(raw_stack_scanner* scanner, const message* msg)
+{
+    int retval;
+    message_subscribe* m;
+    const event_handler* eh;
+
+    /* dynamic cast the message. */
+    retval = message_downcast_to_message_subscribe(&m, (message*)msg);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* get the event handler for this message. */
+    eh = message_subscribe_event_handler_get(m);
+
+    /* add this handler to our reactor. */
+    retval = event_reactor_add(scanner->reactor, eh);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* success. */
+    retval = STATUS_SUCCESS;
+    goto done;
 
 done:
     return retval;
