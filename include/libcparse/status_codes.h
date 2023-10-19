@@ -16,3 +16,4 @@
 #define ERROR_LIBCPARSE_INPUT_STREAM_EOF                        1003
 #define ERROR_LIBCPARSE_RSS_MESSAGE_INPUT_STREAM_NULL           1004
 #define ERROR_LIBCPARSE_BAD_CAST                                1005
+#define ERROR_LIBCPARSE_UNHANDLED_MESSAGE                       1006
