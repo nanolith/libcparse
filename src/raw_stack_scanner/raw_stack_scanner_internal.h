@@ -11,6 +11,7 @@
 
 #include <libcparse/abstract_parser.h>
 #include <libcparse/cursor.h>
+#include <libcparse/event_reactor_fwd.h>
 #include <libcparse/function_decl.h>
 
 /* C++ compatibility. */
@@ -31,6 +32,7 @@ struct CPARSE_SYM(raw_stack_entry)
 struct CPARSE_SYM(raw_stack_scanner)
 {
     CPARSE_SYM(abstract_parser) hdr;
+    CPARSE_SYM(event_reactor)* reactor;
     CPARSE_SYM(raw_stack_entry)* head;
 };
 
