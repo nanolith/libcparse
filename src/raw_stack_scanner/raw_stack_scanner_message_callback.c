@@ -59,17 +59,17 @@ int CPARSE_SYM(raw_stack_scanner_message_callback)(
 
     switch (message_get_type(msg))
     {
-    case CPARSE_MESSAGE_TYPE_RSS_ADD_INPUT_STREAM:
-        return add_input_stream(scanner, (message*)msg);
+        case CPARSE_MESSAGE_TYPE_RSS_ADD_INPUT_STREAM:
+            return add_input_stream(scanner, (message*)msg);
 
-    case CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE:
-        return subscribe(scanner, msg);
+        case CPARSE_MESSAGE_TYPE_RUN:
+            return run(scanner, msg);
 
-    case CPARSE_MESSAGE_TYPE_RUN:
-        return run(scanner, msg);
+        case CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE:
+            return subscribe(scanner, msg);
 
-    default:
-        return ERROR_LIBCPARSE_UNHANDLED_MESSAGE;
+        default:
+            return ERROR_LIBCPARSE_UNHANDLED_MESSAGE;
     }
 }
 
