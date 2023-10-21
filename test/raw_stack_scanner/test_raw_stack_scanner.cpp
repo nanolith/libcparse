@@ -7,7 +7,6 @@
  * distribution for the license terms under which this software is distributed.
  */
 
-#include <iostream>
 #include <libcparse/event/raw_character.h>
 #include <libcparse/raw_stack_scanner.h>
 #include <libcparse/status_codes.h>
@@ -168,8 +167,6 @@ TEST(input_stream_1)
 
     /* postcondition: vals matches our string. */
     string out(t1.vals.begin(), t1.vals.end());
-    cout << "*** " << out << endl;
-    cout << "*** " << TEST_STRING << endl;
     TEST_EXPECT(out == TEST_STRING);
 
     /* clean up. */
