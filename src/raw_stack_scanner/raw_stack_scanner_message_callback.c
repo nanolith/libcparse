@@ -222,6 +222,9 @@ static int run(raw_stack_scanner* scanner, const message* msg)
             {
                 goto done;
             }
+
+            /* skip to the next entry. */
+            continue;
         }
         /* any other error is fatal. */
         else if (STATUS_SUCCESS != retval)
