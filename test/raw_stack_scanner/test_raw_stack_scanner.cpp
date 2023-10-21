@@ -173,3 +173,86 @@ TEST(input_stream_1)
     TEST_ASSERT(STATUS_SUCCESS == raw_stack_scanner_release(scanner));
     TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
 }
+
+/**
+ * Test that we receive all input from multiple input streams.
+ */
+TEST(multiple_input_streams)
+{
+    raw_stack_scanner* scanner;
+    input_stream* stream1;
+    input_stream* stream2;
+    input_stream* stream3;
+    event_handler eh;
+    test_context t1;
+    const string TEST_STRING1 = "ghi";
+    const string TEST_STRING2 = "def";
+    const string TEST_STRING3 = "abc";
+
+    /* create the raw_stack_scanner. */
+    TEST_ASSERT(STATUS_SUCCESS == raw_stack_scanner_create(&scanner));
+
+    /* create our event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = raw_stack_scanner_upcast(scanner);
+
+    /* subscribe to the raw stack scanner. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == abstract_parser_raw_stack_scanner_subscribe(ap, &eh));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream1, TEST_STRING1.c_str()));
+
+    /* add the input stream to the scanner. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "1", stream1));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream2, TEST_STRING2.c_str()));
+
+    /* add the input stream to the scanner. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "2", stream2));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream3, TEST_STRING3.c_str()));
+
+    /* add the input stream to the scanner. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "3", stream3));
+
+    /* precondition: eof is false. */
+    TEST_ASSERT(!t1.eof);
+
+    /* precondition: vals is empty. */
+    TEST_ASSERT(t1.vals.empty());
+
+    /* run the scanner. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(ap));
+
+    /* postcondition: eof is true. */
+    TEST_EXPECT(t1.eof);
+
+    /* postcondition: vals is not empty. */
+    TEST_EXPECT(!t1.vals.empty());
+
+    /* postcondition: vals matches our strings. */
+    string out(t1.vals.begin(), t1.vals.end());
+    TEST_EXPECT(out == (TEST_STRING3 + TEST_STRING2 + TEST_STRING1));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == raw_stack_scanner_release(scanner));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
