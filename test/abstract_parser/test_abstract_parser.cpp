@@ -199,7 +199,7 @@ TEST(push_input_stream)
     TEST_EXPECT(!ctx.error);
 
     /* precondition: push_input_stream_called is false. */
-    TEST_ASSERT(!ctx.run_called);
+    TEST_ASSERT(!ctx.push_input_stream_called);
 
     /* call push_input_stream. */
     TEST_ASSERT(
