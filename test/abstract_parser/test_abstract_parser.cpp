@@ -8,13 +8,17 @@
  */
 
 #include <libcparse/abstract_parser.h>
+#include <libcparse/input_stream.h>
+#include <libcparse/message/raw_stack_scanner.h>
 #include <libcparse/message_handler.h>
 #include <libcparse/status_codes.h>
 #include <minunit/minunit.h>
 
 CPARSE_IMPORT_abstract_parser;
+CPARSE_IMPORT_input_stream;
 CPARSE_IMPORT_message;
 CPARSE_IMPORT_message_handler;
+CPARSE_IMPORT_message_raw_stack_scanner;
 
 TEST_SUITE(abstract_parser);
 
@@ -25,11 +29,13 @@ namespace
         bool run_called;
         bool push_input_stream_called;
         bool subscribe_called;
+        bool error;
 
         test_context()
             : run_called(false)
             , push_input_stream_called(false)
             , subscribe_called(false)
+            , error(false)
         {
         }
     };
@@ -37,7 +43,10 @@ namespace
 
 static int dummy_callback(void* context, const CPARSE_SYM(message)* msg)
 {
+    int retval;
     test_context* ctx = (test_context*)context;
+    input_stream* stream;
+    message_rss_add_input_stream* rimsg;
 
     switch (message_get_type(msg))
     {
@@ -51,6 +60,26 @@ static int dummy_callback(void* context, const CPARSE_SYM(message)* msg)
 
         case CPARSE_MESSAGE_TYPE_RSS_ADD_INPUT_STREAM:
             ctx->push_input_stream_called = true;
+            retval =
+                message_downcast_to_message_rss_add_input_stream(
+                    &rimsg, (message*)msg);
+            if (STATUS_SUCCESS != retval)
+            {
+                ctx->error = true;
+                break;
+            }
+            retval = message_rss_add_input_stream_xfer(&stream, rimsg);
+            if (STATUS_SUCCESS != retval)
+            {
+                ctx->error = true;
+                break;
+            }
+            retval = input_stream_release(stream);
+            if (STATUS_SUCCESS != retval)
+            {
+                ctx->error = true;
+                break;
+            }
             break;
 
         default:
@@ -96,14 +125,63 @@ TEST(run)
     /* initialize the abstract parser. */
     TEST_ASSERT(STATUS_SUCCESS == abstract_parser_init(&ap, &mh));
 
+    /* precondition: no errors encountered. */
+    TEST_EXPECT(!ctx.error);
+
     /* precondition: run_called is false. */
     TEST_ASSERT(!ctx.run_called);
 
     /* call run. */
     TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(&ap));
 
+    /* postcondition: no errors encountered. */
+    TEST_EXPECT(!ctx.error);
+
     /* postcondition: run_called is true. */
     TEST_EXPECT(ctx.run_called);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
+}
+
+/**
+ * Test that we can send an input stream to the parser.
+ */
+TEST(push_input_stream)
+{
+    abstract_parser ap;
+    test_context ctx;
+    message_handler mh;
+    input_stream* stream;
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == input_stream_create_from_string(&stream, "test"));
+
+    /* initialize the message handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == message_handler_init(&mh, &dummy_callback, &ctx));
+
+    /* initialize the abstract parser. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_init(&ap, &mh));
+
+    /* precondition: no errors encountered. */
+    TEST_EXPECT(!ctx.error);
+
+    /* precondition: push_input_stream_called is false. */
+    TEST_ASSERT(!ctx.run_called);
+
+    /* call push_input_stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(&ap, "test", stream));
+
+    /* postcondition: no errors encountered. */
+    TEST_EXPECT(!ctx.error);
+
+    /* postcondition: push_input_stream_called is true. */
+    TEST_EXPECT(ctx.push_input_stream_called);
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
