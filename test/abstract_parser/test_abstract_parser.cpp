@@ -13,21 +13,49 @@
 #include <minunit/minunit.h>
 
 CPARSE_IMPORT_abstract_parser;
+CPARSE_IMPORT_message;
 CPARSE_IMPORT_message_handler;
 
 TEST_SUITE(abstract_parser);
 
-struct test_context
+namespace
 {
-    bool run_called;
-    bool push_input_stream_called;
-    bool subscribe_called;
-};
+    struct test_context
+    {
+        bool run_called;
+        bool push_input_stream_called;
+        bool subscribe_called;
 
-static int dummy_callback(void* context, const CPARSE_SYM(message)* ev)
+        test_context()
+            : run_called(false)
+            , push_input_stream_called(false)
+            , subscribe_called(false)
+        {
+        }
+    };
+}
+
+static int dummy_callback(void* context, const CPARSE_SYM(message)* msg)
 {
-    (void)context;
-    (void)ev;
+    test_context* ctx = (test_context*)context;
+
+    switch (message_get_type(msg))
+    {
+        case CPARSE_MESSAGE_TYPE_RUN:
+            ctx->run_called = true;
+            break;
+
+        case CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE:
+            ctx->subscribe_called = true;
+            break;
+
+        case CPARSE_MESSAGE_TYPE_RSS_ADD_INPUT_STREAM:
+            ctx->push_input_stream_called = true;
+            break;
+
+        default:
+            break;
+    }
 
     return STATUS_SUCCESS;
 }
@@ -46,6 +74,36 @@ TEST(init_dispose)
 
     /* initialize the abstract parser. */
     TEST_ASSERT(STATUS_SUCCESS == abstract_parser_init(&ap, &mh));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
+}
+
+/**
+ * Test that run sends a run message to the message handler.
+ */
+TEST(run)
+{
+    abstract_parser ap;
+    test_context ctx;
+    message_handler mh;
+
+    /* initialize the message handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == message_handler_init(&mh, &dummy_callback, &ctx));
+
+    /* initialize the abstract parser. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_init(&ap, &mh));
+
+    /* precondition: run_called is false. */
+    TEST_ASSERT(!ctx.run_called);
+
+    /* call run. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(&ap));
+
+    /* postcondition: run_called is true. */
+    TEST_EXPECT(ctx.run_called);
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
