@@ -25,6 +25,17 @@ TEST_SUITE(abstract_parser);
 
 namespace
 {
+    struct test_context_override
+    {
+        bool override_called;
+        message_handler mh;
+
+        test_context_override()
+            : override_called(false)
+        {
+        }
+    };
+
     struct test_context
     {
         bool run_called;
@@ -47,6 +58,16 @@ static int dummy_event_callback(void* context, const CPARSE_SYM(event)* ev)
     (void)context;
     (void)ev;
     return STATUS_SUCCESS;
+}
+
+static int dummy_callback_override(
+    void* context, const CPARSE_SYM(message)* msg)
+{
+    test_context_override* over = (test_context_override*)context;
+
+    over->override_called = true;
+
+    return message_handler_send(&over->mh, msg);
 }
 
 static int dummy_callback(void* context, const CPARSE_SYM(message)* msg)
@@ -238,5 +259,66 @@ TEST(raw_stack_scanner_subscribe)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
     TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
+
+/**
+ * Test that we can override the message handler.
+ */
+TEST(message_handler_override)
+{
+    abstract_parser ap;
+    test_context ctx;
+    test_context_override octx;
+    message_handler mh, omh;
+    event_handler eh;
+
+    /* initialize the event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_handler_init(&eh, &dummy_event_callback, nullptr));
+
+    /* initialize the message handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == message_handler_init(&mh, &dummy_callback, &ctx));
+
+    /* initialize the override message handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == message_handler_init(&omh, &dummy_callback_override, &octx));
+
+    /* initialize the abstract parser. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_init(&ap, &mh));
+
+    /* override the message handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_message_handler_override(&octx.mh, &ap, &omh));
+
+    /* precondition: no errors encountered. */
+    TEST_EXPECT(!ctx.error);
+
+    /* precondition: override_called is false. */
+    TEST_ASSERT(!octx.override_called);
+
+    /* precondition: run_called is false. */
+    TEST_ASSERT(!ctx.run_called);
+
+    /* call run. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(&ap));
+
+    /* postcondition: no errors encountered. */
+    TEST_EXPECT(!ctx.error);
+
+    /* postcondition: override_called is true. */
+    TEST_EXPECT(octx.override_called);
+
+    /* postcondition: run_called is true. */
+    TEST_EXPECT(ctx.run_called);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&omh));
     TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
 }
