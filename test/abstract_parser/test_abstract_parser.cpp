@@ -15,6 +15,7 @@
 #include <minunit/minunit.h>
 
 CPARSE_IMPORT_abstract_parser;
+CPARSE_IMPORT_event_handler;
 CPARSE_IMPORT_input_stream;
 CPARSE_IMPORT_message;
 CPARSE_IMPORT_message_handler;
@@ -39,6 +40,13 @@ namespace
         {
         }
     };
+}
+
+static int dummy_event_callback(void* context, const CPARSE_SYM(event)* ev)
+{
+    (void)context;
+    (void)ev;
+    return STATUS_SUCCESS;
 }
 
 static int dummy_callback(void* context, const CPARSE_SYM(message)* msg)
@@ -186,4 +194,49 @@ TEST(push_input_stream)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
     TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
+}
+
+/**
+ * Test that we can subscribe to raw stack scanner events.
+ */
+TEST(raw_stack_scanner_subscribe)
+{
+    abstract_parser ap;
+    test_context ctx;
+    message_handler mh;
+    event_handler eh;
+
+    /* initialize the event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_handler_init(&eh, &dummy_event_callback, nullptr));
+
+    /* initialize the message handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == message_handler_init(&mh, &dummy_callback, &ctx));
+
+    /* initialize the abstract parser. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_init(&ap, &mh));
+
+    /* precondition: no errors encountered. */
+    TEST_EXPECT(!ctx.error);
+
+    /* precondition: subscribe_called is false. */
+    TEST_ASSERT(!ctx.subscribe_called);
+
+    /* call subscribe. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_raw_stack_scanner_subscribe(&ap, &eh));
+
+    /* postcondition: no errors encountered. */
+    TEST_EXPECT(!ctx.error);
+
+    /* postcondition: subscribe_called is true. */
+    TEST_EXPECT(ctx.subscribe_called);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
 }
