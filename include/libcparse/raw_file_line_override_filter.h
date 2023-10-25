@@ -27,6 +27,27 @@ extern "C" {
 typedef struct CPARSE_SYM(raw_file_line_override_filter)
 CPARSE_SYM(raw_file_line_override_filter);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a raw file/line override filter.
+ *
+ * This filter automatically creates a raw stack scanner and injects itself into
+ * the message chain for that scanner.
+ *
+ * \param filter            Pointer to the \ref raw_file_line_override_filter
+ *                          pointer to be populated with the created raw
+ *                          file/line override filter instance on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(raw_file_line_override_filter_create)(
+    CPARSE_SYM(raw_file_line_override_filter)** filter);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
