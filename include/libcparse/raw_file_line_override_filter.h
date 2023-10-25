@@ -48,6 +48,20 @@ CPARSE_SYM(raw_file_line_override_filter);
 int CPARSE_SYM(raw_file_line_override_filter_create)(
     CPARSE_SYM(raw_file_line_override_filter)** filter);
 
+/**
+ * \brief Release a raw file/line override filter, instance, releasing any
+ * internal resources it may own.
+ *
+ * \param filter            The \ref raw_file_line_override_filter instance to
+ *                          release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(raw_file_line_override_filter_release)(
+    CPARSE_SYM(raw_file_line_override_filter)* filter);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
