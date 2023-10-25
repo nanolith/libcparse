@@ -30,8 +30,17 @@ CPARSE_IMPORT_event_raw_character;
 CPARSE_IMPORT_input_stream;
 CPARSE_IMPORT_raw_stack_scanner;
 
+/* context structure. */
+typedef struct slowcat_context slowcat_context;
+
+struct slowcat_context
+{
+};
+
 /* forward decls. */
-int slowcat_read_byte(void* context, const event* ev);
+static int setup_parser(
+    abstract_parser* ap, slowcat_context* context, int argc, char* argv[]);
+static int slowcat_read_byte(void* context, const event* ev);
 
 /**
  * \brief Main entry point for slowcat.
@@ -43,29 +52,16 @@ int slowcat_read_byte(void* context, const event* ev);
  */
 int main(int argc, char* argv[])
 {
-    input_stream* stream = NULL;
     raw_stack_scanner* scanner = NULL;
     abstract_parser* ap = NULL;
     event_handler eh;
     int return_code = 0;
-    int ch, retval;
+    int retval;
     int desc = -1;
+    slowcat_context context;
 
-    /* parse flags. */
-    while ((ch = getopt(argc, argv, "")) != -1)
-    {
-        switch (ch)
-        {
-            default:
-                fprintf(stderr, "usage: %s [file ...]\n", getprogname());
-                return_code = 1;
-                goto done;
-        }
-    }
-
-    /* skip past flags. */
-    argc -= optind;
-    argv += optind;
+    /* clear context. */
+    memset(&context, 0, sizeof(context));
 
     /* create the raw stack scanner. */
     retval = raw_stack_scanner_create(&scanner);
@@ -78,73 +74,12 @@ int main(int argc, char* argv[])
     /* get the abstract parser for this scanner. */
     ap = raw_stack_scanner_upcast(scanner);
 
-    /* should we write stdin to stdout? */
-    if (0 == argc)
+    /* set up the parser with the input arguments. */
+    retval = setup_parser(ap, &context, argc, argv);
+    if (STATUS_SUCCESS != retval)
     {
-        /* turn stdin into a stream. */
-        retval = input_stream_create_from_descriptor(&stream, 0);
-        if (STATUS_SUCCESS != retval)
-        {
-            return_code = 1;
-            goto done;
-        }
-
-        /* push this stream to the scanner. */
-        retval = abstract_parser_push_input_stream(ap, "stdin", stream);
-        if (STATUS_SUCCESS != retval)
-        {
-            return_code = 1;
-            goto cleanup_stream;
-        }
-
-        /* the scanner now owns this stream. */
-        stream = NULL;
-    }
-    else
-    {
-        /* iterate backward through all remaining arguments. */
-        for (int i = argc; i > 0; --i)
-        {
-            const char* filename = argv[i - 1];
-
-            if (!strcmp(filename, "-"))
-            {
-                desc = 0;
-            }
-            else
-            {
-                /* attempt to open the filename. */
-                desc = open(filename, O_RDONLY);
-                if (desc < 0)
-                {
-                    fprintf(stderr, "Could not open %s\n", filename);
-                    return_code = 1;
-                    goto cleanup_scanner;
-                }
-            }
-
-            /* turn this descriptor into a stream. */
-            retval = input_stream_create_from_descriptor(&stream, desc);
-            if (STATUS_SUCCESS != retval)
-            {
-                return_code = 1;
-                goto close_desc;
-            }
-
-            /* the descriptor is now owned by the stream. */
-            desc = -1;
-
-            /* push this stream to the scanner. */
-            retval = abstract_parser_push_input_stream(ap, filename, stream);
-            if (STATUS_SUCCESS != retval)
-            {
-                return_code = 1;
-                goto cleanup_stream;
-            }
-
-            /* the scanner now owns this stream. */
-            stream = NULL;
-        }
+        return_code = 1;
+        goto cleanup_scanner;
     }
 
     /* initialize our event_handler for reading events from the scanner. */
@@ -178,22 +113,6 @@ int main(int argc, char* argv[])
     return_code = 0;
     goto cleanup_scanner;
 
-close_desc:
-    if (desc >= 0)
-    {
-        close(desc);
-    }
-
-cleanup_stream:
-    if (NULL != stream)
-    {
-        retval = input_stream_release(stream);
-        if (STATUS_SUCCESS != retval)
-        {
-            return_code = 1;
-        }
-    }
-
 cleanup_scanner:
     if (NULL != scanner)
     {
@@ -208,6 +127,125 @@ done:
     return return_code;
 }
 
+/**
+ * \brief Set up the parser using the arguments.
+ *
+ * \param ap                The parser to set up.
+ * \param context           The slowcat context.
+ * \param argc              The number of arguments.
+ * \param argv              The argument vector.
+ */
+static int setup_parser(
+    abstract_parser* ap, slowcat_context* context, int argc, char* argv[])
+{
+    int ch, retval, release_retval;
+    input_stream* stream = NULL;
+    int desc = -1;
+
+    /* parse flags. */
+    while ((ch = getopt(argc, argv, "")) != -1)
+    {
+        switch (ch)
+        {
+            default:
+                fprintf(stderr, "usage: %s [file ...]\n", getprogname());
+                retval = 1;
+                goto done;
+        }
+    }
+
+    /* skip past flags. */
+    argc -= optind;
+    argv += optind;
+
+    /* should we write stdin to stdout? */
+    if (0 == argc)
+    {
+        /* turn stdin into a stream. */
+        retval = input_stream_create_from_descriptor(&stream, 0);
+        if (STATUS_SUCCESS != retval)
+        {
+            goto done;
+        }
+
+        /* push this stream to the scanner. */
+        retval = abstract_parser_push_input_stream(ap, "stdin", stream);
+        if (STATUS_SUCCESS != retval)
+        {
+            goto cleanup_stream;
+        }
+
+        /* the scanner now owns this stream. */
+        stream = NULL;
+    }
+    else
+    {
+        /* iterate backward through all remaining arguments. */
+        for (int i = argc; i > 0; --i)
+        {
+            const char* filename = argv[i - 1];
+
+            if (!strcmp(filename, "-"))
+            {
+                desc = 0;
+            }
+            else
+            {
+                /* attempt to open the filename. */
+                desc = open(filename, O_RDONLY);
+                if (desc < 0)
+                {
+                    fprintf(stderr, "Could not open %s\n", filename);
+                    retval = 1;
+                    goto done;
+                }
+            }
+
+            /* turn this descriptor into a stream. */
+            retval = input_stream_create_from_descriptor(&stream, desc);
+            if (STATUS_SUCCESS != retval)
+            {
+                goto close_desc;
+            }
+
+            /* the descriptor is now owned by the stream. */
+            desc = -1;
+
+            /* push this stream to the scanner. */
+            retval = abstract_parser_push_input_stream(ap, filename, stream);
+            if (STATUS_SUCCESS != retval)
+            {
+                goto cleanup_stream;
+            }
+
+            /* the scanner now owns this stream. */
+            stream = NULL;
+        }
+    }
+
+    /* success. */
+    retval = STATUS_SUCCESS;
+    goto done;
+
+close_desc:
+    if (desc >= 0)
+    {
+        close(desc);
+    }
+
+cleanup_stream:
+    if (NULL != stream)
+    {
+        release_retval = input_stream_release(stream);
+        if (STATUS_SUCCESS != release_retval)
+        {
+            retval = release_retval;
+        }
+    }
+
+done:
+    return retval;
+}
 
 /**
  * \brief Scanner event callback.
@@ -215,7 +253,7 @@ done:
  * \param context           Not used by this callback.
  * \param ev                The event to process.
  */
-int slowcat_read_byte(void* context, const event* ev)
+static int slowcat_read_byte(void* context, const event* ev)
 {
     int retval;
     event_raw_character* rev;
