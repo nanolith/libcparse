@@ -89,6 +89,9 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(raw_file_line_override_filter_upcast)(
     static inline int sym ## raw_file_line_override_filter_create( \
         CPARSE_SYM(raw_file_line_override_filter)** x) { \
             return CPARSE_SYM(raw_file_line_override_filter_create)(x); } \
+    static inline int sym ## raw_file_line_override_filter_release( \
+        CPARSE_SYM(raw_file_line_override_filter)* x) { \
+            return CPARSE_SYM(raw_file_line_override_filter_release)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_raw_file_line_override_filter_as(sym) \
