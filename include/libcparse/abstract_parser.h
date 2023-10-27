@@ -137,6 +137,20 @@ int
 CPARSE_SYM(abstract_parser_raw_stack_scanner_subscribe)(
     CPARSE_SYM(abstract_parser)* ap, CPARSE_SYM(event_handler)* eh);
 
+/**
+ * \brief Subscribe to \ref raw_file_line_override_filter events.
+ *
+ * \param ap                The \ref abstract_parser for this operation.
+ * \param eh                The event handler to add to the subscription list.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int
+CPARSE_SYM(abstract_parser_raw_file_line_overide_filter_subscribe)(
+    CPARSE_SYM(abstract_parser)* ap, CPARSE_SYM(event_handler)* eh);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
