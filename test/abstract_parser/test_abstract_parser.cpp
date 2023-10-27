@@ -41,12 +41,14 @@ namespace
         bool run_called;
         bool push_input_stream_called;
         bool rss_subscribe_called;
+        bool rflo_subscribe_called;
         bool error;
 
         test_context()
             : run_called(false)
             , push_input_stream_called(false)
             , rss_subscribe_called(false)
+            , rflo_subscribe_called(false)
             , error(false)
         {
         }
@@ -85,6 +87,10 @@ static int dummy_callback(void* context, const CPARSE_SYM(message)* msg)
 
         case CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE:
             ctx->rss_subscribe_called = true;
+            break;
+
+        case CPARSE_MESSAGE_TYPE_RFLO_SUBSCRIBE:
+            ctx->rflo_subscribe_called = true;
             break;
 
         case CPARSE_MESSAGE_TYPE_RSS_ADD_INPUT_STREAM:
@@ -255,6 +261,52 @@ TEST(raw_stack_scanner_subscribe)
 
     /* postcondition: rss_subscribe_called is true. */
     TEST_EXPECT(ctx.rss_subscribe_called);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
+
+/**
+ * Test that we can subscribe to raw file/line override filter events.
+ */
+TEST(raw_file_line_override_filter_subscribe)
+{
+    abstract_parser ap;
+    test_context ctx;
+    message_handler mh;
+    event_handler eh;
+
+    /* initialize the event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_handler_init(&eh, &dummy_event_callback, nullptr));
+
+    /* initialize the message handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == message_handler_init(&mh, &dummy_callback, &ctx));
+
+    /* initialize the abstract parser. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_init(&ap, &mh));
+
+    /* precondition: no errors encountered. */
+    TEST_EXPECT(!ctx.error);
+
+    /* precondition: rflo_subscribe_called is false. */
+    TEST_ASSERT(!ctx.rflo_subscribe_called);
+
+    /* call subscribe. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_raw_file_line_override_filter_subscribe(
+                    &ap, &eh));
+
+    /* postcondition: no errors encountered. */
+    TEST_EXPECT(!ctx.error);
+
+    /* postcondition: rflo_subscribe_called is true. */
+    TEST_EXPECT(ctx.rflo_subscribe_called);
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
