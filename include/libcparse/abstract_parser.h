@@ -148,7 +148,7 @@ CPARSE_SYM(abstract_parser_raw_stack_scanner_subscribe)(
  *      - a non-zero error code on failure.
  */
 int
-CPARSE_SYM(abstract_parser_raw_file_line_overide_filter_subscribe)(
+CPARSE_SYM(abstract_parser_raw_file_line_override_filter_subscribe)(
     CPARSE_SYM(abstract_parser)* ap, CPARSE_SYM(event_handler)* eh);
 
 /******************************************************************************/
@@ -185,11 +185,11 @@ CPARSE_SYM(abstract_parser_raw_file_line_overide_filter_subscribe)(
                 CPARSE_SYM(abstract_parser_raw_stack_scanner_subscribe)( \
                     x,y); } \
     static inline int \
-    sym ## abstract_parser_raw_file_line_overide_filter_subscribe( \
+    sym ## abstract_parser_raw_file_line_override_filter_subscribe( \
         CPARSE_SYM(abstract_parser)* x, CPARSE_SYM(event_handler)* y) { \
             return \
                 CPARSE_SYM( \
-                    abstract_parser_raw_file_line_overide_filter_subscribe)( \
+                    abstract_parser_raw_file_line_override_filter_subscribe)( \
                     x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
