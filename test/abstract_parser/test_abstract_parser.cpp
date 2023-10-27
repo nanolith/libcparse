@@ -40,13 +40,13 @@ namespace
     {
         bool run_called;
         bool push_input_stream_called;
-        bool subscribe_called;
+        bool rss_subscribe_called;
         bool error;
 
         test_context()
             : run_called(false)
             , push_input_stream_called(false)
-            , subscribe_called(false)
+            , rss_subscribe_called(false)
             , error(false)
         {
         }
@@ -84,7 +84,7 @@ static int dummy_callback(void* context, const CPARSE_SYM(message)* msg)
             break;
 
         case CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE:
-            ctx->subscribe_called = true;
+            ctx->rss_subscribe_called = true;
             break;
 
         case CPARSE_MESSAGE_TYPE_RSS_ADD_INPUT_STREAM:
@@ -242,8 +242,8 @@ TEST(raw_stack_scanner_subscribe)
     /* precondition: no errors encountered. */
     TEST_EXPECT(!ctx.error);
 
-    /* precondition: subscribe_called is false. */
-    TEST_ASSERT(!ctx.subscribe_called);
+    /* precondition: rss_subscribe_called is false. */
+    TEST_ASSERT(!ctx.rss_subscribe_called);
 
     /* call subscribe. */
     TEST_ASSERT(
@@ -253,8 +253,8 @@ TEST(raw_stack_scanner_subscribe)
     /* postcondition: no errors encountered. */
     TEST_EXPECT(!ctx.error);
 
-    /* postcondition: subscribe_called is true. */
-    TEST_EXPECT(ctx.subscribe_called);
+    /* postcondition: rss_subscribe_called is true. */
+    TEST_EXPECT(ctx.rss_subscribe_called);
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == abstract_parser_dispose(&ap));
