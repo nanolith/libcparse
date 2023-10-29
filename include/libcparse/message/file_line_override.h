@@ -25,6 +25,27 @@ extern "C" {
 typedef struct CPARSE_SYM(message_file_line_override)
 CPARSE_SYM(message_file_line_override);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Initialize a \ref message_file_line_override instance.
+ *
+ * \param msg               The message to initialize.
+ * \param msg_type          The type of file/line override message.
+ * \param file              The new name of the file, which is optional and can
+ *                          be NULL if unchanged.
+ * \param line              The line to override.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_file_line_override_init)(
+    CPARSE_SYM(message_file_line_override)* msg, int msg_type,
+    const char* file, unsigned int line);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
