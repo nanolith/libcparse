@@ -130,7 +130,7 @@ CPARSE_SYM(message)* CPARSE_SYM(message_file_line_override_upcast)(
     static inline const char* sym ## message_file_line_override_file_get( \
         const CPARSE_SYM(message_file_line_override)* x) { \
             return CPARSE_SYM(message_file_line_override_file_get)(x); } \
-    static inline int sym ## message_file_line_override_line_get( \
+    static inline unsigned int sym ## message_file_line_override_line_get( \
         const CPARSE_SYM(message_file_line_override)* x) { \
             return CPARSE_SYM(message_file_line_override_line_get)(x); } \
     CPARSE_END_EXPORT \
