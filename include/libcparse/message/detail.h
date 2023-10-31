@@ -44,6 +44,13 @@ struct CPARSE_SYM(message_run)
     CPARSE_SYM(message) hdr;
 };
 
+struct CPARSE_SYM(message_file_line_override)
+{
+    CPARSE_SYM(message) hdr;
+    char* file;
+    unsigned int line;
+};
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
