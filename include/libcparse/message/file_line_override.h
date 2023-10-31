@@ -74,6 +74,18 @@ const char*
 CPARSE_SYM(message_file_line_override_file_get)(
     const CPARSE_SYM(message_file_line_override)* msg);
 
+/**
+ * \brief Get the \ref line associated with a \ref message_file_line_override
+ * instance.
+ *
+ * \param msg               The message to query.
+ *
+ * \returns the \ref line associated with this message.
+ */
+unsigned int
+CPARSE_SYM(message_file_line_override_line_get)(
+    const CPARSE_SYM(message_file_line_override)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
