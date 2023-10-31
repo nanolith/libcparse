@@ -102,6 +102,16 @@ CPARSE_SYM(message_file_line_override_line_get)(
 int CPARSE_SYM(message_downcast_to_message_file_line_override)(
     CPARSE_SYM(message_file_line_override)** flo_msg, CPARSE_SYM(message)* msg);
 
+/**
+ * \brief Upcast a \ref message_file_line_override to a \ref message.
+ *
+ * \param msg               The \ref message_file_line_override to upcast.
+ *
+ * \returns the \ref message instance for this message.
+ */
+CPARSE_SYM(message)* CPARSE_SYM(message_file_line_override_upcast)(
+    CPARSE_SYM(message_file_line_override)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
