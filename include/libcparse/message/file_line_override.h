@@ -86,6 +86,22 @@ unsigned int
 CPARSE_SYM(message_file_line_override_line_get)(
     const CPARSE_SYM(message_file_line_override)* msg);
 
+/**
+ * \brief Attempt to downcast a \ref message to a
+ * \ref message_file_line_override.
+ *
+ * \param flo_msg           Pointer to the message pointer to receive the
+ *                          downcast instance on success.
+ * \param msg               The \ref message pointer to attempt to downcast to
+ *                          the derived type.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_downcast_to_message_file_line_override)(
+    CPARSE_SYM(message_file_line_override)** flo_msg, CPARSE_SYM(message)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
