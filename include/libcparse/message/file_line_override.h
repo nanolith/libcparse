@@ -58,6 +58,22 @@ int CPARSE_SYM(message_file_line_override_init)(
 int CPARSE_SYM(message_file_line_override_dispose)(
     CPARSE_SYM(message_file_line_override)* msg);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the \ref file associated with a \ref message_file_line_override
+ * instance.
+ *
+ * \param msg               The message to query.
+ *
+ * \returns the \ref file associated with this message or NULL if unset.
+ */
+const char*
+CPARSE_SYM(message_file_line_override_file_get)(
+    const CPARSE_SYM(message_file_line_override)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
