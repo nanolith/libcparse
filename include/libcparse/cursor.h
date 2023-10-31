@@ -24,10 +24,10 @@ typedef struct CPARSE_SYM(cursor) CPARSE_SYM(cursor);
 struct CPARSE_SYM(cursor)
 {
     const char* file;
-    int begin_line;
-    int begin_col;
-    int end_line;
-    int end_col;
+    unsigned int begin_line;
+    unsigned int begin_col;
+    unsigned int end_line;
+    unsigned int end_col;
 };
 
 /******************************************************************************/
