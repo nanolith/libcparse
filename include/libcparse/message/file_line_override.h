@@ -127,6 +127,9 @@ CPARSE_SYM(message)* CPARSE_SYM(message_file_line_override_upcast)(
     static inline int sym ## message_file_line_override_dispose( \
         CPARSE_SYM(message_file_line_override)* x) { \
             return CPARSE_SYM(message_file_line_override_dispose)(x); } \
+    static inline const char* sym ## message_file_line_override_file_get( \
+        const CPARSE_SYM(message_file_line_override)* x) { \
+            return CPARSE_SYM(message_file_line_override_file_get)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_message_file_line_override_as(sym) \
