@@ -8,7 +8,6 @@
  */
 
 #include <libcparse/message/file_line_override.h>
-#include <libcparse/status_codes.h>
 
 /**
  * \brief Get the \ref file associated with a \ref message_file_line_override
