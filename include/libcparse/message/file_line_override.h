@@ -112,6 +112,21 @@ int CPARSE_SYM(message_downcast_to_message_file_line_override)(
 CPARSE_SYM(message)* CPARSE_SYM(message_file_line_override_upcast)(
     CPARSE_SYM(message_file_line_override)* msg);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_message_file_line_override_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(message_file_line_override) \
+    sym ## message_file_line_override; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_message_file_line_override_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_message_file_line_override_sym(sym ## _)
+#define CPARSE_IMPORT_message_file_line_override \
+    __INTERNAL_CPARSE_IMPORT_message_file_line_override_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
