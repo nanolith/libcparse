@@ -11,7 +11,6 @@
 #include <libcparse/status_codes.h>
 #include <string.h>
 
-CPARSE_IMPORT_event_handler;
 CPARSE_IMPORT_message;
 
 /**
