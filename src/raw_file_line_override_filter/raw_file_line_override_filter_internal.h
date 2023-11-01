@@ -21,9 +21,9 @@ extern "C" {
 # endif /*__cplusplus*/
 
 typedef struct CPARSE_SYM(raw_file_line_override_filter)
-CPARSE_SYM(file_line_override_filter);
+CPARSE_SYM(raw_file_line_override_filter);
 
-struct CPARSE_SYM(file_line_override_filter)
+struct CPARSE_SYM(raw_file_line_override_filter)
 {
     CPARSE_SYM(raw_stack_scanner)* parent;
     CPARSE_SYM(event_reactor)* reactor;
