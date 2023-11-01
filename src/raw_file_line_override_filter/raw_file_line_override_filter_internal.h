@@ -27,6 +27,7 @@ struct CPARSE_SYM(file_line_override_filter)
 {
     CPARSE_SYM(raw_stack_scanner)* parent;
     CPARSE_SYM(event_reactor)* reactor;
+    CPARSE_SYM(message_handler) parent_mh;
     bool use_pos;
     CPARSE_SYM(cursor) pos;
 };
