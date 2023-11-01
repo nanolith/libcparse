@@ -209,6 +209,9 @@ CPARSE_SYM(abstract_parser_file_line_override)(
                 CPARSE_SYM( \
                     abstract_parser_raw_file_line_override_filter_subscribe)( \
                     x,y); } \
+    static inline int sym ## abstract_parser_file_line_override( \
+        CPARSE_SYM(abstract_parser)* x, unsigned int y, const char* z) { \
+            return CPARSE_SYM(abstract_parser_file_line_override)(x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_abstract_parser_as(sym) \
