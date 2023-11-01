@@ -151,6 +151,24 @@ int
 CPARSE_SYM(abstract_parser_raw_file_line_override_filter_subscribe)(
     CPARSE_SYM(abstract_parser)* ap, CPARSE_SYM(event_handler)* eh);
 
+/**
+ * \brief Override the line number and file name in the file / line override
+ * filter.
+ *
+ * \note This operation also overrides the column number, setting it to 1.
+ *
+ * \param ap                The \ref abstract_parser for this operation.
+ * \param line              The new line number.
+ * \param file              The new file name, or NULL to keep it the same.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int
+CPARSE_SYM(abstract_parser_file_line_override)(
+    CPARSE_SYM(abstract_parser)* ap, unsigned int line, const char* file);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
