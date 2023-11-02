@@ -78,7 +78,8 @@ TEST(event_handler_get)
 }
 
 /**
- *  Test that we can upcast and downcast this message.
+ *  Test that we can upcast and downcast a CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE
+ *  message.
  */
 TEST(upcast_downcast_CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE)
 {
