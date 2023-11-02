@@ -22,6 +22,7 @@ bool CPARSE_SYM(message_type_valid_subscription_type)(int msg_type)
     {
         /* valid message types. */
         case CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE:
+        case CPARSE_MESSAGE_TYPE_RFLO_SUBSCRIBE:
             return true;
 
         default:
