@@ -31,6 +31,7 @@ struct CPARSE_SYM(raw_file_line_override_filter)
     CPARSE_SYM(message_handler) parent_mh;
     bool use_pos;
     CPARSE_SYM(cursor) pos;
+    char* file;
 };
 
 /******************************************************************************/
