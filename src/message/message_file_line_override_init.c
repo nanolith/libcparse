@@ -42,12 +42,15 @@ int CPARSE_SYM(message_file_line_override_init)(
         goto done;
     }
 
-    /* copy the file. */
-    msg->file = strdup(file);
-    if (NULL == msg->file)
+    /* copy the file, if set. */
+    if (NULL != file)
     {
-        retval = ERROR_LIBCPARSE_OUT_OF_MEMORY;
-        goto cleanup_msg;
+        msg->file = strdup(file);
+        if (NULL == msg->file)
+        {
+            retval = ERROR_LIBCPARSE_OUT_OF_MEMORY;
+            goto cleanup_msg;
+        }
     }
 
     /* copy the other fields. */
