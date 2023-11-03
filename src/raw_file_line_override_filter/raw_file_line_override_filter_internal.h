@@ -75,6 +75,11 @@ int CPARSE_SYM(raw_file_line_override_filter_event_callback)(
             return \
                 CPARSE_SYM(raw_file_line_override_filter_message_callback)( \
                     x,y); } \
+    static inline int sym ## raw_file_line_override_filter_event_callback( \
+        void* x, const CPARSE_SYM(event)* y) { \
+            return \
+                CPARSE_SYM(raw_file_line_override_filter_event_callback)( \
+                    x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_raw_file_line_override_filter_internal_as(sym) \
