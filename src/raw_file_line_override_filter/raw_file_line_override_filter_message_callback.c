@@ -20,6 +20,7 @@
 CPARSE_IMPORT_event_handler;
 CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_message;
+CPARSE_IMPORT_message_handler;
 CPARSE_IMPORT_message_subscription;
 CPARSE_IMPORT_raw_file_line_override_filter;
 
@@ -46,9 +47,10 @@ int CPARSE_SYM(raw_file_line_override_filter_message_callback)(
     {
         case CPARSE_MESSAGE_TYPE_RFLO_SUBSCRIBE:
             return subscribe(filter, msg);
-    }
 
-    return ERROR_LIBCPARSE_UNHANDLED_MESSAGE;
+        default:
+            return message_handler_send(&filter->parent_mh, msg);
+    }
 }
 
 /**
