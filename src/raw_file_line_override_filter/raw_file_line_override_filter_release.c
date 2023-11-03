@@ -54,6 +54,13 @@ int CPARSE_SYM(raw_file_line_override_filter_release)(
     /* dispose the parent message handler. */
     mh_dispose_retval = message_handler_dispose(&filter->parent_mh);
 
+    /* free the file if set. */
+    if (NULL != filter->file)
+    {
+        memset(filter->file, 0, strlen(filter->file));
+        free(filter->file);
+    }
+
     /* clear the filter. */
     memset(filter, 0, sizeof(*filter));
 
