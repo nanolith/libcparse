@@ -13,9 +13,11 @@
 #include <libcparse/event_reactor.h>
 #include <libcparse/raw_file_line_override_filter.h>
 #include <libcparse/status_codes.h>
+#include <string.h>
 
 #include "raw_file_line_override_filter_internal.h"
 
+CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_raw_character;
 CPARSE_IMPORT_event_reactor;
@@ -23,6 +25,7 @@ CPARSE_IMPORT_raw_file_line_override_filter;
 
 static int broadcast_char_event(
     raw_file_line_override_filter* filter, const event* ev);
+static void update_cursor(cursor* pos, int ch);
 
 /**
  * \brief Event handler callback for \ref raw_file_line_override_filter.
@@ -67,8 +70,10 @@ int CPARSE_SYM(raw_file_line_override_filter_event_callback)(
 static int broadcast_char_event(
     raw_file_line_override_filter* filter, const event* ev)
 {
-    int retval;
+    int retval, release_retval;
     event_raw_character* rev;
+    event_raw_character newrev;
+    cursor pos;
 
     /* dynamic cast the message. */
     retval = event_downcast_to_event_raw_character(&rev, (event*)ev);
@@ -77,20 +82,85 @@ static int broadcast_char_event(
         goto done;
     }
 
-    /* TODO - initialize a local raw character event so we can override the
-     * cursor position.
-     */
+    const cursor* ev_pos = event_get_cursor(ev);
+    int ch = event_raw_character_get(rev);
 
-    /* broadcast this event to all subscribers. */
-    retval = event_reactor_broadcast(filter->reactor, ev);
+    /* override the file and line. */
+    if (filter->use_pos)
+    {
+        /* copy our override position. */
+        memcpy(&pos, &filter->pos, sizeof(pos));
+
+        /* set the file if not overridden. */
+        if (NULL == pos.file)
+        {
+            pos.file = ev_pos->file;
+        }
+
+        /* update our position. */
+        update_cursor(&filter->pos, ch);
+    }
+    /* use the original position. */
+    else
+    {
+        /* copy the position from the event. */
+        memcpy(&pos, ev_pos, sizeof(pos));
+    }
+
+    /* initialize our override event. */
+    retval =
+        event_raw_character_init(
+            &newrev, CPARSE_EVENT_TYPE_RAW_CHARACTER, &pos, ch);
     if (STATUS_SUCCESS != retval)
     {
-        goto done;
+        goto cleanup_pos;
+    }
+
+    /* broadcast this event to all subscribers. */
+    retval =
+        event_reactor_broadcast(
+            filter->reactor, event_raw_character_upcast(&newrev));
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_newrev;
     }
 
     /* success. */
-    goto done;
+    goto cleanup_newrev;
+
+cleanup_pos:
+    memset(&pos, 0, sizeof(pos));
+
+cleanup_newrev:
+    release_retval = event_raw_character_dispose(&newrev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
 
 done:
     return retval;
+}
+
+/**
+ * \brief Update a cursor with the given character.
+ *
+ * \param pos               The cursor to update.
+ * \param ch                The character to use to update this cursor.
+ */
+static void update_cursor(cursor* pos, int ch)
+{
+    switch (ch)
+    {
+        case '\n':
+            pos->begin_line += 1;
+            pos->end_line = pos->begin_line;
+            pos->begin_col = pos->end_col = 1;
+            break;
+
+        default:
+            pos->begin_col += 1;
+            pos->end_col = pos->begin_col;
+            break;
+    }
 }
