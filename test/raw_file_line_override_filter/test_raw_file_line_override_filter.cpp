@@ -265,3 +265,77 @@ TEST(line_override)
         STATUS_SUCCESS == raw_file_line_override_filter_release(filter));
     TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
 }
+
+/**
+ * Test that we can override the file and line.
+ */
+TEST(file_line_override)
+{
+    raw_file_line_override_filter* filter;
+    input_stream* stream;
+    event_handler eh;
+    test_context t1;
+    const char* TEST_STRING = "abc 123";
+    const unsigned int TEST_LINE = 10;
+    const char* TEST_FILE = "foo.txt";
+
+    /* create the raw_file_line_override_filter. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == raw_file_line_override_filter_create(&filter));
+
+    /* create our event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = raw_file_line_override_filter_upcast(filter);
+
+    /* subscribe to the rflo. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_raw_file_line_override_filter_subscribe(
+                    ap, &eh));
+
+    /* create our input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, TEST_STRING));
+
+    /* add our input stream to the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "stdin", stream));
+
+    /* override the line for the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_file_line_override(ap, TEST_LINE, TEST_FILE));
+
+    /* precondition: eof is false. */
+    TEST_ASSERT(!t1.eof);
+
+    /* precondition: vals is empty. */
+    TEST_ASSERT(t1.vals.empty());
+
+    /* run the scanner. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(ap));
+
+    /* postcondition: eof is true. */
+    TEST_EXPECT(t1.eof);
+
+    /* postcondition: vals is not empty. */
+    TEST_EXPECT(!t1.vals.empty());
+
+    /* postcondition: vals matches our string. */
+    string out(t1.vals.begin(), t1.vals.end());
+    TEST_EXPECT(out == TEST_STRING);
+
+    /* postcondition: the file and line of the position has been updated. */
+    TEST_EXPECT(TEST_LINE == t1.pos.begin_line);
+    TEST_EXPECT(!strcmp(t1.pos.file, TEST_FILE));
+
+    /* clean up. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == raw_file_line_override_filter_release(filter));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
