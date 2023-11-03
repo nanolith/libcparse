@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <libcparse/event_handler.h>
 #include <libcparse/raw_stack_scanner.h>
 #include <libcparse/cursor.h>
 #include <libcparse/event_reactor_fwd.h>
@@ -49,6 +50,20 @@ struct CPARSE_SYM(raw_file_line_override_filter)
  */
 int CPARSE_SYM(raw_file_line_override_filter_message_callback)(
     void* context, const CPARSE_SYM(message)* msg);
+
+/**
+ * \brief Event handler callback for \ref raw_file_line_override_filter.
+ *
+ * \param context           The context for this handler (the
+ *                          \ref raw_file_line_override_filter instance).
+ * \param ev                A message for this handler.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(raw_file_line_override_filter_event_callback)(
+    void* context, const CPARSE_SYM(event)* ev);
 
 /******************************************************************************/
 /* Start of public exports.                                                   */
