@@ -11,20 +11,25 @@
 #include <libcparse/event_handler.h>
 #include <libcparse/event_reactor.h>
 #include <libcparse/message.h>
+#include <libcparse/message/file_line_override.h>
 #include <libcparse/message/subscription.h>
 #include <libcparse/raw_file_line_override_filter.h>
 #include <libcparse/status_codes.h>
+#include <stddef.h>
 
 #include "raw_file_line_override_filter_internal.h"
 
 CPARSE_IMPORT_event_handler;
 CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_message;
+CPARSE_IMPORT_message_file_line_override;
 CPARSE_IMPORT_message_handler;
 CPARSE_IMPORT_message_subscription;
 CPARSE_IMPORT_raw_file_line_override_filter;
 
 static int subscribe(raw_file_line_override_filter* filter, const message* msg);
+static int file_line_override(
+    raw_file_line_override_filter* filter, const message* msg);
 
 /**
  * \brief Message handler callback for \ref raw_file_line_override_filter.
@@ -47,6 +52,9 @@ int CPARSE_SYM(raw_file_line_override_filter_message_callback)(
     {
         case CPARSE_MESSAGE_TYPE_RFLO_SUBSCRIBE:
             return subscribe(filter, msg);
+
+        case CPARSE_MESSAGE_TYPE_RFLO_FILE_LINE_OVERRIDE:
+            return file_line_override(filter, msg);
 
         default:
             return message_handler_send(&filter->parent_mh, msg);
@@ -85,6 +93,46 @@ static int subscribe(raw_file_line_override_filter* filter, const message* msg)
     {
         goto done;
     }
+
+    /* success. */
+    retval = STATUS_SUCCESS;
+    goto done;
+
+done:
+    return retval;
+}
+
+/**
+ * \brief Override the file and line for this filter.
+ *
+ * \param filter            The filter for this operation.
+ * \param msg               The message for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int file_line_override(
+    raw_file_line_override_filter* filter, const message* msg)
+{
+    int retval;
+    message_file_line_override* m;
+
+    /* dynamic cast the message. */
+    retval = message_downcast_to_message_file_line_override(&m, (message*)msg);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* get the line for this message. */
+    unsigned int line = message_file_line_override_line_get(m);
+
+    /* override this entry. */
+    filter->use_pos = true;
+    filter->pos.file = NULL; /* TODO - override with file if set. */
+    filter->pos.begin_line = filter->pos.end_line = line;
+    filter->pos.begin_col = filter->pos.end_col = 1;
 
     /* success. */
     retval = STATUS_SUCCESS;
