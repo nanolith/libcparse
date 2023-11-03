@@ -9,6 +9,7 @@
  */
 
 #include <libcparse/abstract_parser.h>
+#include <libcparse/event_handler.h>
 #include <libcparse/event_reactor.h>
 #include <libcparse/message_handler.h>
 #include <libcparse/raw_file_line_override_filter.h>
@@ -19,6 +20,7 @@
 #include "raw_file_line_override_filter_internal.h"
 
 CPARSE_IMPORT_abstract_parser;
+CPARSE_IMPORT_event_handler;
 CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_message_handler;
 CPARSE_IMPORT_raw_file_line_override_filter;
@@ -45,6 +47,7 @@ int CPARSE_SYM(raw_file_line_override_filter_create)(
     int retval, release_retval;
     raw_file_line_override_filter* tmp;
     message_handler mh;
+    event_handler eh;
 
     /* allocate memory for this instance. */
     tmp = (raw_file_line_override_filter*)malloc(sizeof(*tmp));
@@ -83,11 +86,27 @@ int CPARSE_SYM(raw_file_line_override_filter_create)(
         goto cleanup_tmp;
     }
 
+    /* initialize our event handler. */
+    retval =
+        event_handler_init(
+            &eh, &raw_file_line_override_filter_event_callback, tmp);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_mh;
+    }
+
     /* override the raw stack scanner's message handler with our own. */
     retval = abstract_parser_message_handler_override(&tmp->parent_mh, ap, &mh);
     if (STATUS_SUCCESS != retval)
     {
-        goto cleanup_mh;
+        goto cleanup_eh;
+    }
+
+    /* subscribe to the raw stack scanner. */
+    retval = abstract_parser_raw_stack_scanner_subscribe(ap, &eh);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_eh;
     }
 
     /* by default, we do not override the position. */
@@ -97,7 +116,14 @@ int CPARSE_SYM(raw_file_line_override_filter_create)(
     retval = STATUS_SUCCESS;
     *filter = tmp;
     tmp = NULL;
-    goto cleanup_mh;
+    goto cleanup_eh;
+
+cleanup_eh:
+    release_retval = event_handler_dispose(&eh);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
 
 cleanup_mh:
     release_retval = message_handler_dispose(&mh);
