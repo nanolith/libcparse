@@ -7,7 +7,14 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <libcparse/comment_scanner.h>
+#include <libcparse/event.h>
+#include <libcparse/status_codes.h>
+
 #include "comment_scanner_internal.h"
+
+CPARSE_IMPORT_comment_scanner;
+CPARSE_IMPORT_event;
 
 /**
  * \brief Event handler callback for \ref comment_scanner.
@@ -24,7 +31,10 @@ int CPARSE_SYM(comment_scanner_event_callback)(
     void* context, const CPARSE_SYM(event)* ev)
 {
     (void)context;
-    (void)ev;
 
-    return -1;
+    switch (event_get_type(ev))
+    {
+        default:
+            return STATUS_SUCCESS;
+    }
 }
