@@ -57,7 +57,7 @@ int CPARSE_SYM(raw_file_line_override_filter_message_callback)(
  *
  * \param context           The context for this handler (the
  *                          \ref raw_file_line_override_filter instance).
- * \param ev                A message for this handler.
+ * \param ev                An event for this handler.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
