@@ -41,6 +41,24 @@ enum CPARSE_SYM(comment_scanner_state)
     CPARSE_COMMENT_SCANNER_IN_STRING_BACKSLASH =                 8,
 };
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Message handler callback for \ref comment_scanner.
+ *
+ * \param context           The context for this handler (the
+ *                          \ref comment_scanner instance).
+ * \param msg               A message for this handler.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(comment_scanner_message_callback)(
+    void* context, const CPARSE_SYM(message)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
