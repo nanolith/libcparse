@@ -22,7 +22,7 @@ CPARSE_IMPORT_message_handler;
 CPARSE_IMPORT_raw_stack_scanner;
 
 /**
- * \brief Release a raw file/line override filter, instance, releasing any
+ * \brief Release a raw file/line override filter instance, releasing any
  * internal resources it may own.
  *
  * \param filter            The \ref raw_file_line_override_filter instance to
