@@ -35,6 +35,7 @@ enum CPARSE_SYM(comment_scanner_state)
     CPARSE_COMMENT_SCANNER_IN_BLOCK_COMMENT =                    2,
     CPARSE_COMMENT_SCANNER_IN_BLOCK_COMMENT_STAR =               3,
     CPARSE_COMMENT_SCANNER_IN_LINE_COMMENT =                     4,
+    CPARSE_COMMENT_SCANNER_IN_CHAR_SEQUENCE =                    5,
 };
 
 /* C++ compatibility. */
