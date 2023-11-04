@@ -28,6 +28,11 @@ struct CPARSE_SYM(comment_scanner)
     int state;
 };
 
+enum CPARSE_SYM(comment_scanner_state)
+{
+    CPARSE_COMMENT_SCANNER_STATE_INIT =                          0,
+};
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
