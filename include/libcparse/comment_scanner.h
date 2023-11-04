@@ -46,6 +46,26 @@ extern "C" {
 typedef struct CPARSE_SYM(comment_scanner)
 CPARSE_SYM(comment_scanner);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a comment scanner.
+ *
+ * This filter automatically creates a file / line override filter and injects
+ * itself into the message chain for the parser stack.
+ *
+ * \param scanner           Pointer to the \ref comment_scanner pointer to be
+ *                          populated with the created comment scanner instance
+ *                          on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
