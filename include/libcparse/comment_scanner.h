@@ -103,6 +103,9 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(comment_scanner_upcast)(
     static inline int sym ## comment_scanner_create( \
         CPARSE_SYM(comment_scanner)** x) { \
             return CPARSE_SYM(comment_scanner_create)(x); } \
+    static inline int sym ## comment_scanner_release( \
+        CPARSE_SYM(comment_scanner)* x) { \
+            return CPARSE_SYM(comment_scanner_release)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_comment_scanner_as(sym) \
