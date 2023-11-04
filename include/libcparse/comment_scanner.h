@@ -66,6 +66,18 @@ CPARSE_SYM(comment_scanner);
  */
 int CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner);
 
+/**
+ * \brief Release a comment scanner instance, releasing any internal resources
+ * it may own.
+ *
+ * \param scanner           The \ref comment_scanner instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
