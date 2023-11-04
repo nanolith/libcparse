@@ -9,6 +9,7 @@
 
 #include <libcparse/comment_scanner.h>
 #include <libcparse/event.h>
+#include <libcparse/event/raw_character.h>
 #include <libcparse/event_reactor.h>
 #include <libcparse/status_codes.h>
 
@@ -16,7 +17,10 @@
 
 CPARSE_IMPORT_comment_scanner;
 CPARSE_IMPORT_event;
+CPARSE_IMPORT_event_raw_character;
 CPARSE_IMPORT_event_reactor;
+
+static int process_char_event(comment_scanner* scanner, const event* ev);
 
 /**
  * \brief Event handler callback for \ref comment_scanner.
@@ -39,7 +43,51 @@ int CPARSE_SYM(comment_scanner_event_callback)(
         case CPARSE_EVENT_TYPE_EOF:
             return event_reactor_broadcast(scanner->reactor, ev);
 
+        case CPARSE_EVENT_TYPE_RAW_CHARACTER:
+            return process_char_event(scanner, ev);
+
         default:
             return STATUS_SUCCESS;
     }
+}
+
+/**
+ * \brief Process a char event.
+ *
+ * \param scanner           The \ref comment_scanner for this operation.
+ * \param ev                The raw character event to process.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int process_char_event(comment_scanner* scanner, const event* ev)
+{
+    int retval;
+    event_raw_character* rev;
+
+    /* dynamic cast the message. */
+    retval = event_downcast_to_event_raw_character(&rev, (event*)ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* TODO - dispatch this message by state. */
+
+    /* broadcast this event to all subscribers. */
+    retval =
+        event_reactor_broadcast(
+            scanner->reactor, event_raw_character_upcast(rev));
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* success. */
+    retval = STATUS_SUCCESS;
+    goto done;
+
+done:
+    return retval;
 }
