@@ -31,6 +31,7 @@ struct CPARSE_SYM(comment_scanner)
 enum CPARSE_SYM(comment_scanner_state)
 {
     CPARSE_COMMENT_SCANNER_STATE_INIT =                          0,
+    CPARSE_COMMENT_SCANNER_SLASH =                               1,
 };
 
 /* C++ compatibility. */
