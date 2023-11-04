@@ -7,9 +7,13 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <libcparse/comment_scanner.h>
 #include <libcparse/status_codes.h>
 
 #include "comment_scanner_internal.h"
+
+CPARSE_IMPORT_comment_scanner;
+CPARSE_IMPORT_message_handler;
 
 /**
  * \brief Message handler callback for \ref comment_scanner.
@@ -25,8 +29,8 @@
 int CPARSE_SYM(comment_scanner_message_callback)(
     void* context, const CPARSE_SYM(message)* msg)
 {
-    (void)context;
-    (void)msg;
+    comment_scanner* scanner = (comment_scanner*)context;
 
-    return ERROR_LIBCPARSE_UNHANDLED_MESSAGE;
+    /* call the parent handler. */
+    return message_handler_send(&scanner->parent_mh, msg);
 }
