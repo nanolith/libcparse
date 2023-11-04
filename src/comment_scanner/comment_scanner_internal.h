@@ -31,14 +31,14 @@ struct CPARSE_SYM(comment_scanner)
 enum CPARSE_SYM(comment_scanner_state)
 {
     CPARSE_COMMENT_SCANNER_STATE_INIT =                          0,
-    CPARSE_COMMENT_SCANNER_SLASH =                               1,
-    CPARSE_COMMENT_SCANNER_IN_BLOCK_COMMENT =                    2,
-    CPARSE_COMMENT_SCANNER_IN_BLOCK_COMMENT_STAR =               3,
-    CPARSE_COMMENT_SCANNER_IN_LINE_COMMENT =                     4,
-    CPARSE_COMMENT_SCANNER_IN_CHAR_SEQUENCE =                    5,
-    CPARSE_COMMENT_SCANNER_IN_CHAR_SEQUENCE_BACKSLASH =          6,
-    CPARSE_COMMENT_SCANNER_IN_STRING =                           7,
-    CPARSE_COMMENT_SCANNER_IN_STRING_BACKSLASH =                 8,
+    CPARSE_COMMENT_SCANNER_STATE_SLASH =                         1,
+    CPARSE_COMMENT_SCANNER_STATE_IN_BLOCK_COMMENT =              2,
+    CPARSE_COMMENT_SCANNER_STATE_IN_BLOCK_COMMENT_STAR =         3,
+    CPARSE_COMMENT_SCANNER_STATE_IN_LINE_COMMENT =               4,
+    CPARSE_COMMENT_SCANNER_STATE_IN_CHAR_SEQUENCE =              5,
+    CPARSE_COMMENT_SCANNER_STATE_IN_CHAR_SEQUENCE_BACKSLASH =    6,
+    CPARSE_COMMENT_SCANNER_STATE_IN_STRING =                     7,
+    CPARSE_COMMENT_SCANNER_STATE_IN_STRING_BACKSLASH =           8,
 };
 
 /******************************************************************************/
