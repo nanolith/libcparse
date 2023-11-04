@@ -33,6 +33,7 @@
 
 #pragma once
 
+#include <libcparse/abstract_parser.h>
 #include <libcparse/function_decl.h>
 
 /* C++ compatibility. */
@@ -77,6 +78,20 @@ int CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner);
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner);
+
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the \ref abstract_parser interface for this scanner.
+ *
+ * \param scanner           The \ref comment_scanner instance to query.
+ *
+ * \returns the \ref abstract_parser interface for this scanner.
+ */
+CPARSE_SYM(abstract_parser)* CPARSE_SYM(comment_scanner_upcast)(
+    CPARSE_SYM(comment_scanner)* scanner);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
