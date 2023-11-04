@@ -38,6 +38,7 @@ enum CPARSE_SYM(comment_scanner_state)
     CPARSE_COMMENT_SCANNER_IN_CHAR_SEQUENCE =                    5,
     CPARSE_COMMENT_SCANNER_IN_CHAR_SEQUENCE_BACKSLASH =          6,
     CPARSE_COMMENT_SCANNER_IN_STRING =                           7,
+    CPARSE_COMMENT_SCANNER_IN_STRING_BACKSLASH =                 8,
 };
 
 /* C++ compatibility. */
