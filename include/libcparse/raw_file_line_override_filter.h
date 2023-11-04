@@ -50,7 +50,7 @@ int CPARSE_SYM(raw_file_line_override_filter_create)(
     CPARSE_SYM(raw_file_line_override_filter)** filter);
 
 /**
- * \brief Release a raw file/line override filter, instance, releasing any
+ * \brief Release a raw file/line override filter instance, releasing any
  * internal resources it may own.
  *
  * \param filter            The \ref raw_file_line_override_filter instance to
