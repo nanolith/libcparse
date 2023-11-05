@@ -34,7 +34,7 @@ int CPARSE_SYM(comment_scanner_cached_file_position_set)(
 
     /* duplicate the file to our cached file. */
     tmp = strdup(pos->file);
-    if (NULL == scanner->file)
+    if (NULL == tmp)
     {
         retval = ERROR_LIBCPARSE_OUT_OF_MEMORY;
         goto done;
