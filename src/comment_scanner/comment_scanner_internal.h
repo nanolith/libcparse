@@ -75,6 +75,18 @@ int CPARSE_SYM(comment_scanner_message_callback)(
 int CPARSE_SYM(comment_scanner_event_callback)(
     void* context, const CPARSE_SYM(event)* ev);
 
+/**
+ * \brief Clear and free cached file.
+ *
+ * \param scanner           The scanner for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(comment_scanner_cached_file_clear)(
+    CPARSE_SYM(comment_scanner)* scanner);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
