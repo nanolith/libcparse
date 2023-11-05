@@ -15,6 +15,7 @@
 
 #include "comment_scanner_internal.h"
 
+CPARSE_IMPORT_comment_scanner_internal;
 CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_message_handler;
 CPARSE_IMPORT_raw_file_line_override_filter;
@@ -33,6 +34,7 @@ int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner)
 {
     int parent_release_retval = STATUS_SUCCESS;
     int reactor_release_retval = STATUS_SUCCESS;
+    int cached_file_clear = STATUS_SUCCESS;
     int mh_dispose_retval = STATUS_SUCCESS;
 
     /* release the parent if valid. */
@@ -49,11 +51,7 @@ int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner)
     }
 
     /* clear the cached file name if set. */
-    if (NULL != scanner->file)
-    {
-        memset(scanner->file, 0, strlen(scanner->file));
-        free(scanner->file);
-    }
+    cached_file_clear = comment_scanner_cached_file_clear(scanner);
 
     /* dispose the parent message handler. */
     mh_dispose_retval = message_handler_dispose(&scanner->parent_mh);
@@ -72,6 +70,10 @@ int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner)
     else if (STATUS_SUCCESS != reactor_release_retval)
     {
         return reactor_release_retval;
+    }
+    else if (STATUS_SUCCESS != cached_file_clear)
+    {
+        return cached_file_clear;
     }
     else
     {
