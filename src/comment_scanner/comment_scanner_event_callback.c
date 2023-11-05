@@ -218,6 +218,9 @@ static int process_char_event_slash(
                 return retval;
             }
 
+            /* we are now in the init state. */
+            scanner->state = CPARSE_COMMENT_SCANNER_STATE_INIT;
+
             /* broadcast this event to all subscribers. */
             return
                 event_reactor_broadcast(
@@ -321,6 +324,9 @@ static int process_char_event_block_star(
             {
                 return retval;
             }
+
+            /* we are now in the in block comment event state. */
+            scanner->state = CPARSE_COMMENT_SCANNER_STATE_IN_BLOCK_COMMENT;
 
             /* broadcast this event to all subscribers. */
             return
