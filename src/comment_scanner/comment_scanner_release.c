@@ -48,6 +48,13 @@ int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner)
         reactor_release_retval = event_reactor_release(scanner->reactor);
     }
 
+    /* clear the cached file name if set. */
+    if (NULL != scanner->file)
+    {
+        memset(scanner->file, 0, strlen(scanner->file));
+        free(scanner->file);
+    }
+
     /* dispose the parent message handler. */
     mh_dispose_retval = message_handler_dispose(&scanner->parent_mh);
 
