@@ -25,6 +25,8 @@ struct CPARSE_SYM(comment_scanner)
     CPARSE_SYM(raw_file_line_override_filter)* parent;
     CPARSE_SYM(event_reactor)* reactor;
     CPARSE_SYM(message_handler) parent_mh;
+    char* file;
+    CPARSE_SYM(cursor) pos1;
     int state;
 };
 
