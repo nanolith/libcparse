@@ -116,6 +116,10 @@ int CPARSE_SYM(comment_scanner_cached_file_position_set)(
     static inline int sym ## comment_scanner_cached_file_clear( \
         CPARSE_SYM(comment_scanner)* x) { \
             return CPARSE_SYM(comment_scanner_cached_file_clear)(x); } \
+    static inline int sym ## comment_scanner_cached_file_position_set( \
+        CPARSE_SYM(comment_scanner)* x, const CPARSE_SYM(cursor)* y) { \
+            return \
+                CPARSE_SYM(comment_scanner_cached_file_position_set)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_comment_scanner_internal_as(sym) \
