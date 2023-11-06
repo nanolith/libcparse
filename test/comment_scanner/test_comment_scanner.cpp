@@ -7,7 +7,6 @@
  * distribution for the license terms under which this software is distributed.
  */
 
-#include <iostream>
 #include <libcparse/abstract_parser.h>
 #include <libcparse/comment_scanner.h>
 #include <libcparse/cursor.h>
@@ -303,7 +302,6 @@ TEST(input_stream_block_comment_dupes)
 
     /* postcondition: vals matches our string. */
     string out(t1.vals.begin(), t1.vals.end());
-    cout << out << endl;
     TEST_EXPECT(out == TEST_STRING_XFORM);
 
     /* clean up. */
