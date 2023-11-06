@@ -18,3 +18,4 @@
 #define ERROR_LIBCPARSE_BAD_CAST                                1005
 #define ERROR_LIBCPARSE_UNHANDLED_MESSAGE                       1006
 #define ERROR_LIBCPARSE_COMMENT_EXPECTING_SLASH                 1007
+#define ERROR_LIBCPARSE_COMMENT_EXPECTING_STAR_SLASH            1008
