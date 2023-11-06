@@ -139,7 +139,7 @@ TEST(subscribe)
 /**
  * Test that we can receive all non-comment input from an input stream.
  */
-TEST(input_stream_no_comments)
+TEST(no_comments)
 {
     comment_scanner* scanner;
     input_stream* stream;
@@ -196,7 +196,7 @@ TEST(input_stream_no_comments)
 /**
  * Test that we receive block comment begin / end events.
  */
-TEST(input_stream_block_comment)
+TEST(block_comment)
 {
     comment_scanner* scanner;
     input_stream* stream;
@@ -254,7 +254,7 @@ TEST(input_stream_block_comment)
 /**
  * Test that the block comment state machine respects duplicate symbols.
  */
-TEST(input_stream_block_comment_dupes)
+TEST(block_comment_dupes)
 {
     comment_scanner* scanner;
     input_stream* stream;
@@ -312,7 +312,7 @@ TEST(input_stream_block_comment_dupes)
 /**
  * Test that slash-eof is processed correctly.
  */
-TEST(input_stream_slash_eof)
+TEST(slash_eof)
 {
     comment_scanner* scanner;
     input_stream* stream;
