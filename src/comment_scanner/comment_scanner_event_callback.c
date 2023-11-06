@@ -32,6 +32,7 @@ static int process_char_event_block(
     comment_scanner* scanner, const event_raw_character* ev, int ch);
 static int process_char_event_block_star(
     comment_scanner* scanner, const event_raw_character* ev, int ch);
+static int process_eof_event(comment_scanner* scanner, const event* ev);
 static int begin_block_comment_broadcast(
     comment_scanner* scanner, const event_raw_character* ev);
 static int end_block_comment_broadcast(
@@ -58,7 +59,7 @@ int CPARSE_SYM(comment_scanner_event_callback)(
     switch (event_get_type(ev))
     {
         case CPARSE_EVENT_TYPE_EOF:
-            return event_reactor_broadcast(scanner->reactor, ev);
+            return process_eof_event(scanner, ev);
 
         case CPARSE_EVENT_TYPE_RAW_CHARACTER:
             return process_char_event(scanner, ev);
@@ -66,6 +67,61 @@ int CPARSE_SYM(comment_scanner_event_callback)(
         default:
             return STATUS_SUCCESS;
     }
+}
+
+/**
+ * \brief Process an eof event.
+ *
+ * \param scanner           The \ref comment_scanner for this operation.
+ * \param ev                The eof event to process.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int process_eof_event(comment_scanner* scanner, const event* ev)
+{
+    int retval;
+
+    switch (scanner->state)
+    {
+        /* in the init state, just send the EOF. */
+        case CPARSE_COMMENT_SCANNER_STATE_INIT:
+            retval = event_reactor_broadcast(scanner->reactor, ev);
+            goto done;
+
+        /* if we've encountered a slash, then we can recover. */
+        case CPARSE_COMMENT_SCANNER_STATE_SLASH:
+            /* send the previous slash event to all subscribers. */
+            retval = raw_character_broadcast(scanner, &scanner->pos1, '/');
+            if (STATUS_SUCCESS != retval)
+            {
+                return retval;
+            }
+            /* broadcast the EOF event. */
+            retval = event_reactor_broadcast(scanner->reactor, ev);
+            /* reset our state. */
+            scanner->state = CPARSE_COMMENT_SCANNER_STATE_INIT;
+            goto done;
+
+        /* we are expecting a slash. */
+        case CPARSE_COMMENT_SCANNER_STATE_IN_BLOCK_COMMENT_STAR:
+            retval = ERROR_LIBCPARSE_COMMENT_EXPECTING_SLASH;
+            goto done;
+
+        /* we are expecting a star slash. */
+        case CPARSE_COMMENT_SCANNER_STATE_IN_BLOCK_COMMENT:
+            retval = ERROR_LIBCPARSE_COMMENT_EXPECTING_STAR_SLASH;
+            goto done;
+
+        /* TODO - complete other end states. */
+        default:
+            retval = ERROR_LIBCPARSE_COMMENT_BAD_STATE;
+            goto done;
+    }
+
+done:
+    return retval;
 }
 
 /**
