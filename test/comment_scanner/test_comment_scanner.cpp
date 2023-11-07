@@ -270,8 +270,8 @@ TEST(block_comment_dupes)
     input_stream* stream;
     event_handler eh;
     test_context t1;
-    const char* TEST_STRING = "abc ///***123***/";
-    const char* TEST_STRING_XFORM = "abc //CB**123**CE";
+    const char* TEST_STRING = "abc /***123***/";
+    const char* TEST_STRING_XFORM = "abc CB**123**CE";
 
     /* create the scanner instance. */
     TEST_ASSERT(
@@ -469,6 +469,64 @@ TEST(unterminated_block_comment_2)
     TEST_ASSERT(
         ERROR_LIBCPARSE_COMMENT_EXPECTING_SLASH
             == abstract_parser_run(ap));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == comment_scanner_release(scanner));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
+
+/**
+ * Test that we receive block comment begin / end events.
+ */
+TEST(line_comment)
+{
+    comment_scanner* scanner;
+    input_stream* stream;
+    event_handler eh;
+    test_context t1;
+    const char* TEST_STRING = "abc //123\ntest";
+    const char* TEST_STRING_XFORM = "abc LB123LE\ntest";
+
+    /* create the scanner instance. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == comment_scanner_create(&scanner));
+
+    /* create our event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = comment_scanner_upcast(scanner);
+
+    /* subscribe to the scanner. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == abstract_parser_comment_scanner_subscribe(ap, &eh));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, TEST_STRING));
+
+    /* add the input stream to the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "stdin", stream));
+
+    /* precondition: eof is false. */
+    TEST_ASSERT(!t1.eof);
+
+    /* run the filter. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(ap));
+
+    /* postcondition: eof is true. */
+    TEST_EXPECT(t1.eof);
+
+    /* postcondition: vals is not empty. */
+    TEST_EXPECT(!t1.vals.empty());
+
+    /* postcondition: vals matches our string. */
+    string out(t1.vals.begin(), t1.vals.end());
+    TEST_EXPECT(out == TEST_STRING_XFORM);
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == comment_scanner_release(scanner));
