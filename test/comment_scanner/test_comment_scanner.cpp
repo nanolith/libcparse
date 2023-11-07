@@ -74,6 +74,16 @@ static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
         ctx->vals.push_back('C');
         ctx->vals.push_back('E');
     }
+    else if (CPARSE_EVENT_TYPE_COMMENT_LINE_BEGIN == event_get_type(ev))
+    {
+        ctx->vals.push_back('L');
+        ctx->vals.push_back('B');
+    }
+    else if (CPARSE_EVENT_TYPE_COMMENT_LINE_END == event_get_type(ev))
+    {
+        ctx->vals.push_back('L');
+        ctx->vals.push_back('E');
+    }
     else
     {
         return -1;
