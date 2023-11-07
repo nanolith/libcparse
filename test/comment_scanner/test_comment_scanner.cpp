@@ -270,8 +270,8 @@ TEST(block_comment_dupes)
     input_stream* stream;
     event_handler eh;
     test_context t1;
-    const char* TEST_STRING = "abc ///***123***///";
-    const char* TEST_STRING_XFORM = "abc //CB**123**CE//";
+    const char* TEST_STRING = "abc ///***123***/";
+    const char* TEST_STRING_XFORM = "abc //CB**123**CE";
 
     /* create the scanner instance. */
     TEST_ASSERT(
