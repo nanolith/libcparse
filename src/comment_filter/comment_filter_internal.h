@@ -30,6 +30,12 @@ struct CPARSE_SYM(comment_filter)
     int state;
 };
 
+enum CPARSE_SYM(comment_filter_state)
+{
+    CPARSE_COMMENT_FILTER_STATE_INIT =                           0,
+    CPARSE_COMMENT_FILTER_STATE_IN_COMMENT =                     1,
+};
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
