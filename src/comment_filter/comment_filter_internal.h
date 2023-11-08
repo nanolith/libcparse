@@ -80,6 +80,20 @@ int CPARSE_SYM(comment_filter_event_callback)(
 int CPARSE_SYM(comment_filter_cached_file_clear)(
     CPARSE_SYM(comment_filter)* filter);
 
+/**
+ * \brief Set the cached file and position, clearing the previous cached file if
+ * necessary.
+ *
+ * \param filter            The filter for this operation.
+ * \param pos               The position to use for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(comment_filter_cached_file_position_set)(
+    CPARSE_SYM(comment_filter)* filter, const CPARSE_SYM(cursor)* pos);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
