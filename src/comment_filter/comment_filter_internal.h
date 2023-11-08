@@ -36,6 +36,24 @@ enum CPARSE_SYM(comment_filter_state)
     CPARSE_COMMENT_FILTER_STATE_IN_COMMENT =                     1,
 };
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Message handler callback for \ref comment_filter.
+ *
+ * \param context           The context for this handler (the
+ *                          \ref comment_filter instance).
+ * \param msg               A message for this handler.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(comment_filter_message_callback)(
+    void* context, const CPARSE_SYM(message)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
