@@ -27,6 +27,26 @@ extern "C" {
 typedef struct CPARSE_SYM(comment_filter)
 CPARSE_SYM(comment_filter);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a comment filter.
+ *
+ * This filter automatically creates a comment filter and injects itself into
+ * the message chain for the parser stack.
+ *
+ * \param scanner           Pointer to the \ref comment_filter pointer to be
+ *                          populated with the created comment filter instance
+ *                          on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(comment_filter_create)(CPARSE_SYM(comment_filter)** filter);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
