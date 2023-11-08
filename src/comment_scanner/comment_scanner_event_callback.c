@@ -149,7 +149,12 @@ static int process_eof_event(comment_scanner* scanner, const event* ev)
             retval = ERROR_LIBCPARSE_COMMENT_EXPECTING_DOUBLE_QUOTE;
             goto done;
 
-        /* TODO - complete other end states. */
+        /* in the string slash state, expect a char and double quote. */
+        case CPARSE_COMMENT_SCANNER_STATE_IN_STRING_BACKSLASH:
+            retval = ERROR_LIBCPARSE_COMMENT_EXPECTING_CHAR_DOUBLE_QUOTE;
+            goto done;
+
+        /* If we make it here, we are in a bad state. */
         default:
             retval = ERROR_LIBCPARSE_COMMENT_BAD_STATE;
             goto done;
