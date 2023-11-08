@@ -54,6 +54,20 @@ enum CPARSE_SYM(comment_filter_state)
 int CPARSE_SYM(comment_filter_message_callback)(
     void* context, const CPARSE_SYM(message)* msg);
 
+/**
+ * \brief Event handler callback for \ref comment_filter.
+ *
+ * \param context           The context for this handler (the
+ *                          \ref commant_filter instance).
+ * \param ev                An event for this handler.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(comment_filter_event_callback)(
+    void* context, const CPARSE_SYM(event)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
