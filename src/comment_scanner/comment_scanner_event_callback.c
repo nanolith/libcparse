@@ -40,6 +40,8 @@ static int process_char_event_string_backslash(
     comment_scanner* scanner, const event_raw_character* ev, int ch);
 static int process_char_event_char_seq(
     comment_scanner* scanner, const event_raw_character* ev, int ch);
+static int process_char_event_char_seq_backslash(
+    comment_scanner* scanner, const event_raw_character* ev, int ch);
 static int process_eof_event(comment_scanner* scanner, const event* ev);
 static int begin_block_comment_broadcast(
     comment_scanner* scanner, const event_raw_character* ev);
@@ -196,9 +198,8 @@ static int process_char_event(comment_scanner* scanner, const event* ev)
             retval = process_char_event_char_seq(scanner, rev, ch);
             goto done;
 
-        /* TODO - fix this up. */
-        default:
-            retval = process_char_event_init(scanner, rev, ch);
+        case CPARSE_COMMENT_SCANNER_STATE_IN_CHAR_SEQUENCE_BACKSLASH:
+            retval = process_char_event_char_seq_backslash(scanner, rev, ch);
             goto done;
     }
 
@@ -546,6 +547,16 @@ static int process_char_event_char_seq(
                     scanner->reactor,
                     event_raw_character_upcast((event_raw_character*)ev));
 
+        case '\\':
+            /* a backslash starts an escape. */
+            scanner->state =
+                CPARSE_COMMENT_SCANNER_STATE_IN_CHAR_SEQUENCE_BACKSLASH;
+            /* broadcast the backslash. */
+            return
+                event_reactor_broadcast(
+                    scanner->reactor,
+                    event_raw_character_upcast((event_raw_character*)ev));
+
         default:
             /* broadcast this event to all subscribers. */
             return
@@ -553,6 +564,32 @@ static int process_char_event_char_seq(
                     scanner->reactor,
                     event_raw_character_upcast((event_raw_character*)ev));
     }
+}
+
+/**
+ * \brief Process a char event in char sequence bockslash state.
+ *
+ * \param scanner           The \ref comment_scanner for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The character to process.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int process_char_event_char_seq_backslash(
+    comment_scanner* scanner, const event_raw_character* ev, int ch)
+{
+    (void)ch;
+
+    /* no matter the character, we return to character sequence state. */
+    scanner->state = CPARSE_COMMENT_SCANNER_STATE_IN_CHAR_SEQUENCE;
+
+    /* broadcast the character. */
+    return
+        event_reactor_broadcast(
+            scanner->reactor,
+            event_raw_character_upcast((event_raw_character*)ev));
 }
 
 /**
