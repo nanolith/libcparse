@@ -74,6 +74,20 @@ int CPARSE_SYM(comment_filter_release)(CPARSE_SYM(comment_filter)* filter);
 CPARSE_SYM(abstract_parser)* CPARSE_SYM(comment_filter_upcast)(
     CPARSE_SYM(comment_filter)* filter);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_comment_scanner_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(comment_filter) sym ## comment_filter; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_comment_scanner_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_comment_scanner_sym(sym ## _)
+#define CPARSE_IMPORT_comment_scanner \
+    __INTERNAL_CPARSE_IMPORT_comment_scanner_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
