@@ -134,6 +134,11 @@ static int process_eof_event(comment_scanner* scanner, const event* ev)
             retval = end_line_comment_broadcast(scanner, ev);
             goto done;
 
+        /* in the char sequence state, we are expecting a single quote. */
+        case CPARSE_COMMENT_SCANNER_STATE_IN_CHAR_SEQUENCE:
+            retval = ERROR_LIBCPARSE_COMMENT_EXPECTING_SINGLE_QUOTE;
+            goto done;
+
         /* TODO - complete other end states. */
         default:
             retval = ERROR_LIBCPARSE_COMMENT_BAD_STATE;
