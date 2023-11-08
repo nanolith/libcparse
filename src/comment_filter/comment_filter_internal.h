@@ -68,6 +68,18 @@ int CPARSE_SYM(comment_filter_message_callback)(
 int CPARSE_SYM(comment_filter_event_callback)(
     void* context, const CPARSE_SYM(event)* ev);
 
+/**
+ * \brief Clear and free cached file.
+ *
+ * \param filter            The filter for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(comment_filter_cached_file_clear)(
+    CPARSE_SYM(comment_filter)* filter);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
