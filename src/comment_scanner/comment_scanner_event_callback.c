@@ -497,6 +497,7 @@ static int process_char_event_string_backslash(
 
     /* no matter the character, we return to string state. */
     scanner->state = CPARSE_COMMENT_SCANNER_STATE_IN_STRING;
+
     /* broadcast the character. */
     return
         event_reactor_broadcast(
