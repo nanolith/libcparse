@@ -47,6 +47,18 @@ CPARSE_SYM(comment_filter);
  */
 int CPARSE_SYM(comment_filter_create)(CPARSE_SYM(comment_filter)** filter);
 
+/**
+ * \brief Release a comment filter instance, releasing any internal resources
+ * it may own.
+ *
+ * \param filter            The \ref comment_filter instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(comment_filter_release)(CPARSE_SYM(comment_filter)* filter);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
