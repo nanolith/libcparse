@@ -38,6 +38,8 @@ static int process_char_event_string(
     comment_scanner* scanner, const event_raw_character* ev, int ch);
 static int process_char_event_string_backslash(
     comment_scanner* scanner, const event_raw_character* ev, int ch);
+static int process_char_event_char_seq(
+    comment_scanner* scanner, const event_raw_character* ev, int ch);
 static int process_eof_event(comment_scanner* scanner, const event* ev);
 static int begin_block_comment_broadcast(
     comment_scanner* scanner, const event_raw_character* ev);
@@ -190,6 +192,10 @@ static int process_char_event(comment_scanner* scanner, const event* ev)
             retval = process_char_event_string_backslash(scanner, rev, ch);
             goto done;
 
+        case CPARSE_COMMENT_SCANNER_STATE_IN_CHAR_SEQUENCE:
+            retval = process_char_event_char_seq(scanner, rev, ch);
+            goto done;
+
         /* TODO - fix this up. */
         default:
             retval = process_char_event_init(scanner, rev, ch);
@@ -238,6 +244,15 @@ static int process_char_event_init(
             /* we are now in the string state. */
             scanner->state = CPARSE_COMMENT_SCANNER_STATE_IN_STRING;
             /* broadcast the quote. */
+            return
+                event_reactor_broadcast(
+                    scanner->reactor,
+                    event_raw_character_upcast((event_raw_character*)ev));
+
+        case '\'':
+            /* we are now in the char sequence state. */
+            scanner->state = CPARSE_COMMENT_SCANNER_STATE_IN_CHAR_SEQUENCE;
+            /* broadcast the tick. */
             return
                 event_reactor_broadcast(
                     scanner->reactor,
@@ -503,6 +518,41 @@ static int process_char_event_string_backslash(
         event_reactor_broadcast(
             scanner->reactor,
             event_raw_character_upcast((event_raw_character*)ev));
+}
+
+/**
+ * \brief Process a char event in char sequence state.
+ *
+ * \param scanner           The \ref comment_scanner for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The character to process.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int process_char_event_char_seq(
+    comment_scanner* scanner, const event_raw_character* ev, int ch)
+{
+    /* decode the character. */
+    switch (ch)
+    {
+        case '\'':
+            /* an end quote ends our character sequence state. */
+            scanner->state = CPARSE_COMMENT_SCANNER_STATE_INIT;
+            /* broadcast the quote. */
+            return
+                event_reactor_broadcast(
+                    scanner->reactor,
+                    event_raw_character_upcast((event_raw_character*)ev));
+
+        default:
+            /* broadcast this event to all subscribers. */
+            return
+                event_reactor_broadcast(
+                    scanner->reactor,
+                    event_raw_character_upcast((event_raw_character*)ev));
+    }
 }
 
 /**
