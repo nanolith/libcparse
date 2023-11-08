@@ -227,6 +227,11 @@ static int process_char_event(comment_scanner* scanner, const event* ev)
         case CPARSE_COMMENT_SCANNER_STATE_IN_CHAR_SEQUENCE_BACKSLASH:
             retval = process_char_event_char_seq_backslash(scanner, rev, ch);
             goto done;
+
+        /* If we make it here, we are in a bad state. */
+        default:
+            retval = ERROR_LIBCPARSE_COMMENT_BAD_STATE;
+            goto done;
     }
 
 done:
