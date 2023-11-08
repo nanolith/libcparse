@@ -50,7 +50,7 @@ static int end_block_comment_broadcast(
 static int begin_line_comment_broadcast(
     comment_scanner* scanner, const event_raw_character* ev);
 static int end_line_comment_broadcast(
-    comment_scanner* scanner, const event_raw_character* ev);
+    comment_scanner* scanner, const event* ev);
 static int raw_character_broadcast(
     comment_scanner* scanner, const cursor* pos, int ch);
 
@@ -126,6 +126,12 @@ static int process_eof_event(comment_scanner* scanner, const event* ev)
         /* we are expecting a star slash. */
         case CPARSE_COMMENT_SCANNER_STATE_IN_BLOCK_COMMENT:
             retval = ERROR_LIBCPARSE_COMMENT_EXPECTING_STAR_SLASH;
+            goto done;
+
+        /* in the line comment, send the end comment and then EOF. */
+        case CPARSE_COMMENT_SCANNER_STATE_IN_LINE_COMMENT:
+            scanner->state = CPARSE_COMMENT_SCANNER_STATE_INIT;
+            retval = end_line_comment_broadcast(scanner, ev);
             goto done;
 
         /* TODO - complete other end states. */
@@ -440,7 +446,10 @@ static int process_char_event_line(
     {
         case '\n':
             scanner->state = CPARSE_COMMENT_SCANNER_STATE_INIT;
-            return end_line_comment_broadcast(scanner, ev);
+            return
+                end_line_comment_broadcast(
+                    scanner,
+                    event_raw_character_upcast((event_raw_character*)ev));
 
         default:
             /* broadcast this event to all subscribers. */
@@ -777,14 +786,13 @@ done:
  *      - a non-zero error code on failure.
  */
 static int end_line_comment_broadcast(
-    comment_scanner* scanner, const event_raw_character* ev)
+    comment_scanner* scanner, const event* ev)
 {
     int retval, release_retval;
     cursor pos;
     event lev;
 
-    const cursor* newlinepos =
-        event_get_cursor(event_raw_character_upcast((event_raw_character*)ev));
+    const cursor* newlinepos = event_get_cursor(ev);
 
     /* copy the cached position. */
     memcpy(&pos, newlinepos, sizeof(pos));
@@ -803,11 +811,8 @@ static int end_line_comment_broadcast(
         goto cleanup_lev;
     }
 
-    /* rebroadcast the newline event. */
-    retval =
-        event_reactor_broadcast(
-            scanner->reactor,
-            event_raw_character_upcast((event_raw_character*)ev));
+    /* rebroadcast the newline / EOF event. */
+    retval = event_reactor_broadcast(scanner->reactor, ev);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_lev;
