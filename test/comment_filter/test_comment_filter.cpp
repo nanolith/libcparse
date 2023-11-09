@@ -7,6 +7,7 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <iostream>
 #include <libcparse/abstract_parser.h>
 #include <libcparse/comment_filter.h>
 #include <libcparse/cursor.h>
@@ -16,6 +17,7 @@
 #include <libcparse/status_codes.h>
 #include <list>
 #include <minunit/minunit.h>
+#include <string>
 
 using namespace std;
 
@@ -25,6 +27,7 @@ CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_handler;
 CPARSE_IMPORT_event_raw_character;
+CPARSE_IMPORT_input_stream;
 
 TEST_SUITE(comment_filter);
 
@@ -117,6 +120,61 @@ TEST(subscribe)
 
     /* postcondition: eof is true. */
     TEST_EXPECT(t1.eof);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == comment_filter_release(filter));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
+
+/**
+ * Test that a string with no comments is passed verbatim.
+ */
+TEST(no_comments)
+{
+    comment_filter* filter;
+    input_stream* stream;
+    event_handler eh;
+    test_context t1;
+    const char* TEST_STRING = "abc 123";
+
+    /* create the filter instance. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == comment_filter_create(&filter));
+
+    /* create our event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = comment_filter_upcast(filter);
+
+    /* subscribe to the filter. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == abstract_parser_comment_filter_subscribe(ap, &eh));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, TEST_STRING));
+
+    /* add the input stream to the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "stdin", stream));
+
+    /* precondition: eof is false. */
+    TEST_ASSERT(!t1.eof);
+
+    /* run the filter. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(ap));
+
+    /* postcondition: eof is true. */
+    TEST_EXPECT(t1.eof);
+
+    /* postcondition: vals matches our string. */
+    string out(t1.vals.begin(), t1.vals.end());
+    cout << "*** " << out << " ***" << endl;
+    TEST_EXPECT(out == TEST_STRING);
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == comment_filter_release(filter));
