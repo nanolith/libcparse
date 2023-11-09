@@ -34,6 +34,7 @@ enum CPARSE_SYM(comment_filter_state)
 {
     CPARSE_COMMENT_FILTER_STATE_INIT =                           0,
     CPARSE_COMMENT_FILTER_STATE_IN_BLOCK_COMMENT =               1,
+    CPARSE_COMMENT_FILTER_STATE_IN_LINE_COMMENT =                2,
 };
 
 /******************************************************************************/
