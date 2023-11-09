@@ -81,6 +81,16 @@ int CPARSE_SYM(comment_filter_event_callback)(
             filter->state = CPARSE_COMMENT_FILTER_STATE_INIT;
             return STATUS_SUCCESS;
 
+        case CPARSE_EVENT_TYPE_COMMENT_LINE_BEGIN:
+            /* we are now in the line comment state. */
+            filter->state = CPARSE_COMMENT_FILTER_STATE_IN_LINE_COMMENT;
+            return STATUS_SUCCESS;
+
+        case CPARSE_EVENT_TYPE_COMMENT_LINE_END:
+            /* we are now in the init state. */
+            filter->state = CPARSE_COMMENT_FILTER_STATE_INIT;
+            return STATUS_SUCCESS;
+
         default:
             return STATUS_SUCCESS;
     }
