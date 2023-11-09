@@ -33,7 +33,7 @@ struct CPARSE_SYM(comment_filter)
 enum CPARSE_SYM(comment_filter_state)
 {
     CPARSE_COMMENT_FILTER_STATE_INIT =                           0,
-    CPARSE_COMMENT_FILTER_STATE_IN_COMMENT =                     1,
+    CPARSE_COMMENT_FILTER_STATE_IN_BLOCK_COMMENT =               1,
 };
 
 /******************************************************************************/
