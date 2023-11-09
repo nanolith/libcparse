@@ -28,7 +28,8 @@ enum CPARSE_SYM(message_type)
     CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE =                                 0x0003,
     CPARSE_MESSAGE_TYPE_RFLO_SUBSCRIBE =                                0x0004,
     CPARSE_MESSAGE_TYPE_COMMENT_SCANNER_SUBSCRIBE =                     0x0005,
-    CPARSE_MESSAGE_TYPE_RFLO_FILE_LINE_OVERRIDE =                       0x0006,
+    CPARSE_MESSAGE_TYPE_COMMENT_FILTER_SUBSCRIBE =                      0x0006,
+    CPARSE_MESSAGE_TYPE_RFLO_FILE_LINE_OVERRIDE =                       0x0007,
     CPARSE_MESSAGE_TYPE_UNKNOWN =                                       0xFFFF,
 };
 
