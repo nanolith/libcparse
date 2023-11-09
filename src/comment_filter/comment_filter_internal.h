@@ -103,6 +103,9 @@ int CPARSE_SYM(comment_filter_cached_file_position_set)(
     static inline int sym ## comment_filter_message_callback( \
         void* x, const CPARSE_SYM(message)* y) { \
             return CPARSE_SYM(comment_filter_message_callback)(x,y); } \
+    static inline int sym ## comment_filter_event_callback( \
+        void* x, const CPARSE_SYM(event)* y) { \
+            return CPARSE_SYM(comment_filter_event_callback)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_comment_filter_internal_as(sym) \
