@@ -166,6 +166,20 @@ CPARSE_SYM(abstract_parser_comment_scanner_subscribe)(
     CPARSE_SYM(abstract_parser)* ap, CPARSE_SYM(event_handler)* eh);
 
 /**
+ * \brief Subscribe to \ref comment_filter events.
+ *
+ * \param ap                The \ref abstract_parser for this operation.
+ * \param eh                The event handler to add to the subscription list.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int
+CPARSE_SYM(abstract_parser_comment_filter_subscribe)(
+    CPARSE_SYM(abstract_parser)* ap, CPARSE_SYM(event_handler)* eh);
+
+/**
  * \brief Override the line number and file name in the file / line override
  * filter.
  *
