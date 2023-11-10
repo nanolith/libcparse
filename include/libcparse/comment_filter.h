@@ -38,7 +38,7 @@ CPARSE_SYM(comment_filter);
  * This filter automatically creates a comment scanner and injects itself into
  * the message chain for the parser stack.
  *
- * \param scanner           Pointer to the \ref comment_filter pointer to be
+ * \param filter            Pointer to the \ref comment_filter pointer to be
  *                          populated with the created comment filter instance
  *                          on success.
  *
