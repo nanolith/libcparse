@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <libcparse/abstract_parser.h>
 #include <libcparse/function_decl.h>
 
 /* C++ compatibility. */
@@ -60,6 +61,20 @@ int CPARSE_SYM(line_wrap_filter_create)(CPARSE_SYM(line_wrap_filter)** filter);
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(line_wrap_filter_release)(CPARSE_SYM(line_wrap_filter)* filter);
+
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the \ref abstract_parser interface for this filter.
+ *
+ * \param filter            The \ref line_wrap_filter instance to query.
+ *
+ * \returns the \ref abstract_parser interface for this filter.
+ */
+CPARSE_SYM(abstract_parser)* CPARSE_SYM(line_wrap_filter_upcast)(
+    CPARSE_SYM(line_wrap_filter)* filter);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
