@@ -29,6 +29,26 @@ extern "C" {
 typedef struct CPARSE_SYM(line_wrap_filter)
 CPARSE_SYM(line_wrap_filter);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a line wrap filter.
+ *
+ * This filter automatically creates a raw file/line override filter and injects
+ * itself into the message chain for the parser stack.
+ *
+ * \param filter            Pointer to the \ref line_wrap_filter pointer to be
+ *                          populated with the created line wrap filter instance
+ *                          on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(line_wrap_filter_create)(CPARSE_SYM(line_wrap_filter)** filter);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
