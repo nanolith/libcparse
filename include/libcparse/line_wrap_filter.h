@@ -49,6 +49,18 @@ CPARSE_SYM(line_wrap_filter);
  */
 int CPARSE_SYM(line_wrap_filter_create)(CPARSE_SYM(line_wrap_filter)** filter);
 
+/**
+ * \brief Release a line wrap filter instance, releasing any internal resources
+ * it may own.
+ *
+ * \param filter            The \ref line_wrap_filter instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(line_wrap_filter_release)(CPARSE_SYM(line_wrap_filter)* filter);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
