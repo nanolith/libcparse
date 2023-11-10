@@ -89,6 +89,9 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(line_wrap_filter_upcast)(
     static inline int sym ## line_wrap_filter_release( \
         CPARSE_SYM(line_wrap_filter)* x) { \
             return CPARSE_SYM(line_wrap_filter_release)(x); } \
+    static inline CPARSE_SYM(abstract_parser)* sym ## line_wrap_filter_upcast( \
+        CPARSE_SYM(line_wrap_filter)* x) { \
+            return CPARSE_SYM(line_wrap_filter_upcast)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_line_wrap_filter_as(sym) \
