@@ -1,0 +1,35 @@
+/**
+ * \file libcparse/line_wrap_filter.h
+ *
+ * \brief The line wrap filter performs line wrapping by removing a newline that
+ * occurs after a backslash character in the source file. This allows lines to
+ * wrap in the source file while remaining readable to humans by adding natural
+ * line breaks.
+ *
+ * Subscribers to this filter will receive raw character events as with the raw
+ * file/line override filter, but any backslash followed by a newline will be
+ * automatically filtered out.
+ *
+ * \copyright 2023 Justin Handville.  Please see license.txt in this
+ * distribution for the license terms under which this software is distributed.
+ */
+
+#pragma once
+
+#include <libcparse/function_decl.h>
+
+/* C++ compatibility. */
+# ifdef   __cplusplus
+extern "C" {
+# endif /*__cplusplus*/
+
+/**
+ * \brief The \ref line_wrap_filter wraps escaped newlines.
+ */
+typedef struct CPARSE_SYM(line_wrap_filter)
+CPARSE_SYM(line_wrap_filter);
+
+/* C++ compatibility. */
+# ifdef   __cplusplus
+}
+# endif /*__cplusplus*/
