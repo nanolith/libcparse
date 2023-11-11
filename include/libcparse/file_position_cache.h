@@ -75,6 +75,19 @@ int CPARSE_SYM(file_position_cache_set)(
     CPARSE_SYM(file_position_cache)* cache, const char* file,
     const CPARSE_SYM(cursor)* position);
 
+/**
+ * \brief Clear the \ref file_position_cache.
+ *
+ * \param cache             The \ref file_position_cache instance for this
+ *                          operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(file_position_cache_clear)(
+    CPARSE_SYM(file_position_cache)* cache);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
