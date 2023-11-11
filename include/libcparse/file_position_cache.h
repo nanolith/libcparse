@@ -88,6 +88,21 @@ int CPARSE_SYM(file_position_cache_set)(
 int CPARSE_SYM(file_position_cache_clear)(
     CPARSE_SYM(file_position_cache)* cache);
 
+/**
+ * \brief Get the cached file.
+ *
+ * \param cache             The \ref file_position_cache instance for this
+ *                          operation.
+ * \param file              The file pointer pointer to receive this file on
+ *                          success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(file_position_cache_file_get)(
+    CPARSE_SYM(file_position_cache)* cache, const char** file);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
