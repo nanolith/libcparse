@@ -103,6 +103,22 @@ int CPARSE_SYM(file_position_cache_clear)(
 int CPARSE_SYM(file_position_cache_file_get)(
     CPARSE_SYM(file_position_cache)* cache, const char** file);
 
+/**
+ * \brief Get the cached position.
+ *
+ * \param cache             The \ref file_position_cache instance for this
+ *                          operation.
+ * \param pos               The cursor pointer pointer to receive this position
+ *                          on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(file_position_cache_position_get)(
+    CPARSE_SYM(file_position_cache)* cache,
+    const CPARSE_SYM(cursor)** position);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
