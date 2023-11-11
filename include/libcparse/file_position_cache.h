@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <libcparse/cursor.h>
 #include <libcparse/function_decl.h>
 
 /* C++ compatibility. */
@@ -53,6 +54,26 @@ int CPARSE_SYM(file_position_cache_create)(
  */
 int CPARSE_SYM(file_position_cache_release)(
     CPARSE_SYM(file_position_cache)* cache);
+
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Set the \ref file_position_cache file and position.
+ *
+ * \param cache             The \ref file_position_cache instance for this
+ *                          operation.
+ * \param file              The file to cache.
+ * \param position          The position to cache.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(file_position_cache_set)(
+    CPARSE_SYM(file_position_cache)* cache, const char* file,
+    const CPARSE_SYM(cursor)* position);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
