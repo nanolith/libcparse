@@ -30,6 +30,12 @@ struct CPARSE_SYM(line_wrap_filter)
     int state;
 };
 
+enum CPARSE_SYM(line_wrap_filter_state)
+{
+    CPARSE_LINE_WRAP_FILTER_STATE_INIT =                         0,
+    CPARSE_LINE_WRAP_FILTER_STATE_SLASH =                        1,
+};
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
