@@ -23,6 +23,24 @@ extern "C" {
  */
 typedef struct CPARSE_SYM(file_position_cache) CPARSE_SYM(file_position_cache);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a file position cache instance.
+ *
+ * \param cache             Pointer to the \ref file_position_cache pointer to
+ *                          be populated with the created file position cache
+ *                          instance on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(file_position_cache_create)(
+    CPARSE_SYM(file_position_cache)** filter);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
