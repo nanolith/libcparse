@@ -154,6 +154,9 @@ int CPARSE_SYM(file_position_cache_raw_character_broadcast)(
         CPARSE_SYM(file_position_cache)* x, const char* y, \
         const CPARSE_SYM(cursor)* z) { \
             return CPARSE_SYM(file_position_cache_set)(x,y,z); } \
+    static inline int sym ## file_position_cache_clear( \
+        CPARSE_SYM(file_position_cache)* x) { \
+            return CPARSE_SYM(file_position_cache_clear)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_file_position_cache_as(sym) \
