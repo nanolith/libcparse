@@ -39,7 +39,20 @@ typedef struct CPARSE_SYM(file_position_cache) CPARSE_SYM(file_position_cache);
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(file_position_cache_create)(
-    CPARSE_SYM(file_position_cache)** filter);
+    CPARSE_SYM(file_position_cache)** cache);
+
+/**
+ * \brief Release a file position cache instance, releasing any internal
+ * resources it may own.
+ *
+ * \param cache             The \ref line_wrap_filter instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(file_position_cache_release)(
+    CPARSE_SYM(file_position_cache)* cache);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
