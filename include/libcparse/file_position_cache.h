@@ -137,6 +137,20 @@ int CPARSE_SYM(file_position_cache_raw_character_broadcast)(
     CPARSE_SYM(file_position_cache)* cache, CPARSE_SYM(event_reactor)* reactor,
     int ch);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_file_position_cache_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(file_position_cache) sym ## file_position_cache; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_file_position_cache_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_file_position_cache_sym(sym ## _)
+#define CPARSE_IMPORT_file_position_cache \
+    __INTERNAL_CPARSE_IMPORT_file_position_cache_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
