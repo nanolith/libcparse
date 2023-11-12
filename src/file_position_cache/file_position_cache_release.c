@@ -7,11 +7,14 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <libcparse/file_position_cache.h>
 #include <libcparse/status_codes.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "file_position_cache_internal.h"
+
+CPARSE_IMPORT_file_position_cache;
 
 /**
  * \brief Release a file position cache instance, releasing any internal
@@ -26,12 +29,10 @@
 int CPARSE_SYM(file_position_cache_release)(
     CPARSE_SYM(file_position_cache)* cache)
 {
-    if (NULL != cache->file)
-    {
-        memset(cache->file, 0, strlen(cache->file));
-        free(cache->file);
-    }
+    /* clear the cache. */
+    file_position_cache_clear(cache);
 
+    /* clear and free our instance. */
     memset(cache, 0, sizeof(*cache));
     free(cache);
 
