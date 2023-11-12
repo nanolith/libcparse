@@ -9,6 +9,9 @@
 
 #pragma once
 
+#include <libcparse/cursor.h>
+#include <libcparse/function_decl.h>
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 extern "C" {
