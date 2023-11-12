@@ -81,12 +81,8 @@ int CPARSE_SYM(file_position_cache_set)(
  *
  * \param cache             The \ref file_position_cache instance for this
  *                          operation.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(file_position_cache_clear)(
+void CPARSE_SYM(file_position_cache_clear)(
     CPARSE_SYM(file_position_cache)* cache);
 
 /**
@@ -154,9 +150,9 @@ int CPARSE_SYM(file_position_cache_raw_character_broadcast)(
         CPARSE_SYM(file_position_cache)* x, const char* y, \
         const CPARSE_SYM(cursor)* z) { \
             return CPARSE_SYM(file_position_cache_set)(x,y,z); } \
-    static inline int sym ## file_position_cache_clear( \
+    static inline void sym ## file_position_cache_clear( \
         CPARSE_SYM(file_position_cache)* x) { \
-            return CPARSE_SYM(file_position_cache_clear)(x); } \
+            CPARSE_SYM(file_position_cache_clear)(x); } \
     static inline int sym ## file_position_cache_file_get( \
         CPARSE_SYM(file_position_cache)* x, const char** y) { \
             return CPARSE_SYM(file_position_cache_file_get)(x,y); } \
