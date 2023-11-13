@@ -17,6 +17,7 @@
 
 CPARSE_IMPORT_comment_scanner_internal;
 CPARSE_IMPORT_event_reactor;
+CPARSE_IMPORT_file_position_cache;
 CPARSE_IMPORT_message_handler;
 CPARSE_IMPORT_raw_file_line_override_filter;
 
@@ -34,7 +35,7 @@ int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner)
 {
     int parent_release_retval = STATUS_SUCCESS;
     int reactor_release_retval = STATUS_SUCCESS;
-    int cached_file_clear = STATUS_SUCCESS;
+    int cache_release_retval = STATUS_SUCCESS;
     int mh_dispose_retval = STATUS_SUCCESS;
 
     /* release the parent if valid. */
@@ -50,8 +51,11 @@ int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner)
         reactor_release_retval = event_reactor_release(scanner->reactor);
     }
 
-    /* clear the cached file name if set. */
-    cached_file_clear = comment_scanner_cached_file_clear(scanner);
+    /* release the cache if set. */
+    if (NULL != scanner->cache)
+    {
+        cache_release_retval = file_position_cache_release(scanner->cache);
+    }
 
     /* dispose the parent message handler. */
     mh_dispose_retval = message_handler_dispose(&scanner->parent_mh);
@@ -71,9 +75,9 @@ int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner)
     {
         return reactor_release_retval;
     }
-    else if (STATUS_SUCCESS != cached_file_clear)
+    else if (STATUS_SUCCESS != cache_release_retval)
     {
-        return cached_file_clear;
+        return cache_release_retval;
     }
     else
     {
