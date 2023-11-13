@@ -10,6 +10,7 @@
 #pragma once
 
 #include <libcparse/event_reactor_fwd.h>
+#include <libcparse/file_position_cache.h>
 #include <libcparse/raw_file_line_override_filter.h>
 
 /* C++ compatibility. */
@@ -25,8 +26,7 @@ struct CPARSE_SYM(comment_scanner)
     CPARSE_SYM(raw_file_line_override_filter)* parent;
     CPARSE_SYM(event_reactor)* reactor;
     CPARSE_SYM(message_handler) parent_mh;
-    char* file;
-    CPARSE_SYM(cursor) pos1;
+    CPARSE_SYM(file_position_cache)* cache;
     int state;
 };
 
@@ -75,32 +75,6 @@ int CPARSE_SYM(comment_scanner_message_callback)(
 int CPARSE_SYM(comment_scanner_event_callback)(
     void* context, const CPARSE_SYM(event)* ev);
 
-/**
- * \brief Clear and free cached file.
- *
- * \param scanner           The scanner for this operation.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-int CPARSE_SYM(comment_scanner_cached_file_clear)(
-    CPARSE_SYM(comment_scanner)* scanner);
-
-/**
- * \brief Set the cached file and position, clearing the previous cached file if
- * necessary.
- *
- * \param scanner           The scanner for this operation.
- * \param pos               The position to use for this operation.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-int CPARSE_SYM(comment_scanner_cached_file_position_set)(
-    CPARSE_SYM(comment_scanner)* scanner, const CPARSE_SYM(cursor)* pos);
-
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
@@ -113,13 +87,6 @@ int CPARSE_SYM(comment_scanner_cached_file_position_set)(
     static inline int sym ## comment_scanner_event_callback( \
         void* x, const CPARSE_SYM(event)* y) { \
             return CPARSE_SYM(comment_scanner_event_callback)(x,y); } \
-    static inline int sym ## comment_scanner_cached_file_clear( \
-        CPARSE_SYM(comment_scanner)* x) { \
-            return CPARSE_SYM(comment_scanner_cached_file_clear)(x); } \
-    static inline int sym ## comment_scanner_cached_file_position_set( \
-        CPARSE_SYM(comment_scanner)* x, const CPARSE_SYM(cursor)* y) { \
-            return \
-                CPARSE_SYM(comment_scanner_cached_file_position_set)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_comment_scanner_internal_as(sym) \

@@ -22,6 +22,7 @@ CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_raw_character;
 CPARSE_IMPORT_event_reactor;
+CPARSE_IMPORT_file_position_cache;
 
 static int process_char_event(comment_scanner* scanner, const event* ev);
 static int process_char_event_init(
@@ -51,8 +52,6 @@ static int begin_line_comment_broadcast(
     comment_scanner* scanner, const event_raw_character* ev);
 static int end_line_comment_broadcast(
     comment_scanner* scanner, const event* ev);
-static int raw_character_broadcast(
-    comment_scanner* scanner, const cursor* pos, int ch);
 
 /**
  * \brief Event handler callback for \ref comment_scanner.
@@ -107,13 +106,20 @@ static int process_eof_event(comment_scanner* scanner, const event* ev)
         /* if we've encountered a slash, then we can recover. */
         case CPARSE_COMMENT_SCANNER_STATE_SLASH:
             /* send the previous slash event to all subscribers. */
-            retval = raw_character_broadcast(scanner, &scanner->pos1, '/');
+            retval =
+                file_position_cache_raw_character_broadcast(
+                    scanner->cache, scanner->reactor, '/');
             if (STATUS_SUCCESS != retval)
             {
                 return retval;
             }
+
+            /* clear the cache. */
+            file_position_cache_clear(scanner->cache);
+
             /* broadcast the EOF event. */
             retval = event_reactor_broadcast(scanner->reactor, ev);
+
             /* reset our state. */
             scanner->state = CPARSE_COMMENT_SCANNER_STATE_INIT;
             goto done;
@@ -252,18 +258,19 @@ done:
 static int process_char_event_init(
     comment_scanner* scanner, const event_raw_character* ev, int ch)
 {
+    const cursor* pos;
     int retval;
 
     /* decode the character. */
     switch (ch)
     {
         case '/':
+            /* get the event position. */
+            pos =
+                event_get_cursor(event_raw_character_upcast(
+                    (event_raw_character*)ev));
             /* cache the current position. */
-            retval =
-                comment_scanner_cached_file_position_set(
-                    scanner,
-                    event_get_cursor(event_raw_character_upcast(
-                        (event_raw_character*)ev)));
+            retval = file_position_cache_set(scanner->cache, pos->file, pos);
             if (STATUS_SUCCESS != retval)
             {
                 return retval;
@@ -328,11 +335,16 @@ static int process_char_event_slash(
 
         default:
             /* send the slash event to all subscribers. */
-            retval = raw_character_broadcast(scanner, &scanner->pos1, '/');
+            retval =
+                file_position_cache_raw_character_broadcast(
+                    scanner->cache, scanner->reactor, '/');
             if (STATUS_SUCCESS != retval)
             {
                 return retval;
             }
+
+            /* clear the cache. */
+            file_position_cache_clear(scanner->cache);
 
             /* we are now in the init state. */
             scanner->state = CPARSE_COMMENT_SCANNER_STATE_INIT;
@@ -359,18 +371,19 @@ static int process_char_event_slash(
 static int process_char_event_block(
     comment_scanner* scanner, const event_raw_character* ev, int ch)
 {
+    const cursor* pos;
     int retval;
 
     /* decode the character. */
     switch (ch)
     {
         case '*':
+            /* get the event position. */
+            pos =
+                event_get_cursor(event_raw_character_upcast(
+                    (event_raw_character*)ev));
             /* cache the current position. */
-            retval =
-                comment_scanner_cached_file_position_set(
-                    scanner,
-                    event_get_cursor(event_raw_character_upcast(
-                        (event_raw_character*)ev)));
+            retval = file_position_cache_set(scanner->cache, pos->file, pos);
             if (STATUS_SUCCESS != retval)
             {
                 return retval;
@@ -402,6 +415,7 @@ static int process_char_event_block(
 static int process_char_event_block_star(
     comment_scanner* scanner, const event_raw_character* ev, int ch)
 {
+    const cursor* pos;
     int retval;
 
     /* decode the character. */
@@ -413,33 +427,45 @@ static int process_char_event_block_star(
 
         case '*':
             /* send the previous star event to all subscribers. */
-            retval = raw_character_broadcast(scanner, &scanner->pos1, '*');
+            retval =
+                file_position_cache_raw_character_broadcast(
+                    scanner->cache, scanner->reactor, '*');
             if (STATUS_SUCCESS != retval)
             {
                 return retval;
             }
 
+            /* clear the cache. */
+            file_position_cache_clear(scanner->cache);
+
+            /* get the event position. */
+            pos =
+                event_get_cursor(event_raw_character_upcast(
+                    (event_raw_character*)ev));
+
             /* cache the current position. */
-            retval =
-                comment_scanner_cached_file_position_set(
-                    scanner,
-                    event_get_cursor(event_raw_character_upcast(
-                        (event_raw_character*)ev)));
+            retval = file_position_cache_set(scanner->cache, pos->file, pos);
             if (STATUS_SUCCESS != retval)
             {
                 return retval;
             }
+
             /* we are now in the block star state. */
             scanner->state = CPARSE_COMMENT_SCANNER_STATE_IN_BLOCK_COMMENT_STAR;
             return STATUS_SUCCESS;
 
         default:
             /* send the star event to all subscribers. */
-            retval = raw_character_broadcast(scanner, &scanner->pos1, '*');
+            retval =
+                file_position_cache_raw_character_broadcast(
+                    scanner->cache, scanner->reactor, '*');
             if (STATUS_SUCCESS != retval)
             {
                 return retval;
             }
+
+            /* clear the cache. */
+            file_position_cache_clear(scanner->cache);
 
             /* we are now in the in block comment event state. */
             scanner->state = CPARSE_COMMENT_SCANNER_STATE_IN_BLOCK_COMMENT;
@@ -640,14 +666,22 @@ static int begin_block_comment_broadcast(
     comment_scanner* scanner, const event_raw_character* ev)
 {
     int retval, release_retval;
+    const cursor* pos1;
     cursor pos;
     event bev;
 
     const cursor* starpos =
         event_get_cursor(event_raw_character_upcast((event_raw_character*)ev));
 
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->cache, &pos1);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
     /* copy the cached position. */
-    memcpy(&pos, &scanner->pos1, sizeof(pos));
+    memcpy(&pos, pos1, sizeof(pos));
 
     /* update the end column and line. */
     pos.end_line = starpos->end_line;
@@ -666,6 +700,9 @@ static int begin_block_comment_broadcast(
     {
         goto cleanup_bev;
     }
+
+    /* clear the cache. */
+    file_position_cache_clear(scanner->cache);
 
     /* success. */
     retval = STATUS_SUCCESS;
@@ -698,14 +735,22 @@ static int end_block_comment_broadcast(
     comment_scanner* scanner, const event_raw_character* ev)
 {
     int retval, release_retval;
+    const cursor* pos1;
     cursor pos;
     event bev;
 
     const cursor* slashpos =
         event_get_cursor(event_raw_character_upcast((event_raw_character*)ev));
 
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->cache, &pos1);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
     /* copy the cached position. */
-    memcpy(&pos, &scanner->pos1, sizeof(pos));
+    memcpy(&pos, pos1, sizeof(pos));
 
     /* update the end column and line. */
     pos.end_line = slashpos->end_line;
@@ -724,6 +769,9 @@ static int end_block_comment_broadcast(
     {
         goto cleanup_bev;
     }
+
+    /* clear the cache. */
+    file_position_cache_clear(scanner->cache);
 
     /* success. */
     retval = STATUS_SUCCESS;
@@ -756,14 +804,22 @@ static int begin_line_comment_broadcast(
     comment_scanner* scanner, const event_raw_character* ev)
 {
     int retval, release_retval;
+    const cursor* pos1;
     cursor pos;
     event lev;
 
     const cursor* slashpos =
         event_get_cursor(event_raw_character_upcast((event_raw_character*)ev));
 
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->cache, &pos1);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
     /* copy the cached position. */
-    memcpy(&pos, &scanner->pos1, sizeof(pos));
+    memcpy(&pos, pos1, sizeof(pos));
 
     /* update the end column and line. */
     pos.end_line = slashpos->end_line;
@@ -782,6 +838,9 @@ static int begin_line_comment_broadcast(
     {
         goto cleanup_lev;
     }
+
+    /* clear the cache. */
+    file_position_cache_clear(scanner->cache);
 
     /* success. */
     retval = STATUS_SUCCESS;
@@ -843,6 +902,9 @@ static int end_line_comment_broadcast(
         goto cleanup_lev;
     }
 
+    /* clear the cache. */
+    file_position_cache_clear(scanner->cache);
+
     /* success. */
     retval = STATUS_SUCCESS;
     goto cleanup_lev;
@@ -857,55 +919,5 @@ cleanup_lev:
 done:
     memset(&pos, 0, sizeof(pos));
 
-    return retval;
-}
-
-/**
- * \brief Broadcast a raw character.
- *
- * \param scanner           The \ref comment_scanner for this operation.
- * \param pos               The position for this message.
- * \param ch                The character for this message.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-static int raw_character_broadcast(
-    comment_scanner* scanner, const cursor* pos, int ch)
-{
-    int retval, release_retval;
-    event_raw_character rev;
-
-    /* initialize the raw character event. */
-    retval =
-        event_raw_character_init(
-            &rev, CPARSE_EVENT_TYPE_RAW_CHARACTER, pos, ch);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto done;
-    }
-
-    /* broadcast this message. */
-    retval =
-        event_reactor_broadcast(
-            scanner->reactor, event_raw_character_upcast(&rev));
-    if (STATUS_SUCCESS != retval)
-    {
-        goto cleanup_rev;
-    }
-
-    /* success. */
-    retval = STATUS_SUCCESS;
-    goto cleanup_rev;
-
-cleanup_rev:
-    release_retval = event_raw_character_dispose(&rev);
-    if (STATUS_SUCCESS != release_retval)
-    {
-        retval = release_retval;
-    }
-
-done:
     return retval;
 }
