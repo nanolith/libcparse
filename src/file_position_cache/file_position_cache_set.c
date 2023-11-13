@@ -49,6 +49,7 @@ int CPARSE_SYM(file_position_cache_set)(
 
     /* set the file. */
     cache->file = tmp;
+    cache->pos.file = tmp;
     tmp = NULL;
 
     /* success. */
