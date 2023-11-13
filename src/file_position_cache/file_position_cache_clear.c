@@ -25,6 +25,7 @@ void CPARSE_SYM(file_position_cache_clear)(
     {
         memset(cache->file, 0, strlen(cache->file));
         free(cache->file);
+        cache->file = NULL;
     }
 
     memset(&cache->pos, 0, sizeof(cache->pos));
