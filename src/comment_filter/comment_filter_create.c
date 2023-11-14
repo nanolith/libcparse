@@ -24,6 +24,7 @@ CPARSE_IMPORT_comment_filter_internal;
 CPARSE_IMPORT_comment_scanner;
 CPARSE_IMPORT_event_handler;
 CPARSE_IMPORT_event_reactor;
+CPARSE_IMPORT_file_position_cache;
 CPARSE_IMPORT_message_handler;
 
 /**
@@ -67,6 +68,13 @@ int CPARSE_SYM(comment_filter_create)(CPARSE_SYM(comment_filter)** filter)
 
     /* create event reactor. */
     retval = event_reactor_create(&tmp->reactor);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tmp;
+    }
+
+    /* create the cache. */
+    retval = file_position_cache_create(&tmp->cache);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_tmp;
