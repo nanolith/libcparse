@@ -37,6 +37,7 @@ struct test_context
     list<int> vals;
     bool eof;
     cursor pos;
+    string f;
 
     test_context()
         : eof(false)
@@ -64,6 +65,8 @@ static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
 
         ctx->vals.push_back(event_raw_character_get(rev));
         memcpy(&ctx->pos, event_get_cursor(ev), sizeof(ctx->pos));
+        ctx->f = ctx->pos.file;
+        ctx->pos.file = ctx->f.c_str();
     }
     else
     {
