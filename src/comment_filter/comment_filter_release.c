@@ -18,6 +18,7 @@
 CPARSE_IMPORT_comment_filter_internal;
 CPARSE_IMPORT_comment_scanner;
 CPARSE_IMPORT_event_reactor;
+CPARSE_IMPORT_file_position_cache;
 CPARSE_IMPORT_message_handler;
 
 /**
@@ -34,6 +35,7 @@ int CPARSE_SYM(comment_filter_release)(CPARSE_SYM(comment_filter)* filter)
 {
     int parent_release_retval = STATUS_SUCCESS;
     int reactor_release_retval = STATUS_SUCCESS;
+    int cache_release_retval = STATUS_SUCCESS;
     int cached_file_clear = STATUS_SUCCESS;
     int mh_dispose_retval = STATUS_SUCCESS;
 
@@ -47,6 +49,12 @@ int CPARSE_SYM(comment_filter_release)(CPARSE_SYM(comment_filter)* filter)
     if (NULL != filter->reactor)
     {
         reactor_release_retval = event_reactor_release(filter->reactor);
+    }
+
+    /* release the cache if valid. */
+    if (NULL != filter->cache)
+    {
+        cache_release_retval = file_position_cache_release(filter->cache);
     }
 
     /* clear the cached file name if set. */
@@ -69,6 +77,10 @@ int CPARSE_SYM(comment_filter_release)(CPARSE_SYM(comment_filter)* filter)
     else if (STATUS_SUCCESS != reactor_release_retval)
     {
         return reactor_release_retval;
+    }
+    else if (STATUS_SUCCESS != cache_release_retval)
+    {
+        return cache_release_retval;
     }
     else if (STATUS_SUCCESS != cached_file_clear)
     {
