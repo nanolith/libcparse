@@ -36,6 +36,24 @@ enum CPARSE_SYM(line_wrap_filter_state)
     CPARSE_LINE_WRAP_FILTER_STATE_SLASH =                        1,
 };
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Message handler callback for \ref line_wrap_filter.
+ *
+ * \param context           The context for this handler (the
+ *                          \ref line_wrap_filter instance).
+ * \param msg               A message for this handler.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(line_wrap_filter_message_callback)(
+    void* context, const CPARSE_SYM(message)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
