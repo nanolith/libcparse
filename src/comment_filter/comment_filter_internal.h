@@ -27,8 +27,6 @@ struct CPARSE_SYM(comment_filter)
     CPARSE_SYM(event_reactor)* reactor;
     CPARSE_SYM(message_handler) parent_mh;
     CPARSE_SYM(file_position_cache)* cache;
-    char* file;
-    CPARSE_SYM(cursor) pos1;
     int state;
 };
 
