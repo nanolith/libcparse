@@ -119,3 +119,38 @@ TEST(cache_set)
     TEST_ASSERT(
         STATUS_SUCCESS == file_position_cache_release(cache));
 }
+
+/**
+ * Test that setting the cache twice results in an error.
+ */
+TEST(cache_set_twice_error)
+{
+    const char* EXPECTED_FILE = "testfile";
+    cursor EXPECTED_CURSOR;
+    file_position_cache* cache;
+
+    /* initialize the expected cursor. */
+    EXPECTED_CURSOR.file = EXPECTED_FILE;
+    EXPECTED_CURSOR.begin_line = 10;
+    EXPECTED_CURSOR.begin_col = 2;
+    EXPECTED_CURSOR.end_line = 12;
+    EXPECTED_CURSOR.end_col = 16;
+
+    /* we can create the comment_filter. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == file_position_cache_create(&cache));
+
+    /* Setting the cache should succeed. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == file_position_cache_set(cache, EXPECTED_FILE, &EXPECTED_CURSOR));
+
+    /* Setting the cache a second time should fail. */
+    TEST_ASSERT(
+        ERROR_LIBCPARSE_FILE_POSITION_CACHE_ALREADY_SET
+            == file_position_cache_set(cache, EXPECTED_FILE, &EXPECTED_CURSOR));
+
+    /* clean up. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == file_position_cache_release(cache));
+}
