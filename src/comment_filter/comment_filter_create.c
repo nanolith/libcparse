@@ -111,7 +111,7 @@ int CPARSE_SYM(comment_filter_create)(CPARSE_SYM(comment_filter)** filter)
         goto cleanup_eh;
     }
 
-    /* we starte in the initial state. */
+    /* we start in the initial state. */
     tmp->state = CPARSE_COMMENT_FILTER_STATE_INIT;
 
     /* success. */
