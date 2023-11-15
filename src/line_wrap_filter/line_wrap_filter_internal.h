@@ -77,6 +77,9 @@ int CPARSE_SYM(line_wrap_filter_event_callback)(
     static inline int sym ## line_wrap_filter_message_callback( \
         void* x, const CPARSE_SYM(message)* y) { \
             return CPARSE_SYM(line_wrap_filter_message_callback)(x,y); } \
+    static inline int sym ## line_wrap_filter_event_callback( \
+        void* x, const CPARSE_SYM(event)* y) { \
+            return CPARSE_SYM(line_wrap_filter_event_callback)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_line_wrap_filter_internal_as(sym) \
