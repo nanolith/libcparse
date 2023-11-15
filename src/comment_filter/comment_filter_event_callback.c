@@ -22,11 +22,10 @@ CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_raw_character;
 CPARSE_IMPORT_event_reactor;
+CPARSE_IMPORT_file_position_cache;
 
 static int process_char_event(comment_filter* filter, const event* ev);
 static int process_eof_event(comment_filter* filter, const event* ev);
-static int raw_character_broadcast(
-    comment_filter* filter, const cursor* pos, const event* ev, int ch);
 
 /**
  * \brief Event handler callback for \ref comment_filter.
@@ -42,6 +41,7 @@ static int raw_character_broadcast(
 int CPARSE_SYM(comment_filter_event_callback)(
     void* context, const CPARSE_SYM(event)* ev)
 {
+    const cursor* pos;
     int retval;
     comment_filter* filter = (comment_filter*)context;
 
@@ -54,12 +54,11 @@ int CPARSE_SYM(comment_filter_event_callback)(
             return process_char_event(filter, ev);
 
         case CPARSE_EVENT_TYPE_COMMENT_BLOCK_BEGIN:
+            /* get the current position. */
+            pos = event_get_cursor(ev);
+
             /* cache the current position. */
-            retval =
-                comment_filter_cached_file_position_set(
-                    filter,
-                    event_get_cursor(event_raw_character_upcast(
-                        (event_raw_character*)ev)));
+            retval = file_position_cache_set(filter->cache, pos->file, pos);
             if (STATUS_SUCCESS != retval)
             {
                 return retval;
@@ -71,11 +70,16 @@ int CPARSE_SYM(comment_filter_event_callback)(
 
         case CPARSE_EVENT_TYPE_COMMENT_BLOCK_END:
             /* broadcast a space character event. */
-            retval = raw_character_broadcast(filter, &filter->pos1, ev, ' ');
+            retval =
+                file_position_cache_raw_character_broadcast(
+                    filter->cache, filter->reactor, ' ');
             if (STATUS_SUCCESS != retval)
             {
                 return retval;
             }
+
+            /* clear the cache. */
+            file_position_cache_clear(filter->cache);
 
             /* we are now in the init state. */
             filter->state = CPARSE_COMMENT_FILTER_STATE_INIT;
@@ -137,67 +141,4 @@ static int process_char_event(comment_filter* filter, const event* ev)
         default:
             return ERROR_LIBCPARSE_COMMENT_BAD_STATE;
     }
-}
-
-/**
- * \brief Broadcast a raw character.
- *
- * \param filter            The \ref comment_filter for this operation.
- * \param pos               The position for this message.
- * \param ev                The event for the end position of this message.
- * \param ch                The character for this message.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-static int raw_character_broadcast(
-    comment_filter* filter, const cursor* pos, const event* ev, int ch)
-{
-    int retval, release_retval;
-    event_raw_character rev;
-    const cursor* endpos;
-    cursor newpos;
-
-    /* get the endpos cursor. */
-    endpos = event_get_cursor(ev);
-
-    /* copy the position to this position. */
-    memcpy(&newpos, pos, sizeof(newpos));
-
-    /* override the end position. */
-    newpos.end_line = endpos->end_line;
-    newpos.end_col = endpos->end_col;
-
-    /* initialize the raw character event. */
-    retval =
-        event_raw_character_init(
-            &rev, CPARSE_EVENT_TYPE_RAW_CHARACTER, &newpos, ch);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto done;
-    }
-
-    /* broadcast this message. */
-    retval =
-        event_reactor_broadcast(
-            filter->reactor, event_raw_character_upcast(&rev));
-    if (STATUS_SUCCESS != retval)
-    {
-        goto cleanup_rev;
-    }
-
-    /* success. */
-    retval = STATUS_SUCCESS;
-    goto cleanup_rev;
-
-cleanup_rev:
-    release_retval = event_raw_character_dispose(&rev);
-    if (STATUS_SUCCESS != release_retval)
-    {
-        retval = release_retval;
-    }
-
-done:
-    return retval;
 }
