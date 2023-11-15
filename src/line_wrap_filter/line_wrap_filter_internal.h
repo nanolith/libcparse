@@ -11,6 +11,7 @@
 
 #include <libcparse/raw_file_line_override_filter.h>
 #include <libcparse/event_reactor_fwd.h>
+#include <libcparse/file_position_cache.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -25,8 +26,7 @@ struct CPARSE_SYM(line_wrap_filter)
     CPARSE_SYM(raw_file_line_override_filter)* parent;
     CPARSE_SYM(event_reactor)* reactor;
     CPARSE_SYM(message_handler) parent_mh;
-    char* file;
-    CPARSE_SYM(cursor) pos1;
+    CPARSE_SYM(file_position_cache)* cache;
     int state;
 };
 
