@@ -10,6 +10,7 @@
 #include <libcparse/file_position_cache.h>
 #include <libcparse/status_codes.h>
 #include <minunit/minunit.h>
+#include <string.h>
 
 using namespace std;
 
@@ -57,6 +58,62 @@ TEST(cache_not_set_error)
     TEST_EXPECT(
         ERROR_LIBCPARSE_FILE_POSITION_CACHE_NOT_SET
             == file_position_cache_position_get(cache, &pos));
+
+    /* clean up. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == file_position_cache_release(cache));
+}
+
+/**
+ * Test that if we set the cache, we can retrieve the file and position.
+ */
+TEST(cache_set)
+{
+    const char* EXPECTED_FILE = "testfile";
+    cursor EXPECTED_CURSOR;
+    file_position_cache* cache;
+    const char* file = nullptr;
+    const cursor* pos = nullptr;
+
+    /* initialize the expected cursor. */
+    EXPECTED_CURSOR.file = EXPECTED_FILE;
+    EXPECTED_CURSOR.begin_line = 10;
+    EXPECTED_CURSOR.begin_col = 2;
+    EXPECTED_CURSOR.end_line = 12;
+    EXPECTED_CURSOR.end_col = 16;
+
+    /* we can create the comment_filter. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == file_position_cache_create(&cache));
+
+    /* Setting the cache should succeed. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == file_position_cache_set(cache, EXPECTED_FILE, &EXPECTED_CURSOR));
+
+    /* getting the file succeeds. */
+    TEST_ASSERT(STATUS_SUCCESS == file_position_cache_file_get(cache, &file));
+
+    /* the file is not NULL. */
+    TEST_ASSERT(nullptr != file);
+
+    /* the file matches our expected file. */
+    TEST_EXPECT(!strcmp(file, EXPECTED_FILE));
+
+    /* getting the position succeeds. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == file_position_cache_position_get(cache, &pos));
+
+    /* the position is not NULL. */
+    TEST_ASSERT(nullptr != pos);
+
+    /* the position matches our expected position. */
+    TEST_ASSERT(nullptr != pos->file);
+    TEST_EXPECT(!strcmp(pos->file, EXPECTED_CURSOR.file));
+    TEST_EXPECT(pos->begin_line == EXPECTED_CURSOR.begin_line);
+    TEST_EXPECT(pos->begin_col == EXPECTED_CURSOR.begin_col);
+    TEST_EXPECT(pos->end_line == EXPECTED_CURSOR.end_line);
+    TEST_EXPECT(pos->end_col == EXPECTED_CURSOR.end_col);
 
     /* clean up. */
     TEST_ASSERT(
