@@ -36,7 +36,6 @@ int CPARSE_SYM(comment_filter_release)(CPARSE_SYM(comment_filter)* filter)
     int parent_release_retval = STATUS_SUCCESS;
     int reactor_release_retval = STATUS_SUCCESS;
     int cache_release_retval = STATUS_SUCCESS;
-    int cached_file_clear = STATUS_SUCCESS;
     int mh_dispose_retval = STATUS_SUCCESS;
 
     /* release the parent if valid. */
@@ -56,9 +55,6 @@ int CPARSE_SYM(comment_filter_release)(CPARSE_SYM(comment_filter)* filter)
     {
         cache_release_retval = file_position_cache_release(filter->cache);
     }
-
-    /* clear the cached file name if set. */
-    cached_file_clear = comment_filter_cached_file_clear(filter);
 
     /* dispose the parent message handler. */
     mh_dispose_retval = message_handler_dispose(&filter->parent_mh);
@@ -81,10 +77,6 @@ int CPARSE_SYM(comment_filter_release)(CPARSE_SYM(comment_filter)* filter)
     else if (STATUS_SUCCESS != cache_release_retval)
     {
         return cache_release_retval;
-    }
-    else if (STATUS_SUCCESS != cached_file_clear)
-    {
-        return cached_file_clear;
     }
     else
     {

@@ -71,18 +71,6 @@ int CPARSE_SYM(comment_filter_message_callback)(
 int CPARSE_SYM(comment_filter_event_callback)(
     void* context, const CPARSE_SYM(event)* ev);
 
-/**
- * \brief Clear and free cached file.
- *
- * \param filter            The filter for this operation.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-int CPARSE_SYM(comment_filter_cached_file_clear)(
-    CPARSE_SYM(comment_filter)* filter);
-
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
@@ -95,9 +83,6 @@ int CPARSE_SYM(comment_filter_cached_file_clear)(
     static inline int sym ## comment_filter_event_callback( \
         void* x, const CPARSE_SYM(event)* y) { \
             return CPARSE_SYM(comment_filter_event_callback)(x,y); } \
-    static inline int sym ## comment_filter_cached_file_clear( \
-        CPARSE_SYM(comment_filter)* x) { \
-            return CPARSE_SYM(comment_filter_cached_file_clear)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_comment_filter_internal_as(sym) \
