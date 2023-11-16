@@ -8,6 +8,7 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <cstring>
 #include <libcparse/abstract_parser.h>
 #include <libcparse/cursor.h>
 #include <libcparse/event.h>
