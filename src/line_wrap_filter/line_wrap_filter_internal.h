@@ -33,7 +33,8 @@ struct CPARSE_SYM(line_wrap_filter)
 enum CPARSE_SYM(line_wrap_filter_state)
 {
     CPARSE_LINE_WRAP_FILTER_STATE_INIT =                         0,
-    CPARSE_LINE_WRAP_FILTER_STATE_SLASH =                        1,
+    CPARSE_LINE_WRAP_FILTER_STATE_CHAR =                         1,
+    CPARSE_LINE_WRAP_FILTER_STATE_SLASH =                        2,
 };
 
 /******************************************************************************/
