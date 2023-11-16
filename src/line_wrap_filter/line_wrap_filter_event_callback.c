@@ -7,17 +7,23 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <libcparse/event/raw_character.h>
 #include <libcparse/event_reactor.h>
 #include <libcparse/line_wrap_filter.h>
 #include <libcparse/status_codes.h>
 
 #include "line_wrap_filter_internal.h"
 
+CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
+CPARSE_IMPORT_event_raw_character;
 CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_line_wrap_filter;
 
+static int process_char_event(line_wrap_filter* filter, const event* ev);
 static int process_eof_event(line_wrap_filter* filter, const event* ev);
+static int raw_character_broadcast(
+    line_wrap_filter* filter, const event* ev, int ch);
 
 /**
  * \brief Event handler callback for \ref line_wrap_filter.
@@ -40,6 +46,9 @@ int CPARSE_SYM(line_wrap_filter_event_callback)(
         case CPARSE_EVENT_TYPE_EOF:
             return process_eof_event(filter, ev);
 
+        case CPARSE_EVENT_TYPE_RAW_CHARACTER:
+            return process_char_event(filter, ev);
+
         default:
             return STATUS_SUCCESS;
     }
@@ -57,5 +66,126 @@ int CPARSE_SYM(line_wrap_filter_event_callback)(
  */
 static int process_eof_event(line_wrap_filter* filter, const event* ev)
 {
+    int retval;
+
+    /* if we are in the char state, broadcast a newline. */
+    if (CPARSE_LINE_WRAP_FILTER_STATE_CHAR == filter->state)
+    {
+        retval = raw_character_broadcast(filter, ev, '\n');
+        if (STATUS_SUCCESS != retval)
+        {
+            return retval;
+        }
+    }
+
+    /* broadcast the EOF. */
     return event_reactor_broadcast(filter->reactor, ev);
+}
+
+/**
+ * \brief Process a character event.
+ *
+ * \param filter            The \ref line_wrap_filter for this operation.
+ * \param ev                The raw character event to process.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int process_char_event(line_wrap_filter* filter, const event* ev)
+{
+    event_raw_character* rev;
+
+    /* get the raw character event. */
+    int retval = event_downcast_to_event_raw_character(&rev, (event*)ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    int ch = event_raw_character_get(rev);
+
+    switch (filter->state)
+    {
+        case CPARSE_LINE_WRAP_FILTER_STATE_INIT:
+        case CPARSE_LINE_WRAP_FILTER_STATE_CHAR:
+            /* reset on newline. */
+            if ('\n' == ch)
+            {
+                filter->state = CPARSE_LINE_WRAP_FILTER_STATE_INIT;
+
+                /* broadcast this event. */
+                return event_reactor_broadcast(filter->reactor, ev);
+            }
+            /* forward non-slash characters. */
+            else if ('\\' != ch)
+            {
+                /* there is a character on this line. */
+                filter->state = CPARSE_LINE_WRAP_FILTER_STATE_CHAR;
+
+                /* broadcast this event. */
+                return event_reactor_broadcast(filter->reactor, ev);
+            }
+            else
+            {
+                /* for now, just broadcast this event. */
+                return event_reactor_broadcast(filter->reactor, ev);
+            }
+
+        default:
+            return ERROR_LIBCPARSE_COMMENT_BAD_STATE;
+    }
+}
+
+/**
+ * \brief Broadcast a raw character event.
+ *
+ * \param filter            The \ref line_wrap_filter for this operation.
+ * \param ev                The event to harvest for position data.
+ * \param ch                The character to broadcast.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int raw_character_broadcast(
+    line_wrap_filter* filter, const event* ev, int ch)
+{
+    int retval, release_retval;
+    event_raw_character rch;
+
+    /* get the position of the event. */
+    const cursor* pos = event_get_cursor(ev);
+
+    /* initialize this event. */
+    retval =
+        event_raw_character_init(
+            &rch, CPARSE_EVENT_TYPE_RAW_CHARACTER, pos, ch);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval =
+        event_reactor_broadcast(
+            filter->reactor, event_raw_character_upcast(&rch));
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_rch;
+    }
+
+    /* success. */
+    retval = STATUS_SUCCESS;
+    goto cleanup_rch;
+
+cleanup_rch:
+    release_retval = event_raw_character_dispose(&rch);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    return retval;
 }
