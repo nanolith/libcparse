@@ -142,13 +142,15 @@ static int setup_parser(
     input_stream* stream = NULL;
     int desc = -1;
 
+    const char* progname = argv[0];
+
     /* parse flags. */
     while ((ch = getopt(argc, argv, "")) != -1)
     {
         switch (ch)
         {
             default:
-                fprintf(stderr, "usage: %s [file ...]\n", getprogname());
+                fprintf(stderr, "usage: %s [file ...]\n", progname);
                 retval = 1;
                 goto done;
         }
