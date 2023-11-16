@@ -18,7 +18,7 @@ CPARSE_IMPORT_event_reactor;
 
 /**
  * \brief Given a cache, event reactor, and character, send a cached raw
- * character event to the event reactorsubscribers.
+ * character event to the event reactor subscribers.
  *
  * \param cache             The \ref file_position_cache instance for this
  *                          operation.
