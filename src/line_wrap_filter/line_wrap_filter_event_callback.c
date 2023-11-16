@@ -18,12 +18,15 @@ CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_raw_character;
 CPARSE_IMPORT_event_reactor;
+CPARSE_IMPORT_file_position_cache;
 CPARSE_IMPORT_line_wrap_filter;
 
 static int process_char_event(line_wrap_filter* filter, const event* ev);
 static int process_eof_event(line_wrap_filter* filter, const event* ev);
 static int raw_character_broadcast(
     line_wrap_filter* filter, const event* ev, int ch);
+static int line_wrap_broadcast(line_wrap_filter* filter);
+static int double_char_broadcast(line_wrap_filter* filter, const event* ev);
 
 /**
  * \brief Event handler callback for \ref line_wrap_filter.
@@ -128,8 +131,32 @@ static int process_char_event(line_wrap_filter* filter, const event* ev)
             }
             else
             {
-                /* for now, just broadcast this event. */
-                return event_reactor_broadcast(filter->reactor, ev);
+                /* we are in the slash state now. */
+                filter->state = CPARSE_LINE_WRAP_FILTER_STATE_SLASH;
+
+                /* get the position. */
+                const cursor* pos = event_get_cursor(ev);
+
+                /* cache this state. */
+                return file_position_cache_set(filter->cache, pos->file, pos);
+            }
+
+        case CPARSE_LINE_WRAP_FILTER_STATE_SLASH:
+            /* replace newline with space. */
+            if ('\n' == ch)
+            {
+                filter->state = CPARSE_LINE_WRAP_FILTER_STATE_INIT;
+
+                /* broadcast both events. */
+                return line_wrap_broadcast(filter);
+            }
+            /* for any other character, broadcast both. */
+            else
+            {
+                filter->state = CPARSE_LINE_WRAP_FILTER_STATE_CHAR;
+
+                /* broadcast both characters. */
+                return double_char_broadcast(filter, ev);
             }
 
         default:
@@ -188,4 +215,56 @@ cleanup_rch:
 
 done:
     return retval;
+}
+
+/**
+ * \brief Broadcast a line wrap in place of the original escape.
+ *
+ * \param filter            The \ref line_wrap_filter for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int line_wrap_broadcast(line_wrap_filter* filter)
+{
+    int retval;
+
+    /* broadcast the truncated space. */
+    retval =
+        file_position_cache_raw_character_broadcast(
+            filter->cache, filter->reactor, ' ');
+
+    /* clear the cache. */
+    file_position_cache_clear(filter->cache);
+
+    /* return the broadcast status. */
+    return retval;
+}
+
+/**
+ * \brief Broadcast the backslash and the given character.
+ *
+ * \param filter            The \ref line_wrap_filter for this operation.
+ * \param ch                The character to broadcast.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int double_char_broadcast(line_wrap_filter* filter, const event* ev)
+{
+    int retval;
+
+    /* broadcast the backslash. */
+    retval =
+        file_position_cache_raw_character_broadcast(
+            filter->cache, filter->reactor, '\\');
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* broadcast the character. */
+    return event_reactor_broadcast(filter->reactor, ev);
 }
