@@ -7,9 +7,13 @@
  * distribution for the license terms under which this software is distributed.
  */
 
-#include <libcparse/status_codes.h>
+#include <libcparse/line_wrap_filter.h>
 
 #include "line_wrap_filter_internal.h"
+
+CPARSE_IMPORT_line_wrap_filter;
+CPARSE_IMPORT_message;
+CPARSE_IMPORT_message_handler;
 
 /**
  * \brief Message handler callback for \ref line_wrap_filter.
@@ -25,8 +29,11 @@
 int CPARSE_SYM(line_wrap_filter_message_callback)(
     void* context, const CPARSE_SYM(message)* msg)
 {
-    (void)context;
-    (void)msg;
+    line_wrap_filter* filter = (line_wrap_filter*)context;
 
-    return ERROR_LIBCPARSE_UNHANDLED_MESSAGE;
+    switch (message_get_type(msg))
+    {
+        default:
+            return message_handler_send(&filter->parent_mh, msg);
+    }
 }
