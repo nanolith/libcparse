@@ -25,6 +25,7 @@ bool CPARSE_SYM(message_type_valid_subscription_type)(int msg_type)
         case CPARSE_MESSAGE_TYPE_RFLO_SUBSCRIBE:
         case CPARSE_MESSAGE_TYPE_COMMENT_SCANNER_SUBSCRIBE:
         case CPARSE_MESSAGE_TYPE_COMMENT_FILTER_SUBSCRIBE:
+        case CPARSE_MESSAGE_TYPE_LINE_WRAP_FILTER_SUBSCRIBE:
             return true;
 
         default:
