@@ -7,6 +7,7 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <cstring>
 #include <libcparse/event/raw_character.h>
 #include <libcparse/input_stream.h>
 #include <libcparse/line_wrap_filter.h>
