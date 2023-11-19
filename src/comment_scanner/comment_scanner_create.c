@@ -11,8 +11,8 @@
 #include <libcparse/comment_scanner.h>
 #include <libcparse/event_handler.h>
 #include <libcparse/event_reactor.h>
+#include <libcparse/line_wrap_filter.h>
 #include <libcparse/message_handler.h>
-#include <libcparse/raw_file_line_override_filter.h>
 #include <libcparse/status_codes.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,8 +25,8 @@ CPARSE_IMPORT_comment_scanner_internal;
 CPARSE_IMPORT_event_handler;
 CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_file_position_cache;
+CPARSE_IMPORT_line_wrap_filter;
 CPARSE_IMPORT_message_handler;
-CPARSE_IMPORT_raw_file_line_override_filter;
 
 /**
  * \brief Create a comment scanner.
@@ -61,7 +61,7 @@ int CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner)
     memset(tmp, 0, sizeof(*tmp));
 
     /* create parent instance. */
-    retval = raw_file_line_override_filter_create(&tmp->parent);
+    retval = line_wrap_filter_create(&tmp->parent);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_tmp;
@@ -82,7 +82,7 @@ int CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner)
     }
 
     /* get the abstract parser instance for the parent. */
-    abstract_parser* ap = raw_file_line_override_filter_upcast(tmp->parent);
+    abstract_parser* ap = line_wrap_filter_upcast(tmp->parent);
 
     /* initialize our message handler. */
     retval = message_handler_init(&mh, &comment_scanner_message_callback, tmp);
@@ -105,8 +105,8 @@ int CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner)
         goto cleanup_eh;
     }
 
-    /* subscribe to the raw file line override filter. */
-    retval = abstract_parser_raw_file_line_override_filter_subscribe(ap, &eh);
+    /* subscribe to the line wrap filter. */
+    retval = abstract_parser_line_wrap_filter_subscribe(ap, &eh);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_eh;

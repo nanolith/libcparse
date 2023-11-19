@@ -18,8 +18,8 @@
 CPARSE_IMPORT_comment_scanner_internal;
 CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_file_position_cache;
+CPARSE_IMPORT_line_wrap_filter;
 CPARSE_IMPORT_message_handler;
-CPARSE_IMPORT_raw_file_line_override_filter;
 
 /**
  * \brief Release a comment scanner instance, releasing any internal resources
@@ -42,7 +42,7 @@ int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner)
     if (NULL != scanner->parent)
     {
         parent_release_retval =
-            raw_file_line_override_filter_release(scanner->parent);
+            line_wrap_filter_release(scanner->parent);
     }
 
     /* release the event reactor if valid. */

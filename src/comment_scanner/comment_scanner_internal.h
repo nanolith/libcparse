@@ -11,7 +11,7 @@
 
 #include <libcparse/event_reactor_fwd.h>
 #include <libcparse/file_position_cache.h>
-#include <libcparse/raw_file_line_override_filter.h>
+#include <libcparse/line_wrap_filter.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -23,7 +23,7 @@ CPARSE_SYM(comment_scanner);
 
 struct CPARSE_SYM(comment_scanner)
 {
-    CPARSE_SYM(raw_file_line_override_filter)* parent;
+    CPARSE_SYM(line_wrap_filter)* parent;
     CPARSE_SYM(event_reactor)* reactor;
     CPARSE_SYM(message_handler) parent_mh;
     CPARSE_SYM(file_position_cache)* cache;

@@ -135,7 +135,8 @@ TEST(no_comments)
     input_stream* stream;
     event_handler eh;
     test_context t1;
-    const char* TEST_STRING = "abc 123";
+    const char* INPUT_STREAM = "abc 123";
+    const char* OUTPUT_STREAM = "abc 123\n";
 
     /* create the filter instance. */
     TEST_ASSERT(
@@ -155,7 +156,7 @@ TEST(no_comments)
     /* create an input stream. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == input_stream_create_from_string(&stream, TEST_STRING));
+            == input_stream_create_from_string(&stream, INPUT_STREAM));
 
     /* add the input stream to the parser. */
     TEST_ASSERT(
@@ -173,7 +174,7 @@ TEST(no_comments)
 
     /* postcondition: vals matches our string. */
     string out(t1.vals.begin(), t1.vals.end());
-    TEST_EXPECT(out == TEST_STRING);
+    TEST_EXPECT(out == OUTPUT_STREAM);
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == comment_filter_release(filter));
@@ -190,7 +191,7 @@ TEST(block_comment)
     event_handler eh;
     test_context t1;
     const char* TEST_STRING = "abc/* nothing */123";
-    const char* TEST_STRING_XFORM = "abc 123";
+    const char* TEST_STRING_XFORM = "abc 123\n";
 
     /* create the filter instance. */
     TEST_ASSERT(
@@ -245,7 +246,7 @@ TEST(line_comment)
     event_handler eh;
     test_context t1;
     const char* TEST_STRING = "abc// nothing\n123";
-    const char* TEST_STRING_XFORM = "abc\n123";
+    const char* TEST_STRING_XFORM = "abc\n123\n";
 
     /* create the filter instance. */
     TEST_ASSERT(
