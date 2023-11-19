@@ -1,1 +1,2 @@
 ADD_SUBDIRECTORY(slowcat)
+ADD_SUBDIRECTORY(comment_strip)
