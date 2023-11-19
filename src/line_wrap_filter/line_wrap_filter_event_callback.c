@@ -265,6 +265,9 @@ static int double_char_broadcast(line_wrap_filter* filter, const event* ev)
         return retval;
     }
 
+    /* clear the cache. */
+    file_position_cache_clear(filter->cache);
+
     /* broadcast the character. */
     return event_reactor_broadcast(filter->reactor, ev);
 }
