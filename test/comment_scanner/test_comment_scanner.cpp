@@ -156,7 +156,8 @@ TEST(no_comments)
     input_stream* stream;
     event_handler eh;
     test_context t1;
-    const char* TEST_STRING = "abc 123";
+    const char* INPUT_STRING = "abc 123";
+    const char* OUTPUT_STRING = "abc 123\n";
 
     /* create the scanner instance. */
     TEST_ASSERT(
@@ -176,7 +177,7 @@ TEST(no_comments)
     /* create an input stream. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == input_stream_create_from_string(&stream, TEST_STRING));
+            == input_stream_create_from_string(&stream, INPUT_STRING));
 
     /* add the input stream to the parser. */
     TEST_ASSERT(
@@ -197,7 +198,7 @@ TEST(no_comments)
 
     /* postcondition: vals matches our string. */
     string out(t1.vals.begin(), t1.vals.end());
-    TEST_EXPECT(out == TEST_STRING);
+    TEST_EXPECT(out == OUTPUT_STRING);
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == comment_scanner_release(scanner));
@@ -214,7 +215,7 @@ TEST(block_comment)
     event_handler eh;
     test_context t1;
     const char* TEST_STRING = "abc /*123*/";
-    const char* TEST_STRING_XFORM = "abc CB123CE";
+    const char* TEST_STRING_XFORM = "abc CB123CE\n";
 
     /* create the scanner instance. */
     TEST_ASSERT(
@@ -272,7 +273,7 @@ TEST(block_comment_dupes)
     event_handler eh;
     test_context t1;
     const char* TEST_STRING = "abc /***123***/";
-    const char* TEST_STRING_XFORM = "abc CB**123**CE";
+    const char* TEST_STRING_XFORM = "abc CB**123**CE\n";
 
     /* create the scanner instance. */
     TEST_ASSERT(
@@ -330,7 +331,7 @@ TEST(slash_eof)
     event_handler eh;
     test_context t1;
     const char* TEST_STRING = "/";
-    const char* TEST_STRING_XFORM = "/";
+    const char* TEST_STRING_XFORM = "/\n";
 
     /* create the scanner instance. */
     TEST_ASSERT(
@@ -468,7 +469,7 @@ TEST(unterminated_block_comment_2)
 
     /* run the filter. */
     TEST_ASSERT(
-        ERROR_LIBCPARSE_COMMENT_EXPECTING_SLASH
+        ERROR_LIBCPARSE_COMMENT_EXPECTING_STAR_SLASH
             == abstract_parser_run(ap));
 
     /* clean up. */
@@ -486,7 +487,7 @@ TEST(line_comment)
     event_handler eh;
     test_context t1;
     const char* TEST_STRING = "abc //123\ntest";
-    const char* TEST_STRING_XFORM = "abc LB123LE\ntest";
+    const char* TEST_STRING_XFORM = "abc LB123LE\ntest\n";
 
     /* create the scanner instance. */
     TEST_ASSERT(
@@ -544,7 +545,7 @@ TEST(string_escape1)
     event_handler eh;
     test_context t1;
     const char* TEST_STRING = "\"abc /*123*/\"";
-    const char* TEST_STRING_XFORM = TEST_STRING;
+    const char* TEST_STRING_XFORM = "\"abc /*123*/\"\n";
 
     /* create the scanner instance. */
     TEST_ASSERT(
@@ -602,7 +603,7 @@ TEST(string_escape2)
     event_handler eh;
     test_context t1;
     const char* TEST_STRING = "\"abc \\\"/*123*/\\\"\"";
-    const char* TEST_STRING_XFORM = TEST_STRING;
+    const char* TEST_STRING_XFORM = "\"abc \\\"/*123*/\\\"\"\n";
 
     /* create the scanner instance. */
     TEST_ASSERT(
@@ -660,7 +661,7 @@ TEST(char_escape1)
     event_handler eh;
     test_context t1;
     const char* TEST_STRING = "'abc /*123*/'";
-    const char* TEST_STRING_XFORM = TEST_STRING;
+    const char* TEST_STRING_XFORM = "'abc /*123*/'\n";
 
     /* create the scanner instance. */
     TEST_ASSERT(
@@ -718,7 +719,7 @@ TEST(char_escape2)
     event_handler eh;
     test_context t1;
     const char* TEST_STRING = "'abc \\'/*123*/\\''";
-    const char* TEST_STRING_XFORM = TEST_STRING;
+    const char* TEST_STRING_XFORM = "'abc \\'/*123*/\\''\n";
 
     /* create the scanner instance. */
     TEST_ASSERT(
