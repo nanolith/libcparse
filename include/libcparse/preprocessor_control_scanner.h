@@ -82,6 +82,9 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(preprocessor_control_scanner_upcast)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(preprocessor_control_scanner) \
     sym ## preprocessor_control_scanner; \
+    static inline int sym ## preprocessor_control_scanner_create( \
+        CPARSE_SYM(preprocessor_control_scanner)** x) { \
+            return CPARSE_SYM(preprocessor_control_scanner_create)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_preprocessor_control_scanner_as(sym) \
