@@ -115,6 +115,9 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_line_upcast)(
     static inline int sym ## event_downcast_to_event_raw_line( \
         CPARSE_SYM(event_raw_line)** x, CPARSE_SYM(event)* y) { \
             return CPARSE_SYM(event_downcast_to_event_raw_line)(x,y); } \
+    static CPARSE_SYM(event)* sym ## event_raw_line_upcast( \
+        CPARSE_SYM(event_raw_line)* x) { \
+            return CPARSE_SYM(event_raw_line_upcast)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_raw_line_as(sym) \
