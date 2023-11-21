@@ -44,6 +44,17 @@ int CPARSE_SYM(event_raw_line_init)(
     CPARSE_SYM(event_raw_line)* ev, int event_type,
     const CPARSE_SYM(cursor)* cursor, const char* line);
 
+/**
+ * \brief Perform an in-place disposal of an \ref event_raw_line instance.
+ *
+ * \param ev                Pointer to the event to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_raw_line_dispose)(CPARSE_SYM(event_raw_line)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
