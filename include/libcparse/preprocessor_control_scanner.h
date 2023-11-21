@@ -24,6 +24,27 @@ extern "C" {
 typedef struct CPARSE_SYM(preprocessor_control_scanner)
 CPARSE_SYM(preprocessor_control_scanner);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a preprocessor control scanner.
+ *
+ * This scanner automatically creates a comment filter and injects itself into
+ * the message chain for the parser stack.
+ *
+ * \param scanner           Pointer to the \ref preprocessor_control_scanner
+ *                          pointer to be populated with the created
+ *                          preprocessor control scanner instance on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(preprocessor_control_scanner_create)(
+    CPARSE_SYM(preprocessor_control_scanner)** scanner);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
