@@ -55,6 +55,20 @@ int CPARSE_SYM(event_raw_line_init)(
  */
 int CPARSE_SYM(event_raw_line_dispose)(CPARSE_SYM(event_raw_line)* ev);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the line value for this event.
+ *
+ * \param ev                The event instance to query.
+ *
+ * \returns the line value for this event.
+ */
+const char* CPARSE_SYM(event_raw_line_get)(
+    const CPARSE_SYM(event_raw_line)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
