@@ -60,6 +60,21 @@ enum CPARSE_SYM(newline_preserving_whitespace_filter_state)
 int CPARSE_SYM(newline_preserving_whitespace_filter_message_callback)(
     void* context, const CPARSE_SYM(message)* msg);
 
+/**
+ * \brief Event handler callback for
+ * \ref newline_preserving_whitespace_filter.
+ *
+ * \param context           The context for this handler (the
+ *                          \ref newline_preserving_whitespace_filter instance).
+ * \param ev                An event for this handler.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(newline_preserving_whitespace_filter_event_callback)(
+    void* context, const CPARSE_SYM(event)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
