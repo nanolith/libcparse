@@ -41,6 +41,25 @@ enum CPARSE_SYM(newline_preserving_whitespace_filter_state)
     CPARSE_NL_WHITESPACE_FILTER_STATE_IN_WHITESPACE =               5,
 };
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Message handler callback for
+ * \ref newline_preserving_whitespace_filter.
+ *
+ * \param context           The context for this handler (the
+ *                          \ref newline_preserving_whitespace_filter instance).
+ * \param msg               A message for this handler.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(newline_preserving_whitespace_filter_message_callback)(
+    void* context, const CPARSE_SYM(message)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
