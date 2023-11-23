@@ -30,8 +30,8 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_COMMENT_LINE_END =            0x0013,
 
     /* Add a whitespace token event. */
-    CPARSE_EVENT_TYPE_TOKEN_WHITESPACE =            0x0014,
-    CPARSE_EVENT_TYPE_TOKEN_NEWLINE =               0x0015,
+    CPARSE_EVENT_TYPE_TOKEN_WHITESPACE =            0x0020,
+    CPARSE_EVENT_TYPE_TOKEN_NEWLINE =               0x0021,
 
     /* preprocessor events. */
     CPARSE_EVENT_TYPE_PREPROCESSOR_INCLUDE =        0x0040,
