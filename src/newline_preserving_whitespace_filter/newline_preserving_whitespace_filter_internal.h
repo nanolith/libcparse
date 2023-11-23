@@ -36,6 +36,7 @@ enum CPARSE_SYM(newline_preserving_whitespace_filter_state)
     CPARSE_NL_WHITESPACE_FILTER_STATE_INIT =                        0,
     CPARSE_NL_WHITESPACE_FILTER_STATE_IN_STRING =                   1,
     CPARSE_NL_WHITESPACE_FILTER_STATE_IN_STRING_SLASH =             2,
+    CPARSE_NL_WHITESPACE_FILTER_STATE_IN_CHARACTER_SEQUENCE =       3,
 };
 
 /* C++ compatibility. */
