@@ -83,6 +83,21 @@ CPARSE_SYM(abstract_parser)*
 CPARSE_SYM(newline_preserving_whitespace_filter_upcast)(
     CPARSE_SYM(newline_preserving_whitespace_filter)* filter);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_newline_preserving_whitespace_filter_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(newline_preserving_whitespace_filter) \
+    sym ## newline_preserving_whitespace_filter; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_newline_preserving_whitespace_filter_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_newline_preserving_whitespace_filter_sym(sym ## _)
+#define CPARSE_IMPORT_newline_preserving_whitespace_filter \
+    __INTERNAL_CPARSE_IMPORT_newline_preserving_whitespace_filter_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
