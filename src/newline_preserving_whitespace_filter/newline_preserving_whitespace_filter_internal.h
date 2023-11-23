@@ -34,6 +34,7 @@ struct CPARSE_SYM(newline_preserving_whitespace_filter_internal)
 enum CPARSE_SYM(newline_preserving_whitespace_filter_state)
 {
     CPARSE_NL_WHITESPACE_FILTER_STATE_INIT =                        0,
+    CPARSE_NL_WHITESPACE_FILTER_STATE_IN_STRING =                   1,
 };
 
 /* C++ compatibility. */
