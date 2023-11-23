@@ -24,6 +24,8 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EOF =                         0x0000,
     CPARSE_EVENT_TYPE_RAW_CHARACTER =               0x0001,
     CPARSE_EVENT_TYPE_FILTERED_RAW_CHARACTER =      0x0002,
+
+    /* Comment events. */
     CPARSE_EVENT_TYPE_COMMENT_BLOCK_BEGIN =         0x0010,
     CPARSE_EVENT_TYPE_COMMENT_BLOCK_END =           0x0011,
     CPARSE_EVENT_TYPE_COMMENT_LINE_BEGIN =          0x0012,
