@@ -52,6 +52,20 @@ CPARSE_SYM(newline_preserving_whitespace_filter);
 int CPARSE_SYM(newline_preserving_whitespace_filter_create)(
     CPARSE_SYM(newline_preserving_whitespace_filter)** filter);
 
+/**
+ * \brief Release a newline preserving whitespace filter instance, releasing any
+ * internal resources it may own.
+ *
+ * \param filter            The\ref newline_preserving_whitespace_filter to
+ *                          release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(newline_preserving_whitespace_filter_release)(
+    CPARSE_SYM(newline_preserving_whitespace_filter)* filter);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
