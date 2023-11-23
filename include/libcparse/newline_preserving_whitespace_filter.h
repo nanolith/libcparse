@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <libcparse/abstract_parser.h>
 #include <libcparse/function_decl.h>
 
 /* C++ compatibility. */
@@ -64,6 +65,22 @@ int CPARSE_SYM(newline_preserving_whitespace_filter_create)(
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(newline_preserving_whitespace_filter_release)(
+    CPARSE_SYM(newline_preserving_whitespace_filter)* filter);
+
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the \ref abstract_parser interface for this filter.
+ *
+ * \param filter            The \ref newline_preserving_whitespace_filter
+ *                          instance to query.
+ *
+ * \returns the \ref abstract_parser interface for this filter.
+ */
+CPARSE_SYM(abstract_parser)*
+CPARSE_SYM(newline_preserving_whitespace_filter_upcast)(
     CPARSE_SYM(newline_preserving_whitespace_filter)* filter);
 
 /* C++ compatibility. */
