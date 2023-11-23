@@ -91,6 +91,10 @@ CPARSE_SYM(newline_preserving_whitespace_filter_upcast)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(newline_preserving_whitespace_filter) \
     sym ## newline_preserving_whitespace_filter; \
+    static inline int sym ## newline_preserving_whitespace_filter_create( \
+        CPARSE_SYM(newline_preserving_whitespace_filter)** x) { \
+            return \
+                CPARSE_SYM(newline_preserving_whitespace_filter_create)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_newline_preserving_whitespace_filter_as(sym) \
