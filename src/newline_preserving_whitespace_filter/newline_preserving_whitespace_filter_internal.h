@@ -75,6 +75,25 @@ int CPARSE_SYM(newline_preserving_whitespace_filter_message_callback)(
 int CPARSE_SYM(newline_preserving_whitespace_filter_event_callback)(
     void* context, const CPARSE_SYM(event)* ev);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_newline_preserving_whitespace_filter_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+        static inline int \
+        sym ## newline_preserving_whitespace_filter_message_callback( \
+            void* x, const CPARSE_SYM(message)* y) { \
+                return \
+                    CPARSE_SYM(newline_preserving_whitespace_filter_message_callback)( \
+                        x,y); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_newline_preserving_whitespace_filter_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_newline_preserving_whitespace_filter_internal_sym(sym ## _)
+#define CPARSE_IMPORT_newline_preserving_whitespace_filter_internal \
+    __INTERNAL_CPARSE_IMPORT_newline_preserving_whitespace_filter_internal_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
