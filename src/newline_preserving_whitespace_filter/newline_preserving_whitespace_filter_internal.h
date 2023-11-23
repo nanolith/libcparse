@@ -81,12 +81,18 @@ int CPARSE_SYM(newline_preserving_whitespace_filter_event_callback)(
 
 #define __INTERNAL_CPARSE_IMPORT_newline_preserving_whitespace_filter_internal_sym(sym) \
     CPARSE_BEGIN_EXPORT \
-        static inline int \
-        sym ## newline_preserving_whitespace_filter_message_callback( \
-            void* x, const CPARSE_SYM(message)* y) { \
-                return \
-                    CPARSE_SYM(newline_preserving_whitespace_filter_message_callback)( \
-                        x,y); } \
+    static inline int \
+    sym ## newline_preserving_whitespace_filter_message_callback( \
+        void* x, const CPARSE_SYM(message)* y) { \
+            return \
+                CPARSE_SYM(newline_preserving_whitespace_filter_message_callback)( \
+                    x,y); } \
+    static inline int \
+    sym ## newline_preserving_whitespace_filter_event_callback( \
+        void* x, const CPARSE_SYM(event)* y) { \
+            return \
+                CPARSE_SYM(newline_preserving_whitespace_filter_event_callback)( \
+                    x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_newline_preserving_whitespace_filter_internal_as(sym) \
