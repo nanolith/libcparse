@@ -23,15 +23,16 @@ extern "C" {
 enum CPARSE_SYM(message_type)
 {
     /* Messages supported by \ref raw_stack_scanner. */
-    CPARSE_MESSAGE_TYPE_RUN =                                           0x0001,
-    CPARSE_MESSAGE_TYPE_RSS_ADD_INPUT_STREAM =                          0x0002,
-    CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE =                                 0x0003,
-    CPARSE_MESSAGE_TYPE_RFLO_SUBSCRIBE =                                0x0004,
-    CPARSE_MESSAGE_TYPE_COMMENT_SCANNER_SUBSCRIBE =                     0x0005,
-    CPARSE_MESSAGE_TYPE_COMMENT_FILTER_SUBSCRIBE =                      0x0006,
-    CPARSE_MESSAGE_TYPE_LINE_WRAP_FILTER_SUBSCRIBE =                    0x0007,
-    CPARSE_MESSAGE_TYPE_RFLO_FILE_LINE_OVERRIDE =                       0x0008,
-    CPARSE_MESSAGE_TYPE_UNKNOWN =                                       0xFFFF,
+    CPARSE_MESSAGE_TYPE_RUN =                                            0x0001,
+    CPARSE_MESSAGE_TYPE_RSS_ADD_INPUT_STREAM =                           0x0002,
+    CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE =                                  0x0003,
+    CPARSE_MESSAGE_TYPE_RFLO_SUBSCRIBE =                                 0x0004,
+    CPARSE_MESSAGE_TYPE_COMMENT_SCANNER_SUBSCRIBE =                      0x0005,
+    CPARSE_MESSAGE_TYPE_COMMENT_FILTER_SUBSCRIBE =                       0x0006,
+    CPARSE_MESSAGE_TYPE_LINE_WRAP_FILTER_SUBSCRIBE =                     0x0007,
+    CPARSE_MESSAGE_TYPE_NEWLINE_PRESERVING_WHITESPACE_FILTER_SUBSCRIBE = 0x0008,
+    CPARSE_MESSAGE_TYPE_RFLO_FILE_LINE_OVERRIDE =                        0x0009,
+    CPARSE_MESSAGE_TYPE_UNKNOWN =                                        0xFFFF,
 };
 
 /******************************************************************************/
