@@ -19,10 +19,10 @@
 extern "C" {
 # endif /*__cplusplus*/
 
-typedef struct CPARSE_SYM(newline_preserving_whitespace_filter_internal)
-CPARSE_SYM(newline_preserving_whitespace_filter_internal);
+typedef struct CPARSE_SYM(newline_preserving_whitespace_filter)
+CPARSE_SYM(newline_preserving_whitespace_filter);
 
-struct CPARSE_SYM(newline_preserving_whitespace_filter_internal)
+struct CPARSE_SYM(newline_preserving_whitespace_filter)
 {
     CPARSE_SYM(comment_filter)* parent;
     CPARSE_SYM(event_reactor)* reactor;
