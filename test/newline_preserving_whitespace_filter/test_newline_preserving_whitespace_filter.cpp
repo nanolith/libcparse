@@ -10,11 +10,14 @@
 
 #include <libcparse/cursor.h>
 #include <libcparse/event.h>
+#include <libcparse/event/raw_character.h>
 #include <libcparse/event_handler.h>
+#include <libcparse/input_stream.h>
 #include <libcparse/newline_preserving_whitespace_filter.h>
 #include <libcparse/status_codes.h>
 #include <list>
 #include <minunit/minunit.h>
+#include <string>
 
 using namespace std;
 
@@ -22,6 +25,8 @@ CPARSE_IMPORT_abstract_parser;
 CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_handler;
+CPARSE_IMPORT_event_raw_character;
+CPARSE_IMPORT_input_stream;
 CPARSE_IMPORT_newline_preserving_whitespace_filter;
 
 TEST_SUITE(newline_preserving_whitespace_filter);
@@ -40,11 +45,24 @@ struct test_context
 
 static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
 {
+    int retval;
     test_context* ctx = (test_context*)context;
 
     if (CPARSE_EVENT_TYPE_EOF == event_get_type(ev))
     {
         ctx->eof = true;
+    }
+    else if (CPARSE_EVENT_TYPE_RAW_CHARACTER == event_get_type(ev))
+    {
+        event_raw_character* rev;
+        retval = event_downcast_to_event_raw_character(&rev, (event*)ev);
+        if (STATUS_SUCCESS != retval)
+        {
+            return retval;
+        }
+
+        ctx->vals.push_back(event_raw_character_get(rev));
+        memcpy(&ctx->pos, event_get_cursor(ev), sizeof(ctx->pos));
     }
     else
     {
@@ -104,6 +122,64 @@ TEST(subscribe)
 
     /* postcondition: eof is true. */
     TEST_EXPECT(t1.eof);
+
+    /* clean up. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == newline_preserving_whitespace_filter_release(filter));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
+
+/**
+ * Test that a string with no whitespace is passed verbatim.
+ */
+TEST(no_whitespace)
+{
+    newline_preserving_whitespace_filter* filter;
+    input_stream* stream;
+    event_handler eh;
+    test_context t1;
+    const char* INPUT_STRING = "abc123";
+    const char* OUTPUT_STRING = "abc123\n";
+
+    /* create the filter instance. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == newline_preserving_whitespace_filter_create(&filter));
+
+    /* create our event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = newline_preserving_whitespace_filter_upcast(filter);
+
+    /* subscribe to the filter. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_newline_preserving_whitespace_filter_subscribe(
+                    ap, &eh));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, INPUT_STRING));
+
+    /* add the input stream to the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "stdin", stream));
+
+    /* precondition: eof is false. */
+    TEST_ASSERT(!t1.eof);
+
+    /* run the filter. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(ap));
+
+    /* postcondition: eof is true. */
+    TEST_EXPECT(t1.eof);
+
+    /* postcondition: vals matches our string. */
+    string out(t1.vals.begin(), t1.vals.end());
+    TEST_EXPECT(out == OUTPUT_STRING);
 
     /* clean up. */
     TEST_ASSERT(
