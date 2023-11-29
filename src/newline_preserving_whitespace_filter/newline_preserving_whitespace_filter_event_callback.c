@@ -185,14 +185,24 @@ static int process_char_event_whitespace_state(
     newline_preserving_whitespace_filter* filter, const event_raw_character* ev,
     int ch)
 {
+    int retval;
+
+    /* get the base event. */
+    const event* oev = event_raw_character_upcast((event_raw_character*)ev);
+
     switch (ch)
     {
         default:
             if (isspace(ch))
             {
-                /* TODO - extend cache position to include this position. */
+                retval =
+                    file_position_cache_position_extend(filter->cache, oev);
+                if (STATUS_SUCCESS != retval)
+                {
+                    return retval;
+                }
 
-                /* eat whitespace character. */
+                /* eat the whitespace character. */
                 return STATUS_SUCCESS;
             }
             else
