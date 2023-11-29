@@ -39,9 +39,9 @@ static int process_char_event_newline_state(
     int ch);
 static int process_eof_event(
     newline_preserving_whitespace_filter* filter, const event* ev);
-static int broadcast_newline_event(
-    newline_preserving_whitespace_filter* filter, const cursor* pos);
 static int init_whitespace_transition(
+    newline_preserving_whitespace_filter* filter, const cursor* pos);
+static int init_newline_transition(
     newline_preserving_whitespace_filter* filter, const cursor* pos);
 static int whitespace_init_transition(
     newline_preserving_whitespace_filter* filter,
@@ -49,6 +49,8 @@ static int whitespace_init_transition(
 static int newline_init_transition(
     newline_preserving_whitespace_filter* filter,
     const event_raw_character* ev);
+static int newline_eof_transition(
+    newline_preserving_whitespace_filter* filter, const event* ev);
 static int whitespace_newline_transition(
     newline_preserving_whitespace_filter* filter,
     const event_raw_character* ev);
@@ -97,7 +99,14 @@ int CPARSE_SYM(newline_preserving_whitespace_filter_event_callback)(
 static int process_eof_event(
     newline_preserving_whitespace_filter* filter, const event* ev)
 {
-    return event_reactor_broadcast(filter->reactor, ev);
+    switch (filter->state)
+    {
+        case CPARSE_NL_WHITESPACE_FILTER_STATE_IN_NEWLINE:
+            return newline_eof_transition(filter, ev);
+
+        default:
+            return event_reactor_broadcast(filter->reactor, ev);
+    }
 }
 
 /**
@@ -168,7 +177,7 @@ static int process_char_event_init_state(
     switch (ch)
     {
         case '\n':
-            return broadcast_newline_event(filter, pos);
+            return init_newline_transition(filter, pos);
 
         default:
             if (isspace(ch))
@@ -271,51 +280,6 @@ static int process_char_event_newline_state(
 }
 
 /**
- * \brief Broadcast a newline event to all subscribers.
- *
- * \param filter        The filter for this operation.
- * \param pos           The cursor position for this event.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-static int broadcast_newline_event(
-    newline_preserving_whitespace_filter* filter, const cursor* pos)
-{
-    int retval, release_retval;
-    event ev;
-
-    /* initialize the newline event. */
-    retval = event_init(&ev, CPARSE_EVENT_TYPE_TOKEN_NEWLINE, pos);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto done;
-    }
-
-    /* broadcast this event. */
-    retval = event_reactor_broadcast(filter->reactor, &ev);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto cleanup_ev;
-    }
-
-    /* success. */
-    retval = STATUS_SUCCESS;
-    goto cleanup_ev;
-
-cleanup_ev:
-    release_retval = event_dispose(&ev);
-    if (STATUS_SUCCESS != release_retval)
-    {
-        retval = release_retval;
-    }
-
-done:
-    return retval;
-}
-
-/**
  * \brief Transition from the init state to the whitespace state.
  *
  * \param filter            The filter for this operation.
@@ -339,6 +303,33 @@ static int init_whitespace_transition(
 
     /* we are now in the whitespace state. */
     filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_IN_WHITESPACE;
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Transition from the init state to the newline state.
+ *
+ * \param filter            The filter for this operation.
+ * \param pos               The cursor position for the whitespace event.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int init_newline_transition(
+    newline_preserving_whitespace_filter* filter, const cursor* pos)
+{
+    int retval;
+
+    /* cache this position. */
+    retval = file_position_cache_set(filter->cache, pos->file, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the newline state. */
+    filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_IN_NEWLINE;
     return STATUS_SUCCESS;
 }
 
@@ -374,6 +365,45 @@ static int whitespace_init_transition(
 
     /* send the character event. */
     retval = event_reactor_broadcast(filter->reactor, oev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the init state. */
+    filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_INIT;
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Transition from the newline state to the init state.
+ *
+ * \param filter            The filter for this operation.
+ * \param pos               The cursor position for the whitespace event.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int newline_eof_transition(
+    newline_preserving_whitespace_filter* filter, const event* ev)
+{
+    int retval;
+
+    /* broadcast newline event. */
+    retval =
+        file_position_cache_generic_event_broadcast(
+            filter->cache, filter->reactor, CPARSE_EVENT_TYPE_TOKEN_NEWLINE);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* clear the cache. */
+    file_position_cache_clear(filter->cache);
+
+    /* send the EOF event. */
+    retval = event_reactor_broadcast(filter->reactor, ev);
     if (STATUS_SUCCESS != retval)
     {
         return retval;
