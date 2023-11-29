@@ -40,6 +40,9 @@ static int process_char_event_newline_state(
 static int process_char_event_string_state(
     newline_preserving_whitespace_filter* filter, const event_raw_character* ev,
     int ch);
+static int process_char_event_string_slash_state(
+    newline_preserving_whitespace_filter* filter, const event_raw_character* ev,
+    int ch);
 static int process_eof_event(
     newline_preserving_whitespace_filter* filter, const event* ev);
 static int init_whitespace_transition(
@@ -55,6 +58,8 @@ static int newline_init_transition(
     newline_preserving_whitespace_filter* filter,
     const event_raw_character* ev);
 static int string_init_transition(
+    newline_preserving_whitespace_filter* filter, const event* ev);
+static int string_slash_transition(
     newline_preserving_whitespace_filter* filter, const event* ev);
 static int newline_eof_transition(
     newline_preserving_whitespace_filter* filter, const event* ev);
@@ -161,6 +166,10 @@ static int process_char_event(
         /* ignore characters in a string. */
         case CPARSE_NL_WHITESPACE_FILTER_STATE_IN_STRING:
             return process_char_event_string_state(filter, rev, ch);
+
+        /* skip over string escapes. */
+        case CPARSE_NL_WHITESPACE_FILTER_STATE_IN_STRING_SLASH:
+            return process_char_event_string_slash_state(filter, rev, ch);
 
         default:
             return ERROR_LIBCPARSE_WHITESPACE_BAD_STATE;
@@ -316,9 +325,45 @@ static int process_char_event_string_state(
         case '"':
             return string_init_transition(filter, oev);
 
+        case '\\':
+            return string_slash_transition(filter, oev);
+
         default:
             return event_reactor_broadcast(filter->reactor, oev);
     }
+}
+
+/**
+ * \brief Process a raw character event in the string slash state.
+ *
+ * \param filter            The filter for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The raw character to process.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int process_char_event_string_slash_state(
+    newline_preserving_whitespace_filter* filter, const event_raw_character* ev,
+    int ch)
+{
+    (void)ch;
+    int retval;
+
+    /* get the base event. */
+    const event* oev = event_raw_character_upcast((event_raw_character*)ev);
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(filter->reactor, oev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the string state. */
+    filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_IN_STRING;
+    return STATUS_SUCCESS;
 }
 
 /**
@@ -549,6 +594,33 @@ static int string_init_transition(
 
     /* we are now in the init state. */
     filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_INIT;
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Transition from the string state to the string slash state.
+ *
+ * \param filter            The filter for this operation.
+ * \param ev                The event for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int string_slash_transition(
+    newline_preserving_whitespace_filter* filter, const event* ev)
+{
+    int retval;
+
+    /* broadcast the character event. */
+    retval = event_reactor_broadcast(filter->reactor, ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the init state. */
+    filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_IN_STRING_SLASH;
     return STATUS_SUCCESS;
 }
 
