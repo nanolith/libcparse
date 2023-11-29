@@ -12,6 +12,7 @@
 #pragma once
 
 #include <libcparse/cursor.h>
+#include <libcparse/event_fwd.h>
 #include <libcparse/event_reactor_fwd.h>
 #include <libcparse/function_decl.h>
 
@@ -115,6 +116,20 @@ int CPARSE_SYM(file_position_cache_file_get)(
 int CPARSE_SYM(file_position_cache_position_get)(
     CPARSE_SYM(file_position_cache)* cache,
     const CPARSE_SYM(cursor)** position);
+
+/**
+ * \brief Extend the cached position to include this event's position.
+ *
+ * \param cache             The \ref file_position_cache instance for this
+ *                          operation.
+ * \param ev                The event to include in this cached position.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(file_position_cache_position_extend)(
+    CPARSE_SYM(file_position_cache)* cache, const CPARSE_SYM(event)* ev);
 
 /**
  * \brief Given a cache, event reactor, and character, send a cached raw
