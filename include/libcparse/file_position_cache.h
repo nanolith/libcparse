@@ -200,6 +200,12 @@ int CPARSE_SYM(file_position_cache_generic_event_broadcast)(
             return \
                 CPARSE_SYM(file_position_cache_raw_character_broadcast)( \
                     x,y,z); } \
+    static inline int sym ## file_position_cache_generic_event_broadcast( \
+        CPARSE_SYM(file_position_cache)* x, CPARSE_SYM(event_reactor)* y, \
+        int z) { \
+            return \
+                CPARSE_SYM(file_position_cache_generic_event_broadcast)( \
+                    x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_file_position_cache_as(sym) \
