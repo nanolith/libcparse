@@ -43,6 +43,9 @@ static int init_whitespace_transition(
 static int whitespace_init_transition(
     newline_preserving_whitespace_filter* filter,
     const event_raw_character* ev);
+static int whitespace_newline_transition(
+    newline_preserving_whitespace_filter* filter,
+    const event_raw_character* ev);
 
 /**
  * \brief Event handler callback for
@@ -192,6 +195,9 @@ static int process_char_event_whitespace_state(
 
     switch (ch)
     {
+        case '\n':
+            return whitespace_newline_transition(filter, ev);
+
         default:
             if (isspace(ch))
             {
@@ -320,6 +326,51 @@ static int whitespace_init_transition(
     {
         return retval;
     }
+
+    /* we are now in the init state. */
+    filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_INIT;
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Transition from the whitespace state to the newline state.
+ *
+ * \param filter            The filter for this operation.
+ * \param pos               The cursor position for the whitespace event.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int whitespace_newline_transition(
+    newline_preserving_whitespace_filter* filter, const event_raw_character* ev)
+{
+    int retval;
+
+    /* get the base event. */
+    const event* oev = event_raw_character_upcast((event_raw_character*)ev);
+
+    /* extend the position to cover the newline. */
+    retval = file_position_cache_position_extend(filter->cache, oev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* TODO - just transition to the newline state so we can eat WS after
+     * newline. */
+
+    /* broadcast newline event. */
+    retval =
+        file_position_cache_generic_event_broadcast(
+            filter->cache, filter->reactor, CPARSE_EVENT_TYPE_TOKEN_NEWLINE);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* clear the cache. */
+    file_position_cache_clear(filter->cache);
 
     /* we are now in the init state. */
     filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_INIT;
