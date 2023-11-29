@@ -8,10 +8,12 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <ctype.h>
 #include <libcparse/cursor.h>
 #include <libcparse/event.h>
 #include <libcparse/event/raw_character.h>
 #include <libcparse/event_reactor.h>
+#include <libcparse/file_position_cache.h>
 #include <libcparse/newline_preserving_whitespace_filter.h>
 #include <libcparse/status_codes.h>
 
@@ -21,6 +23,7 @@ CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_raw_character;
 CPARSE_IMPORT_event_reactor;
+CPARSE_IMPORT_file_position_cache;
 CPARSE_IMPORT_newline_preserving_whitespace_filter;
 
 static int process_char_event(
@@ -28,10 +31,18 @@ static int process_char_event(
 static int process_char_event_init_state(
     newline_preserving_whitespace_filter* filter, const event_raw_character* ev,
     int ch);
+static int process_char_event_whitespace_state(
+    newline_preserving_whitespace_filter* filter, const event_raw_character* ev,
+    int ch);
 static int process_eof_event(
     newline_preserving_whitespace_filter* filter, const event* ev);
 static int broadcast_newline_event(
     newline_preserving_whitespace_filter* filter, const cursor* pos);
+static int init_whitespace_transition(
+    newline_preserving_whitespace_filter* filter, const cursor* pos);
+static int whitespace_init_transition(
+    newline_preserving_whitespace_filter* filter,
+    const event_raw_character* ev);
 
 /**
  * \brief Event handler callback for
@@ -110,9 +121,13 @@ static int process_char_event(
 
     switch (filter->state)
     {
-        /* forward non-comment characters. */
+        /* forward non-whitespace characters. */
         case CPARSE_NL_WHITESPACE_FILTER_STATE_INIT:
             return process_char_event_init_state(filter, rev, ch);
+
+        /* compress whitespace characters. */
+        case CPARSE_NL_WHITESPACE_FILTER_STATE_IN_WHITESPACE:
+            return process_char_event_whitespace_state(filter, rev, ch);
 
         default:
             return ERROR_LIBCPARSE_WHITESPACE_BAD_STATE;
@@ -143,8 +158,47 @@ static int process_char_event_init_state(
             return broadcast_newline_event(filter, pos);
 
         default:
-            return
-                event_reactor_broadcast(filter->reactor, oev);
+            if (isspace(ch))
+            {
+                return init_whitespace_transition(filter, pos);
+            }
+            else
+            {
+                return
+                    event_reactor_broadcast(filter->reactor, oev);
+            }
+    }
+}
+
+/**
+ * \brief Process a raw character event in the whitespace state.
+ *
+ * \param filter            The filter for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The raw character to process.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int process_char_event_whitespace_state(
+    newline_preserving_whitespace_filter* filter, const event_raw_character* ev,
+    int ch)
+{
+    switch (ch)
+    {
+        default:
+            if (isspace(ch))
+            {
+                /* TODO - extend cache position to include this position. */
+
+                /* eat whitespace character. */
+                return STATUS_SUCCESS;
+            }
+            else
+            {
+                return whitespace_init_transition(filter, ev);
+            }
     }
 }
 
@@ -191,4 +245,73 @@ cleanup_ev:
 
 done:
     return retval;
+}
+
+/**
+ * \brief Transition from the init state to the whitespace state.
+ *
+ * \param filter            The filter for this operation.
+ * \param pos               The cursor position for the whitespace event.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int init_whitespace_transition(
+    newline_preserving_whitespace_filter* filter, const cursor* pos)
+{
+    int retval;
+
+    /* cache this position. */
+    retval = file_position_cache_set(filter->cache, pos->file, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the whitespace state. */
+    filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_IN_WHITESPACE;
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Transition from the whitespace state to the init state.
+ *
+ * \param filter            The filter for this operation.
+ * \param pos               The cursor position for the whitespace event.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int whitespace_init_transition(
+    newline_preserving_whitespace_filter* filter, const event_raw_character* ev)
+{
+    int retval;
+
+    /* get the base event. */
+    const event* oev = event_raw_character_upcast((event_raw_character*)ev);
+
+    /* TODO - replace this with a proper whitespace event. */
+    retval =
+        file_position_cache_raw_character_broadcast(
+            filter->cache, filter->reactor, ' ');
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* clear the cache. */
+    file_position_cache_clear(filter->cache);
+
+    /* send the character event. */
+    retval = event_reactor_broadcast(filter->reactor, oev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the init state. */
+    filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_INIT;
+    return STATUS_SUCCESS;
 }
