@@ -302,10 +302,10 @@ static int whitespace_init_transition(
     /* get the base event. */
     const event* oev = event_raw_character_upcast((event_raw_character*)ev);
 
-    /* TODO - replace this with a proper whitespace event. */
+    /* broadcast whitespace event. */
     retval =
-        file_position_cache_raw_character_broadcast(
-            filter->cache, filter->reactor, ' ');
+        file_position_cache_generic_event_broadcast(
+            filter->cache, filter->reactor, CPARSE_EVENT_TYPE_TOKEN_WHITESPACE);
     if (STATUS_SUCCESS != retval)
     {
         return retval;
