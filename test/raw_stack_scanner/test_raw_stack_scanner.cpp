@@ -25,16 +25,19 @@ CPARSE_IMPORT_raw_stack_scanner;
 
 TEST_SUITE(raw_stack_scanner);
 
-struct test_context
+namespace
 {
-    list<int> vals;
-    bool eof;
-
-    test_context()
-        : eof(false)
+    struct test_context
     {
-    }
-};
+        list<int> vals;
+        bool eof;
+
+        test_context()
+            : eof(false)
+        {
+        }
+    };
+}
 
 static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
 {

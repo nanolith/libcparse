@@ -33,18 +33,21 @@ CPARSE_IMPORT_raw_file_line_override_filter;
 
 TEST_SUITE(raw_file_line_override_filter);
 
-struct test_context
+namespace
 {
-    list<int> vals;
-    bool eof;
-    string f;
-    cursor pos;
-
-    test_context()
-        : eof(false)
+    struct test_context
     {
-    }
-};
+        list<int> vals;
+        bool eof;
+        string f;
+        cursor pos;
+
+        test_context()
+            : eof(false)
+        {
+        }
+    };
+}
 
 static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
 {
