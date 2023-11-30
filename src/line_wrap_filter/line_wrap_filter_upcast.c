@@ -9,8 +9,6 @@
 
 #include "line_wrap_filter_internal.h"
 
-CPARSE_IMPORT_raw_file_line_override_filter;
-
 /**
  * \brief Get the \ref abstract_parser interface for this filter.
  *
@@ -21,5 +19,5 @@ CPARSE_IMPORT_raw_file_line_override_filter;
 CPARSE_SYM(abstract_parser)* CPARSE_SYM(line_wrap_filter_upcast)(
     CPARSE_SYM(line_wrap_filter)* filter)
 {
-    return raw_file_line_override_filter_upcast(filter->parent);
+    return filter->base;
 }
