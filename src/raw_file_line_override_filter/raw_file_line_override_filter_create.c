@@ -75,7 +75,7 @@ int CPARSE_SYM(raw_file_line_override_filter_create)(
     }
 
     /* Get the abstract parser instance for the parent. */
-    abstract_parser* ap = raw_stack_scanner_upcast(tmp->parent);
+    tmp->base = raw_stack_scanner_upcast(tmp->parent);
 
     /* initialize our message handler. */
     retval =
@@ -96,14 +96,16 @@ int CPARSE_SYM(raw_file_line_override_filter_create)(
     }
 
     /* override the raw stack scanner's message handler with our own. */
-    retval = abstract_parser_message_handler_override(&tmp->parent_mh, ap, &mh);
+    retval =
+        abstract_parser_message_handler_override(
+            &tmp->parent_mh, tmp->base, &mh);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_eh;
     }
 
     /* subscribe to the raw stack scanner. */
-    retval = abstract_parser_raw_stack_scanner_subscribe(ap, &eh);
+    retval = abstract_parser_raw_stack_scanner_subscribe(tmp->base, &eh);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_eh;
