@@ -37,8 +37,8 @@ struct test_context
 {
     list<int> vals;
     bool eof;
-    cursor pos;
     string f;
+    cursor pos;
 
     test_context()
         : eof(false)
