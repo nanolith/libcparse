@@ -646,7 +646,7 @@ static int newline_eof_transition(
  * \brief Transition from the newline state to the init state.
  *
  * \param filter            The filter for this operation.
- * \param pos               The cursor position for the whitespace event.
+ * \param ev                The raw character event for this operation.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
