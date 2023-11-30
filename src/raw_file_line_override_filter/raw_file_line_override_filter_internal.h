@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <libcparse/abstract_parser_fwd.h>
 #include <libcparse/event_handler.h>
 #include <libcparse/raw_stack_scanner.h>
 #include <libcparse/cursor.h>
@@ -27,6 +28,7 @@ CPARSE_SYM(raw_file_line_override_filter);
 struct CPARSE_SYM(raw_file_line_override_filter)
 {
     CPARSE_SYM(raw_stack_scanner)* parent;
+    CPARSE_SYM(abstract_parser)* base;
     CPARSE_SYM(event_reactor)* reactor;
     CPARSE_SYM(message_handler) parent_mh;
     bool use_pos;
