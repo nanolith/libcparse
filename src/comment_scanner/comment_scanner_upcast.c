@@ -9,8 +9,6 @@
 
 #include "comment_scanner_internal.h"
 
-CPARSE_IMPORT_line_wrap_filter;
-
 /**
  * \brief Get the \ref abstract_parser interface for this scanner.
  *
@@ -21,5 +19,5 @@ CPARSE_IMPORT_line_wrap_filter;
 CPARSE_SYM(abstract_parser)* CPARSE_SYM(comment_scanner_upcast)(
     CPARSE_SYM(comment_scanner)* scanner)
 {
-    return line_wrap_filter_upcast(scanner->parent);
+    return scanner->base;
 }
