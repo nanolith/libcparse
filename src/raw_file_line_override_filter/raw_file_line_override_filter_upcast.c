@@ -11,8 +11,6 @@
 
 #include "raw_file_line_override_filter_internal.h"
 
-CPARSE_IMPORT_raw_stack_scanner;
-
 /**
  * \brief Get the \ref abstract_parser interface for this filter.
  *
@@ -24,5 +22,5 @@ CPARSE_IMPORT_raw_stack_scanner;
 CPARSE_SYM(abstract_parser)* CPARSE_SYM(raw_file_line_override_filter_upcast)(
     CPARSE_SYM(raw_file_line_override_filter)* filter)
 {
-    return raw_stack_scanner_upcast(filter->parent);
+    return filter->base;
 }
