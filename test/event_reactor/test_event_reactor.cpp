@@ -20,11 +20,14 @@ CPARSE_IMPORT_event_reactor;
 
 TEST_SUITE(event_reactor);
 
-struct test_context
+namespace
 {
-    size_t count;
-    const CPARSE_SYM(event)* ev;
-};
+    struct test_context
+    {
+        size_t count;
+        const CPARSE_SYM(event)* ev;
+    };
+}
 
 static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
 {

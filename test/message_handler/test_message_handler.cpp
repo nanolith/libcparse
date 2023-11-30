@@ -18,11 +18,14 @@ CPARSE_IMPORT_message_handler;
 
 TEST_SUITE(message_handler);
 
-struct test_context
+namespace
 {
-    size_t count;
-    const CPARSE_SYM(message)* msg;
-};
+    struct test_context
+    {
+        size_t count;
+        const CPARSE_SYM(message)* msg;
+    };
+}
 
 static int dummy_callback(void* context, const CPARSE_SYM(message)* msg)
 {
