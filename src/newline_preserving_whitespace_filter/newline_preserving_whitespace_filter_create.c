@@ -85,7 +85,7 @@ int CPARSE_SYM(newline_preserving_whitespace_filter_create)(
     }
 
     /* get the abstract parser instance for the parent. */
-    abstract_parser* ap = comment_filter_upcast(tmp->parent);
+    tmp->base = comment_filter_upcast(tmp->parent);
 
     /* initialize our message handler. */
     retval =
@@ -106,14 +106,16 @@ int CPARSE_SYM(newline_preserving_whitespace_filter_create)(
     }
 
     /* override the comment filter message handler with ours. */
-    retval = abstract_parser_message_handler_override(&tmp->parent_mh, ap, &mh);
+    retval =
+        abstract_parser_message_handler_override(
+            &tmp->parent_mh, tmp->base, &mh);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_eh;
     }
 
     /* subscribe to the comment filter. */
-    retval = abstract_parser_comment_filter_subscribe(ap, &eh);
+    retval = abstract_parser_comment_filter_subscribe(tmp->base, &eh);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_eh;
