@@ -81,7 +81,7 @@ int CPARSE_SYM(line_wrap_filter_create)(CPARSE_SYM(line_wrap_filter)** filter)
     }
 
     /* get the abstract parser instance for the parent. */
-    abstract_parser* ap = raw_file_line_override_filter_upcast(tmp->parent);
+    tmp->base = raw_file_line_override_filter_upcast(tmp->parent);
 
     /* initialize our message handler. */
     retval = message_handler_init(&mh, &line_wrap_filter_message_callback, tmp);
@@ -98,14 +98,17 @@ int CPARSE_SYM(line_wrap_filter_create)(CPARSE_SYM(line_wrap_filter)** filter)
     }
 
     /* override the raw file line override filter message handler with ours. */
-    retval = abstract_parser_message_handler_override(&tmp->parent_mh, ap, &mh);
+    retval =
+        abstract_parser_message_handler_override(
+            &tmp->parent_mh, tmp->base, &mh);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_eh;
     }
 
     /* subscribe to the raw file live override filter. */
-    retval = abstract_parser_raw_file_line_override_filter_subscribe(ap, &eh);
+    retval =
+        abstract_parser_raw_file_line_override_filter_subscribe(tmp->base, &eh);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_eh;
