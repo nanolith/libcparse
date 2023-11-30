@@ -10,8 +10,6 @@
 
 #include "newline_preserving_whitespace_filter_internal.h"
 
-CPARSE_IMPORT_comment_filter;
-
 /**
  * \brief Get the \ref abstract_parser interface for this filter.
  *
@@ -24,5 +22,5 @@ CPARSE_SYM(abstract_parser)*
 CPARSE_SYM(newline_preserving_whitespace_filter_upcast)(
     CPARSE_SYM(newline_preserving_whitespace_filter)* filter)
 {
-    return comment_filter_upcast(filter->parent);
+    return filter->base;
 }
