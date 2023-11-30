@@ -9,8 +9,6 @@
 
 #include "comment_filter_internal.h"
 
-CPARSE_IMPORT_comment_scanner;
-
 /**
  * \brief Get the \ref abstract_parser interface for this filter.
  *
@@ -21,5 +19,5 @@ CPARSE_IMPORT_comment_scanner;
 CPARSE_SYM(abstract_parser)* CPARSE_SYM(comment_filter_upcast)(
     CPARSE_SYM(comment_filter)* filter)
 {
-    return comment_scanner_upcast(filter->parent);
+    return filter->base;
 }
