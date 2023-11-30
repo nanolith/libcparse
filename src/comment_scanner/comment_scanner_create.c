@@ -82,7 +82,7 @@ int CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner)
     }
 
     /* get the abstract parser instance for the parent. */
-    abstract_parser* ap = line_wrap_filter_upcast(tmp->parent);
+    tmp->base = line_wrap_filter_upcast(tmp->parent);
 
     /* initialize our message handler. */
     retval = message_handler_init(&mh, &comment_scanner_message_callback, tmp);
@@ -99,14 +99,16 @@ int CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner)
     }
 
     /* override the raw file line override filter message handler with ours. */
-    retval = abstract_parser_message_handler_override(&tmp->parent_mh, ap, &mh);
+    retval =
+        abstract_parser_message_handler_override(
+            &tmp->parent_mh, tmp->base, &mh);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_eh;
     }
 
     /* subscribe to the line wrap filter. */
-    retval = abstract_parser_line_wrap_filter_subscribe(ap, &eh);
+    retval = abstract_parser_line_wrap_filter_subscribe(tmp->base, &eh);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_eh;
