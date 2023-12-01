@@ -103,6 +103,10 @@ CPARSE_SYM(event)* CPARSE_SYM(event_include_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_event_include_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_include) sym ## event_include; \
+    static inline int sym ## event_include_init( \
+        CPARSE_SYM(event_include)* w, int x, const CPARSE_SYM(cursor)* y, \
+        const char* z) { \
+            return CPARSE_SYM(event_include_init)(w,x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_include_as(sym) \
