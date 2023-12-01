@@ -86,6 +86,16 @@ const char* CPARSE_SYM(event_include_file_get)(
 int CPARSE_SYM(event_downcast_to_event_include)(
     CPARSE_SYM(event_include)** inc_ev, CPARSE_SYM(event)* ev);
 
+/**
+ * \brief Upcast an \ref event_include to an \ref event.
+ *
+ * \param ev                The \ref event_include to upcast.
+ *
+ * \returns the \ref event instance for this event.
+ */
+CPARSE_SYM(event)* CPARSE_SYM(event_include_upcast)(
+    CPARSE_SYM(event_include)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
