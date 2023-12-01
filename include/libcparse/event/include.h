@@ -110,6 +110,9 @@ CPARSE_SYM(event)* CPARSE_SYM(event_include_upcast)(
     static inline int sym ## event_include_dispose( \
         CPARSE_SYM(event_include)* x) { \
             return CPARSE_SYM(event_include_dispose)(x); } \
+    static inline const char* sym ## event_include_file_get( \
+        const CPARSE_SYM(event_include)* x) { \
+            return CPARSE_SYM(event_include_file_get)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_include_as(sym) \
