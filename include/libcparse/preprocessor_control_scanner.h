@@ -88,7 +88,7 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(preprocessor_control_scanner_upcast)(
     static inline int sym ## preprocessor_control_scanner_release( \
         CPARSE_SYM(preprocessor_control_scanner)* x) { \
             return CPARSE_SYM(preprocessor_control_scanner_release)(x); } \
-    static CPARSE_SYM(abstract_parser)* \
+    static inline CPARSE_SYM(abstract_parser)* \
     sym ## preprocessor_control_scanner_upcast( \
         CPARSE_SYM(preprocessor_control_scanner)* x) { \
             return CPARSE_SYM(preprocessor_control_scanner_upcast)(x); } \
