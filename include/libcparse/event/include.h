@@ -56,6 +56,20 @@ int CPARSE_SYM(event_include_init)(
  */
 int CPARSE_SYM(event_include_dispose)(CPARSE_SYM(event_include)* ev);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the file value for this event.
+ *
+ * \param ev                The event instance to query.
+ *
+ * \returns the line value for this event.
+ */
+const char* CPARSE_SYM(event_include_file_get)(
+    const CPARSE_SYM(event_include)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
