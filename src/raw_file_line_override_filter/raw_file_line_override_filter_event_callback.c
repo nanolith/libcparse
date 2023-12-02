@@ -108,9 +108,7 @@ static int broadcast_char_event(
     }
 
     /* initialize our override event. */
-    retval =
-        event_raw_character_init(
-            &newrev, CPARSE_EVENT_TYPE_RAW_CHARACTER, &pos, ch);
+    retval = event_raw_character_init(&newrev, &pos, ch);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_pos;
