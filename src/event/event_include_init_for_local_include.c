@@ -12,8 +12,11 @@
 #include <libcparse/status_codes.h>
 #include <string.h>
 
+#include "event_include_internal.h"
+
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_include;
+CPARSE_IMPORT_event_include_internal;
 
 /**
  * \brief Perform an in-place initialization of an \ref event_include instance
