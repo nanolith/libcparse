@@ -31,22 +31,6 @@ CPARSE_SYM(event_include);
 /******************************************************************************/
 
 /**
- * \brief Perform an in-place initialization of an \ref event_include instance.
- *
- * \param ev                Pointer to the event to initialize.
- * \param event_type        The type of the event.
- * \param cursor            The event cursor.
- * \param file              The file to include for this event.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero failure code on failure.
- */
-int CPARSE_SYM(event_include_init)(
-    CPARSE_SYM(event_include)* ev, int event_type,
-    const CPARSE_SYM(cursor)* cursor, const char* file);
-
-/**
  * \brief Perform an in-place initialization of an \ref event_include instance
  * for a system include.
  *
@@ -135,10 +119,6 @@ CPARSE_SYM(event)* CPARSE_SYM(event_include_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_event_include_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_include) sym ## event_include; \
-    static inline int sym ## event_include_init( \
-        CPARSE_SYM(event_include)* w, int x, const CPARSE_SYM(cursor)* y, \
-        const char* z) { \
-            return CPARSE_SYM(event_include_init)(w,x,y,z); } \
     static inline int sym ## event_include_init_for_system_include( \
         CPARSE_SYM(event_include)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
