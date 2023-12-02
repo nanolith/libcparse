@@ -111,3 +111,40 @@ TEST(upcast_downcast_system_include)
     /* dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
 }
+
+/**
+ * Test that we can upcast and downcast a local include event.
+ */
+TEST(upcast_downcast_local_include)
+{
+    cursor pos;
+    event_include ev;
+    event_include* iev;
+    const char* TEST_FILE = "stdio.h";
+
+    /* set up the position. */
+    memset(&pos, 0, sizeof(pos));
+    pos.file = "stdin";
+    pos.begin_line = pos.end_line = 1;
+    pos.begin_col = pos.end_col = 1;
+
+    /* init the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_include_init(
+                    &ev, CPARSE_EVENT_TYPE_PREPROCESSOR_LOCAL_INCLUDE, &pos,
+                    TEST_FILE));
+
+    /* upcast the event. */
+    auto oev = event_include_upcast(&ev);
+
+    /* this value is not NULL. */
+    TEST_ASSERT(nullptr != oev);
+
+    /* we can downcast this event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_downcast_to_event_include(&iev, oev));
+
+    /* dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
+}
