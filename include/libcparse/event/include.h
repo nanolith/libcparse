@@ -63,6 +63,22 @@ int CPARSE_SYM(event_include_init_for_system_include)(
     const char* file);
 
 /**
+ * \brief Perform an in-place initialization of an \ref event_include instance
+ * for a local include.
+ *
+ * \param ev                Pointer to the event to initialize.
+ * \param cursor            The event cursor.
+ * \param file              The file to include for this event.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero failure code on failure.
+ */
+int CPARSE_SYM(event_include_init_for_local_include)(
+    CPARSE_SYM(event_include)* ev, const CPARSE_SYM(cursor)* cursor,
+    const char* file);
+
+/**
  * \brief Perform an in-place disposal of an \ref event_include instance.
  *
  * \param ev                Pointer to the event to dispose.
