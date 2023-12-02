@@ -38,9 +38,7 @@ TEST(init_dispose)
     /* we can initialize the event. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == event_include_init(
-                    &ev, CPARSE_EVENT_TYPE_PREPROCESSOR_SYSTEM_INCLUDE, &pos,
-                    TEST_FILE));
+            == event_include_init_for_system_include(&ev, &pos, TEST_FILE));
 
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
@@ -64,9 +62,7 @@ TEST(get)
     /* init the event. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == event_include_init(
-                    &ev, CPARSE_EVENT_TYPE_PREPROCESSOR_SYSTEM_INCLUDE, &pos,
-                    TEST_FILE));
+            == event_include_init_for_system_include(&ev, &pos, TEST_FILE));
 
     /* the file should match our constructor value. */
     TEST_EXPECT(!strcmp(TEST_FILE, event_include_file_get(&ev)));
@@ -94,9 +90,7 @@ TEST(upcast_downcast_system_include)
     /* init the event. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == event_include_init(
-                    &ev, CPARSE_EVENT_TYPE_PREPROCESSOR_SYSTEM_INCLUDE, &pos,
-                    TEST_FILE));
+            == event_include_init_for_system_include(&ev, &pos, TEST_FILE));
 
     /* upcast the event. */
     auto oev = event_include_upcast(&ev);
@@ -131,9 +125,7 @@ TEST(upcast_downcast_local_include)
     /* init the event. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == event_include_init(
-                    &ev, CPARSE_EVENT_TYPE_PREPROCESSOR_LOCAL_INCLUDE, &pos,
-                    TEST_FILE));
+            == event_include_init_for_local_include(&ev, &pos, TEST_FILE));
 
     /* upcast the event. */
     auto oev = event_include_upcast(&ev);
