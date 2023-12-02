@@ -72,3 +72,39 @@ TEST(get)
     /* dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_character_dispose(&ev));
 }
+
+/**
+ * Test that we can upcast add downcast the raw character event.
+ */
+TEST(upcast_downcast)
+{
+    cursor pos;
+    event_raw_character ev;
+    event_raw_character* rev;
+    const int TEST_CHAR = 'A';
+
+    /* set up the position. */
+    memset(&pos, 0, sizeof(pos));
+    pos.file = "stdin";
+    pos.begin_line = pos.end_line = 1;
+    pos.begin_col = pos.end_col = 1;
+
+    /* init the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_raw_character_init(
+                    &ev, CPARSE_EVENT_TYPE_RAW_CHARACTER, &pos, TEST_CHAR));
+
+    /* upcast the event. */
+    auto oev = event_raw_character_upcast(&ev);
+
+    /* this value is not NULL. */
+    TEST_ASSERT(nullptr != oev);
+
+    /* we can downcast this event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_downcast_to_event_raw_character(&rev, oev));
+
+    /* dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_character_dispose(&ev));
+}
