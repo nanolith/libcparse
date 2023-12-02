@@ -13,6 +13,7 @@
 #include <string.h>
 
 CPARSE_IMPORT_event;
+CPARSE_IMPORT_event_include;
 
 /**
  * \brief Perform an in-place initialization of an \ref event_include instance
