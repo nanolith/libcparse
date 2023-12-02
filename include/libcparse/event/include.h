@@ -143,6 +143,10 @@ CPARSE_SYM(event)* CPARSE_SYM(event_include_upcast)(
         CPARSE_SYM(event_include)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
             return CPARSE_SYM(event_include_init_for_system_include)(x,y,z); } \
+    static inline int sym ## event_include_init_for_local_include( \
+        CPARSE_SYM(event_include)* x, const CPARSE_SYM(cursor)* y, \
+        const char* z) { \
+            return CPARSE_SYM(event_include_init_for_local_include)(x,y,z); } \
     static inline int sym ## event_include_dispose( \
         CPARSE_SYM(event_include)* x) { \
             return CPARSE_SYM(event_include_dispose)(x); } \
