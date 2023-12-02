@@ -37,9 +37,7 @@ TEST(init_dispose)
 
     /* we can initialize the event. */
     TEST_ASSERT(
-        STATUS_SUCCESS
-            == event_raw_character_init(
-                    &ev, CPARSE_EVENT_TYPE_RAW_CHARACTER, &pos, TEST_CHAR));
+        STATUS_SUCCESS == event_raw_character_init(&ev, &pos, TEST_CHAR));
 
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_character_dispose(&ev));
@@ -63,8 +61,7 @@ TEST(get)
     /* init the event. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == event_raw_character_init(
-                    &ev, CPARSE_EVENT_TYPE_RAW_CHARACTER, &pos, TEST_CHAR));
+            == event_raw_character_init(&ev, &pos, TEST_CHAR));
 
     /* the character value should match our constructor value. */
     TEST_EXPECT(TEST_CHAR == event_raw_character_get(&ev));
@@ -92,8 +89,7 @@ TEST(upcast_downcast)
     /* init the event. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == event_raw_character_init(
-                    &ev, CPARSE_EVENT_TYPE_RAW_CHARACTER, &pos, TEST_CHAR));
+            == event_raw_character_init(&ev, &pos, TEST_CHAR));
 
     /* upcast the event. */
     auto oev = event_raw_character_upcast(&ev);

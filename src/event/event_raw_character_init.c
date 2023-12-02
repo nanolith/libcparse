@@ -19,7 +19,6 @@ CPARSE_IMPORT_event;
  * instance.
  *
  * \param ev                Pointer to the event to initialize.
- * \param event_type        The type of the event.
  * \param cursor            The event cursor.
  * \param ch                The raw character for this event.
  *
@@ -28,8 +27,8 @@ CPARSE_IMPORT_event;
  *      - a non-zero failure code on failure.
  */
 int CPARSE_SYM(event_raw_character_init)(
-    CPARSE_SYM(event_raw_character)* ev, int event_type,
-    const CPARSE_SYM(cursor)* cursor, int ch)
+    CPARSE_SYM(event_raw_character)* ev, const CPARSE_SYM(cursor)* cursor,
+    int ch)
 {
     int retval;
 
@@ -37,7 +36,7 @@ int CPARSE_SYM(event_raw_character_init)(
     memset(ev, 0, sizeof(*ev));
 
     /* initialize base type. */
-    retval = event_init(&ev->hdr, event_type, cursor);
+    retval = event_init(&ev->hdr, CPARSE_EVENT_TYPE_RAW_CHARACTER, cursor);
     if (STATUS_SUCCESS != retval)
     {
         goto done;

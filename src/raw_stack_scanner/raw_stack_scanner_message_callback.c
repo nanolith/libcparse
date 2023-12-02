@@ -302,9 +302,7 @@ static int broadcast_raw_character_event(
     event_raw_character rev;
 
     /* create an event for this character. */
-    retval =
-        event_raw_character_init(
-            &rev, CPARSE_EVENT_TYPE_RAW_CHARACTER, pos, ch);
+    retval = event_raw_character_init(&rev, pos, ch);
     if (STATUS_SUCCESS != retval)
     {
         goto done;

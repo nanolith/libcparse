@@ -34,7 +34,6 @@ typedef struct CPARSE_SYM(event_raw_character) CPARSE_SYM(event_raw_character);
  * instance.
  *
  * \param ev                Pointer to the event to initialize.
- * \param event_type        The type of the event.
  * \param cursor            The event cursor.
  * \param ch                The raw character for this event.
  *
@@ -43,8 +42,8 @@ typedef struct CPARSE_SYM(event_raw_character) CPARSE_SYM(event_raw_character);
  *      - a non-zero failure code on failure.
  */
 int CPARSE_SYM(event_raw_character_init)(
-    CPARSE_SYM(event_raw_character)* ev, int event_type,
-    const CPARSE_SYM(cursor)* cursor, int ch);
+    CPARSE_SYM(event_raw_character)* ev, const CPARSE_SYM(cursor)* cursor,
+    int ch);
 
 /**
  * \brief Perform an in-place disposal of an \ref event_raw_character instance.
@@ -105,9 +104,9 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_character_upcast)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_raw_character) sym ## event_raw_character; \
     static inline int sym ## event_raw_character_init( \
-        CPARSE_SYM(event_raw_character)* w, int x, const CPARSE_SYM(cursor)* y,\
+        CPARSE_SYM(event_raw_character)* x, const CPARSE_SYM(cursor)* y, \
         int z) { \
-            return CPARSE_SYM(event_raw_character_init)(w,x,y,z); } \
+            return CPARSE_SYM(event_raw_character_init)(x,y,z); } \
     static inline int sym ## event_raw_character_dispose( \
         CPARSE_SYM(event_raw_character)* x) { \
             return CPARSE_SYM(event_raw_character_dispose)(x); } \

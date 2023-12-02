@@ -37,9 +37,7 @@ int CPARSE_SYM(file_position_cache_raw_character_broadcast)(
     event_raw_character rev;
 
     /* initialize the raw character event. */
-    retval =
-        event_raw_character_init(
-            &rev, CPARSE_EVENT_TYPE_RAW_CHARACTER, &cache->pos, ch);
+    retval = event_raw_character_init(&rev, &cache->pos, ch);
     if (STATUS_SUCCESS != retval)
     {
         goto done;

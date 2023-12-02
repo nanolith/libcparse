@@ -185,9 +185,7 @@ static int raw_character_broadcast(
     const cursor* pos = event_get_cursor(ev);
 
     /* initialize this event. */
-    retval =
-        event_raw_character_init(
-            &rch, CPARSE_EVENT_TYPE_RAW_CHARACTER, pos, ch);
+    retval = event_raw_character_init(&rch, pos, ch);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
