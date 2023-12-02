@@ -11,7 +11,7 @@
 #pragma once
 
 #include <libcparse/cursor.h>
-#include <libcparse/event_fwd.h>
+#include <libcparse/event.h>
 #include <libcparse/function_decl.h>
 
 /* C++ compatibility. */
