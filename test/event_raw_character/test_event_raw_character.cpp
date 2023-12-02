@@ -74,7 +74,7 @@ TEST(get)
 }
 
 /**
- * Test that we can upcast add downcast the raw character event.
+ * Test that we can upcast and downcast the raw character event.
  */
 TEST(upcast_downcast)
 {
