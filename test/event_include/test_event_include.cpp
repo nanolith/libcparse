@@ -45,3 +45,34 @@ TEST(init_dispose)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
 }
+
+/**
+ * Test that we can get the file value.
+ */
+TEST(get)
+{
+    cursor pos;
+    event_include ev;
+    const char* TEST_FILE = "stdio.h";
+
+    /* set up the position. */
+    memset(&pos, 0, sizeof(pos));
+    pos.file = "stdin";
+    pos.begin_line = pos.end_line = 1;
+    pos.begin_col = pos.end_col = 1;
+
+    /* init the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_include_init(
+                    &ev, CPARSE_EVENT_TYPE_PREPROCESSOR_SYSTEM_INCLUDE, &pos,
+                    TEST_FILE));
+
+    /* the file should match our constructor value. */
+    TEST_EXPECT(!strcmp(TEST_FILE, event_include_file_get(&ev)));
+
+    /* dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
+}
+
+
