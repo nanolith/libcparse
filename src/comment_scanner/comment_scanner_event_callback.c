@@ -688,7 +688,7 @@ static int begin_block_comment_broadcast(
     pos.end_col = starpos->end_col;
 
     /* initialize the begin block comment event. */
-    retval = event_init(&bev, CPARSE_EVENT_TYPE_COMMENT_BLOCK_BEGIN, &pos);
+    retval = event_init_for_comment_block_begin(&bev, &pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
@@ -757,7 +757,7 @@ static int end_block_comment_broadcast(
     pos.end_col = slashpos->end_col;
 
     /* initialize the end block comment event. */
-    retval = event_init(&bev, CPARSE_EVENT_TYPE_COMMENT_BLOCK_END, &pos);
+    retval = event_init_for_comment_block_end(&bev, &pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
@@ -826,7 +826,7 @@ static int begin_line_comment_broadcast(
     pos.end_col = slashpos->end_col;
 
     /* initialize the begin line comment event. */
-    retval = event_init(&lev, CPARSE_EVENT_TYPE_COMMENT_LINE_BEGIN, &pos);
+    retval = event_init_for_comment_line_begin(&lev, &pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
@@ -882,7 +882,7 @@ static int end_line_comment_broadcast(
     memcpy(&pos, newlinepos, sizeof(pos));
 
     /* initialize the end line comment event. */
-    retval = event_init(&lev, CPARSE_EVENT_TYPE_COMMENT_LINE_END, &pos);
+    retval = event_init_for_comment_line_end(&lev, &pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
