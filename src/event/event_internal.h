@@ -34,6 +34,23 @@ extern "C" {
 int CPARSE_SYM(event_init)(
     CPARSE_SYM(event)* ev, int event_type, const CPARSE_SYM(cursor)* cursor);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_event_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(event) sym ## event; \
+    static inline int sym ## event_init( \
+        CPARSE_SYM(event)* x, int y, const CPARSE_SYM(cursor)* z) { \
+            return CPARSE_SYM(event_init)(x,y,z); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_event_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_event_internal_sym(sym ## _)
+#define CPARSE_IMPORT_event_internal \
+    __INTERNAL_CPARSE_IMPORT_event_internal_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
