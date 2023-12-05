@@ -7,12 +7,13 @@
  * distribution for the license terms under which this software is distributed.
  */
 
-#include <libcparse/event.h>
 #include <libcparse/event/raw_character.h>
 #include <libcparse/status_codes.h>
 #include <string.h>
 
-CPARSE_IMPORT_event;
+#include "event_internal.h"
+
+CPARSE_IMPORT_event_internal;
 
 /**
  * \brief Perform an in-place initialization of an \ref event_raw_character
