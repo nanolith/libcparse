@@ -620,8 +620,8 @@ static int newline_eof_transition(
 
     /* broadcast newline event. */
     retval =
-        file_position_cache_generic_event_broadcast(
-            filter->cache, filter->reactor, CPARSE_EVENT_TYPE_TOKEN_NEWLINE);
+        file_position_cache_newline_token_broadcast(
+            filter->cache, filter->reactor);
     if (STATUS_SUCCESS != retval)
     {
         return retval;
@@ -662,8 +662,8 @@ static int newline_init_transition(
 
     /* broadcast newline event. */
     retval =
-        file_position_cache_generic_event_broadcast(
-            filter->cache, filter->reactor, CPARSE_EVENT_TYPE_TOKEN_NEWLINE);
+        file_position_cache_newline_token_broadcast(
+            filter->cache, filter->reactor);
     if (STATUS_SUCCESS != retval)
     {
         return retval;
