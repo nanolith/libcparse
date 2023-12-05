@@ -235,6 +235,10 @@ int CPARSE_SYM(file_position_cache_generic_event_broadcast)(
             return \
                 CPARSE_SYM(file_position_cache_whitespace_token_broadcast)( \
                     x,y); } \
+    static inline int sym ## file_position_cache_newline_token_broadcast( \
+        CPARSE_SYM(file_position_cache)* x, CPARSE_SYM(event_reactor)* y) { \
+            return \
+                CPARSE_SYM(file_position_cache_newline_token_broadcast)(x,y); }\
     static inline int sym ## file_position_cache_generic_event_broadcast( \
         CPARSE_SYM(file_position_cache)* x, CPARSE_SYM(event_reactor)* y, \
         int z) { \
