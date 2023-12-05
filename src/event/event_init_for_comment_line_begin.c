@@ -7,10 +7,11 @@
  * distribution for the license terms under which this software is distributed.
  */
 
-#include <libcparse/event.h>
 #include <libcparse/event_type.h>
 
-CPARSE_IMPORT_event;
+#include "event_internal.h"
+
+CPARSE_IMPORT_event_internal;
 
 /**
  * \brief Perform an in-place initialization of a comment line begin event
