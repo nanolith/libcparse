@@ -95,7 +95,7 @@ TEST(send)
     memset(&c, 0, sizeof(c));
 
     /* initialize a dummy event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init(&ev, 17, &c));
+    TEST_ASSERT(STATUS_SUCCESS == event_init_for_whitespace_token(&ev, &c));
 
     /* precondition: test_context count is zero. */
     TEST_ASSERT(0 == t.count);
