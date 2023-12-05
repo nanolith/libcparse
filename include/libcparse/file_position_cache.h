@@ -149,6 +149,21 @@ int CPARSE_SYM(file_position_cache_raw_character_broadcast)(
     int ch);
 
 /**
+ * \brief Given a cache and event reactor, send a cached whitespace token event
+ * to the event reactor subscribers.
+ *
+ * \param cache             The \ref file_position_cache instance for this
+ *                          operation.
+ * \param reactor           The \ref event_reactor for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(file_position_cache_whitespace_token_broadcast)(
+    CPARSE_SYM(file_position_cache)* cache, CPARSE_SYM(event_reactor)* reactor);
+
+/**
  * \brief Given a cache, event reactor, and event type, send a cached generic
  * event to the event reactor subscribers.
  *
