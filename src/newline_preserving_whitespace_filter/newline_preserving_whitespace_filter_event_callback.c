@@ -581,8 +581,8 @@ static int whitespace_init_transition(
 
     /* broadcast whitespace event. */
     retval =
-        file_position_cache_generic_event_broadcast(
-            filter->cache, filter->reactor, CPARSE_EVENT_TYPE_TOKEN_WHITESPACE);
+        file_position_cache_whitespace_token_broadcast(
+            filter->cache, filter->reactor);
     if (STATUS_SUCCESS != retval)
     {
         return retval;
