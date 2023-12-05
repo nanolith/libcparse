@@ -348,7 +348,7 @@ static int broadcast_eof_event(raw_stack_scanner* scanner, const cursor* pos)
     event ev;
 
     /* Create an EOF event. */
-    retval = event_init(&ev, CPARSE_EVENT_TYPE_EOF, pos);
+    retval = event_init_for_eof(&ev, pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
