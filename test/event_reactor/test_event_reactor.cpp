@@ -68,7 +68,7 @@ TEST(broadcast_zero)
     memset(&c, 0, sizeof(c));
 
     /* initialize a dummy event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init(&ev, 17, &c));
+    TEST_ASSERT(STATUS_SUCCESS == event_init_for_whitespace_token(&ev, &c));
 
     /* broadcast this event. */
     TEST_ASSERT(STATUS_SUCCESS == event_reactor_broadcast(er, &ev));
@@ -105,7 +105,7 @@ TEST(broadcast_one)
     memset(&c, 0, sizeof(c));
 
     /* initialize a dummy event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init(&ev, 17, &c));
+    TEST_ASSERT(STATUS_SUCCESS == event_init_for_whitespace_token(&ev, &c));
 
     /* precondition: test_context count is zero. */
     TEST_ASSERT(0 == t.count);
@@ -158,7 +158,7 @@ TEST(broadcast_multiple)
     memset(&c, 0, sizeof(c));
 
     /* initialize a dummy event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init(&ev, 17, &c));
+    TEST_ASSERT(STATUS_SUCCESS == event_init_for_whitespace_token(&ev, &c));
 
     /* precondition: test_context counts are zero. */
     TEST_ASSERT(0 == t1.count);
