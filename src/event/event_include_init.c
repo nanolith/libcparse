@@ -13,7 +13,6 @@
 
 #include "event_internal.h"
 
-CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_internal;
 
 /**
