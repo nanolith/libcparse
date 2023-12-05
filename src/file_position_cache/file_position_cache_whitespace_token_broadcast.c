@@ -17,8 +17,8 @@ CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_reactor;
 
 /**
- * \brief Given a cache and event reactor, send a cached newline token event to
- * the event reactor subscribers.
+ * \brief Given a cache and event reactor, send a cached whitespace token event
+ * to the event reactor subscribers.
  *
  * \param cache             The \ref file_position_cache instance for this
  *                          operation.
@@ -28,7 +28,7 @@ CPARSE_IMPORT_event_reactor;
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(file_position_cache_newline_token_broadcast)(
+int CPARSE_SYM(file_position_cache_whitespace_token_broadcast)(
     CPARSE_SYM(file_position_cache)* cache, CPARSE_SYM(event_reactor)* reactor)
 {
     int retval, release_retval;
