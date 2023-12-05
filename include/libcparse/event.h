@@ -56,6 +56,20 @@ int CPARSE_SYM(event_init_for_eof)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
+ * \brief Perform an in-place initialization of a whitespace token event
+ * instance.
+ *
+ * \param ev                    Pointer to the event to initialize.
+ * \param cursor                The event cursor.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_init_for_whitespace_token)(
+    CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
+
+/**
  * \brief Perform an in-place initialization of a comment block begin event
  * instance.
  *
