@@ -35,7 +35,7 @@ int CPARSE_SYM(file_position_cache_whitespace_token_broadcast)(
     event ev;
 
     /* initialize the event. */
-    retval = event_init(&ev, CPARSE_EVENT_TYPE_TOKEN_WHITESPACE, &cache->pos);
+    retval = event_init_for_whitespace_token(&ev, &cache->pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
