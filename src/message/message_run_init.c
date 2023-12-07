@@ -10,7 +10,9 @@
 #include <libcparse/message/run.h>
 #include <string.h>
 
-CPARSE_IMPORT_message;
+#include "message_internal.h"
+
+CPARSE_IMPORT_message_internal;
 
 /**
  * \brief Initialize a \ref message_run instance.
