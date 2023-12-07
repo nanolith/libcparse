@@ -11,6 +11,7 @@
 
 #include <libcparse/string_builder.h>
 #include <stdint.h>
+#include <stddef.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -34,6 +35,20 @@ struct CPARSE_SYM(string_builder)
     CPARSE_SYM(string_builder_chunk)* tail;
     size_t offset;
 };
+
+/******************************************************************************/
+/* Start of private exports.                                                  */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_string_builder_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(string_builder_chunk) sym ## string_builder_chunk; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_string_builder_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_string_builder_internal_sym(sym ## _)
+#define CPARSE_IMPORT_string_builder_internal \
+    __INTERNAL_CPARSE_IMPORT_string_builder_internal_sym()
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
