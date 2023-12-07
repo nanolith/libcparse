@@ -44,6 +44,20 @@ int CPARSE_SYM(message_subscribe_init)(
     CPARSE_SYM(event_handler)* handler);
 
 /**
+ * \brief Initialize a \ref message_subscribe instance for subscribing to the
+ * comment filter.
+ *
+ * \param msg               The message to initialize.
+ * \param handler           The \ref event_handler to add to this endpoint.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(message_subscribe_init_for_comment_filter)(
+    CPARSE_SYM(message_subscribe)* msg, CPARSE_SYM(event_handler)* handler);
+
+/**
  * \brief Dispose of a \ref message_subscribe instance.
  *
  * \param msg               The message to dispose.
