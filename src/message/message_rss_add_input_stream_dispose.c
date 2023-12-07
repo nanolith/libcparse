@@ -13,8 +13,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "message_internal.h"
+
 CPARSE_IMPORT_input_stream;
-CPARSE_IMPORT_message;
+CPARSE_IMPORT_message_internal;
 
 /**
  * \brief Dispose of a \ref message_rss_add_input_stream message.
