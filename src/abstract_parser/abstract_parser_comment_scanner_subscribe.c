@@ -34,9 +34,7 @@ CPARSE_SYM(abstract_parser_comment_scanner_subscribe)(
     message_subscribe msg;
 
     /* initialize the message. */
-    retval =
-        message_subscribe_init(
-            &msg, CPARSE_MESSAGE_TYPE_COMMENT_SCANNER_SUBSCRIBE, eh);
+    retval = message_subscribe_init_for_comment_scanner(&msg, eh);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
