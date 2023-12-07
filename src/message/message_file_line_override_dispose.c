@@ -12,7 +12,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-CPARSE_IMPORT_message;
+#include "message_internal.h"
+
+CPARSE_IMPORT_message_internal;
 
 /**
  * \brief Dispose of a \ref message_file_line_override instance.
