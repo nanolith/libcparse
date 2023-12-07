@@ -34,8 +34,7 @@ CPARSE_SYM(abstract_parser_raw_file_line_override_filter_subscribe)(
     message_subscribe msg;
 
     /* initialize the message. */
-    retval =
-        message_subscribe_init(&msg, CPARSE_MESSAGE_TYPE_RFLO_SUBSCRIBE, eh);
+    retval = message_subscribe_init_for_rflo_filter(&msg,eh);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
