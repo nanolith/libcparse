@@ -8,10 +8,12 @@
  */
 
 #include <libcparse/message.h>
+#include <libcparse/message/run.h>
 #include <libcparse/status_codes.h>
 #include <minunit/minunit.h>
 
 CPARSE_IMPORT_message;
+CPARSE_IMPORT_message_run;
 
 TEST_SUITE(message);
 
@@ -20,15 +22,17 @@ TEST_SUITE(message);
  */
 TEST(basics)
 {
-    message msg;
-    const int MESSAGE_TYPE = 27;
+    message_run msg;
 
     /* we can initialize the message. */
-    TEST_ASSERT(STATUS_SUCCESS == message_init(&msg, MESSAGE_TYPE));
+    TEST_ASSERT(STATUS_SUCCESS == message_run_init(&msg));
+
+    /* we can upcast this to a message. */
+    auto base = message_run_upcast(&msg);
 
     /* we can get the message type. */
-    TEST_ASSERT(MESSAGE_TYPE == message_get_type(&msg));
+    TEST_ASSERT(CPARSE_MESSAGE_TYPE_RUN == message_get_type(base));
 
     /* we can dispose the message. */
-    TEST_ASSERT(STATUS_SUCCESS == message_dispose(&msg));
+    TEST_ASSERT(STATUS_SUCCESS == message_run_dispose(&msg));
 }
