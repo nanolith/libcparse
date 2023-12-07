@@ -80,6 +80,21 @@ int CPARSE_SYM(string_builder_add_character)(
 int CPARSE_SYM(string_builder_add_string)(
     CPARSE_SYM(string_builder)* builder, const char* ch);
 
+/**
+ * \brief Build a string from the current string builder.
+ *
+ * \param str               Pointer to the string pointer to receive the string
+ *                          on success. On success, this string is owned by the
+ *                          caller and must be freed when no longer needed.
+ * \param builder           The string builder for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(string_builder_build)(
+    char** str, CPARSE_SYM(string_builder)* builder);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
