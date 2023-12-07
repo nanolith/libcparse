@@ -24,21 +24,6 @@ extern "C" {
 typedef struct CPARSE_SYM(message) CPARSE_SYM(message);
 
 /******************************************************************************/
-/* Start of constructors.                                                     */
-/******************************************************************************/
-
-/**
- * \brief Dispose a \ref message.
- *
- * \param msg                   The message to dispose.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-int CPARSE_SYM(message_dispose)(CPARSE_SYM(message)* msg);
-
-/******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
 
@@ -57,8 +42,6 @@ int CPARSE_SYM(message_get_type)(const CPARSE_SYM(message)* msg);
 #define __INTERNAL_CPARSE_IMPORT_message_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(message) sym ## message; \
-    static inline int sym ## message_dispose(CPARSE_SYM(message)* x) { \
-            return CPARSE_SYM(message_dispose)(x); } \
     static inline int sym ## message_get_type(const CPARSE_SYM(message)* x) { \
         return CPARSE_SYM(message_get_type)(x); } \
     CPARSE_END_EXPORT \
