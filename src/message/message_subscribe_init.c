@@ -11,8 +11,10 @@
 #include <libcparse/status_codes.h>
 #include <string.h>
 
+#include "message_internal.h"
+
 CPARSE_IMPORT_event_handler;
-CPARSE_IMPORT_message;
+CPARSE_IMPORT_message_internal;
 
 /**
  * \brief Initialize a \ref message_subscribe instance.
