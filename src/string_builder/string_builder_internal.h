@@ -31,6 +31,7 @@ struct CPARSE_SYM(string_builder_chunk)
 struct CPARSE_SYM(string_builder)
 {
     CPARSE_SYM(string_builder_chunk)* head;
+    CPARSE_SYM(string_builder_chunk)* tail;
     size_t offset;
 };
 
