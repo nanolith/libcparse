@@ -95,6 +95,14 @@ int CPARSE_SYM(string_builder_add_string)(
 int CPARSE_SYM(string_builder_build)(
     char** str, CPARSE_SYM(string_builder)* builder);
 
+/**
+ * \brief Clear the current string builder instance, returning its internal
+ * state to empty.
+ *
+ * \param builder           The string builder for this operation.
+ */
+void CPARSE_SYM(string_builder_clear)(CPARSE_SYM(string_builder)* builder);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
