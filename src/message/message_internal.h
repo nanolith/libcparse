@@ -51,6 +51,8 @@ int CPARSE_SYM(message_dispose)(CPARSE_SYM(message)* msg);
     static inline int sym ## message_init( \
         CPARSE_SYM(message)* x, int y) { \
             return CPARSE_SYM(message_init)(x,y); } \
+    static inline int sym ## message_dispose(CPARSE_SYM(message)* x) { \
+            return CPARSE_SYM(message_dispose)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_message_internal_as(sym) \
