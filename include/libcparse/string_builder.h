@@ -50,6 +50,23 @@ int CPARSE_SYM(string_builder_create)(CPARSE_SYM(string_builder)** builder);
  */
 int CPARSE_SYM(string_builder_release)(CPARSE_SYM(string_builder)* builder);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Add a character to the string builder.
+ *
+ * \param builder           The string builder instance for this operation.
+ * \param ch                The character to add.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(string_builder_add_character)(
+    CPARSE_SYM(string_builder)* builder, int ch);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
