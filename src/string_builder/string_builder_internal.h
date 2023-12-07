@@ -10,6 +10,7 @@
 #pragma once
 
 #include <libcparse/string_builder.h>
+#include <stdint.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -25,6 +26,12 @@ struct CPARSE_SYM(string_builder_chunk)
 {
     CPARSE_SYM(string_builder_chunk)* next;
     char arr[CPARSE_STRING_BUILDER_CHUNK_ARRAY_SIZE];
+};
+
+struct CPARSE_SYM(string_builder)
+{
+    CPARSE_SYM(string_builder_chunk)* head;
+    size_t offset;
 };
 
 /* C++ compatibility. */
