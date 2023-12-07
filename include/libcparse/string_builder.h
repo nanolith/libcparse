@@ -22,6 +22,22 @@ extern "C" {
  */
 typedef struct CPARSE_SYM(string_builder) CPARSE_SYM(string_builder);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a string builder instance.
+ *
+ * \param builder           Pointer to the string builder pointer to receive
+ *                          this instance on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(string_builder_create)(CPARSE_SYM(string_builder)** builder);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
