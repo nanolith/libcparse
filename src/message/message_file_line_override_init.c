@@ -17,7 +17,6 @@ CPARSE_IMPORT_message;
  * \brief Initialize a \ref message_file_line_override instance.
  *
  * \param msg               The message to initialize.
- * \param msg_type          The type of file/line override message.
  * \param file              The new name of the file, which is optional and can
  *                          be NULL if unchanged.
  * \param line              The line to override.
@@ -27,8 +26,8 @@ CPARSE_IMPORT_message;
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(message_file_line_override_init)(
-    CPARSE_SYM(message_file_line_override)* msg, int msg_type,
-    const char* file, unsigned int line)
+    CPARSE_SYM(message_file_line_override)* msg, const char* file,
+    unsigned int line)
 {
     int retval, release_retval;
 
@@ -36,7 +35,8 @@ int CPARSE_SYM(message_file_line_override_init)(
     memset(msg, 0, sizeof(*msg));
 
     /* initialize the base message. */
-    retval = message_init(&msg->hdr, msg_type);
+    retval =
+        message_init(&msg->hdr, CPARSE_MESSAGE_TYPE_RFLO_FILE_LINE_OVERRIDE);
     if (STATUS_SUCCESS != retval)
     {
         goto done;

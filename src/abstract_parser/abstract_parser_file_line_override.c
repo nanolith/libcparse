@@ -38,9 +38,7 @@ CPARSE_SYM(abstract_parser_file_line_override)(
     message_file_line_override msg;
 
     /* initialize the message. */
-    retval =
-        message_file_line_override_init(
-            &msg, CPARSE_MESSAGE_TYPE_RFLO_FILE_LINE_OVERRIDE, file, line);
+    retval = message_file_line_override_init(&msg, file, line);
     if (STATUS_SUCCESS != retval)
     {
         goto done;

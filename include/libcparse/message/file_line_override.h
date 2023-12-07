@@ -33,7 +33,6 @@ CPARSE_SYM(message_file_line_override);
  * \brief Initialize a \ref message_file_line_override instance.
  *
  * \param msg               The message to initialize.
- * \param msg_type          The type of file/line override message.
  * \param file              The new name of the file, which is optional and can
  *                          be NULL if unchanged.
  * \param line              The line to override.
@@ -43,8 +42,8 @@ CPARSE_SYM(message_file_line_override);
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(message_file_line_override_init)(
-    CPARSE_SYM(message_file_line_override)* msg, int msg_type,
-    const char* file, unsigned int line);
+    CPARSE_SYM(message_file_line_override)* msg, const char* file,
+    unsigned int line);
 
 /**
  * \brief Dispose of a \ref message_file_line_override instance.
@@ -121,9 +120,9 @@ CPARSE_SYM(message)* CPARSE_SYM(message_file_line_override_upcast)(
     typedef CPARSE_SYM(message_file_line_override) \
     sym ## message_file_line_override; \
     static inline int sym ## message_file_line_override_init( \
-        CPARSE_SYM(message_file_line_override)* w, int x, const char* y, \
+        CPARSE_SYM(message_file_line_override)* x, const char* y, \
         unsigned int z) { \
-            return CPARSE_SYM(message_file_line_override_init)(w,x,y,z); } \
+            return CPARSE_SYM(message_file_line_override_init)(x,y,z); } \
     static inline int sym ## message_file_line_override_dispose( \
         CPARSE_SYM(message_file_line_override)* x) { \
             return CPARSE_SYM(message_file_line_override_dispose)(x); } \
