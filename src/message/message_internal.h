@@ -17,7 +17,7 @@ extern "C" {
 # endif /*__cplusplus*/
 
 /******************************************************************************/
-/* Start of constructors.                                                     */
+/* Start of private constructors.                                             */
 /******************************************************************************/
 
 /**
@@ -42,6 +42,21 @@ int CPARSE_SYM(message_init)(CPARSE_SYM(message)* msg, int msg_type);
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(message_dispose)(CPARSE_SYM(message)* msg);
+
+/******************************************************************************/
+/* Start of private exports.                                                  */
+/******************************************************************************/
+#define __INTERNAL_CPARSE_IMPORT_message_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    static inline int sym ## message_init( \
+        CPARSE_SYM(message)* x, int y) { \
+            return CPARSE_SYM(message_init)(x,y); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_message_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_message_internal_sym(sym ## _)
+#define CPARSE_IMPORT_message_internal \
+    __INTERNAL_CPARSE_IMPORT_message_internal_sym()
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
