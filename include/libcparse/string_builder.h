@@ -125,6 +125,9 @@ void CPARSE_SYM(string_builder_clear)(CPARSE_SYM(string_builder)* builder);
     static inline int sym ## string_builder_build( \
         char** x, CPARSE_SYM(string_builder)* y) { \
             return CPARSE_SYM(string_builder_build)(x,y); } \
+    static inline void sym ## string_builder_clear( \
+        CPARSE_SYM(string_builder)* x) { \
+            CPARSE_SYM(string_builder_clear)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_string_builder_as(sym) \
