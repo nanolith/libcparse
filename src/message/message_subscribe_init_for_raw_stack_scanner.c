@@ -8,9 +8,9 @@
  * distribution for the license terms under which this software is distributed.
  */
 
-#include <libcparse/message/subscription.h>
+#include "message_subscription_internal.h"
 
-CPARSE_IMPORT_message_subscription;
+CPARSE_IMPORT_message_subscription_internal;
 
 /**
  * \brief Initialize a \ref message_subscribe instance for subscribing to the
