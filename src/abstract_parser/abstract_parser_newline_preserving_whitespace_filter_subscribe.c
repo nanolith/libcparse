@@ -35,11 +35,7 @@ CPARSE_SYM(abstract_parser_newline_preserving_whitespace_filter_subscribe)(
     message_subscribe msg;
 
     /* initialize the message. */
-    retval =
-        message_subscribe_init(
-            &msg,
-            CPARSE_MESSAGE_TYPE_NEWLINE_PRESERVING_WHITESPACE_FILTER_SUBSCRIBE,
-            eh);
+    retval = message_subscribe_init_for_nl_ws_filter(&msg, eh);
     if (STATUS_SUCCESS != retval)
     {
         goto done;

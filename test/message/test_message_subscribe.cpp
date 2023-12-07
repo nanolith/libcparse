@@ -268,10 +268,7 @@ TEST(upcast_downcast_CPARSE_MESSAGE_TYPE_NEWLINE_PRESERVING_WS_FILTER_SUB)
     /* we can initialize the message. */
     TEST_ASSERT(
       STATUS_SUCCESS
-      == message_subscribe_init(
-            &msg,
-            CPARSE_MESSAGE_TYPE_NEWLINE_PRESERVING_WHITESPACE_FILTER_SUBSCRIBE,
-            &handler));
+            == message_subscribe_init_for_nl_ws_filter(&msg, &handler));
 
     /* we can upcast the message. */
     upcast_msg = message_subscribe_upcast(&msg);
