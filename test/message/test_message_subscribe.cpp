@@ -44,8 +44,7 @@ TEST(basics)
     /* we can initialize the message. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == message_subscribe_init(
-                    &msg, CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE, &handler));
+            == message_subscribe_init_for_raw_stack_scanner(&msg, &handler));
 
     /* dispose the message. */
     TEST_ASSERT(STATUS_SUCCESS == message_subscribe_dispose(&msg));
@@ -67,8 +66,7 @@ TEST(event_handler_get)
     /* we can initialize the message. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == message_subscribe_init(
-                    &msg, CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE, &handler));
+            == message_subscribe_init_for_raw_stack_scanner(&msg, &handler));
 
     /* we can get the event handler. */
     TEST_EXPECT(nullptr != message_subscribe_event_handler_get(&msg));
@@ -96,8 +94,7 @@ TEST(upcast_downcast_CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE)
     /* we can initialize the message. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == message_subscribe_init(
-                    &msg, CPARSE_MESSAGE_TYPE_RSS_SUBSCRIBE, &handler));
+            == message_subscribe_init_for_raw_stack_scanner(&msg, &handler));
 
     /* we can upcast the message. */
     upcast_msg = message_subscribe_upcast(&msg);
