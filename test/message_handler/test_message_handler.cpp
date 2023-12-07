@@ -8,6 +8,7 @@
  */
 
 #include <libcparse/message.h>
+#include <libcparse/message/run.h>
 #include <libcparse/message_handler.h>
 #include <libcparse/status_codes.h>
 #include <minunit/minunit.h>
@@ -15,6 +16,7 @@
 
 CPARSE_IMPORT_message;
 CPARSE_IMPORT_message_handler;
+CPARSE_IMPORT_message_run;
 
 TEST_SUITE(message_handler);
 
@@ -80,7 +82,7 @@ TEST(copy)
 TEST(send)
 {
     message_handler mh;
-    message msg;
+    message_run msg;
     test_context t;
 
     /* we can initialize the message_handler. */
@@ -91,18 +93,21 @@ TEST(send)
     memset(&t, 0, sizeof(t));
 
     /* initialize a dummy message. */
-    TEST_ASSERT(STATUS_SUCCESS == message_init(&msg, 17));
+    TEST_ASSERT(STATUS_SUCCESS == message_run_init(&msg));
+
+    /* get the base message. */
+    auto base = message_run_upcast(&msg);
 
     /* precondition: test_context count is zero. */
     TEST_ASSERT(0 == t.count);
 
     /* send this message. */
-    TEST_ASSERT(STATUS_SUCCESS == message_handler_send(&mh, &msg));
+    TEST_ASSERT(STATUS_SUCCESS == message_handler_send(&mh, base));
 
     /* postcondition: test_context count is 1. */
     TEST_EXPECT(1 == t.count);
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == message_handler_dispose(&mh));
-    TEST_ASSERT(STATUS_SUCCESS == message_dispose(&msg));
+    TEST_ASSERT(STATUS_SUCCESS == message_run_dispose(&msg));
 }
