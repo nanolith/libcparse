@@ -8,12 +8,10 @@
  */
 
 #include <libcparse/status_codes.h>
+#include <libcparse/string_builder.h>
 #include <stdlib.h>
-#include <string.h>
 
-#include "string_builder_internal.h"
-
-CPARSE_IMPORT_string_builder_internal;
+CPARSE_IMPORT_string_builder;
 
 /**
  * \brief Release a string builder instance, releasing any internal resources it
@@ -27,19 +25,8 @@ CPARSE_IMPORT_string_builder_internal;
  */
 int CPARSE_SYM(string_builder_release)(CPARSE_SYM(string_builder)* builder)
 {
-    /* clear all chunks. */
-    string_builder_chunk* tmp = builder->head;
-    while (NULL != tmp)
-    {
-        string_builder_chunk* next = tmp->next;
-
-        memset(tmp, 0, sizeof(*tmp));
-        free(tmp);
-        tmp = next;
-    }
-
-    /* clear structure. */
-    memset(builder, 0, sizeof(*builder));
+    /* clear the structure. */
+    string_builder_clear(builder);
 
     /* free structure. */
     free(builder);
