@@ -35,6 +35,23 @@ int CPARSE_SYM(message_subscribe_init)(
     CPARSE_SYM(message_subscribe)* msg, int msg_type,
     CPARSE_SYM(event_handler)* handler);
 
+/******************************************************************************/
+/* Start of private exports.                                                  */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_message_subscription_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    static inline int sym ## message_subscribe_init(\
+        CPARSE_SYM(message_subscribe)* x, int y, \
+        CPARSE_SYM(event_handler)* z) { \
+            return CPARSE_SYM(message_subscribe_init)(x,y,z); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_message_subscription_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_message_subscription_internal_sym(sym ## _)
+#define CPARSE_IMPORT_message_subscription_internal \
+    __INTERNAL_CPARSE_IMPORT_message_subscription_internal_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
