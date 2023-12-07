@@ -103,6 +103,20 @@ int CPARSE_SYM(string_builder_build)(
  */
 void CPARSE_SYM(string_builder_clear)(CPARSE_SYM(string_builder)* builder);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_string_builder_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(string_builder) sym ## string_builder; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_string_builder_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_string_builder_sym(sym ## _)
+#define CPARSE_IMPORT_string_builder \
+    __INTERNAL_CPARSE_IMPORT_string_builder_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
