@@ -234,9 +234,7 @@ TEST(upcast_downcast_CPARSE_MESSAGE_TYPE_LINE_WRAP_FILTER_SUBSCRIBE)
     /* we can initialize the message. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == message_subscribe_init(
-                    &msg, CPARSE_MESSAGE_TYPE_LINE_WRAP_FILTER_SUBSCRIBE,
-                    &handler));
+            == message_subscribe_init_for_line_wrap_filter(&msg, &handler));
 
     /* we can upcast the message. */
     upcast_msg = message_subscribe_upcast(&msg);

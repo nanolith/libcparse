@@ -34,9 +34,7 @@ CPARSE_SYM(abstract_parser_line_wrap_filter_subscribe)(
     message_subscribe msg;
 
     /* initialize the message. */
-    retval =
-        message_subscribe_init(
-            &msg, CPARSE_MESSAGE_TYPE_LINE_WRAP_FILTER_SUBSCRIBE, eh);
+    retval = message_subscribe_init_for_line_wrap_filter(&msg, eh);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
