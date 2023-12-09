@@ -10,6 +10,7 @@
 #include <libcparse/input_stream.h>
 #include <libcparse/message/raw_stack_scanner.h>
 #include <libcparse/status_codes.h>
+#include <libcparse/string_utils.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -17,6 +18,7 @@
 
 CPARSE_IMPORT_input_stream;
 CPARSE_IMPORT_message_internal;
+CPARSE_IMPORT_string_utils;
 
 /**
  * \brief Dispose of a \ref message_rss_add_input_stream message.
@@ -42,8 +44,7 @@ int CPARSE_SYM(message_rss_add_input_stream_dispose)(
     /* free the name if set. */
     if (NULL != msg->name)
     {
-        memset(msg->name, 0, strlen(msg->name));
-        free(msg->name);
+        string_utils_string_release(msg->name);
     }
 
     /* dispose base structure. */
