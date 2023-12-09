@@ -16,6 +16,7 @@
 #include <libcparse/message/subscription.h>
 #include <libcparse/raw_file_line_override_filter.h>
 #include <libcparse/status_codes.h>
+#include <libcparse/string_utils.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -29,6 +30,7 @@ CPARSE_IMPORT_message_file_line_override;
 CPARSE_IMPORT_message_handler;
 CPARSE_IMPORT_message_subscription;
 CPARSE_IMPORT_raw_file_line_override_filter;
+CPARSE_IMPORT_string_utils;
 
 static int subscribe(raw_file_line_override_filter* filter, const message* msg);
 static int file_line_override(
@@ -192,8 +194,7 @@ static int file_set(raw_file_line_override_filter* filter, const char* file)
     /* clear and free the filter file if set. */
     if (NULL != filter->file)
     {
-        memset(filter->file, 0, strlen(filter->file));
-        free(filter->file);
+        string_utils_string_release(filter->file);
         filter->file = NULL;
     }
 
