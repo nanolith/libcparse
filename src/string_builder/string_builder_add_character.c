@@ -47,7 +47,7 @@ int CPARSE_SYM(string_builder_add_character)(
         tmp = builder->tail;
     }
 
-    /* 2. We need to allocate memory for the chunk, so save it to tmp. */
+    /* (1, 2). We need to allocate memory for the chunk, so save it to tmp. */
     if (0 == chunk_offset)
     {
         /* allocate memory for this chunk. */
