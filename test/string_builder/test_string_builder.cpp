@@ -122,3 +122,42 @@ TEST(add_strings)
     TEST_ASSERT(STATUS_SUCCESS == string_builder_release(builder));
     free(str);
 }
+
+/**
+ * Test that we can add 1024 As to the builder.
+ */
+TEST(A1024)
+{
+    string_builder* builder;
+    char* str = nullptr;
+
+    /* we can create the string_builder. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_create(&builder));
+
+    for (int i = 0; i < 1024; ++i)
+    {
+        TEST_ASSERT(
+            STATUS_SUCCESS == string_builder_add_character(builder, 'A'));
+    }
+
+    /* we can build a string. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_build(&str, builder));
+
+    /* This string is not NULL. */
+    TEST_ASSERT(nullptr != str);
+
+    /* This string matches our characters. */
+    char* tmp = str;
+    for (int i = 0; i < 1024; ++i)
+    {
+        TEST_EXPECT('A' == *tmp);
+        ++tmp;
+    }
+
+    /* the string is terminated with an ASCII zero. */
+    TEST_EXPECT(0 == *tmp);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_release(builder));
+    free(str);
+}
