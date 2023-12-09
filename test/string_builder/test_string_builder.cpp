@@ -10,6 +10,8 @@
 #include <libcparse/status_codes.h>
 #include <libcparse/string_builder.h>
 #include <minunit/minunit.h>
+#include <stdlib.h>
+#include <string.h>
 
 using namespace std;
 
@@ -29,4 +31,29 @@ TEST(create_release)
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == string_builder_release(builder));
+}
+
+/**
+ * Test that an empty string builder builds an empty string.
+ */
+TEST(empty_string_builder)
+{
+    string_builder* builder;
+    char* str = nullptr;
+
+    /* we can create the string_builder. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_create(&builder));
+
+    /* we can build an empty string. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_build(&str, builder));
+
+    /* This string is not NULL. */
+    TEST_ASSERT(nullptr != str);
+
+    /* This string is empty. */
+    TEST_EXPECT(!strcmp(str, ""));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_release(builder));
+    free(str);
 }
