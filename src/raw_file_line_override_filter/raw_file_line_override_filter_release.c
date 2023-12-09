@@ -12,6 +12,7 @@
 #include <libcparse/message_handler.h>
 #include <libcparse/raw_stack_scanner.h>
 #include <libcparse/status_codes.h>
+#include <libcparse/string_utils.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -20,6 +21,7 @@
 CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_message_handler;
 CPARSE_IMPORT_raw_stack_scanner;
+CPARSE_IMPORT_string_utils;
 
 /**
  * \brief Release a raw file/line override filter instance, releasing any
@@ -57,8 +59,7 @@ int CPARSE_SYM(raw_file_line_override_filter_release)(
     /* free the file if set. */
     if (NULL != filter->file)
     {
-        memset(filter->file, 0, strlen(filter->file));
-        free(filter->file);
+        string_utils_string_release(filter->file);
     }
 
     /* clear the filter. */
