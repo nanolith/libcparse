@@ -161,3 +161,34 @@ TEST(A1024)
     TEST_ASSERT(STATUS_SUCCESS == string_builder_release(builder));
     free(str);
 }
+
+/**
+ * Test that we can clear a builder to reset its state.
+*/
+TEST(clear)
+{
+    string_builder* builder;
+    char* str = nullptr;
+
+    /* we can create the string_builder. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_create(&builder));
+
+    /* add a dummy string. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_add_string(builder, "Dummy"));
+
+    /* clear the builder. */
+    string_builder_clear(builder);
+
+    /* Build a string. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_build(&str, builder));
+
+    /* The string is not NULL. */
+    TEST_ASSERT(nullptr != str);
+
+    /* The string is empty. */
+    TEST_EXPECT(!strcmp(str, ""));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_release(builder));
+    free(str);
+}
