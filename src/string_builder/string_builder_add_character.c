@@ -60,8 +60,13 @@ int CPARSE_SYM(string_builder_add_character)(
         /* clear the new chunk. */
         memset(tmp, 0, sizeof(*tmp));
 
-        /* this is our new tail. */
-        builder->tail->next = tmp;
+        /* Fix up tail next to point to tmp. */
+        if (NULL != builder->tail)
+        {
+            builder->tail->next = tmp;
+        }
+
+        /* tmp is our new tail. */
         builder->tail = tmp;
     }
 
