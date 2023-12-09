@@ -91,3 +91,34 @@ TEST(add_character)
     TEST_ASSERT(STATUS_SUCCESS == string_builder_release(builder));
     free(str);
 }
+
+/**
+ * Test that we can add strings to a string.
+ */
+TEST(add_strings)
+{
+    string_builder* builder;
+    char* str = nullptr;
+
+    /* we can create the string_builder. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_create(&builder));
+
+    /* add characters to the string. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == string_builder_add_string(builder, "Hello, "));
+    TEST_ASSERT(
+        STATUS_SUCCESS == string_builder_add_string(builder, "World!"));
+
+    /* we can build a string. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_build(&str, builder));
+
+    /* This string is not NULL. */
+    TEST_ASSERT(nullptr != str);
+
+    /* This string matches our characters. */
+    TEST_EXPECT(!strcmp(str, "Hello, World!"));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_release(builder));
+    free(str);
+}
