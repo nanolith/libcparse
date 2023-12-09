@@ -57,3 +57,37 @@ TEST(empty_string_builder)
     TEST_ASSERT(STATUS_SUCCESS == string_builder_release(builder));
     free(str);
 }
+
+/**
+ * Test that we can add characters to a string.
+ */
+TEST(add_character)
+{
+    string_builder* builder;
+    char* str = nullptr;
+
+    /* we can create the string_builder. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_create(&builder));
+
+    /* add characters to the string. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_add_character(builder, 'A'));
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_add_character(builder, 'B'));
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_add_character(builder, 'C'));
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_add_character(builder, 'D'));
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_add_character(builder, 'E'));
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_add_character(builder, 'F'));
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_add_character(builder, 'G'));
+
+    /* we can build a string. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_build(&str, builder));
+
+    /* This string is not NULL. */
+    TEST_ASSERT(nullptr != str);
+
+    /* This string matches our characters. */
+    TEST_EXPECT(!strcmp(str, "ABCDEFG"));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == string_builder_release(builder));
+    free(str);
+}
