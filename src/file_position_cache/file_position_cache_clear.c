@@ -7,10 +7,13 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <libcparse/string_utils.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "file_position_cache_internal.h"
+
+CPARSE_IMPORT_string_utils;
 
 /**
  * \brief Clear the \ref file_position_cache.
@@ -23,8 +26,7 @@ void CPARSE_SYM(file_position_cache_clear)(
 {
     if (NULL != cache->file)
     {
-        memset(cache->file, 0, strlen(cache->file));
-        free(cache->file);
+        string_utils_string_release(cache->file);
         cache->file = NULL;
     }
 
