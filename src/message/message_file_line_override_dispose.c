@@ -9,12 +9,14 @@
 
 #include <libcparse/message/file_line_override.h>
 #include <libcparse/status_codes.h>
+#include <libcparse/string_utils.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "message_internal.h"
 
 CPARSE_IMPORT_message_internal;
+CPARSE_IMPORT_string_utils;
 
 /**
  * \brief Dispose of a \ref message_file_line_override instance.
@@ -33,8 +35,7 @@ int CPARSE_SYM(message_file_line_override_dispose)(
     /* clean up the file if set. */
     if (NULL != msg->file)
     {
-        memset(msg->file, 0, strlen(msg->file));
-        free(msg->file);
+        string_utils_string_release(msg->file);
     }
 
     /* dispose the message header. */
