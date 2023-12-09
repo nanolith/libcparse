@@ -31,6 +31,22 @@ extern "C" {
  */
 void CPARSE_SYM(string_utils_string_release)(char* str);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_string_utils_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    static inline void sym ## string_utils_string_release( \
+        char* x) { \
+            CPARSE_SYM(string_utils_string_release)(x); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_string_utils_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_string_utils_sym(sym ## _)
+#define CPARSE_IMPORT_string_utils \
+    __INTERNAL_CPARSE_IMPORT_string_utils_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
