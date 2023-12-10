@@ -50,6 +50,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_PREPROCESSOR_ELSE =           0x004C,
     CPARSE_EVENT_TYPE_PREPROCESSOR_ENDIF =          0x004D,
 
+    /* token events. */
+    CPARSE_EVENT_TYPE_TOKEN_STRING =                0x0060,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
 
