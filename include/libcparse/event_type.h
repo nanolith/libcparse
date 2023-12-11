@@ -58,6 +58,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_VALUE_FLOAT =           0x0064,
 
     CPARSE_EVENT_TYPE_TOKEN_IDENTIFIER =            0x0070,
+    CPARSE_EVENT_TYPE_TOKEN_LEFT_PAREN =            0x0071,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
