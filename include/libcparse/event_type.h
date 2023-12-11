@@ -52,7 +52,7 @@ enum CPARSE_SYM(event_type)
 
     /* token events. */
     CPARSE_EVENT_TYPE_TOKEN_VALUE_STRING =          0x0060,
-    CPARSE_EVENT_TYPE_TOKEN_SYSTEM_STRING =         0x0061,
+    CPARSE_EVENT_TYPE_TOKEN_VALUE_SYSTEM_STRING =   0x0061,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
