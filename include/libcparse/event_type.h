@@ -65,6 +65,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_LEFT_BRACKET =          0x0075,
     CPARSE_EVENT_TYPE_TOKEN_RIGHT_BRACKET =         0x0076,
     CPARSE_EVENT_TYPE_TOKEN_COMMA =                 0x0077,
+    CPARSE_EVENT_TYPE_TOKEN_COLON =                 0x0078,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
