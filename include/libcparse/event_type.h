@@ -69,6 +69,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_SEMICOLON =             0x0079,
     CPARSE_EVENT_TYPE_TOKEN_DOT =                   0x007A,
     CPARSE_EVENT_TYPE_TOKEN_ARROW =                 0x007B,
+    CPARSE_EVENT_TYPE_TOKEN_PLUS =                  0x007C,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
