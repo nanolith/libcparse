@@ -120,7 +120,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_PRAGMA =          0x012B,
 
     /* Preprocessor token events. */
-    CPARSE_EVENT_TYPE_TOKEN_STRING_CONCAT =         0x0130,
+    CPARSE_EVENT_TYPE_TOKEN_PP_STRING_CONCAT =      0x0130,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
