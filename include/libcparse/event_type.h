@@ -79,6 +79,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_AMPERSAND =             0x0083,
     CPARSE_EVENT_TYPE_TOKEN_PIPE =                  0x0084,
     CPARSE_EVENT_TYPE_TOKEN_CARET =                 0x0085,
+    CPARSE_EVENT_TYPE_TOKEN_TILDE =                 0x0086,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
