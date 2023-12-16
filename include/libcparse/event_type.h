@@ -105,6 +105,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_LESS_THAN_EQUAL =       0x009A,
     CPARSE_EVENT_TYPE_TOKEN_GREATER_THAN_EQUAL =    0x009B,
 
+    /* Preprocessor identifier token events. */
+    CPARSE_EVENT_TYPE_TOKEN_PP_ID_IF =              0x0120,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
 
