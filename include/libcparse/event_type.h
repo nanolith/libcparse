@@ -88,6 +88,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_MINUS_EQUAL =           0x008C,
     CPARSE_EVENT_TYPE_TOKEN_TIMES_EQUAL =           0x008D,
     CPARSE_EVENT_TYPE_TOKEN_DIV_EQUAL =             0x008E,
+    CPARSE_EVENT_TYPE_TOKEN_MOD_EQUAL =             0x008F,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
