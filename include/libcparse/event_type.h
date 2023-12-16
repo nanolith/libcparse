@@ -110,6 +110,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_IFDEF =           0x0121,
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_IFNDEF =          0x0122,
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_ELIF =            0x0123,
+    CPARSE_EVENT_TYPE_TOKEN_PP_ID_ELSE =            0x0124,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
