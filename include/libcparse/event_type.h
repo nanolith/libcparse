@@ -50,14 +50,17 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_PREPROCESSOR_ELSE =           0x004C,
     CPARSE_EVENT_TYPE_PREPROCESSOR_ENDIF =          0x004D,
 
-    /* token events. */
+    /* token value events. */
     CPARSE_EVENT_TYPE_TOKEN_VALUE_STRING =          0x0060,
     CPARSE_EVENT_TYPE_TOKEN_VALUE_SYSTEM_STRING =   0x0061,
     CPARSE_EVENT_TYPE_TOKEN_VALUE_INTEGER =         0x0062,
     CPARSE_EVENT_TYPE_TOKEN_VALUE_CHARACTER =       0x0063,
     CPARSE_EVENT_TYPE_TOKEN_VALUE_FLOAT =           0x0064,
 
+    /* identifier token event. */
     CPARSE_EVENT_TYPE_TOKEN_IDENTIFIER =            0x0070,
+
+    /* simple token events. */
     CPARSE_EVENT_TYPE_TOKEN_LEFT_PAREN =            0x0071,
     CPARSE_EVENT_TYPE_TOKEN_RIGHT_PAREN =           0x0072,
     CPARSE_EVENT_TYPE_TOKEN_LEFT_BRACE =            0x0073,
