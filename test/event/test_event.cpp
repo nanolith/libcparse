@@ -38,3 +38,24 @@ TEST(eof)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
 }
+
+/**
+ * Test that we can create a whitespace token event.
+ */
+TEST(token_whitespace)
+{
+    event ev;
+    cursor c;
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* We can create an eof event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_init_for_whitespace_token(&ev, &c));
+
+    /* The event type is correct. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_WHITESPACE == event_get_type(&ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
