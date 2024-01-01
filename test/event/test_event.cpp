@@ -29,7 +29,7 @@ TEST(eof)
     /* clear the cursor. */
     memset(&c, 0, sizeof(c));
 
-    /* We can create an eof event. */
+    /* Initialize an event. */
     TEST_ASSERT(STATUS_SUCCESS == event_init_for_eof(&ev, &c));
 
     /* The event type is correct. */
@@ -50,7 +50,7 @@ TEST(token_whitespace)
     /* clear the cursor. */
     memset(&c, 0, sizeof(c));
 
-    /* We can create an eof event. */
+    /* Initialize an event. */
     TEST_ASSERT(STATUS_SUCCESS == event_init_for_whitespace_token(&ev, &c));
 
     /* The event type is correct. */
@@ -71,7 +71,7 @@ TEST(token_newline)
     /* clear the cursor. */
     memset(&c, 0, sizeof(c));
 
-    /* We can create an eof event. */
+    /* Initialize an event. */
     TEST_ASSERT(STATUS_SUCCESS == event_init_for_newline_token(&ev, &c));
 
     /* The event type is correct. */
@@ -92,7 +92,7 @@ TEST(comment_block_begin)
     /* clear the cursor. */
     memset(&c, 0, sizeof(c));
 
-    /* We can create an eof event. */
+    /* Initialize an event. */
     TEST_ASSERT(STATUS_SUCCESS == event_init_for_comment_block_begin(&ev, &c));
 
     /* The event type is correct. */
@@ -113,7 +113,7 @@ TEST(comment_block_end)
     /* clear the cursor. */
     memset(&c, 0, sizeof(c));
 
-    /* We can create an eof event. */
+    /* Initialize an event. */
     TEST_ASSERT(STATUS_SUCCESS == event_init_for_comment_block_end(&ev, &c));
 
     /* The event type is correct. */
@@ -134,7 +134,7 @@ TEST(comment_line_begin)
     /* clear the cursor. */
     memset(&c, 0, sizeof(c));
 
-    /* We can create an eof event. */
+    /* Initialize an event. */
     TEST_ASSERT(STATUS_SUCCESS == event_init_for_comment_line_begin(&ev, &c));
 
     /* The event type is correct. */
