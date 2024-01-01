@@ -80,3 +80,24 @@ TEST(token_newline)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
 }
+
+/**
+ * Test that we can create a comment block begin event.
+ */
+TEST(comment_block_begin)
+{
+    event ev;
+    cursor c;
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* We can create an eof event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_init_for_comment_block_begin(&ev, &c));
+
+    /* The event type is correct. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_COMMENT_BLOCK_BEGIN == event_get_type(&ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
