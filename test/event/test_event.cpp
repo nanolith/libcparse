@@ -143,3 +143,24 @@ TEST(comment_line_begin)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
 }
+
+/**
+ * Test that we can create a comment line end event.
+ */
+TEST(comment_line_end)
+{
+    event ev;
+    cursor c;
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_init_for_comment_line_end(&ev, &c));
+
+    /* The event type is correct. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_COMMENT_LINE_END == event_get_type(&ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
