@@ -1,4 +1,3 @@
-
 /**
  * \file src/event/event_init_for_token_left_paren.c
  *
