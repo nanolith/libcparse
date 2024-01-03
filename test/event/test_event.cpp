@@ -227,3 +227,24 @@ TEST(token_left_brace)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
 }
+
+/**
+ * Test that we can create a token right brace event.
+ */
+TEST(token_right_brace)
+{
+    event ev;
+    cursor c;
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_init_for_token_right_brace(&ev, &c));
+
+    /* The event type is correct. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_RIGHT_BRACE == event_get_type(&ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
