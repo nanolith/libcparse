@@ -395,3 +395,24 @@ TEST(token_arrow)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
 }
+
+/**
+ * Test that we can create a token plus event.
+ */
+TEST(token_plus)
+{
+    event ev;
+    cursor c;
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_init_for_token_plus(&ev, &c));
+
+    /* The event type is correct. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_PLUS == event_get_type(&ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
