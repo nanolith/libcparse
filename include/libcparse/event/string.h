@@ -120,6 +120,10 @@ CPARSE_SYM(event)* CPARSE_SYM(event_string_upcast)(
         CPARSE_SYM(event_string)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
             return CPARSE_SYM(event_string_init)(x,y,z); } \
+    static inline int sym ## event_string_init_for_system_string( \
+        CPARSE_SYM(event_string)* x, const CPARSE_SYM(cursor)* y, \
+        const char* z) { \
+            return CPARSE_SYM(event_string_init_for_system_string)(x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_string_as(sym) \
