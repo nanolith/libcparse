@@ -70,6 +70,20 @@ int CPARSE_SYM(event_string_init_for_system_string)(
  */
 int CPARSE_SYM(event_string_dispose)(CPARSE_SYM(event_string)* ev);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the string value for this event.
+ *
+ * \param ev                The event instance to query.
+ *
+ * \returns the line value for this event.
+ */
+const char* CPARSE_SYM(event_string_get)(
+    const CPARSE_SYM(event_string)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
