@@ -59,6 +59,17 @@ int CPARSE_SYM(event_string_init_for_system_string)(
     CPARSE_SYM(event_string)* ev, const CPARSE_SYM(cursor)* cursor,
     const char* line);
 
+/**
+ * \brief Perform an in-place disposal of an \ref event_string instance.
+ *
+ * \param ev                Pointer to the event to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_string_dispose)(CPARSE_SYM(event_string)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
