@@ -109,6 +109,20 @@ int CPARSE_SYM(event_downcast_to_event_string)(
 CPARSE_SYM(event)* CPARSE_SYM(event_string_upcast)(
     CPARSE_SYM(event_string)* ev);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_event_string_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(event_string) sym ## event_string; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_event_string_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_event_string_sym(sym ## _)
+#define CPARSE_IMPORT_event_string \
+    __INTERNAL_CPARSE_IMPORT_event_string_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
