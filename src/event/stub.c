@@ -5,3 +5,4 @@
 
 CPARSE_IMPORT_event_include;
 CPARSE_IMPORT_event_raw_line;
+CPARSE_IMPORT_event_string;
