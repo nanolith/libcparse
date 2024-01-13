@@ -35,6 +35,12 @@ struct CPARSE_SYM(event_include)
     const char* file;
 };
 
+struct CPARSE_SYM(event_string)
+{
+    CPARSE_SYM(event) hdr;
+    const char* str;
+};
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
