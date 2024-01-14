@@ -44,3 +44,31 @@ TEST(event_string_init)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_string_dispose(&ev));
 }
+
+/**
+ * Test that we can create a system string value event.
+ */
+TEST(event_string_init_for_system_string)
+{
+    event_string ev;
+    cursor c;
+    const char* TEST_STRING = "test";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_string_init_for_system_string(&ev, &c, TEST_STRING));
+
+    /* get the base event type. */
+    auto bev = event_string_upcast(&ev);
+
+    /* The event type is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_TYPE_TOKEN_VALUE_SYSTEM_STRING == event_get_type(bev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_string_dispose(&ev));
+}
