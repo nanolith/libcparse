@@ -41,7 +41,7 @@ typedef struct CPARSE_SYM(event_string) CPARSE_SYM(event_string);
  */
 int CPARSE_SYM(event_string_init)(
     CPARSE_SYM(event_string)* ev, const CPARSE_SYM(cursor)* cursor,
-    const char* line);
+    const char* str);
 
 /**
  * \brief Perform an in-place initialization of an \ref event_string instance
@@ -57,7 +57,7 @@ int CPARSE_SYM(event_string_init)(
  */
 int CPARSE_SYM(event_string_init_for_system_string)(
     CPARSE_SYM(event_string)* ev, const CPARSE_SYM(cursor)* cursor,
-    const char* line);
+    const char* str);
 
 /**
  * \brief Perform an in-place disposal of an \ref event_string instance.
