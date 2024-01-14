@@ -35,7 +35,7 @@ extern "C" {
  */
 int CPARSE_SYM(event_string_init_internal)(
     CPARSE_SYM(event_string)* ev, int event_type,
-    const CPARSE_SYM(cursor)* cursor, const char* line);
+    const CPARSE_SYM(cursor)* cursor, const char* str);
 
 /******************************************************************************/
 /* Start of private exports.                                                  */
