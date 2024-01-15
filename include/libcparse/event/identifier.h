@@ -24,6 +24,26 @@ extern "C" {
  */
 typedef struct CPARSE_SYM(event_identifier) CPARSE_SYM(event_identifier);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Perform an in-place initialization of an \ref event_identifier
+ * instance.
+ *
+ * \param ev                Pointer to the event to initialize.
+ * \param cursor            The event cursor.
+ * \param id                The identifier value for this event.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero failure code on failure.
+ */
+int CPARSE_SYM(event_identifier_init)(
+    CPARSE_SYM(event_identifier)* ev, const CPARSE_SYM(cursor)* cursor,
+    const char* id);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
