@@ -1,4 +1,5 @@
 #include <libcparse/event/include.h>
+#include <libcparse/event/identifier.h>
 #include <libcparse/event/raw_line.h>
 #include <libcparse/event/string.h>
 #include <stdio.h>
