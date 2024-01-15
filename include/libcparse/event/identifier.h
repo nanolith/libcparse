@@ -44,6 +44,17 @@ int CPARSE_SYM(event_identifier_init)(
     CPARSE_SYM(event_identifier)* ev, const CPARSE_SYM(cursor)* cursor,
     const char* id);
 
+/**
+ * \brief Perform an in-place disposal of an \ref event_identifier instance.
+ *
+ * \param ev                Pointer to the event to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_identifier_dispose)(CPARSE_SYM(event_identifier)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
