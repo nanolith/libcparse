@@ -99,3 +99,32 @@ TEST(event_string_get)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_string_dispose(&ev));
 }
+
+/**
+ * Test that we can downcast a string event.
+ */
+TEST(event_downcast_to_event_string)
+{
+    event_string ev;
+    event_string* ev2;
+    cursor c;
+    const char* TEST_STRING = "test";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_string_init(&ev, &c, TEST_STRING));
+
+    /* get the base event type. */
+    auto bev = event_string_upcast(&ev);
+
+    /* attempt to downcast this event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_downcast_to_event_string(&ev2, bev));
+
+    /* this value should match our original event pointer. */
+    TEST_EXPECT(ev2 == &ev);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_string_dispose(&ev));
+}
