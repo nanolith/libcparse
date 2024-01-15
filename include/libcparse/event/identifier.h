@@ -55,6 +55,20 @@ int CPARSE_SYM(event_identifier_init)(
  */
 int CPARSE_SYM(event_identifier_dispose)(CPARSE_SYM(event_identifier)* ev);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the identifier value for this event.
+ *
+ * \param ev                The event instance to query.
+ *
+ * \returns the line value for this event.
+ */
+const char* CPARSE_SYM(event_identifier_get)(
+    const CPARSE_SYM(event_identifier)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
