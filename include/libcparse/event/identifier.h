@@ -84,6 +84,16 @@ const char* CPARSE_SYM(event_identifier_get)(
 int CPARSE_SYM(event_downcast_to_event_identifier)(
     CPARSE_SYM(event_identifier)** i_ev, CPARSE_SYM(event)* ev);
 
+/**
+ * \brief Upcast an \ref event_identifier to an \ref event.
+ *
+ * \param ev                The \ref event_identifier to upcast.
+ *
+ * \returns the \ref event instance for this event.
+ */
+CPARSE_SYM(event)* CPARSE_SYM(event_identifier_upcast)(
+    CPARSE_SYM(event_identifier)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
