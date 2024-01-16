@@ -105,6 +105,9 @@ CPARSE_SYM(event)* CPARSE_SYM(event_identifier_upcast)(
         CPARSE_SYM(event_identifier)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
             return CPARSE_SYM(event_identifier_init)(x,y,z); } \
+    static inline int sym ## event_identifier_dispose( \
+        CPARSE_SYM(event_identifier)* x) { \
+            return CPARSE_SYM(event_identifier_dispose)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_identifier_as(sym) \
