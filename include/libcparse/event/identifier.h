@@ -111,6 +111,9 @@ CPARSE_SYM(event)* CPARSE_SYM(event_identifier_upcast)(
     static inline const char* sym ## event_identifier_get( \
         const CPARSE_SYM(event_identifier)* x) { \
             return CPARSE_SYM(event_identifier_get)(x); } \
+    static inline int sym ## event_downcast_to_event_identifier( \
+        CPARSE_SYM(event_identifier)** x, CPARSE_SYM(event)* y) { \
+            return CPARSE_SYM(event_downcast_to_event_identifier)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_identifier_as(sym) \
