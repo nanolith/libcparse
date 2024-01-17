@@ -44,3 +44,27 @@ TEST(event_identifier_init)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_identifier_dispose(&ev));
 }
+
+/**
+ * Test that we can get the value of the identifier event.
+ */
+TEST(event_identifier_get)
+{
+    event_identifier ev;
+    cursor c;
+    const char* TEST_ID = "test";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_identifier_init(&ev, &c, TEST_ID));
+
+    auto id = event_identifier_get(&ev);
+
+    /* This value matches our test id. */
+    TEST_EXPECT(!strcmp(id, TEST_ID));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_identifier_dispose(&ev));
+}
