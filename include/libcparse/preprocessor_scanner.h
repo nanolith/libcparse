@@ -25,6 +25,27 @@ extern "C" {
 typedef struct CPARSE_SYM(preprocessor_scanner)
 CPARSE_SYM(preprocessor_scanner);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a preprocessor scanner.
+ *
+ * This scanner automatically creates a newline preserving whitespace filter and
+ * injects itself into the message chain for the parser stack.
+ *
+ * \param scanner           Pointer to the \ref preprocessor_scanner pointer to
+ *                          be populated with the created preprocessor scanner
+ *                          instance on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(preprocessor_scanner_create)(
+    CPARSE_SYM(preprocessor_scanner)** scanner);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
