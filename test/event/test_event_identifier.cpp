@@ -68,3 +68,33 @@ TEST(event_identifier_get)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_identifier_dispose(&ev));
 }
+
+/**
+ * Test that we can downcast an identifier event.
+ */
+TEST(event_downcast_to_event_identifier)
+{
+    event_identifier ev;
+    event_identifier* ev2;
+    cursor c;
+    const char* TEST_ID = "test";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_identifier_init(&ev, &c, TEST_ID));
+
+    /* get the base event type. */
+    auto bev = event_identifier_upcast(&ev);
+
+    /* attempt to downcast this event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_downcast_to_event_identifier(&ev2, bev));
+
+    /* This value should match our original event pointer. */
+    TEST_EXPECT(ev2 == &ev);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_identifier_dispose(&ev));
+}
