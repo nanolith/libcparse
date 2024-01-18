@@ -34,6 +34,11 @@ struct CPARSE_SYM(preprocessor_scanner)
     int state;
 };
 
+enum CPARSE_SYM(preprocessor_scanner_state)
+{
+    CPARSE_PREPROCESSOR_SCANNER_STATE_INIT =                            0,
+};
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
