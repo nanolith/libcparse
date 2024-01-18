@@ -13,6 +13,7 @@
 #include <libcparse/newline_preserving_whitespace_filter.h>
 #include <libcparse/event_reactor_fwd.h>
 #include <libcparse/file_position_cache.h>
+#include <libcparse/string_builder.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -29,6 +30,7 @@ struct CPARSE_SYM(preprocessor_scanner)
     CPARSE_SYM(event_reactor)* reactor;
     CPARSE_SYM(message_handler) parent_mh;
     CPARSE_SYM(file_position_cache)* cache;
+    CPARSE_SYM(string_builder)* builder;
     int state;
 };
 
