@@ -73,6 +73,20 @@ int CPARSE_SYM(preprocessor_scanner_release)(
 CPARSE_SYM(abstract_parser)* CPARSE_SYM(preprocessor_scanner_upcast)(
     CPARSE_SYM(preprocessor_scanner)* scanner);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_preprocessor_scanner_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(preprocessor_scanner) CPARSE_SYM(preprocessor_scanner); \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_preprocessor_scanner_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_preprocessor_scanner_sym(sym ## _)
+#define CPARSE_IMPORT_preprocessor_scanner \
+    __INTERNAL_CPARSE_IMPORT_preprocessor_scanner_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
