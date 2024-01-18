@@ -59,6 +59,20 @@ int CPARSE_SYM(preprocessor_scanner_create)(
 int CPARSE_SYM(preprocessor_scanner_release)(
     CPARSE_SYM(preprocessor_scanner)* scanner);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the \ref abstract_parser interface for this scanner.
+ *
+ * \param scanner           The \ref preprocessor_scanner instance to query.
+ *
+ * \returns the \ref abstract_parser interface for this scanner.
+ */
+CPARSE_SYM(abstract_parser)* CPARSE_SYM(preprocessor_scanner_upcast)(
+    CPARSE_SYM(preprocessor_scanner)* scanner);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
