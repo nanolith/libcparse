@@ -46,6 +46,19 @@ CPARSE_SYM(preprocessor_scanner);
 int CPARSE_SYM(preprocessor_scanner_create)(
     CPARSE_SYM(preprocessor_scanner)** scanner);
 
+/**
+ * \brief Release a preprocessor scanner instance, releasing any internal
+ * resources it may own.
+ *
+ * \param scanner           The \ref preprocessor_scanner instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(preprocessor_scanner_release)(
+    CPARSE_SYM(preprocessor_scanner)* scanner);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
