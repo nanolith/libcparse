@@ -81,8 +81,11 @@ int CPARSE_SYM(preprocessor_scanner_event_callback)(
     static inline int \
     sym ## preprocessor_scanner_message_callback( \
         void* x, const CPARSE_SYM(message)* y) { \
-            return \
-                CPARSE_SYM(preprocessor_scanner_message_callback)(x,y); } \
+            return CPARSE_SYM(preprocessor_scanner_message_callback)(x,y); } \
+    static inline int \
+    sym ## preprocessor_scanner_event_callback( \
+        void* x, const CPARSE_SYM(event)* y) { \
+            return CPARSE_SYM(preprocessor_scanner_event_callback)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_preprocessor_scanner_internal_as(sym) \
