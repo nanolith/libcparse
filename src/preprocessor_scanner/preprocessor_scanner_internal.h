@@ -39,6 +39,25 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_INIT =                            0,
 };
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Message handler callback for
+ * \ref preprocessor_scanner_message_callback.
+ *
+ * \param context           The context for this handler (the
+ *                          \ref preprocessor_scanner instance).
+ * \param msg               A message for this handler.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(preprocessor_scanner_message_callback)(
+    void* context, const CPARSE_SYM(message)* msg);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
