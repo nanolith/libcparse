@@ -79,7 +79,7 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(preprocessor_scanner_upcast)(
 
 #define __INTERNAL_CPARSE_IMPORT_preprocessor_scanner_sym(sym) \
     CPARSE_BEGIN_EXPORT \
-    typedef CPARSE_SYM(preprocessor_scanner) CPARSE_SYM(preprocessor_scanner); \
+    typedef CPARSE_SYM(preprocessor_scanner) preprocessor_scanner; \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_preprocessor_scanner_as(sym) \
