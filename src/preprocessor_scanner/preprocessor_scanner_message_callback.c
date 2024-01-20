@@ -7,9 +7,16 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <libcparse/message.h>
+#include <libcparse/message_handler.h>
+#include <libcparse/preprocessor_scanner.h>
 #include <libcparse/status_codes.h>
 
 #include "preprocessor_scanner_internal.h"
+
+CPARSE_IMPORT_message;
+CPARSE_IMPORT_message_handler;
+CPARSE_IMPORT_preprocessor_scanner;
 
 /**
  * \brief Message handler callback for
@@ -26,9 +33,11 @@
 int CPARSE_SYM(preprocessor_scanner_message_callback)(
     void* context, const CPARSE_SYM(message)* msg)
 {
-    /* TODO - fill out stub. */
-    (void)context;
-    (void)msg;
+    preprocessor_scanner* scanner = (preprocessor_scanner*)context;
 
-    return ERROR_LIBCPARSE_UNHANDLED_MESSAGE;
+    switch (message_get_type(msg))
+    {
+        default:
+            return message_handler_send(&scanner->parent_mh, msg);
+    }
 }
