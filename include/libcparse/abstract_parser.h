@@ -298,6 +298,13 @@ CPARSE_SYM(abstract_parser_file_line_override)(
             CPARSE_SYM( \
               abstract_parser_newline_preserving_whitespace_filter_subscribe)( \
                     x,y); } \
+    static inline int \
+    sym ## abstract_parser_preprocessor_scanner_subscribe( \
+        CPARSE_SYM(abstract_parser)* x, CPARSE_SYM(event_handler)* y) { \
+            return \
+            CPARSE_SYM( \
+              abstract_parser_preprocessor_scanner_subscribe)( \
+                    x,y); } \
     static inline int sym ## abstract_parser_file_line_override( \
         CPARSE_SYM(abstract_parser)* x, unsigned int y, const char* z) { \
             return CPARSE_SYM(abstract_parser_file_line_override)(x,y,z); } \
