@@ -278,3 +278,37 @@ TEST(upcast_downcast_CPARSE_MESSAGE_TYPE_NEWLINE_PRESERVING_WS_FILTER_SUB)
     /* dispose the message. */
     TEST_ASSERT(STATUS_SUCCESS == message_subscribe_dispose(&msg));
 }
+
+/**
+ *  Test that we can upcast and downcast a
+ *  CPARSE_MESSAGE_TYPE_PREPROCESSOR_SCANNER_SUBSCRIBE message.
+ */
+TEST(upcast_downcast_CPARSE_MESSAGE_TYPE_PREPROCESSOR_SCANNER_SUBSCRIBE)
+{
+    message_subscribe msg;
+    message* upcast_msg;
+    message_subscribe* downcast_msg;
+    event_handler handler;
+
+    /* we can init the event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_handler_init(&handler, &dummy_event_callback_fn, nullptr));
+
+    /* we can initialize the message. */
+    TEST_ASSERT(
+      STATUS_SUCCESS
+            == message_subscribe_init_for_preprocessor_scanner(&msg, &handler));
+
+    /* we can upcast the message. */
+    upcast_msg = message_subscribe_upcast(&msg);
+    TEST_ASSERT(NULL != upcast_msg);
+
+    /* we can downcast the message. */
+    TEST_ASSERT(
+        STATUS_SUCCESS ==
+            message_downcast_to_message_subscribe(&downcast_msg, upcast_msg));
+
+    /* dispose the message. */
+    TEST_ASSERT(STATUS_SUCCESS == message_subscribe_dispose(&msg));
+}
