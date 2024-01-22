@@ -34,6 +34,8 @@ CPARSE_IMPORT_string_utils;
 
 static int process_eof_event(
     preprocessor_scanner* scanner, const event* ev);
+static int process_whitespace_event(
+    preprocessor_scanner* scanner, const event* ev);
 static int process_raw_character(
     preprocessor_scanner* scanner, const event* ev);
 static bool char_is_alpha_underscore(const int ch);
@@ -65,6 +67,9 @@ int CPARSE_SYM(preprocessor_scanner_event_callback)(
         case CPARSE_EVENT_TYPE_EOF:
             return process_eof_event(scanner, ev);
 
+        case CPARSE_EVENT_TYPE_TOKEN_WHITESPACE:
+            return process_whitespace_event(scanner, ev);
+
         case CPARSE_EVENT_TYPE_RAW_CHARACTER:
             return process_raw_character(scanner, ev);
 
@@ -93,6 +98,29 @@ static int process_eof_event(
 
         default:
             return event_reactor_broadcast(scanner->reactor, ev);
+    }
+}
+
+/**
+ * \brief Process a whitespace event.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The whitespace event to process.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int process_whitespace_event(
+    preprocessor_scanner* scanner, const event* ev)
+{
+    switch (scanner->state)
+    {
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER:
+            return end_identifier(scanner, ev);
+
+        default:
+            return STATUS_SUCCESS;
     }
 }
 
