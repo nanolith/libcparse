@@ -59,6 +59,8 @@ static int broadcast_left_bracket_token(
     preprocessor_scanner* scanner, const event* ev);
 static int broadcast_right_bracket_token(
     preprocessor_scanner* scanner, const event* ev);
+static int broadcast_comma_token(
+    preprocessor_scanner* scanner, const event* ev);
 
 /**
  * \brief Event handler callback for \ref preprocessor_scanner_event_callback.
@@ -219,6 +221,9 @@ static int process_raw_character(
 
                     case ']':
                         return broadcast_right_bracket_token(scanner, ev);
+
+                    case ',':
+                        return broadcast_comma_token(scanner, ev);
 
                     default:
                         return
@@ -697,6 +702,57 @@ static int broadcast_right_bracket_token(
 
     /* initialize the token event. */
     retval = event_init_for_token_right_bracket(&tev, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(scanner->reactor, &tev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tev;
+    }
+
+    /* we are now in the init state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+    /* success. */
+    goto cleanup_tev;
+
+cleanup_tev:
+    release_retval = event_dispose(&tev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    return retval;
+}
+
+/**
+ * \brief Broadcast a comma token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int broadcast_comma_token(
+    preprocessor_scanner* scanner, const event* ev)
+{
+    int retval, release_retval;
+    const cursor* pos;
+    event tev;
+
+    /* get the event position. */
+    pos = event_get_cursor(ev);
+
+    /* initialize the token event. */
+    retval = event_init_for_token_comma(&tev, pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
