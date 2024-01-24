@@ -1114,6 +1114,9 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
     static inline int sym ## event_init_for_token_greater_than_equal( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_greater_than_equal)(x,y); } \
+    static inline int sym ## event_init_for_token_increment( \
+        CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
+            return CPARSE_SYM(event_init_for_token_increment)(x,y); } \
     static inline int sym ## event_init_for_token_preprocessor_id_if( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_preprocessor_id_if)(x,y); } \
