@@ -154,6 +154,9 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER:
             return end_identifier(scanner, ev);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
+            return broadcast_minus_token(scanner, ev);
+
         default:
             return STATUS_SUCCESS;
     }
@@ -176,6 +179,9 @@ static int process_newline_event(
     {
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER:
             return end_identifier(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
+            return broadcast_minus_token(scanner, ev);
 
         default:
             return STATUS_SUCCESS;
