@@ -40,6 +40,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER =                   1,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH =                         2,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS =                         3,
+    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STAR =                         4,
 };
 
 /******************************************************************************/
