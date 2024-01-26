@@ -48,6 +48,7 @@ static int continue_identifier(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int end_identifier(preprocessor_scanner* scanner, const event* ev);
 static int start_dash(preprocessor_scanner* scanner, const event* ev);
+static int start_plus(preprocessor_scanner* scanner, const event* ev);
 static int broadcast_left_paren_token(
     preprocessor_scanner* scanner, const event* ev);
 static int broadcast_right_paren_token(
@@ -131,6 +132,9 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
             return broadcast_minus_token(scanner, ev);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
+            return broadcast_plus_token(scanner, ev);
+
         default:
             return event_reactor_broadcast(scanner->reactor, ev);
     }
@@ -157,6 +161,9 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
             return broadcast_minus_token(scanner, ev);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
+            return broadcast_plus_token(scanner, ev);
+
         default:
             return STATUS_SUCCESS;
     }
@@ -182,6 +189,9 @@ static int process_newline_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
             return broadcast_minus_token(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
+            return broadcast_plus_token(scanner, ev);
 
         default:
             return STATUS_SUCCESS;
@@ -260,7 +270,7 @@ static int process_raw_character(
                         return start_dash(scanner, ev);
 
                     case '+':
-                        return broadcast_plus_token(scanner, ev);
+                        return start_plus(scanner, ev);
 
                     default:
                         return
@@ -279,6 +289,13 @@ static int process_raw_character(
                     return broadcast_minus_token(scanner, ev);
             }
             break;
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
+            switch (ch)
+            {
+                default:
+                    return broadcast_plus_token(scanner, ev);
+            }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER:
             if (char_is_identifier(ch))
@@ -1008,8 +1025,39 @@ static int start_dash(preprocessor_scanner* scanner, const event* ev)
         return retval;
     }
 
-    /* we are now in the identifier state. */
+    /* we are now in the dash state. */
     scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH;
+
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Start the plus state.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The character for this identifier.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int start_plus(preprocessor_scanner* scanner, const event* ev)
+{
+    int retval;
+
+    /* get the cursor for this event. */
+    const cursor* pos = event_get_cursor(ev);
+
+    /* cache the location for the start of this event. */
+    retval = file_position_cache_set(scanner->cache, pos->file, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the plus state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS;
 
     return STATUS_SUCCESS;
 }
@@ -1096,8 +1144,12 @@ static int broadcast_plus_token(
     const cursor* pos;
     event tev;
 
-    /* get the event position. */
-    pos = event_get_cursor(ev);
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->cache, &pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
 
     /* initialize the token event. */
     retval = event_init_for_token_plus(&tev, pos);
@@ -1113,6 +1165,9 @@ static int broadcast_plus_token(
         goto cleanup_tev;
     }
 
+    /* clear the file / position cache. */
+    file_position_cache_clear(scanner->cache);
+
     /* we are now in the init state. */
     scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
 
@@ -1127,7 +1182,13 @@ cleanup_tev:
     }
 
 done:
-    return retval;
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* if we succeed, then recursively process the new event on the way out. */
+    return preprocessor_scanner_event_callback(scanner, ev);
 }
 
 /**
