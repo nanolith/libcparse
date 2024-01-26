@@ -270,8 +270,7 @@ static int process_raw_character(
                     return broadcast_arrow_token(scanner, ev);
 
                 default:
-                    return
-                        ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+                    return broadcast_minus_token(scanner, ev);
             }
             break;
 
