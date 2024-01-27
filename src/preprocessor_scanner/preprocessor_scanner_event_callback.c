@@ -49,6 +49,7 @@ static int continue_identifier(
 static int end_identifier(preprocessor_scanner* scanner, const event* ev);
 static int start_dash(preprocessor_scanner* scanner, const event* ev);
 static int start_plus(preprocessor_scanner* scanner, const event* ev);
+static int start_star(preprocessor_scanner* scanner, const event* ev);
 static int broadcast_left_paren_token(
     preprocessor_scanner* scanner, const event* ev);
 static int broadcast_right_paren_token(
@@ -74,6 +75,8 @@ static int broadcast_arrow_token(
 static int broadcast_plus_token(
     preprocessor_scanner* scanner, const event* ev);
 static int broadcast_minus_token(
+    preprocessor_scanner* scanner, const event* ev);
+static int broadcast_star_token(
     preprocessor_scanner* scanner, const event* ev);
 
 /**
@@ -135,6 +138,9 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
             return broadcast_plus_token(scanner, ev);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STAR:
+            return broadcast_star_token(scanner, ev);
+
         default:
             return event_reactor_broadcast(scanner->reactor, ev);
     }
@@ -164,6 +170,9 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
             return broadcast_plus_token(scanner, ev);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STAR:
+            return broadcast_star_token(scanner, ev);
+
         default:
             return STATUS_SUCCESS;
     }
@@ -192,6 +201,9 @@ static int process_newline_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
             return broadcast_plus_token(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STAR:
+            return broadcast_star_token(scanner, ev);
 
         default:
             return STATUS_SUCCESS;
@@ -272,6 +284,9 @@ static int process_raw_character(
                     case '+':
                         return start_plus(scanner, ev);
 
+                    case '*':
+                        return start_star(scanner, ev);
+
                     default:
                         return
                             ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
@@ -295,6 +310,13 @@ static int process_raw_character(
             {
                 default:
                     return broadcast_plus_token(scanner, ev);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STAR:
+            switch (ch)
+            {
+                default:
+                    return broadcast_star_token(scanner, ev);
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER:
@@ -1063,6 +1085,37 @@ static int start_plus(preprocessor_scanner* scanner, const event* ev)
 }
 
 /**
+ * \brief Start the star state.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The character for this identifier.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int start_star(preprocessor_scanner* scanner, const event* ev)
+{
+    int retval;
+
+    /* get the cursor for this event. */
+    const cursor* pos = event_get_cursor(ev);
+
+    /* cache the location for the start of this event. */
+    retval = file_position_cache_set(scanner->cache, pos->file, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the star state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STAR;
+
+    return STATUS_SUCCESS;
+}
+
+/**
  * \brief Broadcast an arrow token.
  *
  * \param scanner           The scanner for this operation.
@@ -1217,6 +1270,70 @@ static int broadcast_minus_token(
 
     /* initialize the token event. */
     retval = event_init_for_token_minus(&tev, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(scanner->reactor, &tev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tev;
+    }
+
+    /* clear the file / position cache. */
+    file_position_cache_clear(scanner->cache);
+
+    /* we are now in the init state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+    /* success. */
+    goto cleanup_tev;
+
+cleanup_tev:
+    release_retval = event_dispose(&tev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* if we succeed, then recursively process the new event on the way out. */
+    return preprocessor_scanner_event_callback(scanner, ev);
+}
+
+/**
+ * \brief Broadcast a star token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The event to process AFTER this token.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int broadcast_star_token(
+    preprocessor_scanner* scanner, const event* ev)
+{
+    int retval, release_retval;
+    const cursor* pos;
+    event tev;
+
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->cache, &pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* initialize the token event. */
+    retval = event_init_for_token_star(&tev, pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
