@@ -226,7 +226,7 @@ static int process_whitespace_event(
             return broadcast_pipe_token(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CARET:
-            return broadcast_pipe_token(scanner, ev);
+            return broadcast_caret_token(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_TILDE:
             return broadcast_tilde_token(scanner, ev);
