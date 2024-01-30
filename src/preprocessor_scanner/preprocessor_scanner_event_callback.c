@@ -56,6 +56,7 @@ static int start_ampersand(preprocessor_scanner* scanner, const event* ev);
 static int start_pipe(preprocessor_scanner* scanner, const event* ev);
 static int start_caret(preprocessor_scanner* scanner, const event* ev);
 static int start_tilde(preprocessor_scanner* scanner, const event* ev);
+static int start_equal(preprocessor_scanner* scanner, const event* ev);
 static int broadcast_left_paren_token(
     preprocessor_scanner* scanner, const event* ev);
 static int broadcast_right_paren_token(
@@ -101,6 +102,8 @@ static int broadcast_caret_token(
 static int broadcast_tilde_token(
     preprocessor_scanner* scanner, const event* ev);
 static int broadcast_question_token(
+    preprocessor_scanner* scanner, const event* ev);
+static int broadcast_equal_compare_token(
     preprocessor_scanner* scanner, const event* ev);
 
 /**
@@ -183,6 +186,9 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_TILDE:
             return broadcast_tilde_token(scanner, ev);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_EQUAL:
+            return ERROR_LIBCPARSE_PP_SCANNER_BAD_STATE;
+
         default:
             return event_reactor_broadcast(scanner->reactor, ev);
     }
@@ -233,6 +239,9 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_TILDE:
             return broadcast_tilde_token(scanner, ev);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_EQUAL:
+            return ERROR_LIBCPARSE_PP_SCANNER_BAD_STATE;
+
         default:
             return STATUS_SUCCESS;
     }
@@ -282,6 +291,9 @@ static int process_newline_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_TILDE:
             return broadcast_tilde_token(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_EQUAL:
+            return ERROR_LIBCPARSE_PP_SCANNER_BAD_STATE;
 
         default:
             return STATUS_SUCCESS;
@@ -386,6 +398,9 @@ static int process_raw_character(
                     case '?':
                         return broadcast_question_token(scanner, ev);
 
+                    case '=':
+                        return start_equal(scanner, ev);
+
                     default:
                         return
                             ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
@@ -464,6 +479,16 @@ static int process_raw_character(
             {
                 default:
                     return broadcast_tilde_token(scanner, ev);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_EQUAL:
+            switch (ch)
+            {
+                case '=':
+                    return broadcast_equal_compare_token(scanner, ev);
+
+                default:
+                    return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER:
@@ -1442,8 +1467,39 @@ static int start_tilde(preprocessor_scanner* scanner, const event* ev)
         return retval;
     }
 
-    /* we are now in the caret state. */
+    /* we are now in the tilde state. */
     scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_TILDE;
+
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Start the equal state.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The character for this identifier.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int start_equal(preprocessor_scanner* scanner, const event* ev)
+{
+    int retval;
+
+    /* get the cursor for this event. */
+    const cursor* pos = event_get_cursor(ev);
+
+    /* cache the location for the start of this event. */
+    retval = file_position_cache_set(scanner->cache, pos->file, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the equal state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_EQUAL;
 
     return STATUS_SUCCESS;
 }
@@ -2252,6 +2308,71 @@ static int broadcast_question_token(
     {
         goto cleanup_tev;
     }
+
+    /* we are now in the init state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+    /* success. */
+    goto cleanup_tev;
+
+cleanup_tev:
+    release_retval = event_dispose(&tev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    return retval;
+}
+
+/**
+ * \brief Broadcast an equal compare token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int broadcast_equal_compare_token(
+    preprocessor_scanner* scanner, const event* ev)
+{
+    int retval, release_retval;
+    const cursor* pos;
+    event tev;
+
+    /* extend the cached position to cover this character. */
+    retval = file_position_cache_position_extend(scanner->cache, ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->cache, &pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* initialize the token event. */
+    retval = event_init_for_token_equal_compare(&tev, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(scanner->reactor, &tev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tev;
+    }
+
+    /* clear the file / position cache. */
+    file_position_cache_clear(scanner->cache);
 
     /* we are now in the init state. */
     scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
