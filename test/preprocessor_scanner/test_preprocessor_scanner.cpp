@@ -165,6 +165,7 @@ static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
             break;
         case CPARSE_EVENT_TYPE_TOKEN_MOD_EQUAL:
             ctx->vals.push_back(make_pair(token_type, "%="));
+            break;
 
         default:
             return -1;
