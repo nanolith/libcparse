@@ -126,6 +126,8 @@ static int broadcast_or_equal_token(
     preprocessor_scanner* scanner, const event* ev);
 static int broadcast_xor_equal_token(
     preprocessor_scanner* scanner, const event* ev);
+static int broadcast_compl_equal_token(
+    preprocessor_scanner* scanner, const event* ev);
 
 /**
  * \brief Event handler callback for \ref preprocessor_scanner_event_callback.
@@ -534,6 +536,9 @@ static int process_raw_character(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_TILDE:
             switch (ch)
             {
+                case '=':
+                    return broadcast_compl_equal_token(scanner, ev);
+
                 default:
                     return broadcast_tilde_token(scanner, ev);
             }
@@ -3106,6 +3111,71 @@ static int broadcast_xor_equal_token(
 
     /* initialize the token event. */
     retval = event_init_for_token_xor_equal(&tev, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(scanner->reactor, &tev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tev;
+    }
+
+    /* clear the file / position cache. */
+    file_position_cache_clear(scanner->cache);
+
+    /* we are now in the init state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+    /* success. */
+    goto cleanup_tev;
+
+cleanup_tev:
+    release_retval = event_dispose(&tev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    return retval;
+}
+
+/**
+ * \brief Broadcast a compl equal token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int broadcast_compl_equal_token(
+    preprocessor_scanner* scanner, const event* ev)
+{
+    int retval, release_retval;
+    const cursor* pos;
+    event tev;
+
+    /* extend the cached position to cover this character. */
+    retval = file_position_cache_position_extend(scanner->cache, ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->cache, &pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* initialize the token event. */
+    retval = event_init_for_token_compl_equal(&tev, pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
