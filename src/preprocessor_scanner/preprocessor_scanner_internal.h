@@ -49,6 +49,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_TILDE =                       10,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_EQUAL =                       11,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_NOT =                         12,
+    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT =                          13,
 };
 
 /******************************************************************************/
