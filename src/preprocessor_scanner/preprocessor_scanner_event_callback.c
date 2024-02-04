@@ -32,6 +32,8 @@ CPARSE_IMPORT_preprocessor_scanner_internal;
 CPARSE_IMPORT_string_builder;
 CPARSE_IMPORT_string_utils;
 
+typedef int (*simple_event_ctor)(event*, const cursor*);
+
 static int process_eof_event(
     preprocessor_scanner* scanner, const event* ev);
 static int process_whitespace_event(
@@ -62,8 +64,8 @@ static int start_lt(preprocessor_scanner* scanner, const event* ev);
 static int start_lt_lt(preprocessor_scanner* scanner, const event* ev);
 static int start_gt(preprocessor_scanner* scanner, const event* ev);
 static int start_gt_gt(preprocessor_scanner* scanner, const event* ev);
-static int broadcast_left_paren_token(
-    preprocessor_scanner* scanner, const event* ev);
+static int broadcast_simple_token(
+    preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
 static int broadcast_right_paren_token(
     preprocessor_scanner* scanner, const event* ev);
 static int broadcast_left_brace_token(
@@ -433,7 +435,9 @@ static int process_raw_character(
                 switch (ch)
                 {
                     case '(':
-                        return broadcast_left_paren_token(scanner, ev);
+                        return
+                            broadcast_simple_token(
+                                scanner, ev, &event_init_for_token_left_paren);
 
                     case ')':
                         return broadcast_right_paren_token(scanner, ev);
@@ -874,57 +878,6 @@ done:
 
     /* if we succeed, then recursively process the new event on the way out. */
     return preprocessor_scanner_event_callback(scanner, ev);
-}
-
-/**
- * \brief Broadcast a left paren token.
- *
- * \param scanner           The scanner for this operation.
- * \param ev                The raw character event for this operation.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-static int broadcast_left_paren_token(
-    preprocessor_scanner* scanner, const event* ev)
-{
-    int retval, release_retval;
-    const cursor* pos;
-    event tev;
-
-    /* get the event position. */
-    pos = event_get_cursor(ev);
-
-    /* initialize the token event. */
-    retval = event_init_for_token_left_paren(&tev, pos);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto done;
-    }
-
-    /* broadcast this event. */
-    retval = event_reactor_broadcast(scanner->reactor, &tev);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto cleanup_tev;
-    }
-
-    /* we are now in the init state. */
-    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
-
-    /* success. */
-    goto cleanup_tev;
-
-cleanup_tev:
-    release_retval = event_dispose(&tev);
-    if (STATUS_SUCCESS != release_retval)
-    {
-        retval = release_retval;
-    }
-
-done:
-    return retval;
 }
 
 /**
@@ -4154,4 +4107,56 @@ done:
 
     /* if we succeed, then recursively process the new event on the way out. */
     return preprocessor_scanner_event_callback(scanner, ev);
+}
+
+/**
+ * \brief Broadcast a simple token event.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event for this operation.
+ * \param ctor              The event constructor for this simple token.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int broadcast_simple_token(
+    preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor)
+{
+    int retval, release_retval;
+    const cursor* pos;
+    event tev;
+
+    /* get the event position. */
+    pos = event_get_cursor(ev);
+
+    /* initialize the token event. */
+    retval = (*ctor)(&tev, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(scanner->reactor, &tev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tev;
+    }
+
+    /* we are now in the init state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+    /* success. */
+    goto cleanup_tev;
+
+cleanup_tev:
+    release_retval = event_dispose(&tev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    return retval;
 }
