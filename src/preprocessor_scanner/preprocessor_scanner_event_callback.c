@@ -49,7 +49,8 @@ static int start_identifier(
 static int continue_identifier(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int end_identifier(preprocessor_scanner* scanner, const event* ev);
-static int start_dash(preprocessor_scanner* scanner, const event* ev);
+static int start_state(
+    preprocessor_scanner* scanner, const event* ev, int state);
 static int start_plus(preprocessor_scanner* scanner, const event* ev);
 static int start_star(preprocessor_scanner* scanner, const event* ev);
 static int start_slash(preprocessor_scanner* scanner, const event* ev);
@@ -469,7 +470,10 @@ static int process_raw_character(
                                 scanner, ev, &event_init_for_token_dot);
 
                     case '-':
-                        return start_dash(scanner, ev);
+                        return
+                            start_state(
+                                scanner, ev,
+                                CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH);
 
                     case '+':
                         return start_plus(scanner, ev);
@@ -883,17 +887,18 @@ done:
 }
 
 /**
- * \brief Start the dash state.
+ * \brief Start a state.
  *
  * \param scanner           The scanner for this operation.
  * \param ev                The raw character event to process.
- * \param ch                The character for this identifier.
+ * \param state             The state to start.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-static int start_dash(preprocessor_scanner* scanner, const event* ev)
+static int start_state(
+    preprocessor_scanner* scanner, const event* ev, int state)
 {
     int retval;
 
@@ -907,8 +912,8 @@ static int start_dash(preprocessor_scanner* scanner, const event* ev)
         return retval;
     }
 
-    /* we are now in the dash state. */
-    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH;
+    /* start the new state. */
+    scanner->state = state;
 
     return STATUS_SUCCESS;
 }
