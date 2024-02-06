@@ -52,7 +52,6 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev);
 static int start_state(
     preprocessor_scanner* scanner, const event* ev, int state);
 static int start_lt_lt(preprocessor_scanner* scanner, const event* ev);
-static int start_gt(preprocessor_scanner* scanner, const event* ev);
 static int start_gt_gt(preprocessor_scanner* scanner, const event* ev);
 static int broadcast_simple_token(
     preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
@@ -534,7 +533,10 @@ static int process_raw_character(
                                 CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT);
 
                     case '>':
-                        return start_gt(scanner, ev);
+                        return
+                            start_state(
+                                scanner, ev,
+                                CPARSE_PREPROCESSOR_SCANNER_STATE_IN_GT);
 
                     default:
                         return
@@ -964,37 +966,6 @@ static int start_lt_lt(preprocessor_scanner* scanner, const event* ev)
 
     /* we are now in the lt lt state. */
     scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT_LT;
-
-    return STATUS_SUCCESS;
-}
-
-/**
- * \brief Start the gt state.
- *
- * \param scanner           The scanner for this operation.
- * \param ev                The raw character event to process.
- * \param ch                The character for this identifier.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-static int start_gt(preprocessor_scanner* scanner, const event* ev)
-{
-    int retval;
-
-    /* get the cursor for this event. */
-    const cursor* pos = event_get_cursor(ev);
-
-    /* cache the location for the start of this event. */
-    retval = file_position_cache_set(scanner->cache, pos->file, pos);
-    if (STATUS_SUCCESS != retval)
-    {
-        return retval;
-    }
-
-    /* we are now in the gt state. */
-    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_GT;
 
     return STATUS_SUCCESS;
 }
