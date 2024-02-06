@@ -51,7 +51,6 @@ static int continue_identifier(
 static int end_identifier(preprocessor_scanner* scanner, const event* ev);
 static int start_state(
     preprocessor_scanner* scanner, const event* ev, int state);
-static int start_slash(preprocessor_scanner* scanner, const event* ev);
 static int start_percent(preprocessor_scanner* scanner, const event* ev);
 static int start_ampersand(preprocessor_scanner* scanner, const event* ev);
 static int start_pipe(preprocessor_scanner* scanner, const event* ev);
@@ -486,7 +485,10 @@ static int process_raw_character(
                                 CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STAR);
 
                     case '/':
-                        return start_slash(scanner, ev);
+                        return
+                            start_state(
+                                scanner, ev,
+                                CPARSE_PREPROCESSOR_SCANNER_STATE_IN_SLASH);
 
                     case '%':
                         return start_percent(scanner, ev);
@@ -918,37 +920,6 @@ static int start_state(
 
     /* start the new state. */
     scanner->state = state;
-
-    return STATUS_SUCCESS;
-}
-
-/**
- * \brief Start the slash state.
- *
- * \param scanner           The scanner for this operation.
- * \param ev                The raw character event to process.
- * \param ch                The character for this identifier.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-static int start_slash(preprocessor_scanner* scanner, const event* ev)
-{
-    int retval;
-
-    /* get the cursor for this event. */
-    const cursor* pos = event_get_cursor(ev);
-
-    /* cache the location for the start of this event. */
-    retval = file_position_cache_set(scanner->cache, pos->file, pos);
-    if (STATUS_SUCCESS != retval)
-    {
-        return retval;
-    }
-
-    /* we are now in the slash state. */
-    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_SLASH;
 
     return STATUS_SUCCESS;
 }
