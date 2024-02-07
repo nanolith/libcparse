@@ -57,9 +57,9 @@ static int broadcast_simple_token(
     preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
 static int broadcast_compound_token(
     preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
+static int broadcast_cached_token_and_continue(
+    preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
 static int broadcast_plus_token(
-    preprocessor_scanner* scanner, const event* ev);
-static int broadcast_minus_token(
     preprocessor_scanner* scanner, const event* ev);
 static int broadcast_star_token(
     preprocessor_scanner* scanner, const event* ev);
@@ -176,7 +176,9 @@ static int process_eof_event(
             return end_identifier(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
-            return broadcast_minus_token(scanner, ev);
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_minus);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
             return broadcast_plus_token(scanner, ev);
@@ -244,7 +246,9 @@ static int process_whitespace_event(
             return end_identifier(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
-            return broadcast_minus_token(scanner, ev);
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_minus);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
             return broadcast_plus_token(scanner, ev);
@@ -312,7 +316,9 @@ static int process_newline_event(
             return end_identifier(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
-            return broadcast_minus_token(scanner, ev);
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_minus);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
             return broadcast_plus_token(scanner, ev);
@@ -560,7 +566,9 @@ static int process_raw_character(
                             scanner, ev, &event_init_for_token_decrement);
 
                 default:
-                    return broadcast_minus_token(scanner, ev);
+                    return
+                        broadcast_cached_token_and_continue(
+                            scanner, ev, &event_init_for_token_minus);
             }
             break;
 
@@ -1026,70 +1034,6 @@ static int broadcast_plus_token(
 
     /* initialize the token event. */
     retval = event_init_for_token_plus(&tev, pos);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto done;
-    }
-
-    /* broadcast this event. */
-    retval = event_reactor_broadcast(scanner->reactor, &tev);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto cleanup_tev;
-    }
-
-    /* clear the file / position cache. */
-    file_position_cache_clear(scanner->cache);
-
-    /* we are now in the init state. */
-    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
-
-    /* success. */
-    goto cleanup_tev;
-
-cleanup_tev:
-    release_retval = event_dispose(&tev);
-    if (STATUS_SUCCESS != release_retval)
-    {
-        retval = release_retval;
-    }
-
-done:
-    if (STATUS_SUCCESS != retval)
-    {
-        return retval;
-    }
-
-    /* if we succeed, then recursively process the new event on the way out. */
-    return preprocessor_scanner_event_callback(scanner, ev);
-}
-
-/**
- * \brief Broadcast a minus token.
- *
- * \param scanner           The scanner for this operation.
- * \param ev                The event to process AFTER this token.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-static int broadcast_minus_token(
-    preprocessor_scanner* scanner, const event* ev)
-{
-    int retval, release_retval;
-    const cursor* pos;
-    event tev;
-
-    /* get the cached position. */
-    retval = file_position_cache_position_get(scanner->cache, &pos);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto done;
-    }
-
-    /* initialize the token event. */
-    retval = event_init_for_token_minus(&tev, pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
@@ -3181,4 +3125,69 @@ cleanup_tev:
 
 done:
     return retval;
+}
+
+/**
+ * \brief Broadcast a cached token and continue.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event for this operation.
+ * \param ctor              The event constructor for this simple token.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int broadcast_cached_token_and_continue(
+    preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor)
+{
+    int retval, release_retval;
+    const cursor* pos;
+    event tev;
+
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->cache, &pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* initialize the token event. */
+    retval = (*ctor)(&tev, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(scanner->reactor, &tev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tev;
+    }
+
+    /* clear the file / position cache. */
+    file_position_cache_clear(scanner->cache);
+
+    /* we are now in the init state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+    /* success. */
+    goto cleanup_tev;
+
+cleanup_tev:
+    release_retval = event_dispose(&tev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* if we succeed, then recursively process the new event on the way out. */
+    return preprocessor_scanner_event_callback(scanner, ev);
 }
