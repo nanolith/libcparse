@@ -75,8 +75,6 @@ static int broadcast_less_than_equal_token(
     preprocessor_scanner* scanner, const event* ev);
 static int broadcast_greater_than_equal_token(
     preprocessor_scanner* scanner, const event* ev);
-static int broadcast_not_token(
-    preprocessor_scanner* scanner, const event* ev);
 
 /**
  * \brief Event handler callback for \ref preprocessor_scanner_event_callback.
@@ -182,7 +180,9 @@ static int process_eof_event(
                     scanner, ev, &event_init_for_token_equal_assign);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_NOT:
-            return broadcast_not_token(scanner, ev);
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_not);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT:
             return broadcast_less_than_token(scanner, ev);
@@ -270,7 +270,9 @@ static int process_whitespace_event(
                     scanner, ev, &event_init_for_token_equal_assign);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_NOT:
-            return broadcast_not_token(scanner, ev);
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_not);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT:
             return broadcast_less_than_token(scanner, ev);
@@ -358,7 +360,9 @@ static int process_newline_event(
                     scanner, ev, &event_init_for_token_equal_assign);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_NOT:
-            return broadcast_not_token(scanner, ev);
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_not);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT:
             return broadcast_less_than_token(scanner, ev);
@@ -733,7 +737,9 @@ static int process_raw_character(
                             &event_init_for_token_not_equal_compare);
 
                 default:
-                    return broadcast_not_token(scanner, ev);
+                    return
+                        broadcast_cached_token_and_continue(
+                            scanner, ev, &event_init_for_token_not);
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT:
@@ -1577,70 +1583,6 @@ cleanup_tev:
 
 done:
     return retval;
-}
-
-/**
- * \brief Broadcast a not token.
- *
- * \param scanner           The scanner for this operation.
- * \param ev                The event to process AFTER this token.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-static int broadcast_not_token(
-    preprocessor_scanner* scanner, const event* ev)
-{
-    int retval, release_retval;
-    const cursor* pos;
-    event tev;
-
-    /* get the cached position. */
-    retval = file_position_cache_position_get(scanner->cache, &pos);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto done;
-    }
-
-    /* initialize the token event. */
-    retval = event_init_for_token_not(&tev, pos);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto done;
-    }
-
-    /* broadcast this event. */
-    retval = event_reactor_broadcast(scanner->reactor, &tev);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto cleanup_tev;
-    }
-
-    /* clear the file / position cache. */
-    file_position_cache_clear(scanner->cache);
-
-    /* we are now in the init state. */
-    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
-
-    /* success. */
-    goto cleanup_tev;
-
-cleanup_tev:
-    release_retval = event_dispose(&tev);
-    if (STATUS_SUCCESS != release_retval)
-    {
-        retval = release_retval;
-    }
-
-done:
-    if (STATUS_SUCCESS != retval)
-    {
-        return retval;
-    }
-
-    /* if we succeed, then recursively process the new event on the way out. */
-    return preprocessor_scanner_event_callback(scanner, ev);
 }
 
 /**
