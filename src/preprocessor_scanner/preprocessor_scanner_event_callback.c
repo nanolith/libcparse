@@ -51,7 +51,8 @@ static int continue_identifier(
 static int end_identifier(preprocessor_scanner* scanner, const event* ev);
 static int start_state(
     preprocessor_scanner* scanner, const event* ev, int state);
-static int start_lt_lt(preprocessor_scanner* scanner, const event* ev);
+static int transition_state(
+    preprocessor_scanner* scanner, const event* ev, int state);
 static int start_gt_gt(preprocessor_scanner* scanner, const event* ev);
 static int broadcast_simple_token(
     preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
@@ -746,7 +747,10 @@ static int process_raw_character(
             switch (ch)
             {
                 case '<':
-                    return start_lt_lt(scanner, ev);
+                    return
+                        transition_state(
+                            scanner, ev,
+                            CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT_LT);
 
                 case '=':
                     return broadcast_less_than_equal_token(scanner, ev);
@@ -1014,17 +1018,18 @@ static int start_state(
 }
 
 /**
- * \brief Start the lt lt state.
+ * \brief Transition to the next state.
  *
  * \param scanner           The scanner for this operation.
  * \param ev                The raw character event to process.
- * \param ch                The character for this identifier.
+ * \param state             The state to start.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-static int start_lt_lt(preprocessor_scanner* scanner, const event* ev)
+static int transition_state(
+    preprocessor_scanner* scanner, const event* ev, int state)
 {
     int retval;
 
@@ -1035,8 +1040,8 @@ static int start_lt_lt(preprocessor_scanner* scanner, const event* ev)
         return retval;
     }
 
-    /* we are now in the lt lt state. */
-    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT_LT;
+    /* we are now in the transitioned state. */
+    scanner->state = state;
 
     return STATUS_SUCCESS;
 }
