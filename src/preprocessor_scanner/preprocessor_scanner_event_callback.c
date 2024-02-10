@@ -53,7 +53,6 @@ static int start_state(
     preprocessor_scanner* scanner, const event* ev, int state);
 static int transition_state(
     preprocessor_scanner* scanner, const event* ev, int state);
-static int start_gt_gt(preprocessor_scanner* scanner, const event* ev);
 static int broadcast_simple_token(
     preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
 static int broadcast_compound_token(
@@ -786,7 +785,10 @@ static int process_raw_character(
             switch (ch)
             {
                 case '>':
-                    return start_gt_gt(scanner, ev);
+                    return
+                        transition_state(
+                            scanner, ev,
+                            CPARSE_PREPROCESSOR_SCANNER_STATE_IN_GT_GT);
 
                 case '=':
                     return broadcast_greater_than_equal_token(scanner, ev);
@@ -1055,34 +1057,6 @@ static int transition_state(
 
     /* we are now in the transitioned state. */
     scanner->state = state;
-
-    return STATUS_SUCCESS;
-}
-
-/**
- * \brief Start the gt gt state.
- *
- * \param scanner           The scanner for this operation.
- * \param ev                The raw character event to process.
- * \param ch                The character for this identifier.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
- */
-static int start_gt_gt(preprocessor_scanner* scanner, const event* ev)
-{
-    int retval;
-
-    /* extend the cached position to cover this character. */
-    retval = file_position_cache_position_extend(scanner->cache, ev);
-    if (STATUS_SUCCESS != retval)
-    {
-        return retval;
-    }
-
-    /* we are now in the gt gt state. */
-    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_GT_GT;
 
     return STATUS_SUCCESS;
 }
