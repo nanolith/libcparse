@@ -12,6 +12,7 @@
 #include <libcparse/cursor.h>
 #include <libcparse/event.h>
 #include <libcparse/function_decl.h>
+#include <libcparse/integer_type.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
