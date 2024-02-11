@@ -25,6 +25,7 @@ enum CPARSE_SYM(integer_type)
     CPARSE_INTEGER_TYPE_UNSIGNED_INT =                                  0x0001,
     CPARSE_INTEGER_TYPE_SIGNED_LONG =                                   0x0002,
     CPARSE_INTEGER_TYPE_UNSIGNED_LONG =                                 0x0003,
+    CPARSE_INTEGER_TYPE_SIGNED_LONG_LONG =                              0x0004,
 };
 
 /* C++ compatibility. */
