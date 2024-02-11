@@ -47,6 +47,17 @@ struct CPARSE_SYM(event_identifier)
     const char* id;
 };
 
+struct CPARSE_SYM(event_integer_token)
+{
+    CPARSE_SYM(event) hdr;
+    int integer_type;
+    union
+    {
+        long long signed_val;
+        unsigned long long unsigned_val;
+    } val;
+};
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
