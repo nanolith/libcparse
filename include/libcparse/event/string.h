@@ -19,8 +19,7 @@ extern "C" {
 # endif /*__cplusplus*/
 
 /**
- * \brief The raw line event type indicates the scan of a single raw
- * preprocessor control line.
+ * \brief The string event type represents a string literal token.
  */
 typedef struct CPARSE_SYM(event_string) CPARSE_SYM(event_string);
 
