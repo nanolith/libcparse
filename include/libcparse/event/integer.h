@@ -156,6 +156,21 @@ int CPARSE_SYM(event_integer_token_convert_to_int)(
     int* val, const CPARSE_SYM(event_integer_token)* ev);
 
 /**
+ * \brief Attempt to convert this \ref event_integer_token to an unsigned int,
+ * returning a status indicating whether the conversion was successful.
+ *
+ * \param val               Pointer to the value to receive this converted value
+ *                          on success.
+ * \param ev                The event for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_integer_token_convert_to_unsigned_int)(
+    unsigned int* val, const CPARSE_SYM(event_integer_token)* ev);
+
+/**
  * \brief Attempt to downcast an \ref event to an \ref event_integer_token.
  *
  * \param s_ev              Pointer to the event pointer to receive the downcast
