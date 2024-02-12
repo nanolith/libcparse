@@ -136,6 +136,25 @@ int CPARSE_SYM(event_integer_token_init_for_unsigned_long_long)(
 int CPARSE_SYM(event_integer_token_dispose)(
     CPARSE_SYM(event_integer_token)* ev);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Attempt to downcast an \ref event to an \ref event_integer_token.
+ *
+ * \param s_ev              Pointer to the event pointer to receive the downcast
+ *                          instance on success.
+ * \param ev                The \ref event pointer to attempt to downcast to the
+ *                          derived type.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_downcast_to_event_integer_token)(
+    CPARSE_SYM(event_integer_token)** s_ev, CPARSE_SYM(event)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
