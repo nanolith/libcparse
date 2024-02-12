@@ -44,6 +44,22 @@ int CPARSE_SYM(event_integer_token_init_for_signed_int)(
     CPARSE_SYM(event_integer_token)* ev, const CPARSE_SYM(cursor)* cursor,
     int val);
 
+/**
+ * \brief Perform an in-place initialization of an unsigned int \ref
+ * event_integer_token instance.
+ *
+ * \param ev                Pointer to the event to initialize.
+ * \param cursor            The event cursor.
+ * \param val               The value of this token
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero failure code on failure.
+ */
+int CPARSE_SYM(event_integer_token_init_for_unsigned_int)(
+    CPARSE_SYM(event_integer_token)* ev, const CPARSE_SYM(cursor)* cursor,
+    unsigned int val);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
