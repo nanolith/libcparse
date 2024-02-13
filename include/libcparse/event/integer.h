@@ -315,6 +315,20 @@ int CPARSE_SYM(event_downcast_to_event_integer_token)(
 CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
     CPARSE_SYM(event_integer_token)* ev);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_event_integer_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(event_integer_token) sym ## event_integer_token; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_event_integer_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_event_integer_sym(sym ## _)
+#define CPARSE_IMPORT_event_integer \
+    __INTERNAL_CPARSE_IMPORT_event_integer_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
