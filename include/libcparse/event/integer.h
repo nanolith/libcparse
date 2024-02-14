@@ -448,6 +448,12 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
         int z) { \
             return \
                 CPARSE_SYM(event_integer_token_init_for_signed_int)(x,y,z); } \
+    static inline int sym ## event_integer_token_init_for_unsigned_int( \
+        CPARSE_SYM(event_integer_token)* x, const CPARSE_SYM(cursor)* y, \
+        unsigned int z) { \
+            return \
+                CPARSE_SYM(event_integer_token_init_for_unsigned_int)( \
+                    x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_integer_as(sym) \
