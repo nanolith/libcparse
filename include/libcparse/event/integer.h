@@ -491,6 +491,11 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
     static inline int sym ## event_integer_token_convert_to_short( \
         short* x, const CPARSE_SYM(event_integer_token)* y) { \
             return CPARSE_SYM(event_integer_token_convert_to_short)(x,y); } \
+    static inline int sym ## event_integer_token_convert_to_unsigned_short( \
+        unsigned short* x, const CPARSE_SYM(event_integer_token)* y) { \
+            return \
+                CPARSE_SYM(event_integer_token_convert_to_unsigned_short)( \
+                    x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_integer_as(sym) \
