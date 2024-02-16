@@ -512,6 +512,10 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
             return \
                 CPARSE_SYM(event_integer_token_convert_to_unsigned_long)( \
                     x,y); } \
+    static inline int sym ## event_integer_token_convert_to_long_long( \
+        long long* x, const CPARSE_SYM(event_integer_token)* y) { \
+            return \
+                CPARSE_SYM(event_integer_token_convert_to_long_long)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_integer_as(sym) \
