@@ -520,6 +520,18 @@ long long CPARSE_SYM(event_integer_token_coerce_long_long)(
     const CPARSE_SYM(event_integer_token)* ev);
 
 /**
+ * \brief Perform a potentially lossy conversion to unsigned long long.
+ *
+ * \param ev                The event for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+unsigned long long CPARSE_SYM(event_integer_token_coerce_unsigned_long_long)(
+    const CPARSE_SYM(event_integer_token)* ev);
+
+/**
  * \brief Attempt to downcast an \ref event to an \ref event_integer_token.
  *
  * \param s_ev              Pointer to the event pointer to receive the downcast
