@@ -472,6 +472,18 @@ int CPARSE_SYM(event_integer_token_coerce_int)(
     const CPARSE_SYM(event_integer_token)* ev);
 
 /**
+ * \brief Perform a potentially lossy conversion to unsigned int.
+ *
+ * \param ev                The event for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+unsigned int CPARSE_SYM(event_integer_token_coerce_unsigned_int)(
+    const CPARSE_SYM(event_integer_token)* ev);
+
+/**
  * \brief Attempt to downcast an \ref event to an \ref event_integer_token.
  *
  * \param s_ev              Pointer to the event pointer to receive the downcast
