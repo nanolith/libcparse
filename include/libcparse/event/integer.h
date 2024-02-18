@@ -532,7 +532,7 @@ unsigned long long CPARSE_SYM(event_integer_token_coerce_unsigned_long_long)(
     const CPARSE_SYM(event_integer_token)* ev);
 
 /**
- * \brief Perform a potentially lossy conversion to int8.
+ * \brief Perform a potentially lossy conversion to int8_t.
  *
  * \param ev                The event for this operation.
  *
@@ -541,6 +541,18 @@ unsigned long long CPARSE_SYM(event_integer_token_coerce_unsigned_long_long)(
  *      - a non-zero error code on failure.
  */
 int8_t CPARSE_SYM(event_integer_token_coerce_int8)(
+    const CPARSE_SYM(event_integer_token)* ev);
+
+/**
+ * \brief Perform a potentially lossy conversion to uint8_t.
+ *
+ * \param ev                The event for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+uint8_t CPARSE_SYM(event_integer_token_coerce_uint8)(
     const CPARSE_SYM(event_integer_token)* ev);
 
 /**
