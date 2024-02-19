@@ -765,6 +765,10 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
     static inline char sym ## event_integer_token_coerce_char( \
         const CPARSE_SYM(event_integer_token)* x) { \
             return CPARSE_SYM(event_integer_token_coerce_char)(x); } \
+    static inline unsigned char \
+    sym ## event_integer_token_coerce_unsigned_char( \
+        const CPARSE_SYM(event_integer_token)* x) { \
+            return CPARSE_SYM(event_integer_token_coerce_unsigned_char)(x); } \
     static inline int sym ## event_downcast_to_event_integer_token( \
         CPARSE_SYM(event_integer_token)** x, CPARSE_SYM(event)* y) { \
             return CPARSE_SYM(event_downcast_to_event_integer_token)(x,y); } \
