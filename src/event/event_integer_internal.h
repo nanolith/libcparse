@@ -35,7 +35,7 @@ extern "C" {
  *      - a non-zero failure code on failure.
  */
 int CPARSE_SYM(event_integer_init_for_signed_internal)(
-    CPARSE_SYM(event_integer_token)* ev, int event_type,
+    CPARSE_SYM(event_integer_token)* ev, int integer_type,
     const CPARSE_SYM(cursor)* cursor, long long val);
 
 /**
@@ -52,7 +52,7 @@ int CPARSE_SYM(event_integer_init_for_signed_internal)(
  *      - a non-zero failure code on failure.
  */
 int CPARSE_SYM(event_integer_init_for_unsigned_internal)(
-    CPARSE_SYM(event_integer_token)* ev, int event_type,
+    CPARSE_SYM(event_integer_token)* ev, int integer_type,
     const CPARSE_SYM(cursor)* cursor, unsigned long long val);
 
 /******************************************************************************/
