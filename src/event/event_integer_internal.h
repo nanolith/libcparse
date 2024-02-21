@@ -38,6 +38,23 @@ int CPARSE_SYM(event_integer_init_for_signed_internal)(
     CPARSE_SYM(event_string)* ev, int event_type,
     const CPARSE_SYM(cursor)* cursor, long long val);
 
+/**
+ * \brief Perform an in-place initialization of an unsigned \ref
+ * event_integer_token instance.
+ *
+ * \param ev                Pointer to the event to initialize.
+ * \param cursor            The event cursor.
+ * \param integer_type      The integer type.
+ * \param val               The integer value.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero failure code on failure.
+ */
+int CPARSE_SYM(event_integer_init_for_unsigned_internal)(
+    CPARSE_SYM(event_string)* ev, int event_type,
+    const CPARSE_SYM(cursor)* cursor, unsigned long long val);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
