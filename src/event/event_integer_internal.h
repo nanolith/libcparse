@@ -36,7 +36,7 @@ extern "C" {
  */
 int CPARSE_SYM(event_integer_init_for_signed_internal)(
     CPARSE_SYM(event_string)* ev, int event_type,
-    const CPARSE_SYM(cursor)* cursor, const char* str);
+    const CPARSE_SYM(cursor)* cursor, long long val);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
