@@ -66,6 +66,12 @@ int CPARSE_SYM(event_integer_init_for_unsigned_internal)(
         const CPARSE_SYM(cursor)* y, long long z) { \
             return \
                 CPARSE_SYM(event_integer_init_for_signed_internal)(w,x,y,z); } \
+    static inline int sym ## event_integer_init_for_unsigned_internal( \
+        CPARSE_SYM(event_integer_token)* w, int x, \
+        const CPARSE_SYM(cursor)* y, unsigned long long z) { \
+            return \
+                CPARSE_SYM(event_integer_init_for_unsigned_internal)( \
+                    w,x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_integer_internal_as(sym) \
