@@ -11,6 +11,7 @@
 CPARSE_IMPORT_event_identifier;
 CPARSE_IMPORT_event_include;
 CPARSE_IMPORT_event_integer;
+CPARSE_IMPORT_event_integer_internal;
 CPARSE_IMPORT_event_raw_line;
 CPARSE_IMPORT_event_string;
 CPARSE_IMPORT_event_string_internal;
