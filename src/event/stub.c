@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include "event_string_internal.h"
+#include "event_integer_internal.h"
 
 CPARSE_IMPORT_event_identifier;
 CPARSE_IMPORT_event_include;
