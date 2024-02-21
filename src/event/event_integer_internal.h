@@ -35,7 +35,7 @@ extern "C" {
  *      - a non-zero failure code on failure.
  */
 int CPARSE_SYM(event_integer_init_for_signed_internal)(
-    CPARSE_SYM(event_string)* ev, int event_type,
+    CPARSE_SYM(event_integer_token)* ev, int event_type,
     const CPARSE_SYM(cursor)* cursor, long long val);
 
 /**
@@ -52,8 +52,26 @@ int CPARSE_SYM(event_integer_init_for_signed_internal)(
  *      - a non-zero failure code on failure.
  */
 int CPARSE_SYM(event_integer_init_for_unsigned_internal)(
-    CPARSE_SYM(event_string)* ev, int event_type,
+    CPARSE_SYM(event_integer_token)* ev, int event_type,
     const CPARSE_SYM(cursor)* cursor, unsigned long long val);
+
+/******************************************************************************/
+/* Start of private exports.                                                  */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_event_integer_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    static inline int sym ## event_integer_init_for_signed_internal( \
+        CPARSE_SYM(event_integer_token)* w, int x, \
+        const CPARSE_SYM(cursor)* y, long long z) { \
+            return \
+                CPARSE_SYM(event_integer_init_for_signed_internal)(w,x,y,z); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_event_integer_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_event_integer_internal_sym(sym ## _)
+#define CPARSE_IMPORT_event_integer_internal \
+    __INTERNAL_CPARSE_IMPORT_event_integer_internal_sym()
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
