@@ -85,6 +85,9 @@ bool CPARSE_SYM(event_integer_token_is_signed)(
             return \
                 CPARSE_SYM(event_integer_init_for_unsigned_internal)( \
                     w,x,y,z); } \
+    static inline bool sym ## event_integer_token_is_signed( \
+        const CPARSE_SYM(event_integer_token)* x) { \
+            return CPARSE_SYM(event_integer_token_is_signed)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_integer_internal_as(sym) \
