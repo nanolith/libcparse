@@ -11,6 +11,7 @@
 
 #include <libcparse/event/integer.h>
 #include <libcparse/function_decl.h>
+#include <stdbool.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -54,6 +55,18 @@ int CPARSE_SYM(event_integer_init_for_signed_internal)(
 int CPARSE_SYM(event_integer_init_for_unsigned_internal)(
     CPARSE_SYM(event_integer_token)* ev, int integer_type,
     const CPARSE_SYM(cursor)* cursor, unsigned long long val);
+
+/******************************************************************************/
+/* Start of private methods.                                                  */
+/******************************************************************************/
+
+/**
+ * \brief Return true if the integer type is signed and false otherwise.
+ *
+ * \param ev                The event to query.
+ */
+bool CPARSE_SYM(event_integer_token_is_signed)(
+    const CPARSE_SYM(event_integer_token)* ev);
 
 /******************************************************************************/
 /* Start of private exports.                                                  */
