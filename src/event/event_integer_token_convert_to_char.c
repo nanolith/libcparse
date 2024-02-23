@@ -9,6 +9,7 @@
 
 #include <libcparse/event/integer.h>
 #include <libcparse/status_codes.h>
+#include <limits.h>
 
 #include "event_integer_internal.h"
 
@@ -31,7 +32,7 @@ int CPARSE_SYM(event_integer_token_convert_to_char)(
 {
     if (event_integer_token_is_signed(ev))
     {
-        if (ev->val.signed_val <= 127 && ev->val.signed_val >= -128)
+        if (ev->val.signed_val <= SCHAR_MAX && ev->val.signed_val >= SCHAR_MIN)
         {
             *val = (char)ev->val.signed_val;
             return STATUS_SUCCESS;
@@ -42,7 +43,7 @@ int CPARSE_SYM(event_integer_token_convert_to_char)(
         /* In C, we can overflow into the sign bit for a char if it will
          * otherwise "fit". This has weird implementation defined ramifications,
          * but this conversion shouldn't be avoided here. */
-        if (ev->val.unsigned_val < 256)
+        if (ev->val.unsigned_val < UCHAR_MAX)
         {
             *val = (char)ev->val.unsigned_val;
             return STATUS_SUCCESS;
