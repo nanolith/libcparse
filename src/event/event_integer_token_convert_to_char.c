@@ -43,7 +43,7 @@ int CPARSE_SYM(event_integer_token_convert_to_char)(
         /* In C, we can overflow into the sign bit for a char if it will
          * otherwise "fit". This has weird implementation defined ramifications,
          * but this conversion shouldn't be avoided here. */
-        if (ev->val.unsigned_val < UCHAR_MAX)
+        if (ev->val.unsigned_val <= UCHAR_MAX)
         {
             *val = (char)ev->val.unsigned_val;
             return STATUS_SUCCESS;
