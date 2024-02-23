@@ -34,7 +34,7 @@ int CPARSE_SYM(event_integer_token_convert_to_unsigned_char)(
     {
         if (ev->val.signed_val <= UCHAR_MAX && ev->val.signed_val > 0)
         {
-            *val = (char)ev->val.signed_val;
+            *val = (unsigned char)ev->val.signed_val;
             return STATUS_SUCCESS;
         }
     }
@@ -42,7 +42,7 @@ int CPARSE_SYM(event_integer_token_convert_to_unsigned_char)(
     {
         if (ev->val.unsigned_val <= UCHAR_MAX)
         {
-            *val = (char)ev->val.unsigned_val;
+            *val = (unsigned char)ev->val.unsigned_val;
             return STATUS_SUCCESS;
         }
     }
