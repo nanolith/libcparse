@@ -31,6 +31,6 @@ unsigned long long CPARSE_SYM(event_integer_token_coerce_unsigned_long_long)(
     }
     else
     {
-        return (unsigned long long)ev->val.unsigned_val;
+        return ev->val.unsigned_val;
     }
 }
