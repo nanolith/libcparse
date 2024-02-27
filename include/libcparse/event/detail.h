@@ -11,6 +11,7 @@
 
 #include <libcparse/cursor.h>
 #include <libcparse/event_fwd.h>
+#include <stdbool.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -56,6 +57,14 @@ struct CPARSE_SYM(event_integer_token)
         long long signed_val;
         unsigned long long unsigned_val;
     } val;
+};
+
+struct CPARSE_SYM(event_raw_integer)
+{
+    CPARSE_SYM(event) hdr;
+    int integer_type;
+    bool has_sign;
+    const char* digits;
 };
 
 /* C++ compatibility. */
