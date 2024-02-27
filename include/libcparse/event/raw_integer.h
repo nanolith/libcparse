@@ -1,0 +1,42 @@
+/**
+ * \file libcparse/event/raw_integer.h
+ *
+ * \brief The \ref event_raw_integer_token type represents a raw integer token
+ * event before it has been differentiated into positive or negative values.
+ *
+ * The unary minus token, which is used to indicate that an integer constant is
+ * in the negative two's complement form must be applied during a parsing step.
+ * For instance, the parser must differentiate between the expressions
+ * "x-5" and "-5". This matters because the constant -2147483648 is a valid
+ * int value, but 2147483648 is not. So, we store this constant as a string,
+ * and allow it to be converted to a \ref event_integer_token with or without a
+ * negative sign applied.
+ *
+ * \copyright 2023 Justin Handville.  Please see license.txt in this
+ * distribution for the license terms under which this software is distributed.
+ */
+
+#pragma once
+
+#include <libcparse/cursor.h>
+#include <libcparse/event.h>
+#include <libcparse/function_decl.h>
+#include <libcparse/integer_type.h>
+#include <stdint.h>
+
+/* C++ compatibility. */
+# ifdef   __cplusplus
+extern "C" {
+# endif /*__cplusplus*/
+
+/**
+ * \brief The raw integer event type represents a partially interpreted integer
+ * constant token.
+ */
+typedef struct CPARSE_SYM(event_raw_integer_token)
+CPARSE_SYM(event_raw_integer_token);
+
+/* C++ compatibility. */
+# ifdef   __cplusplus
+}
+# endif /*__cplusplus*/
