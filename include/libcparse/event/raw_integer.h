@@ -88,6 +88,16 @@ int CPARSE_SYM(event_raw_integer_token_dispose)(
 int CPARSE_SYM(event_downcast_to_event_raw_integer_token)(
     CPARSE_SYM(event_raw_integer_token)** s_ev, CPARSE_SYM(event)* ev);
 
+/**
+ * \brief Upcast an \ref event_raw_integer_token to an \ref event.
+ *
+ * \param ev                The \ref event_raw_integer_token to upcast.
+ *
+ * \returns the \ref event instance for this event.
+ */
+CPARSE_SYM(event)* CPARSE_SYM(event_raw_integer_token_upcast)(
+    CPARSE_SYM(event_raw_integer_token)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
