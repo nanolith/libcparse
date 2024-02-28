@@ -74,6 +74,19 @@ int CPARSE_SYM(event_raw_integer_token_dispose)(
 /******************************************************************************/
 
 /**
+ * \brief Set the sign flag.
+ *
+ * \param ev                The event for this operation.
+ * \param sign              The sign flag.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_raw_integer_token_sign_set)(
+    CPARSE_SYM(event_raw_integer_token)* ev, bool sign);
+
+/**
  * \brief Attempt to downcast an \ref event to an \ref event_raw_integer_token.
  *
  * \param s_ev              Pointer to the event pointer to receive the downcast
