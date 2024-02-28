@@ -126,6 +126,9 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_integer_token_upcast)(
     static inline int sym ## event_raw_integer_token_dispose( \
         CPARSE_SYM(event_raw_integer_token)* x) { \
             return CPARSE_SYM(event_raw_integer_token_dispose)(x); } \
+    static inline int sym ## event_raw_integer_token_sign_set( \
+        CPARSE_SYM(event_raw_integer_token)* x, bool y) { \
+            return CPARSE_SYM(event_raw_integer_token_sign_set)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_raw_integer_as(sym) \
