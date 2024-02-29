@@ -22,6 +22,7 @@
 #include <libcparse/event.h>
 #include <libcparse/function_decl.h>
 #include <libcparse/integer_type.h>
+#include <libcparse/event/integer.h>
 #include <stdint.h>
 
 /* C++ compatibility. */
@@ -85,6 +86,21 @@ int CPARSE_SYM(event_raw_integer_token_dispose)(
  */
 int CPARSE_SYM(event_raw_integer_token_sign_set)(
     CPARSE_SYM(event_raw_integer_token)* ev, bool sign);
+
+/**
+ * \brief Convert this token to an integer token.
+ *
+ * \param i_ev              Pointer to the \ref event_integer_token to be
+ *                          initialized with this conversion on success.
+ * \param ev                The event to convert.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_raw_integer_token_convert)(
+    CPARSE_SYM(event_integer_token)** i_ev,
+    const CPARSE_SYM(event_raw_integer_token)* ev);
 
 /**
  * \brief Attempt to downcast an \ref event to an \ref event_raw_integer_token.
