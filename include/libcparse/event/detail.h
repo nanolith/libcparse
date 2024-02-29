@@ -62,7 +62,6 @@ struct CPARSE_SYM(event_integer_token)
 struct CPARSE_SYM(event_raw_integer)
 {
     CPARSE_SYM(event) hdr;
-    int integer_type;
     bool has_sign;
     const char* digits;
 };
