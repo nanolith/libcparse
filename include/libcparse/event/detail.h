@@ -59,7 +59,7 @@ struct CPARSE_SYM(event_integer_token)
     } val;
 };
 
-struct CPARSE_SYM(event_raw_integer)
+struct CPARSE_SYM(event_raw_integer_token)
 {
     CPARSE_SYM(event) hdr;
     bool has_sign;
