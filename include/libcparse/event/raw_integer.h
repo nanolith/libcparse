@@ -99,7 +99,7 @@ int CPARSE_SYM(event_raw_integer_token_sign_set)(
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(event_raw_integer_token_convert)(
-    CPARSE_SYM(event_integer_token)** i_ev,
+    CPARSE_SYM(event_integer_token)* i_ev,
     const CPARSE_SYM(event_raw_integer_token)* ev);
 
 /**
@@ -145,6 +145,10 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_integer_token_upcast)(
     static inline int sym ## event_raw_integer_token_sign_set( \
         CPARSE_SYM(event_raw_integer_token)* x, bool y) { \
             return CPARSE_SYM(event_raw_integer_token_sign_set)(x,y); } \
+    static inline int sym ## event_raw_integer_token_convert( \
+        CPARSE_SYM(event_integer_token)* x, \
+        const CPARSE_SYM(event_raw_integer_token)* y) { \
+            return CPARSE_SYM(event_raw_integer_token_convert)(x,y); } \
     static inline int sym ## event_downcast_to_event_raw_integer_token( \
         CPARSE_SYM(event_raw_integer_token)** x, CPARSE_SYM(event)* y) { \
             return \
