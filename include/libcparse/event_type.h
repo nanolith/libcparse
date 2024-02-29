@@ -126,6 +126,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_PP_STRING_CONCAT =      0x0130,
     CPARSE_EVENT_TYPE_TOKEN_PP_HASH =               0x0131,
 
+    /* Raw integer token. */
+    CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_INTEGER =     0x0140,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
 
