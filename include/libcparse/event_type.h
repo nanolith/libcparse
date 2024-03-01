@@ -129,6 +129,9 @@ enum CPARSE_SYM(event_type)
     /* Raw integer token. */
     CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_INTEGER =     0x0140,
 
+    /* Keyword tokens. */
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD__ALIGNAS =      0x0150,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
 
