@@ -131,6 +131,7 @@ enum CPARSE_SYM(event_type)
 
     /* Keyword tokens. */
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__ALIGNAS =      0x0150,
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD__ALIGNOF =      0x0151,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                     0xFFFF,
 };
