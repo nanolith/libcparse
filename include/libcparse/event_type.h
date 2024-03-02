@@ -142,6 +142,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__THREAD_LOCAL =                     0x0159,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_AUTO =                              0x015A,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_BREAK =                             0x015B,
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD_CASE =                              0x015C,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
