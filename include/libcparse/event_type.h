@@ -152,6 +152,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_ELSE =                              0x0163,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_ENUM =                              0x0164,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_EXTERN =                            0x0165,
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD_FLOAT =                             0x0166,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
