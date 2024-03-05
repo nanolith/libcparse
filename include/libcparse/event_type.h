@@ -165,6 +165,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_SIGNED =                            0x0170,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_SIZEOF =                            0x0171,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_STATIC =                            0x0172,
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD_STRUCT =                            0x0173,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
