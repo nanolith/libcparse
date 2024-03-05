@@ -161,6 +161,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_LONG =                              0x016C,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_REGISTER =                          0x016D,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_RETURN =                            0x016E,
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD_SHORT =                             0x016F,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
