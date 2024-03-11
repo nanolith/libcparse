@@ -1634,6 +1634,9 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
     static inline int sym ## event_init_for_token_keyword_for( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_keyword_for)(x,y); } \
+    static inline int sym ## event_init_for_token_keyword_goto( \
+        CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
+            return CPARSE_SYM(event_init_for_token_keyword_goto)(x,y); } \
     static inline int sym ## event_dispose( \
         CPARSE_SYM(event)* x) { \
             return CPARSE_SYM(event_dispose)(x); } \
