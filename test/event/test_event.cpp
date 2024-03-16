@@ -1406,7 +1406,7 @@ TEST(_Imaginary_keyword_token)
 }
 
 /**
- * Test that we can create an _Noreturn keyword token event.
+ * Test that we can create a _Noreturn keyword token event.
  */
 TEST(_Noreturn_keyword_token)
 {
@@ -1423,6 +1423,29 @@ TEST(_Noreturn_keyword_token)
     /* The event type is correct. */
     TEST_EXPECT(
         CPARSE_EVENT_TYPE_TOKEN_KEYWORD__NORETURN == event_get_type(&ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
+
+/**
+ * Test that we can create a _Static_assert keyword token event.
+ */
+TEST(_Static_assert_keyword_token)
+{
+    event ev;
+    cursor c;
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_init_for_token_keyword__Static_assert(&ev, &c));
+
+    /* The event type is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_TYPE_TOKEN_KEYWORD__STATIC_ASSERT == event_get_type(&ev));
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
