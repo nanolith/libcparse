@@ -1314,7 +1314,7 @@ TEST(_Atomic_keyword_token)
 }
 
 /**
- * Test that we can create an _Bool keyword token event.
+ * Test that we can create a _Bool keyword token event.
  */
 TEST(_Bool_keyword_token)
 {
@@ -1337,7 +1337,7 @@ TEST(_Bool_keyword_token)
 }
 
 /**
- * Test that we can create an _Complex keyword token event.
+ * Test that we can create a _Complex keyword token event.
  */
 TEST(_Complex_keyword_token)
 {
@@ -1360,7 +1360,7 @@ TEST(_Complex_keyword_token)
 }
 
 /**
- * Test that we can create an _Generic keyword token event.
+ * Test that we can create a _Generic keyword token event.
  */
 TEST(_Generic_keyword_token)
 {
