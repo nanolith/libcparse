@@ -1450,3 +1450,26 @@ TEST(_Static_assert_keyword_token)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
 }
+
+/**
+ * Test that we can create a _Thread_local keyword token event.
+ */
+TEST(_Thread_local_keyword_token)
+{
+    event ev;
+    cursor c;
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_init_for_token_keyword__Thread_local(&ev, &c));
+
+    /* The event type is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_TYPE_TOKEN_KEYWORD__THREAD_LOCAL == event_get_type(&ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
