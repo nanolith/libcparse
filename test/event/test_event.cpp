@@ -2048,3 +2048,26 @@ TEST(sizeof_keyword_token)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
 }
+
+/**
+ * Test that we can create a static keyword token event.
+ */
+TEST(static_keyword_token)
+{
+    event ev;
+    cursor c;
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_init_for_token_keyword_static(&ev, &c));
+
+    /* The event type is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_TYPE_TOKEN_KEYWORD_STATIC == event_get_type(&ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
