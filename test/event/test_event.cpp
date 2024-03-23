@@ -2186,3 +2186,26 @@ TEST(unsigned_keyword_token)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
 }
+
+/**
+ * Test that we can create a void keyword token event.
+ */
+TEST(void_keyword_token)
+{
+    event ev;
+    cursor c;
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_init_for_token_keyword_void(&ev, &c));
+
+    /* The event type is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_TYPE_TOKEN_KEYWORD_VOID == event_get_type(&ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
