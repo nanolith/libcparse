@@ -955,6 +955,7 @@ static int continue_identifier(
 static const keyword_ctor keywords[] = {
     { "_Alignas", &event_init_for_token_keyword__Alignas },
     { "_Alignof", &event_init_for_token_keyword__Alignof },
+    { "_Atomic", &event_init_for_token_keyword__Atomic },
 };
 
 /**
