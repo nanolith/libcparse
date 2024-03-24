@@ -18,6 +18,8 @@
 #include <libcparse/status_codes.h>
 #include <libcparse/string_builder.h>
 #include <libcparse/string_utils.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "preprocessor_scanner_internal.h"
 
@@ -33,6 +35,13 @@ CPARSE_IMPORT_string_builder;
 CPARSE_IMPORT_string_utils;
 
 typedef int (*simple_event_ctor)(event*, const cursor*);
+typedef int (*bsearch_compare_func)(const void*, const void*);
+typedef struct keyword_ctor keyword_ctor;
+struct keyword_ctor
+{
+    const char* keyword;
+    simple_event_ctor ctor;
+};
 
 static int process_eof_event(
     preprocessor_scanner* scanner, const event* ev);
@@ -59,6 +68,11 @@ static int broadcast_compound_token(
     preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
 static int broadcast_cached_token_and_continue(
     preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
+static int keyword_compare(const char* key, const keyword_ctor* entry);
+static int keyword_search(const keyword_ctor** keyword_entry, const char* str);
+static int keyword_event_broadcast(
+    preprocessor_scanner* scanner, const keyword_ctor* keyword_entry,
+    const cursor* pos);
 
 /**
  * \brief Event handler callback for \ref preprocessor_scanner_event_callback.
@@ -936,6 +950,108 @@ static int continue_identifier(
 }
 
 /**
+ * \brief This is the list of C keywords with event constructors.
+ */
+static const keyword_ctor keywords[] = {
+    { "_Alignas", &event_init_for_token_keyword__Alignas },
+};
+
+/**
+ * \brief Compare a keyword entry with the key.
+ *
+ * \param key               The key to compare.
+ * \param entry             The entry to compare.
+ *
+ * \returns the comparison result.
+ *      - a negative value if key < entry.
+ *      - a positive value if key > entry.
+ *      - zero if key == entry.
+ */
+static int keyword_compare(const char* key, const keyword_ctor* entry)
+{
+    return strcmp(key, entry->keyword);
+}
+
+/**
+ * \brief Search the keyword list for a given string, returning success and
+ * populating the entry if found.
+ *
+ * \param keyword_entry     Pointer to keyword entry pointer to populate on
+ *                          success.
+ * \param str               The string to search.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int keyword_search(const keyword_ctor** keyword_entry, const char* str)
+{
+    const size_t entry_size = sizeof(keyword_ctor);
+    const size_t entry_count = sizeof(keywords) / entry_size;
+
+    /* perform a binary search on the keyword array. */
+    *keyword_entry =
+        bsearch(
+            str, keywords, entry_count, entry_size,
+            (bsearch_compare_func)&keyword_compare);
+
+    /* if the search succeeded, return success. */
+    if (NULL != *keyword_entry)
+    {
+        return STATUS_SUCCESS;
+    }
+    else
+    {
+        return ERROR_LIBCPARSE_ENTRY_NOT_FOUND;
+    }
+}
+
+/**
+ * \brief Broadcast a keyword event.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param keyword_entry     The entry for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int keyword_event_broadcast(
+    preprocessor_scanner* scanner, const keyword_ctor* keyword_entry,
+    const cursor* pos)
+{
+    int retval, release_retval;
+    event ev;
+
+    /* initialize the token event. */
+    retval = (keyword_entry->ctor)(&ev, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(scanner->reactor, &ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_ev;
+    }
+
+    /* success. */
+    goto cleanup_ev;
+
+cleanup_ev:
+    release_retval = event_dispose(&ev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    return retval;
+}
+
+/**
  * \brief End an identifier token.
  *
  * \param scanner           The scanner for this operation.
@@ -950,7 +1066,9 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev)
     int retval, release_retval;
     const cursor* pos;
     char* str;
+    const keyword_ctor* keyword_entry;
     event_identifier iev;
+    bool iev_initialized = false;
 
     /* get the cached position. */
     retval = file_position_cache_position_get(scanner->cache, &pos);
@@ -966,12 +1084,26 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev)
         goto done;
     }
 
+    /* is this a keyword? */
+    retval = keyword_search(&keyword_entry, str);
+    if (STATUS_SUCCESS == retval)
+    {
+        /* send the keyword event. */
+        retval = keyword_event_broadcast(scanner, keyword_entry, pos);
+
+        /* we are done, so just clean up the string and reset state. */
+        goto reset_state;
+    }
+
     /* initialize the identifier event. */
     retval = event_identifier_init(&iev, pos, str);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_str;
     }
+
+    /* the event was initialized. */
+    iev_initialized = true;
 
     /* broadcast this event. */
     retval =
@@ -982,6 +1114,10 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev)
         goto cleanup_iev;
     }
 
+    /* success. */
+    goto reset_state;
+
+reset_state:
     /* clear the file / position cache. */
     file_position_cache_clear(scanner->cache);
 
@@ -991,14 +1127,14 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev)
     /* we are now in the init state. */
     scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
 
-    /* success. */
-    goto cleanup_iev;
-
 cleanup_iev:
-    release_retval = event_identifier_dispose(&iev);
-    if (STATUS_SUCCESS != release_retval)
+    if (iev_initialized)
     {
-        retval = release_retval;
+        release_retval = event_identifier_dispose(&iev);
+        if (STATUS_SUCCESS != release_retval)
+        {
+            retval = release_retval;
+        }
     }
 
 cleanup_str:
