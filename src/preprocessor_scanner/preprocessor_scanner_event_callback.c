@@ -964,6 +964,7 @@ static const keyword_ctor keywords[] = {
     { "_Static_assert", &event_init_for_token_keyword__Static_assert },
     { "_Thread_local", &event_init_for_token_keyword__Thread_local },
     { "auto", &event_init_for_token_keyword_auto },
+    { "break", &event_init_for_token_keyword_break },
 };
 
 /**
