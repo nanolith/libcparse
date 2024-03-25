@@ -238,6 +238,9 @@ static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
         case CPARSE_EVENT_TYPE_TOKEN_KEYWORD__STATIC_ASSERT:
             ctx->vals.push_back(make_pair(token_type, "_Static_assert"));
             break;
+        case CPARSE_EVENT_TYPE_TOKEN_KEYWORD__THREAD_LOCAL:
+            ctx->vals.push_back(make_pair(token_type, "_Thread_local"));
+            break;
 
         default:
             return -1;
@@ -4276,6 +4279,69 @@ TEST(_Static_assert_keyword_token)
 
     /* this first value is a _Static_assert keyword. */
     TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_KEYWORD__STATIC_ASSERT == f->first);
+
+    /* clean up. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == preprocessor_scanner_release(scanner));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
+
+/**
+ * Test that we can scan a _Thread_local keyword.
+ */
+TEST(_Thread_local_keyword_token)
+{
+    preprocessor_scanner* scanner;
+    input_stream* stream;
+    event_handler eh;
+    test_context t1;
+    const char* INPUT_STRING = "_Thread_local";
+
+    /* Create the scanner instance. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == preprocessor_scanner_create(&scanner));
+
+    /* create an event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = preprocessor_scanner_upcast(scanner);
+
+    /* subscribe to the scanner. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_preprocessor_scanner_subscribe(ap, &eh));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, INPUT_STRING));
+
+    /* add the input stream to the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "stdin", stream));
+
+    /* precondition: eof is false. */
+    TEST_ASSERT(!t1.eof);
+
+    /* precondition: vals is empty. */
+    TEST_ASSERT(t1.vals.empty());
+
+    /* run the filter. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(ap));
+
+    /* postcondition: eof is true. */
+    TEST_EXPECT(t1.eof);
+
+    /* postcondition: there is one value in vals. */
+    TEST_ASSERT(1 == t1.vals.size());
+    auto f = t1.vals.begin();
+    TEST_ASSERT(f != t1.vals.end());
+
+    /* this first value is a _Thread_local keyword. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_KEYWORD__THREAD_LOCAL == f->first);
 
     /* clean up. */
     TEST_ASSERT(
