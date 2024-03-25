@@ -961,6 +961,7 @@ static const keyword_ctor keywords[] = {
     { "_Generic", &event_init_for_token_keyword__Generic },
     { "_Imaginary", &event_init_for_token_keyword__Imaginary },
     { "_Noreturn", &event_init_for_token_keyword__Noreturn },
+    { "_Static_assert", &event_init_for_token_keyword__Static_assert },
 };
 
 /**
