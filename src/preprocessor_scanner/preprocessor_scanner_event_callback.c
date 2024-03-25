@@ -957,6 +957,7 @@ static const keyword_ctor keywords[] = {
     { "_Alignof", &event_init_for_token_keyword__Alignof },
     { "_Atomic", &event_init_for_token_keyword__Atomic },
     { "_Bool", &event_init_for_token_keyword__Bool },
+    { "_Complex", &event_init_for_token_keyword__Complex },
 };
 
 /**
