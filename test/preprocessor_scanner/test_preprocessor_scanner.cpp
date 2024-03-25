@@ -226,6 +226,9 @@ static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
         case CPARSE_EVENT_TYPE_TOKEN_KEYWORD__COMPLEX:
             ctx->vals.push_back(make_pair(token_type, "_Complex"));
             break;
+        case CPARSE_EVENT_TYPE_TOKEN_KEYWORD__GENERIC:
+            ctx->vals.push_back(make_pair(token_type, "_Generic"));
+            break;
 
         default:
             return -1;
@@ -3894,7 +3897,7 @@ TEST(_Atomic_keyword_token)
 }
 
 /**
- * Test that we can scan an _Bool keyword.
+ * Test that we can scan a _Bool keyword.
  */
 TEST(_Bool_keyword_token)
 {
@@ -3947,7 +3950,7 @@ TEST(_Bool_keyword_token)
     auto f = t1.vals.begin();
     TEST_ASSERT(f != t1.vals.end());
 
-    /* this first value is an _Bool keyword. */
+    /* this first value is a _Bool keyword. */
     TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_KEYWORD__BOOL == f->first);
 
     /* clean up. */
@@ -3957,7 +3960,7 @@ TEST(_Bool_keyword_token)
 }
 
 /**
- * Test that we can scan an _Complex keyword.
+ * Test that we can scan a _Complex keyword.
  */
 TEST(_Complex_keyword_token)
 {
@@ -4010,8 +4013,71 @@ TEST(_Complex_keyword_token)
     auto f = t1.vals.begin();
     TEST_ASSERT(f != t1.vals.end());
 
-    /* this first value is an _Complex keyword. */
+    /* this first value is a _Complex keyword. */
     TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_KEYWORD__COMPLEX == f->first);
+
+    /* clean up. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == preprocessor_scanner_release(scanner));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
+
+/**
+ * Test that we can scan a _Generic keyword.
+ */
+TEST(_Generic_keyword_token)
+{
+    preprocessor_scanner* scanner;
+    input_stream* stream;
+    event_handler eh;
+    test_context t1;
+    const char* INPUT_STRING = "_Generic";
+
+    /* Create the scanner instance. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == preprocessor_scanner_create(&scanner));
+
+    /* create an event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = preprocessor_scanner_upcast(scanner);
+
+    /* subscribe to the scanner. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_preprocessor_scanner_subscribe(ap, &eh));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, INPUT_STRING));
+
+    /* add the input stream to the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "stdin", stream));
+
+    /* precondition: eof is false. */
+    TEST_ASSERT(!t1.eof);
+
+    /* precondition: vals is empty. */
+    TEST_ASSERT(t1.vals.empty());
+
+    /* run the filter. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(ap));
+
+    /* postcondition: eof is true. */
+    TEST_EXPECT(t1.eof);
+
+    /* postcondition: there is one value in vals. */
+    TEST_ASSERT(1 == t1.vals.size());
+    auto f = t1.vals.begin();
+    TEST_ASSERT(f != t1.vals.end());
+
+    /* this first value is a _Generic keyword. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_KEYWORD__GENERIC == f->first);
 
     /* clean up. */
     TEST_ASSERT(
