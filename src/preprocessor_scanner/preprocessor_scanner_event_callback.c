@@ -967,6 +967,7 @@ static const keyword_ctor keywords[] = {
     { "break", &event_init_for_token_keyword_break },
     { "case", &event_init_for_token_keyword_case },
     { "char", &event_init_for_token_keyword_char },
+    { "const", &event_init_for_token_keyword_const },
 };
 
 /**
