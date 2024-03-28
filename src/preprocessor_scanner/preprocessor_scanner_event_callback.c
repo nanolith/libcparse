@@ -976,6 +976,7 @@ static const keyword_ctor keywords[] = {
     { "enum", &event_init_for_token_keyword_enum },
     { "extern", &event_init_for_token_keyword_extern },
     { "float", &event_init_for_token_keyword_float },
+    { "for", &event_init_for_token_keyword_for },
 };
 
 /**
