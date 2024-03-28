@@ -972,6 +972,7 @@ static const keyword_ctor keywords[] = {
     { "default", &event_init_for_token_keyword_default },
     { "do", &event_init_for_token_keyword_do },
     { "double", &event_init_for_token_keyword_double },
+    { "else", &event_init_for_token_keyword_else },
 };
 
 /**
