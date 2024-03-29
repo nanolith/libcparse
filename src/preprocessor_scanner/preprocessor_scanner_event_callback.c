@@ -979,6 +979,7 @@ static const keyword_ctor keywords[] = {
     { "for", &event_init_for_token_keyword_for },
     { "goto", &event_init_for_token_keyword_goto },
     { "if", &event_init_for_token_keyword_if },
+    { "inline", &event_init_for_token_keyword_inline },
 };
 
 /**
