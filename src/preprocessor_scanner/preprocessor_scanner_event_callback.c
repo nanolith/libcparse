@@ -983,6 +983,7 @@ static const keyword_ctor keywords[] = {
     { "int", &event_init_for_token_keyword_int },
     { "long", &event_init_for_token_keyword_long },
     { "register", &event_init_for_token_keyword_register },
+    { "restrict", &event_init_for_token_keyword_restrict },
 };
 
 /**
