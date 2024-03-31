@@ -989,6 +989,7 @@ static const keyword_ctor keywords[] = {
     { "signed", &event_init_for_token_keyword_signed },
     { "sizeof", &event_init_for_token_keyword_sizeof },
     { "static", &event_init_for_token_keyword_static },
+    { "struct", &event_init_for_token_keyword_struct },
 };
 
 /**
