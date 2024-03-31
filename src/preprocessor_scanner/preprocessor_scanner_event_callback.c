@@ -996,6 +996,7 @@ static const keyword_ctor keywords[] = {
     { "unsigned", &event_init_for_token_keyword_unsigned },
     { "void", &event_init_for_token_keyword_void },
     { "volatile", &event_init_for_token_keyword_volatile },
+    { "while", &event_init_for_token_keyword_while },
 };
 
 /**
