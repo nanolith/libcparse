@@ -992,6 +992,7 @@ static const keyword_ctor keywords[] = {
     { "struct", &event_init_for_token_keyword_struct },
     { "switch", &event_init_for_token_keyword_switch },
     { "typedef", &event_init_for_token_keyword_typedef },
+    { "union", &event_init_for_token_keyword_union },
 };
 
 /**
