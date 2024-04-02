@@ -12,6 +12,7 @@
 #include <libcparse/event.h>
 #include <libcparse/event/identifier.h>
 #include <libcparse/event/raw_character.h>
+#include <libcparse/event/raw_integer.h>
 #include <libcparse/event_reactor.h>
 #include <libcparse/file_position_cache.h>
 #include <libcparse/preprocessor_scanner.h>
@@ -27,6 +28,7 @@ CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_identifier;
 CPARSE_IMPORT_event_raw_character;
+CPARSE_IMPORT_event_raw_integer;
 CPARSE_IMPORT_event_reactor;
 CPARSE_IMPORT_file_position_cache;
 CPARSE_IMPORT_preprocessor_scanner;
@@ -53,11 +55,18 @@ static int process_raw_character(
     preprocessor_scanner* scanner, const event* ev);
 static bool char_is_alpha_underscore(const int ch);
 static bool char_is_identifier(const int ch);
+static bool char_is_decimal_digit(const int ch);
+static bool char_is_non_zero_digit(const int ch);
 static int start_identifier(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int continue_identifier(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int end_identifier(preprocessor_scanner* scanner, const event* ev);
+static int start_decimal_integer(
+    preprocessor_scanner* scanner, const event* ev, int ch);
+static int continue_integer(
+    preprocessor_scanner* scanner, const event* ev, int ch);
+static int end_integer(preprocessor_scanner* scanner, const event* ev);
 static int start_state(
     preprocessor_scanner* scanner, const event* ev, int state);
 static int transition_state(
@@ -126,6 +135,9 @@ static int process_eof_event(
     {
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER:
             return end_identifier(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
+            return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
             return
@@ -225,6 +237,9 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER:
             return end_identifier(scanner, ev);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
+            return end_integer(scanner, ev);
+
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
             return
                 broadcast_cached_token_and_continue(
@@ -322,6 +337,9 @@ static int process_newline_event(
     {
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER:
             return end_identifier(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
+            return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
             return
@@ -436,6 +454,10 @@ static int process_raw_character(
             if (char_is_alpha_underscore(ch))
             {
                 return start_identifier(scanner, ev, ch);
+            }
+            else if (char_is_non_zero_digit(ch))
+            {
+                return start_decimal_integer(scanner, ev, ch);
             }
             else
             {
@@ -846,6 +868,17 @@ static int process_raw_character(
             }
             break;
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
+            if (char_is_decimal_digit(ch))
+            {
+                return continue_integer(scanner, ev, ch);
+            }
+            else
+            {
+                return end_integer(scanner, ev);
+            }
+            break;
+
         default:
             return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
     }
@@ -870,6 +903,29 @@ static bool char_is_alpha_underscore(const int ch)
 static bool char_is_identifier(const int ch)
 {
     if (char_is_alpha_underscore(ch) || isnumber(ch))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * \brief Return true if this is a decimal digit.
+ */
+static bool char_is_decimal_digit(const int ch)
+{
+    if (isdigit(ch))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+static bool char_is_non_zero_digit(const int ch)
+{
+    if (isdigit(ch) && '0' != ch)
     {
         return true;
     }
@@ -917,6 +973,45 @@ static int start_identifier(
 }
 
 /**
+ * \brief Start a decimal integer token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The digit for this integer.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int start_decimal_integer(
+    preprocessor_scanner* scanner, const event* ev, int ch)
+{
+    int retval;
+
+    /* get the cursor for this event. */
+    const cursor* pos = event_get_cursor(ev);
+
+    /* cache the location for the start of this event. */
+    retval = file_position_cache_set(scanner->cache, pos->file, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* add this character to the string builder. */
+    retval = string_builder_add_character(scanner->builder, ch);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the decimal integer state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER;
+
+    return STATUS_SUCCESS;
+}
+
+/**
  * \brief Continue an identifier token.
  *
  * \param scanner           The scanner for this operation.
@@ -940,6 +1035,39 @@ static int continue_identifier(
     }
     
     /* add this character to the string builder. */
+    retval = string_builder_add_character(scanner->builder, ch);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Continue an integer token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The digit for this integer.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int continue_integer(
+    preprocessor_scanner* scanner, const event* ev, int ch)
+{
+    int retval;
+
+    /* extend the cached position to cover this character. */
+    retval = file_position_cache_position_extend(scanner->cache, ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* add this digit to the string builder. */
     retval = string_builder_add_character(scanner->builder, ch);
     if (STATUS_SUCCESS != retval)
     {
@@ -1178,6 +1306,86 @@ cleanup_iev:
         {
             retval = release_retval;
         }
+    }
+
+cleanup_str:
+    string_utils_string_release(str);
+
+done:
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* if we succeed, then recursively process the new event on the way out. */
+    return preprocessor_scanner_event_callback(scanner, ev);
+}
+
+/**
+ * \brief End an integer token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event that ends this integer.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int end_integer(preprocessor_scanner* scanner, const event* ev)
+{
+    int retval, release_retval;
+    const cursor* pos;
+    char* str;
+    event_raw_integer_token iev;
+
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->cache, &pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* Build a string for the integer. */
+    retval = string_builder_build(&str, scanner->builder);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* initialize the identifier event. */
+    retval = event_raw_integer_token_init(&iev, pos, str);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_str;
+    }
+
+    /* broadcast this event. */
+    retval =
+        event_reactor_broadcast(
+            scanner->reactor, event_raw_integer_token_upcast(&iev));
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_iev;
+    }
+
+    /* success. */
+    goto reset_state;
+
+reset_state:
+    /* clear the file / position cache. */
+    file_position_cache_clear(scanner->cache);
+
+    /* clear the string builder. */
+    string_builder_clear(scanner->builder);
+
+    /* we are now in the init state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+cleanup_iev:
+    release_retval = event_raw_integer_token_dispose(&iev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
     }
 
 cleanup_str:
