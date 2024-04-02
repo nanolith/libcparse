@@ -56,6 +56,7 @@ static int process_raw_character(
 static bool char_is_alpha_underscore(const int ch);
 static bool char_is_identifier(const int ch);
 static bool char_is_decimal_digit(const int ch);
+static bool char_is_octal_digit(const int ch);
 static bool char_is_non_zero_digit(const int ch);
 static int start_identifier(
     preprocessor_scanner* scanner, const event* ev, int ch);
@@ -63,6 +64,8 @@ static int continue_identifier(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int end_identifier(preprocessor_scanner* scanner, const event* ev);
 static int start_decimal_integer(
+    preprocessor_scanner* scanner, const event* ev, int ch);
+static int start_octal_integer(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int continue_integer(
     preprocessor_scanner* scanner, const event* ev, int ch);
@@ -137,6 +140,7 @@ static int process_eof_event(
             return end_identifier(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -238,6 +242,7 @@ static int process_whitespace_event(
             return end_identifier(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -339,6 +344,7 @@ static int process_newline_event(
             return end_identifier(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -463,6 +469,10 @@ static int process_raw_character(
             {
                 switch (ch)
                 {
+                    case '0':
+                        return
+                            start_octal_integer(scanner, ev, ch);
+
                     case '(':
                         return
                             broadcast_simple_token(
@@ -879,6 +889,16 @@ static int process_raw_character(
             }
             break;
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
+            if (char_is_octal_digit(ch))
+            {
+                return continue_integer(scanner, ev, ch);
+            }
+            else
+            {
+                return end_integer(scanner, ev);
+            }
+
         default:
             return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
     }
@@ -916,6 +936,19 @@ static bool char_is_identifier(const int ch)
 static bool char_is_decimal_digit(const int ch)
 {
     if (isdigit(ch))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * \brief Return true if this is a octal digit.
+ */
+static bool char_is_octal_digit(const int ch)
+{
+    if (isdigit(ch) && '9' != ch && '8' != ch)
     {
         return true;
     }
@@ -1007,6 +1040,45 @@ static int start_decimal_integer(
 
     /* we are now in the decimal integer state. */
     scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER;
+
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Start an octal integer token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The digit for this integer.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int start_octal_integer(
+    preprocessor_scanner* scanner, const event* ev, int ch)
+{
+    int retval;
+
+    /* get the cursor for this event. */
+    const cursor* pos = event_get_cursor(ev);
+
+    /* cache the location for the start of this event. */
+    retval = file_position_cache_set(scanner->cache, pos->file, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* add this character to the string builder. */
+    retval = string_builder_add_character(scanner->builder, ch);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the octal integer state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER;
 
     return STATUS_SUCCESS;
 }
