@@ -75,6 +75,16 @@ int CPARSE_SYM(event_raw_integer_token_dispose)(
 /******************************************************************************/
 
 /**
+ * \brief Get the raw integer value.
+ *
+ * \param ev                The event for this operation.
+ *
+ * \returns the string representation of the raw integer value.
+ */
+const char* CPARSE_SYM(event_raw_integer_token_string_get)(
+    const CPARSE_SYM(event_raw_integer_token)* ev);
+
+/**
  * \brief Set the sign flag.
  *
  * \param ev                The event for this operation.
