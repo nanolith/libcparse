@@ -142,6 +142,7 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -245,6 +246,7 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -348,6 +350,7 @@ static int process_newline_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -907,7 +910,7 @@ static int process_raw_character(
             }
             else
             {
-                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+                return end_integer(scanner, ev);
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
