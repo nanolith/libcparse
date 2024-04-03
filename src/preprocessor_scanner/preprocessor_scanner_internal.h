@@ -60,6 +60,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U =           21,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_UL =          22,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_L =           23,
+    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_LL =          24,
 };
 
 /******************************************************************************/
