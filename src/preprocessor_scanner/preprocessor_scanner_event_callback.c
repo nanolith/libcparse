@@ -58,6 +58,7 @@ static bool char_is_identifier(const int ch);
 static bool char_is_decimal_digit(const int ch);
 static bool char_is_octal_digit(const int ch);
 static bool char_is_non_zero_digit(const int ch);
+static bool char_is_unsigned_specifier(const int ch);
 static int start_identifier(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int continue_identifier(
@@ -143,6 +144,7 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -247,6 +249,7 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -351,6 +354,7 @@ static int process_newline_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -889,11 +893,20 @@ static int process_raw_character(
             {
                 return continue_integer(scanner, ev, ch);
             }
+            if (char_is_unsigned_specifier(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U;
+                return continue_integer(scanner, ev, ch);
+            }
             else
             {
                 return end_integer(scanner, ev);
             }
             break;
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U:
+            return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
             if (char_is_octal_digit(ch))
@@ -990,6 +1003,9 @@ static bool char_is_octal_digit(const int ch)
     return false;
 }
 
+/**
+ * \brief Return true if this is a non-zero digit.
+ */
 static bool char_is_non_zero_digit(const int ch)
 {
     if (isdigit(ch) && '0' != ch)
@@ -998,6 +1014,22 @@ static bool char_is_non_zero_digit(const int ch)
     }
 
     return false;
+}
+
+/**
+ * \brief Return true if this is an unsigned specifier digit.
+ */
+static bool char_is_unsigned_specifier(const int ch)
+{
+    switch (ch)
+    {
+        case 'U':
+        case 'u':
+            return true;
+
+        default:
+            return false;
+    }
 }
 
 /**
