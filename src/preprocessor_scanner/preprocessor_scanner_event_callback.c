@@ -65,7 +65,7 @@ static int continue_identifier(
 static int end_identifier(preprocessor_scanner* scanner, const event* ev);
 static int start_decimal_integer(
     preprocessor_scanner* scanner, const event* ev, int ch);
-static int start_octal_integer(
+static int start_zero_integer(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int continue_integer(
     preprocessor_scanner* scanner, const event* ev, int ch);
@@ -141,6 +141,7 @@ static int process_eof_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -243,6 +244,7 @@ static int process_whitespace_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -345,6 +347,7 @@ static int process_newline_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -471,7 +474,7 @@ static int process_raw_character(
                 {
                     case '0':
                         return
-                            start_octal_integer(scanner, ev, ch);
+                            start_zero_integer(scanner, ev, ch);
 
                     case '(':
                         return
@@ -889,8 +892,36 @@ static int process_raw_character(
             }
             break;
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
+            if (char_is_octal_digit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER;
+                return continue_integer(scanner, ev, ch);
+            }
+            else if ('x' == ch)
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER;
+                return continue_integer(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
             if (char_is_octal_digit(ch))
+            {
+                return continue_integer(scanner, ev, ch);
+            }
+            else
+            {
+                return end_integer(scanner, ev);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
+            if (isxdigit(ch))
             {
                 return continue_integer(scanner, ev, ch);
             }
@@ -1045,7 +1076,7 @@ static int start_decimal_integer(
 }
 
 /**
- * \brief Start an octal integer token.
+ * \brief Start a zero integer token.
  *
  * \param scanner           The scanner for this operation.
  * \param ev                The raw character event to process.
@@ -1055,7 +1086,7 @@ static int start_decimal_integer(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-static int start_octal_integer(
+static int start_zero_integer(
     preprocessor_scanner* scanner, const event* ev, int ch)
 {
     int retval;
@@ -1077,8 +1108,8 @@ static int start_octal_integer(
         return retval;
     }
 
-    /* we are now in the octal integer state. */
-    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER;
+    /* we are now in the zero integer state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER;
 
     return STATUS_SUCCESS;
 }
