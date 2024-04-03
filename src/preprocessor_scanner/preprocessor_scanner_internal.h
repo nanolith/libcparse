@@ -56,6 +56,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER =             17,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER =               18,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER =                   19,
+    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER =                 20,
 };
 
 /******************************************************************************/
