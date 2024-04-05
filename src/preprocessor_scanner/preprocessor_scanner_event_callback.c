@@ -930,6 +930,9 @@ static int process_raw_character(
                 return end_integer(scanner, ev);
             }
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_UL:
+            return end_integer(scanner, ev);
+
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_L:
             return end_integer(scanner, ev);
 
