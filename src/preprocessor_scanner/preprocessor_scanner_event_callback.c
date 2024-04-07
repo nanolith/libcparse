@@ -970,7 +970,16 @@ static int process_raw_character(
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_LL:
-            return end_integer(scanner, ev);
+            if (char_is_unsigned_specifier(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_END;
+                return continue_integer(scanner, ev, ch);
+            }
+            else
+            {
+                return end_integer(scanner, ev);
+            }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
             if (char_is_octal_digit(ch))
