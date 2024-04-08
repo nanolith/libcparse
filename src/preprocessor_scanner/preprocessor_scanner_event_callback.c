@@ -988,6 +988,12 @@ static int process_raw_character(
                     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER;
                 return continue_integer(scanner, ev, ch);
             }
+            else if (char_is_unsigned_specifier(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U;
+                return continue_integer(scanner, ev, ch);
+            }
             else if ('x' == ch)
             {
                 scanner->state =
