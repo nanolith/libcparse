@@ -144,6 +144,7 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER_U:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_UL:
@@ -253,6 +254,7 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER_U:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_UL:
@@ -362,6 +364,7 @@ static int process_newline_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER_U:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_UL:
@@ -1011,6 +1014,9 @@ static int process_raw_character(
                 return end_integer(scanner, ev);
             }
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER_U:
+            return end_integer(scanner, ev);
+
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_OCTAL_INTEGER:
             if (char_is_octal_digit(ch))
             {
@@ -1024,6 +1030,12 @@ static int process_raw_character(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
             if (isxdigit(ch))
             {
+                return continue_integer(scanner, ev, ch);
+            }
+            else if (char_is_unsigned_specifier(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER_U;
                 return continue_integer(scanner, ev, ch);
             }
             else
