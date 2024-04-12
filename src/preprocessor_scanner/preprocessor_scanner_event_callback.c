@@ -1066,7 +1066,7 @@ static bool char_is_alpha_underscore(const int ch)
  */
 static bool char_is_identifier(const int ch)
 {
-    if (char_is_alpha_underscore(ch) || isnumber(ch))
+    if (char_is_alpha_underscore(ch) || isdigit(ch))
     {
         return true;
     }
