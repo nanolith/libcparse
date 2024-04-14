@@ -1022,6 +1022,12 @@ static int process_raw_character(
                     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_U;
                 return continue_integer(scanner, ev, ch);
             }
+            else if (char_is_long_specifier(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_L;
+                return continue_integer(scanner, ev, ch);
+            }
             else
             {
                 return end_integer(scanner, ev);
