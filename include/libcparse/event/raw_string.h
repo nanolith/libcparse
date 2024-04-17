@@ -63,6 +63,20 @@ int CPARSE_SYM(event_raw_string_token_init_for_system_string)(
     CPARSE_SYM(event_raw_string_token)* ev, const CPARSE_SYM(cursor)* cursor,
     const char* val);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the raw string value.
+ *
+ * \param ev                The event for this operation.
+ *
+ * \returns the string representation of the raw integer value.
+ */
+const char* CPARSE_SYM(event_raw_string_token_get)(
+    const CPARSE_SYM(event_raw_string_token)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
