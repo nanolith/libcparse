@@ -130,6 +130,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_INTEGER =                         0x0140,
     CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_STRING =                          0x0141,
     CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_SYSTEM_STRING =                   0x0142,
+    CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_CHARACTER =                       0x0143,
 
     /* Keyword tokens. */
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__ALIGNAS =                          0x0150,
