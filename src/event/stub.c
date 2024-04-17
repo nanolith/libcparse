@@ -3,6 +3,7 @@
 #include <libcparse/event/integer.h>
 #include <libcparse/event/raw_integer.h>
 #include <libcparse/event/raw_line.h>
+#include <libcparse/event/raw_string.h>
 #include <libcparse/event/string.h>
 #include <stdio.h>
 
