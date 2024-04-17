@@ -12,6 +12,7 @@
 
 #include <libcparse/cursor.h>
 #include <libcparse/event.h>
+#include <libcparse/event/string.h>
 #include <libcparse/function_decl.h>
 #include <stdint.h>
 
@@ -75,6 +76,21 @@ int CPARSE_SYM(event_raw_string_token_init_for_system_string)(
  * \returns the string representation of the raw integer value.
  */
 const char* CPARSE_SYM(event_raw_string_token_get)(
+    const CPARSE_SYM(event_raw_string_token)* ev);
+
+/**
+ * \brief Convert this token to a string token.
+ *
+ * \param s_ev              Pointer to the \ref event_string to be
+ *                          initialized with this conversion on success.
+ * \param ev                The event to convert.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_raw_string_token_convert)(
+    CPARSE_SYM(event_string)* s_ev,
     const CPARSE_SYM(event_raw_string_token)* ev);
 
 /* C++ compatibility. */
