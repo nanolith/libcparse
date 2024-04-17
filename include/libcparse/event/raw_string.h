@@ -27,6 +27,26 @@ extern "C" {
 typedef struct CPARSE_SYM(event_raw_string_token)
 CPARSE_SYM(event_raw_string_token);
 
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Perform an in-place initialization of an \ref event_raw_string_token
+ * instance.
+ *
+ * \param ev                Pointer to the event to initialize.
+ * \param cursor            The event cursor.
+ * \param val               The raw string representation of this token.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero failure code on failure.
+ */
+int CPARSE_SYM(event_raw_string_token_init)(
+    CPARSE_SYM(event_raw_string_token)* ev, const CPARSE_SYM(cursor)* cursor,
+    const char* val);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
