@@ -64,6 +64,19 @@ int CPARSE_SYM(event_raw_string_token_init_for_system_string)(
     CPARSE_SYM(event_raw_string_token)* ev, const CPARSE_SYM(cursor)* cursor,
     const char* val);
 
+/**
+ * \brief Perform an in-place disposal of an \ref event_raw_string_token
+ * instance.
+ *
+ * \param ev                Pointer to the event to dispose.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_raw_string_token_dispose)(
+    CPARSE_SYM(event_raw_string_token)* ev);
+
 /******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
