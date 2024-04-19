@@ -38,6 +38,24 @@ int CPARSE_SYM(event_raw_string_token_init_internal)(
     CPARSE_SYM(event_raw_string_token)* ev, int event_type,
     const CPARSE_SYM(cursor)* cursor, const char* str);
 
+
+/******************************************************************************/
+/* Start of private exports.                                                  */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_event_raw_string_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    static inline int sym ## event_raw_string_token_init_internal( \
+        CPARSE_SYM(event_raw_string_token)* w, int x, \
+        const CPARSE_SYM(cursor)* y, const char* z) { \
+            return \
+                CPARSE_SYM(event_raw_string_token_init_internal)(w,x,y,z); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_event_raw_string_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_event_raw_string_internal_sym(sym ## _)
+#define CPARSE_IMPORT_event_raw_string_internal \
+    __INTERNAL_CPARSE_IMPORT_event_raw_string_internal_sym()
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
