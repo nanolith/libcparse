@@ -38,7 +38,6 @@ int CPARSE_SYM(event_raw_string_token_init_internal)(
     CPARSE_SYM(event_raw_string_token)* ev, int event_type,
     const CPARSE_SYM(cursor)* cursor, const char* str);
 
-
 /******************************************************************************/
 /* Start of private exports.                                                  */
 /******************************************************************************/
