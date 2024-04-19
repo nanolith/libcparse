@@ -19,4 +19,5 @@ CPARSE_IMPORT_event_raw_integer;
 CPARSE_IMPORT_event_raw_string;
 CPARSE_IMPORT_event_raw_line;
 CPARSE_IMPORT_event_string;
+CPARSE_IMPORT_event_raw_string_internal;
 CPARSE_IMPORT_event_string_internal;
