@@ -7,6 +7,7 @@
 #include <libcparse/event/string.h>
 #include <stdio.h>
 
+#include "event_raw_string_internal.h"
 #include "event_string_internal.h"
 #include "event_integer_internal.h"
 
