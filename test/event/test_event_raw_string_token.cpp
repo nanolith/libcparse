@@ -75,3 +75,31 @@ TEST(event_raw_string_token_init_for_system_string)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_string_token_dispose(&ev));
 }
+
+/**
+ * Test that we can get the string value of this event.
+ */
+TEST(event_raw_string_token_get)
+{
+    event_raw_string_token ev;
+    cursor c;
+    const char* TEST_STRING = "test";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_raw_string_token_init(&ev, &c, TEST_STRING));
+
+    auto str = event_raw_string_token_get(&ev);
+
+    /* this value is not NULL. */
+    TEST_ASSERT(nullptr != str);
+
+    /* this value matches our test string. */
+    TEST_EXPECT(!strcmp(str, TEST_STRING));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_string_token_dispose(&ev));
+}
