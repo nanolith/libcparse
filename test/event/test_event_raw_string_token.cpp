@@ -46,3 +46,32 @@ TEST(event_raw_string_token_init)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_string_token_dispose(&ev));
 }
+
+/**
+ * Test that we can create a raw system string token value event.
+ */
+TEST(event_raw_string_token_init_for_system_string)
+{
+    event_raw_string_token ev;
+    cursor c;
+    const char* TEST_STRING = "test";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_raw_string_token_init_for_system_string(
+                    &ev, &c, TEST_STRING));
+
+    /* get the base event type. */
+    auto bev = event_raw_string_token_upcast(&ev);
+
+    /* The event type is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_SYSTEM_STRING == event_get_type(bev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_string_token_dispose(&ev));
+}
