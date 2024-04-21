@@ -10,6 +10,7 @@
 #include <libcparse/event.h>
 #include <libcparse/event/identifier.h>
 #include <libcparse/event/raw_integer.h>
+#include <libcparse/event/raw_string.h>
 #include <libcparse/event_handler.h>
 #include <libcparse/event_type.h>
 #include <libcparse/input_stream.h>
@@ -26,6 +27,7 @@ CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_handler;
 CPARSE_IMPORT_event_identifier;
 CPARSE_IMPORT_event_raw_integer;
+CPARSE_IMPORT_event_raw_string;
 CPARSE_IMPORT_input_stream;
 CPARSE_IMPORT_preprocessor_scanner;
 
@@ -70,6 +72,20 @@ static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
         auto str = event_identifier_get(iev);
 
         ctx->vals.push_back(make_pair(CPARSE_EVENT_TYPE_TOKEN_IDENTIFIER, str));
+    }
+    else if (CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_STRING == token_type)
+    {
+        event_raw_string_token* sev;
+        retval = event_downcast_to_event_raw_string_token(&sev, (event*)ev);
+        if (STATUS_SUCCESS != retval)
+        {
+            return retval;
+        }
+
+        auto str = event_raw_string_token_get(sev);
+
+        ctx->vals.push_back(
+            make_pair(CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_STRING, str));
     }
     else if (CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_INTEGER == token_type)
     {
@@ -13825,6 +13841,70 @@ TEST(octal_upper_case_long_upper_case_long_upper_case_unsigned_integer)
     /* this first value is a not. */
     TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_INTEGER == f->first);
     TEST_EXPECT("07LLU" == f->second);
+
+    /* clean up. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == preprocessor_scanner_release(scanner));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
+
+/**
+ * Test that we can scan an empty string token.
+ */
+TEST(empty_string)
+{
+    preprocessor_scanner* scanner;
+    input_stream* stream;
+    event_handler eh;
+    test_context t1;
+    const char* INPUT_STRING = R"("")";
+
+    /* Create the scanner instance. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == preprocessor_scanner_create(&scanner));
+
+    /* create an event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = preprocessor_scanner_upcast(scanner);
+
+    /* subscribe to the scanner. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_preprocessor_scanner_subscribe(ap, &eh));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, INPUT_STRING));
+
+    /* add the input stream to the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "stdin", stream));
+
+    /* precondition: eof is false. */
+    TEST_ASSERT(!t1.eof);
+
+    /* precondition: vals is empty. */
+    TEST_ASSERT(t1.vals.empty());
+
+    /* run the filter. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(ap));
+
+    /* postcondition: eof is true. */
+    TEST_EXPECT(t1.eof);
+
+    /* postcondition: there is one value in vals. */
+    TEST_ASSERT(1 == t1.vals.size());
+    auto f = t1.vals.begin();
+    TEST_ASSERT(f != t1.vals.end());
+
+    /* this first value is a not. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_STRING == f->first);
+    TEST_EXPECT(R"("")" == f->second);
 
     /* clean up. */
     TEST_ASSERT(
