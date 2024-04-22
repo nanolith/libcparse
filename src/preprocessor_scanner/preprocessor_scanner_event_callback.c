@@ -944,6 +944,7 @@ static int process_raw_character(
                 case '\'':
                 case '"':
                 case '?':
+                case '\\':
                     scanner->state =
                         CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING;
                     return continue_string(scanner, ev, ch);
