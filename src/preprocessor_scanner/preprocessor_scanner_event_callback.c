@@ -948,6 +948,7 @@ static int process_raw_character(
                 case 'a':
                 case 'b':
                 case 'f':
+                case 'n':
                     scanner->state =
                         CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING;
                     return continue_string(scanner, ev, ch);
