@@ -66,6 +66,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_SLASH =                27,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_1 =              28,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_2 =              29,
+    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_HEX =                  30,
 };
 
 /******************************************************************************/
