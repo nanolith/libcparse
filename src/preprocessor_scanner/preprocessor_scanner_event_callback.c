@@ -984,6 +984,11 @@ static int process_raw_character(
                 case '"':
                     return end_string(scanner, ev, ch);
 
+                case '\\':
+                    scanner->state =
+                        CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_SLASH;
+                    return continue_string(scanner, ev, ch);
+
                 case '0':
                 case '1':
                 case '2':
@@ -1007,6 +1012,11 @@ static int process_raw_character(
             {
                 case '"':
                     return end_string(scanner, ev, ch);
+
+                case '\\':
+                    scanner->state =
+                        CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_SLASH;
+                    return continue_string(scanner, ev, ch);
 
                 default:
                     scanner->state =
