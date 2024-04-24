@@ -151,6 +151,7 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_SLASH:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_1:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_2:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -265,6 +266,7 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_SLASH:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_1:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_2:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -379,6 +381,7 @@ static int process_newline_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_SLASH:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_1:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_2:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -976,6 +979,30 @@ static int process_raw_character(
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_1:
+            switch (ch)
+            {
+                case '"':
+                    return end_string(scanner, ev, ch);
+
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                    scanner->state =
+                        CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_2;
+                    return continue_string(scanner, ev, ch);
+
+                default:
+                    scanner->state =
+                        CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING;
+                    return continue_string(scanner, ev, ch);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_2:
             switch (ch)
             {
                 case '"':
