@@ -72,6 +72,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_LITTLE_U1 =            33,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_LITTLE_U2 =            34,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_LITTLE_U3 =            35,
+    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U =                36,
 };
 
 /******************************************************************************/
