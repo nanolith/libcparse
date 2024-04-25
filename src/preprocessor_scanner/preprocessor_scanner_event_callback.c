@@ -1039,6 +1039,18 @@ static int process_raw_character(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_HEX:
             if (isxdigit(ch))
             {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_HEX_OPT;
+                return continue_string(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_HEX_OPT:
+            if (isxdigit(ch))
+            {
                 return continue_string(scanner, ev, ch);
             }
             else
