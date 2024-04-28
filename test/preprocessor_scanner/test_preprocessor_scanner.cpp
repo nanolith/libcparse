@@ -15958,3 +15958,57 @@ TEST(basic_string_with_big_u_six_digit_error)
         STATUS_SUCCESS == preprocessor_scanner_release(scanner));
     TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
 }
+
+/**
+ * A seven digit big universal character escape is invalid.
+ */
+TEST(basic_string_with_big_u_seven_digit_error)
+{
+    preprocessor_scanner* scanner;
+    input_stream* stream;
+    event_handler eh;
+    test_context t1;
+    const char* INPUT_STRING = R"("\U1111111")";
+
+    /* Create the scanner instance. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == preprocessor_scanner_create(&scanner));
+
+    /* create an event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = preprocessor_scanner_upcast(scanner);
+
+    /* subscribe to the scanner. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_preprocessor_scanner_subscribe(ap, &eh));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, INPUT_STRING));
+
+    /* add the input stream to the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "stdin", stream));
+
+    /* precondition: eof is false. */
+    TEST_ASSERT(!t1.eof);
+
+    /* precondition: vals is empty. */
+    TEST_ASSERT(t1.vals.empty());
+
+    /* run the filter. */
+    TEST_ASSERT(
+        ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER
+            == abstract_parser_run(ap));
+
+    /* clean up. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == preprocessor_scanner_release(scanner));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
