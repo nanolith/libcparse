@@ -1824,6 +1824,13 @@ static const keyword_ctor keywords[] = {
 };
 
 /**
+ * \brief This is the list of C string prefixes.
+ */
+static const char* string_prefixes[] = {
+    "L",
+};
+
+/**
  * \brief Compare a keyword entry with the key.
  *
  * \param key               The key to compare.
@@ -1837,6 +1844,22 @@ static const keyword_ctor keywords[] = {
 static int keyword_compare(const char* key, const keyword_ctor* entry)
 {
     return strcmp(key, entry->keyword);
+}
+
+/**
+ * \brief Compare a string prefixes entry with the key.
+ *
+ * \param key               The key to compare.
+ * \param entry             The entry to compare.
+ *
+ * \returns the comparison result.
+ *      - a negative value if key < entry.
+ *      - a positive value if key > entry.
+ *      - zero if key == entry.
+ */
+static int string_prefix_compare(const char* key, const char** entry)
+{
+    return strcmp(key, *entry);
 }
 
 /**
@@ -1919,6 +1942,53 @@ done:
 }
 
 /**
+ * \brief Return true if this is a string prefix and if the next event is the
+ * start of the string.
+ *
+ * The quote character is populated if this is a string.
+ */
+static bool is_string(const char* str, const event* ev, int* ch)
+{
+    const size_t entry_size = sizeof(const char*);
+    const size_t entry_count = sizeof(string_prefixes) / entry_size;
+    const char* prefix;
+    int retval;
+    event_raw_character* rev;
+
+    /* perform a binary search on the string prefix list. */
+    prefix =
+        bsearch(
+            str, string_prefixes, entry_count, entry_size,
+            (bsearch_compare_func)&string_prefix_compare);
+
+    /* If this is not a string prefix, then this isn't a string. */
+    if (NULL == prefix)
+    {
+        return false;
+    }
+
+    /* attempt to cast this event to a raw character. */
+    retval = event_downcast_to_event_raw_character(&rev, (event*)ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        /* if this is not a raw character, this can't be a string. */
+        return false;
+    }
+
+    /* get the raw character value. */
+    *ch = event_raw_character_get(rev);
+
+    /* if this is not a double quote, then this is not a string. */
+    if (*ch != '"')
+    {
+        return false;
+    }
+
+    /* otherwise, this is a string with a prefix. */
+    return true;
+}
+
+/**
  * \brief End an identifier token.
  *
  * \param scanner           The scanner for this operation.
@@ -1936,6 +2006,7 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev)
     const keyword_ctor* keyword_entry;
     event_identifier iev;
     bool iev_initialized = false;
+    int ch;
 
     /* get the cached position. */
     retval = file_position_cache_position_get(scanner->cache, &pos);
@@ -1960,6 +2031,15 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev)
 
         /* we are done, so just clean up the string and reset state. */
         goto reset_state;
+    }
+
+    /* is this a string prefix? */
+    if (is_string(str, ev, &ch))
+    {
+        scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING;
+        retval = continue_string(scanner, ev, ch);
+        string_utils_string_release(str);
+        return retval;
     }
 
     /* initialize the identifier event. */
