@@ -1829,6 +1829,7 @@ static const keyword_ctor keywords[] = {
 static const char* string_prefixes[] = {
     "L",
     "U",
+    "u",
 };
 
 /**
