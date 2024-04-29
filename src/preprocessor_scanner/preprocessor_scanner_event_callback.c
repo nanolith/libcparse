@@ -1830,6 +1830,7 @@ static const char* string_prefixes[] = {
     "L",
     "U",
     "u",
+    "u8",
 };
 
 /**
