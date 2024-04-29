@@ -122,6 +122,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_ERROR =                               0x012A,
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_PRAGMA =                              0x012B,
 
+    /* End preprocessor directive event. */
+    CPARSE_EVENT_TYPE_PP_END =                                          0x012F,
+
     /* Preprocessor token events. */
     CPARSE_EVENT_TYPE_TOKEN_PP_STRING_CONCAT =                          0x0130,
     CPARSE_EVENT_TYPE_TOKEN_PP_HASH =                                   0x0131,
