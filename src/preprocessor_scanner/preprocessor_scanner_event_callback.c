@@ -89,6 +89,7 @@ static int broadcast_compound_token(
     preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
 static int broadcast_cached_token_and_continue(
     preprocessor_scanner* scanner, const event* ev, simple_event_ctor ctor);
+static int broadcast_pp_end(preprocessor_scanner* scanner);
 static int keyword_compare(const char* key, const keyword_ctor* entry);
 static int keyword_search(const keyword_ctor** keyword_entry, const char* str);
 static int keyword_event_broadcast(
@@ -109,11 +110,22 @@ static int keyword_event_broadcast(
 int CPARSE_SYM(preprocessor_scanner_event_callback)(
     void* context, const CPARSE_SYM(event)* ev)
 {
+    int retval;
     preprocessor_scanner* scanner = (preprocessor_scanner*)context;
 
     /* reset the state to begin line if reset_state is set. */
     if (scanner->state_reset)
     {
+        /* end a preprocessor directive on a newline. */
+        if (scanner->in_preprocessor_directive)
+        {
+            retval = broadcast_pp_end(scanner);
+            if (STATUS_SUCCESS != retval)
+            {
+                return retval;
+            }
+        }
+
         scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_BEGIN_LINE;
         scanner->state_reset = false;
     }
@@ -409,6 +421,7 @@ static int process_newline_event(
     preprocessor_scanner* scanner, const event* ev)
 {
     scanner->state_reset = true;
+    memcpy(&scanner->newline_pos, event_get_cursor(ev), sizeof(cursor));
 
     switch (scanner->state)
     {
@@ -2388,6 +2401,52 @@ static int broadcast_simple_token(
 
 cleanup_tev:
     release_retval = event_dispose(&tev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    return retval;
+}
+
+/**
+ * \brief Broadcast a preprocessor directive end event.
+ *
+ * \param scanner           The scanner for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int broadcast_pp_end(preprocessor_scanner* scanner)
+{
+    int retval, release_retval;
+    event pev;
+
+    /* initialize the token event. */
+    retval =
+        event_init_for_preprocessor_directive_end(&pev, &scanner->newline_pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(scanner->reactor, &pev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_pev;
+    }
+
+    /* we are no longer in a preprocessor directive. */
+    scanner->in_preprocessor_directive = false;
+
+    /* success. */
+    goto cleanup_pev;
+
+cleanup_pev:
+    release_retval = event_dispose(&pev);
     if (STATUS_SUCCESS != release_retval)
     {
         retval = release_retval;
