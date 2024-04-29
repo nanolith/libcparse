@@ -111,6 +111,13 @@ int CPARSE_SYM(preprocessor_scanner_event_callback)(
 {
     preprocessor_scanner* scanner = (preprocessor_scanner*)context;
 
+    /* reset the state to begin line if reset_state is set. */
+    if (scanner->state_reset)
+    {
+        scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_BEGIN_LINE;
+        scanner->state_reset = false;
+    }
+
     switch (event_get_type(ev))
     {
         case CPARSE_EVENT_TYPE_EOF:
