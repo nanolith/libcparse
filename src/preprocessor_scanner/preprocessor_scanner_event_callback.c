@@ -401,6 +401,8 @@ static int process_whitespace_event(
 static int process_newline_event(
     preprocessor_scanner* scanner, const event* ev)
 {
+    scanner->state_reset = true;
+
     switch (scanner->state)
     {
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_IDENTIFIER:
