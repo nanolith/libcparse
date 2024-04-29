@@ -33,6 +33,7 @@ struct CPARSE_SYM(preprocessor_scanner)
     CPARSE_SYM(string_builder)* builder;
     int state;
     bool state_reset;
+    bool in_preprocessor_directive;
 };
 
 enum CPARSE_SYM(preprocessor_scanner_state)
