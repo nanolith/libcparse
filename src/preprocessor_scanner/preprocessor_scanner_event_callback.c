@@ -548,6 +548,19 @@ static int process_raw_character(
     /* decode the state. */
     switch (scanner->state)
     {
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_BEGIN_LINE:
+            if (false)
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+            else
+            {
+                /* for any other character, break out of begin line and process
+                 * as normal. */
+                scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+                return process_raw_character(scanner, ev);
+            }
+
         case CPARSE_PREPROCESSOR_SCANNER_STATE_INIT:
             if (char_is_alpha_underscore(ch))
             {
