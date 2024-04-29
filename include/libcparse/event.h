@@ -1974,6 +1974,10 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
     static inline int sym ## event_init_for_token_keyword_while( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_keyword_while)(x,y); } \
+    static inline int sym ## event_init_for_preprocessor_directive_end( \
+        CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
+            return \
+                CPARSE_SYM(event_init_for_preprocessor_directive_end)(x,y); } \
     static inline int sym ## event_dispose( \
         CPARSE_SYM(event)* x) { \
             return CPARSE_SYM(event_dispose)(x); } \
