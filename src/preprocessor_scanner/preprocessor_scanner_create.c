@@ -128,6 +128,9 @@ int CPARSE_SYM(preprocessor_scanner_create)(
 
     /* we start in the initial state. */
     tmp->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+    /* we set the state_reset flag to true, forcing us into the begin line state
+     * after the first event. */
+    tmp->state_reset = true;
 
     /* success. */
     retval = STATUS_SUCCESS;
