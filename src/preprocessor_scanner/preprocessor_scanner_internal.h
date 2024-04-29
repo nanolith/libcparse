@@ -32,6 +32,7 @@ struct CPARSE_SYM(preprocessor_scanner)
     CPARSE_SYM(file_position_cache)* cache;
     CPARSE_SYM(string_builder)* builder;
     int state;
+    bool state_reset;
 };
 
 enum CPARSE_SYM(preprocessor_scanner_state)
