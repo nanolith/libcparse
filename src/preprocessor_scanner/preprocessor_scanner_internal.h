@@ -35,6 +35,7 @@ struct CPARSE_SYM(preprocessor_scanner)
     bool state_reset;
     bool in_preprocessor_directive;
     CPARSE_SYM(cursor) newline_pos;
+    CPARSE_SYM(cursor) hash_pos;
 };
 
 enum CPARSE_SYM(preprocessor_scanner_state)
