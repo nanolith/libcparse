@@ -87,6 +87,11 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_BEGIN_LINE =                     44,
 };
 
+enum CPARSE_SYM(preprocessor_directive_state)
+{
+    CPARSE_PREPROCESSOR_DIRECTIVE_STATE_INIT =                          1,
+};
+
 /******************************************************************************/
 /* Start of public methods.                                                   */
 /******************************************************************************/
