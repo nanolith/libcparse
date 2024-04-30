@@ -90,6 +90,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
 enum CPARSE_SYM(preprocessor_directive_state)
 {
     CPARSE_PREPROCESSOR_DIRECTIVE_STATE_INIT =                          1,
+    CPARSE_PREPROCESSOR_DIRECTIVE_STATE_MAYBE =                         2,
 };
 
 /******************************************************************************/
