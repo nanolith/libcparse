@@ -117,7 +117,9 @@ int CPARSE_SYM(preprocessor_scanner_event_callback)(
     if (scanner->state_reset)
     {
         /* end a preprocessor directive on a newline. */
-        if (scanner->in_preprocessor_directive)
+        if (
+            CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED
+                == scanner->preprocessor_state)
         {
             retval = broadcast_pp_end(scanner);
             if (STATUS_SUCCESS != retval)
@@ -2440,7 +2442,7 @@ static int broadcast_pp_end(preprocessor_scanner* scanner)
     }
 
     /* we are no longer in a preprocessor directive. */
-    scanner->in_preprocessor_directive = false;
+    scanner->preprocessor_state = CPARSE_PREPROCESSOR_DIRECTIVE_STATE_INIT;
 
     /* success. */
     goto cleanup_pev;
