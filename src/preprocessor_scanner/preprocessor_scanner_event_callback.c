@@ -62,6 +62,10 @@ static bool char_is_octal_digit(const int ch);
 static bool char_is_non_zero_digit(const int ch);
 static bool char_is_unsigned_specifier(const int ch);
 static bool char_is_long_specifier(const int ch);
+static int start_hash(
+    preprocessor_scanner* scanner, const event* ev);
+static int end_hash(
+    preprocessor_scanner* scanner, const event* ev);
 static int start_identifier(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int continue_identifier(
@@ -95,6 +99,8 @@ static int keyword_search(const keyword_ctor** keyword_entry, const char* str);
 static int keyword_event_broadcast(
     preprocessor_scanner* scanner, const keyword_ctor* keyword_entry,
     const cursor* pos);
+static int preprocessor_keyword_search(
+    const keyword_ctor** keyword_entry, const char* str);
 
 /**
  * \brief Event handler callback for \ref preprocessor_scanner_event_callback.
@@ -129,6 +135,7 @@ int CPARSE_SYM(preprocessor_scanner_event_callback)(
         }
 
         scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_BEGIN_LINE;
+        scanner->preprocessor_state = CPARSE_PREPROCESSOR_DIRECTIVE_STATE_INIT;
         scanner->state_reset = false;
     }
 
@@ -571,9 +578,9 @@ static int process_raw_character(
     switch (scanner->state)
     {
         case CPARSE_PREPROCESSOR_SCANNER_STATE_BEGIN_LINE:
-            if (false)
+            if ('#' == ch)
             {
-                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+                return start_hash(scanner, ev);
             }
             else
             {
@@ -744,6 +751,21 @@ static int process_raw_character(
                 }
             }
             break;
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HASH:
+            if (char_is_alpha_underscore(ch))
+            {
+                /* we might be in a preprocessor directive. */
+                scanner->preprocessor_state =
+                    CPARSE_PREPROCESSOR_DIRECTIVE_STATE_MAYBE;
+
+                return start_identifier(scanner, ev, ch);
+            }
+            /* TODO - handle double hash. */
+            else
+            {
+                return end_hash(scanner, ev);
+            }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
             switch (ch)
@@ -1556,6 +1578,32 @@ static bool char_is_unsigned_specifier(const int ch)
 }
 
 /**
+ * \brief Start the hash state, and record the hash position.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event to process.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int start_hash(
+    preprocessor_scanner* scanner, const event* ev)
+{
+    /* get the cursor for this event. */
+    const cursor* pos = event_get_cursor(ev);
+
+    /* save this location. */
+    memcpy(&scanner->hash_pos, pos, sizeof(scanner->hash_pos));
+
+    /* we are now in the hash state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HASH;
+
+    return STATUS_SUCCESS;
+}
+
+
+/**
  * \brief Start an identifier token.
  *
  * \param scanner           The scanner for this operation.
@@ -1861,6 +1909,13 @@ static const keyword_ctor keywords[] = {
 };
 
 /**
+ * \brief This is the list of C preprocessor keywords with event constructors.
+ */
+static const keyword_ctor preprocessor_keywords[] = {
+    { "endif", &event_init_for_token_preprocessor_id_endif },
+};
+
+/**
  * \brief This is the list of C string prefixes.
  */
 static const char* string_prefixes[] = {
@@ -1923,6 +1978,41 @@ static int keyword_search(const keyword_ctor** keyword_entry, const char* str)
     *keyword_entry =
         bsearch(
             str, keywords, entry_count, entry_size,
+            (bsearch_compare_func)&keyword_compare);
+
+    /* if the search succeeded, return success. */
+    if (NULL != *keyword_entry)
+    {
+        return STATUS_SUCCESS;
+    }
+    else
+    {
+        return ERROR_LIBCPARSE_ENTRY_NOT_FOUND;
+    }
+}
+
+/**
+ * \brief Search the preprocessor keyword list for a given string, returning
+ * success and populating the entry if found.
+ *
+ * \param keyword_entry     Pointer to keyword entry pointer to populate on
+ *                          success.
+ * \param str               The string to search.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int preprocessor_keyword_search(
+    const keyword_ctor** keyword_entry, const char* str)
+{
+    const size_t entry_size = sizeof(keyword_ctor);
+    const size_t entry_count = sizeof(preprocessor_keywords) / entry_size;
+
+    /* perform a binary search on the keyword array. */
+    *keyword_entry =
+        bsearch(
+            str, preprocessor_keywords, entry_count, entry_size,
             (bsearch_compare_func)&keyword_compare);
 
     /* if the search succeeded, return success. */
@@ -2029,6 +2119,58 @@ static bool is_string(const char* str, const event* ev, int* ch)
 }
 
 /**
+ * \brief End the hash state, emitting a hash token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event that ends this hash.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int end_hash(preprocessor_scanner* scanner, const event* ev)
+{
+    int retval, release_retval;
+    event tev;
+
+    /* initialize the hash token event. */
+    retval = event_init_for_token_preprocessor_hash(&tev, &scanner->hash_pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(scanner->reactor, &tev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tev;
+    }
+
+    /* we are now in the init state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+    /* success. */
+    goto cleanup_tev;
+
+cleanup_tev:
+    release_retval = event_dispose(&tev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* if we succeed, then recursively process the new event on the way out. */
+    return preprocessor_scanner_event_callback(scanner, ev);
+}
+
+/**
  * \brief End an identifier token.
  *
  * \param scanner           The scanner for this operation.
@@ -2060,6 +2202,27 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev)
     if (STATUS_SUCCESS != retval)
     {
         goto done;
+    }
+
+    /* could this be a preprocessor keyword? */
+    if (
+        CPARSE_PREPROCESSOR_DIRECTIVE_STATE_MAYBE
+            == scanner->preprocessor_state)
+    {
+        /* is this a preprocessor keyword? */
+        retval = preprocessor_keyword_search(&keyword_entry, str);
+        if (STATUS_SUCCESS == retval)
+        {
+            /* we are now in a preprocessor directive. */
+            scanner->preprocessor_state =
+                CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED;
+
+            /* send the keyword event. */
+            retval = keyword_event_broadcast(scanner, keyword_entry, pos);
+
+            /* we are done, so just clean up the string and reset state. */
+            goto reset_state;
+        }
     }
 
     /* is this a keyword? */
