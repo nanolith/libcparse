@@ -32,6 +32,7 @@ struct CPARSE_SYM(preprocessor_scanner)
     CPARSE_SYM(file_position_cache)* cache;
     CPARSE_SYM(string_builder)* builder;
     int state;
+    int preprocessor_state;
     bool state_reset;
     bool in_preprocessor_directive;
     CPARSE_SYM(cursor) newline_pos;
