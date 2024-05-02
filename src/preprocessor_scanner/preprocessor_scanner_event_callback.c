@@ -134,6 +134,7 @@ int CPARSE_SYM(preprocessor_scanner_event_callback)(
             }
         }
 
+        file_position_cache_clear(scanner->newline_cache);
         scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_BEGIN_LINE;
         scanner->preprocessor_state = CPARSE_PREPROCESSOR_DIRECTIVE_STATE_INIT;
         scanner->state_reset = false;
@@ -429,8 +430,16 @@ static int process_whitespace_event(
 static int process_newline_event(
     preprocessor_scanner* scanner, const event* ev)
 {
+    int retval;
+
+    /* cache the newline state. */
     scanner->state_reset = true;
-    memcpy(&scanner->newline_pos, event_get_cursor(ev), sizeof(cursor));
+    const cursor* pos = event_get_cursor(ev);
+    retval = file_position_cache_set(scanner->newline_cache, pos->file, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
 
     switch (scanner->state)
     {
@@ -2588,10 +2597,17 @@ static int broadcast_pp_end(preprocessor_scanner* scanner)
 {
     int retval, release_retval;
     event pev;
+    const cursor* pos;
+
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->newline_cache, &pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
 
     /* initialize the token event. */
-    retval =
-        event_init_for_preprocessor_directive_end(&pev, &scanner->newline_pos);
+    retval = event_init_for_preprocessor_directive_end(&pev, pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
