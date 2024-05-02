@@ -37,6 +37,7 @@ int CPARSE_SYM(preprocessor_scanner_release)(
     int reactor_release_retval = STATUS_SUCCESS;
     int cache_release_retval = STATUS_SUCCESS;
     int newline_cache_release_retval = STATUS_SUCCESS;
+    int hash_cache_release_retval = STATUS_SUCCESS;
     int mh_dispose_retval = STATUS_SUCCESS;
     int builder_release_retval = STATUS_SUCCESS;
 
@@ -64,6 +65,13 @@ int CPARSE_SYM(preprocessor_scanner_release)(
     {
         newline_cache_release_retval =
             file_position_cache_release(scanner->newline_cache);
+    }
+
+    /* release the hash cache if valid. */
+    if (NULL != scanner->hash_cache)
+    {
+        hash_cache_release_retval =
+            file_position_cache_release(scanner->hash_cache);
     }
 
     /* release the builder if valid. */
@@ -97,6 +105,10 @@ int CPARSE_SYM(preprocessor_scanner_release)(
     else if (STATUS_SUCCESS != newline_cache_release_retval)
     {
         return newline_cache_release_retval;
+    }
+    else if (STATUS_SUCCESS != hash_cache_release_retval)
+    {
+        return hash_cache_release_retval;
     }
     else if (STATUS_SUCCESS != builder_release_retval)
     {
