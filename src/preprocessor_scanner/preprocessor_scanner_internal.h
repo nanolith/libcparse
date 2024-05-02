@@ -31,6 +31,7 @@ struct CPARSE_SYM(preprocessor_scanner)
     CPARSE_SYM(message_handler) parent_mh;
     CPARSE_SYM(file_position_cache)* cache;
     CPARSE_SYM(file_position_cache)* newline_cache;
+    CPARSE_SYM(file_position_cache)* hash_cache;
     CPARSE_SYM(string_builder)* builder;
     int state;
     int preprocessor_state;
