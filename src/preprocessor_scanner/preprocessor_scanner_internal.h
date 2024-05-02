@@ -36,7 +36,6 @@ struct CPARSE_SYM(preprocessor_scanner)
     int state;
     int preprocessor_state;
     bool state_reset;
-    CPARSE_SYM(cursor) newline_pos;
     CPARSE_SYM(cursor) hash_pos;
 };
 
