@@ -86,6 +86,13 @@ int CPARSE_SYM(preprocessor_scanner_create)(
         goto cleanup_tmp;
     }
 
+    /* create the hash cache. */
+    retval = file_position_cache_create(&tmp->hash_cache);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tmp;
+    }
+
     /* create the string builder. */
     retval = string_builder_create(&tmp->builder);
     if (STATUS_SUCCESS != retval)
