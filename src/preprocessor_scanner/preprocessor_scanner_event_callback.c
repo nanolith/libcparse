@@ -65,7 +65,7 @@ static bool char_is_long_specifier(const int ch);
 static int start_hash(
     preprocessor_scanner* scanner, const event* ev);
 static int end_hash(
-    preprocessor_scanner* scanner, const event* ev);
+    preprocessor_scanner* scanner, const event* ev, bool process_event);
 static int start_identifier(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int continue_identifier(
@@ -773,7 +773,7 @@ static int process_raw_character(
             /* TODO - handle double hash. */
             else
             {
-                return end_hash(scanner, ev);
+                return end_hash(scanner, ev, true);
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
@@ -2138,12 +2138,15 @@ static bool is_string(const char* str, const event* ev, int* ch)
  *
  * \param scanner           The scanner for this operation.
  * \param ev                The raw character event that ends this hash.
+ * \param process_event     Flag to determine whether the event should be
+ *                          processed next.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-static int end_hash(preprocessor_scanner* scanner, const event* ev)
+static int end_hash(
+    preprocessor_scanner* scanner, const event* ev, bool process_event)
 {
     int retval, release_retval;
     event tev;
@@ -2187,7 +2190,7 @@ cleanup_tev:
     }
 
 done:
-    if (STATUS_SUCCESS != retval)
+    if (STATUS_SUCCESS != retval || process_event)
     {
         return retval;
     }
@@ -2247,16 +2250,25 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev)
             /* TODO - use the complete pos. */
             retval = keyword_event_broadcast(scanner, keyword_entry, pos);
 
+            /* reset the hash cache. */
+            file_position_cache_clear(scanner->hash_cache);
+
             /* we are done, so just clean up the string and reset state. */
             goto reset_state;
         }
         else
         {
-            /* TODO - send the hash. */
-        }
+            /* send the hash symbol. */
+            retval = end_hash(scanner, ev, false);
+            if (STATUS_SUCCESS != retval)
+            {
+                goto cleanup_str;
+            }
 
-        /* reset the hash cache. */
-        file_position_cache_clear(scanner->hash_cache);
+            /* we are not in a preprocessor directive. */
+            scanner->preprocessor_state =
+                CPARSE_PREPROCESSOR_DIRECTIVE_STATE_INIT;
+        }
     }
 
     /* is this a keyword? */
