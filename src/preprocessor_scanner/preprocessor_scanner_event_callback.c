@@ -1599,11 +1599,17 @@ static bool char_is_unsigned_specifier(const int ch)
 static int start_hash(
     preprocessor_scanner* scanner, const event* ev)
 {
+    int retval;
+
     /* get the cursor for this event. */
     const cursor* pos = event_get_cursor(ev);
 
     /* save this location. */
-    memcpy(&scanner->hash_pos, pos, sizeof(scanner->hash_pos));
+    retval = file_position_cache_set(scanner->hash_cache, pos->file, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
 
     /* we are now in the hash state. */
     scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HASH;
@@ -2141,9 +2147,17 @@ static int end_hash(preprocessor_scanner* scanner, const event* ev)
 {
     int retval, release_retval;
     event tev;
+    const cursor* pos;
+
+    /* get the cached hash position. */
+    retval = file_position_cache_position_get(scanner->hash_cache, &pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
 
     /* initialize the hash token event. */
-    retval = event_init_for_token_preprocessor_hash(&tev, &scanner->hash_pos);
+    retval = event_init_for_token_preprocessor_hash(&tev, pos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
@@ -2158,6 +2172,9 @@ static int end_hash(preprocessor_scanner* scanner, const event* ev)
 
     /* we are now in the init state. */
     scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+    /* reset the hash cache. */
+    file_position_cache_clear(scanner->hash_cache);
 
     /* success. */
     goto cleanup_tev;
@@ -2227,11 +2244,19 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev)
                 CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED;
 
             /* send the keyword event. */
+            /* TODO - use the complete pos. */
             retval = keyword_event_broadcast(scanner, keyword_entry, pos);
 
             /* we are done, so just clean up the string and reset state. */
             goto reset_state;
         }
+        else
+        {
+            /* TODO - send the hash. */
+        }
+
+        /* reset the hash cache. */
+        file_position_cache_clear(scanner->hash_cache);
     }
 
     /* is this a keyword? */
