@@ -1931,6 +1931,7 @@ static const keyword_ctor preprocessor_keywords[] = {
     { "endif", &event_init_for_token_preprocessor_id_endif },
     { "if", &event_init_for_token_preprocessor_id_if },
     { "ifdef", &event_init_for_token_preprocessor_id_ifdef },
+    { "ifndef", &event_init_for_token_preprocessor_id_ifndef },
 };
 
 /**
