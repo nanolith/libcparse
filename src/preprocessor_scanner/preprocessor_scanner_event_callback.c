@@ -123,15 +123,16 @@ int CPARSE_SYM(preprocessor_scanner_event_callback)(
     if (scanner->state_reset)
     {
         /* end a preprocessor directive on a newline. */
-        if (
-            CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED
-                == scanner->preprocessor_state)
+        switch (scanner->preprocessor_state)
         {
-            retval = broadcast_pp_end(scanner);
-            if (STATUS_SUCCESS != retval)
-            {
-                return retval;
-            }
+            case CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED:
+            case CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE:
+                retval = broadcast_pp_end(scanner);
+                if (STATUS_SUCCESS != retval)
+                {
+                    return retval;
+                }
+                break;
         }
 
         file_position_cache_clear(scanner->newline_cache);
