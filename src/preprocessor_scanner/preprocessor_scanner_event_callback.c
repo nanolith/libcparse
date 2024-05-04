@@ -1929,6 +1929,7 @@ static const keyword_ctor keywords[] = {
  */
 static const keyword_ctor preprocessor_keywords[] = {
     { "elif", &event_init_for_token_preprocessor_id_elif },
+    { "else", &event_init_for_token_preprocessor_id_else },
     { "endif", &event_init_for_token_preprocessor_id_endif },
     { "if", &event_init_for_token_preprocessor_id_if },
     { "ifdef", &event_init_for_token_preprocessor_id_ifdef },
