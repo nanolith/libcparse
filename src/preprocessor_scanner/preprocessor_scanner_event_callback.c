@@ -1928,6 +1928,7 @@ static const keyword_ctor keywords[] = {
  * \brief This is the list of C preprocessor keywords with event constructors.
  */
 static const keyword_ctor preprocessor_keywords[] = {
+    { "define", &event_init_for_token_preprocessor_id_define },
     { "elif", &event_init_for_token_preprocessor_id_elif },
     { "else", &event_init_for_token_preprocessor_id_else },
     { "endif", &event_init_for_token_preprocessor_id_endif },
