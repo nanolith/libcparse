@@ -78,6 +78,9 @@ static int newline_eof_transition(
 static int whitespace_newline_transition(
     newline_preserving_whitespace_filter* filter,
     const event_raw_character* ev);
+static int whitespace_string_transition(
+    newline_preserving_whitespace_filter* filter,
+    const event_raw_character* ev);
 
 /**
  * \brief Event handler callback for
@@ -262,6 +265,9 @@ static int process_char_event_whitespace_state(
     {
         case '\n':
             return whitespace_newline_transition(filter, ev);
+
+        case '"':
+            return whitespace_string_transition(filter, ev);
 
         default:
             if (isspace(ch))
@@ -820,5 +826,47 @@ static int whitespace_newline_transition(
 
     /* we are now in the newline state. */
     filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_IN_NEWLINE;
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Transition from the whitespace state to the string state.
+ *
+ * \param filter            The filter for this operation.
+ * \param ev                The raw character event for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int whitespace_string_transition(
+    newline_preserving_whitespace_filter* filter, const event_raw_character* ev)
+{
+    int retval;
+
+    /* get the base event. */
+    const event* oev = event_raw_character_upcast((event_raw_character*)ev);
+
+    /* broadcast the whitespace event. */
+    retval =
+        file_position_cache_whitespace_token_broadcast(
+            filter->cache, filter->reactor);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* clear the cache. */
+    file_position_cache_clear(filter->cache);
+
+    /* broadcast the string event. */
+    retval = event_reactor_broadcast(filter->reactor, oev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the string state. */
+    filter->state = CPARSE_NL_WHITESPACE_FILTER_STATE_IN_STRING;
     return STATUS_SUCCESS;
 }
