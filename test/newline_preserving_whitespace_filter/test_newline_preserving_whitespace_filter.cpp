@@ -38,12 +38,12 @@ namespace
     {
         list<int> vals;
         bool eof;
-        bool newline;
+        int newline;
         cursor pos;
 
         test_context()
             : eof(false)
-            , newline(false)
+            , newline(0)
         {
         }
     };
@@ -72,7 +72,7 @@ static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
     }
     else if (CPARSE_EVENT_TYPE_TOKEN_NEWLINE == event_get_type(ev))
     {
-        ctx->newline = true;
+        ++ctx->newline;
         ctx->vals.push_back('\n');
         memcpy(&ctx->pos, event_get_cursor(ev), sizeof(ctx->pos));
     }
@@ -706,7 +706,7 @@ TEST(whitespace_string_state)
     TEST_EXPECT(t1.eof);
 
     /* postcondition: newline is true. */
-    TEST_EXPECT(t1.newline);
+    TEST_EXPECT(1 == t1.newline);
 
     /* postcondition: vals matches our string. */
     string out(t1.vals.begin(), t1.vals.end());
@@ -929,7 +929,7 @@ TEST(whitespace_char_state)
     TEST_EXPECT(t1.eof);
 
     /* postcondition: newline is true. */
-    TEST_EXPECT(t1.newline);
+    TEST_EXPECT(1 == t1.newline);
 
     /* postcondition: vals matches our string. */
     string out(t1.vals.begin(), t1.vals.end());
