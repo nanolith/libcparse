@@ -1937,6 +1937,7 @@ static const keyword_ctor preprocessor_keywords[] = {
     { "ifdef", &event_init_for_token_preprocessor_id_ifdef },
     { "ifndef", &event_init_for_token_preprocessor_id_ifndef },
     { "line", &event_init_for_token_preprocessor_id_line },
+    { "pragma", &event_init_for_token_preprocessor_id_pragma },
     { "undef", &event_init_for_token_preprocessor_id_undef },
 };
 
