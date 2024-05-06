@@ -882,3 +882,61 @@ TEST(char_state_eof)
         STATUS_SUCCESS == newline_preserving_whitespace_filter_release(filter));
     TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
 }
+
+/**
+ * Entering the character state after whitespace works as expected.
+ */
+TEST(whitespace_char_state)
+{
+    newline_preserving_whitespace_filter* filter;
+    input_stream* stream;
+    event_handler eh;
+    test_context t1;
+    const char* INPUT_STRING =  "    'a'\n";
+    const char* OUTPUT_STRING =  " 'a'\n";
+
+    /* create the filter instance. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == newline_preserving_whitespace_filter_create(&filter));
+
+    /* create our event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = newline_preserving_whitespace_filter_upcast(filter);
+
+    /* subscribe to the filter. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_newline_preserving_whitespace_filter_subscribe(
+                    ap, &eh));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, INPUT_STRING));
+
+    /* add the input stream to the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "stdin", stream));
+
+    /* The filter succeeds. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(ap));
+
+    /* postcondition: eof is true. */
+    TEST_EXPECT(t1.eof);
+
+    /* postcondition: newline is true. */
+    TEST_EXPECT(t1.newline);
+
+    /* postcondition: vals matches our string. */
+    string out(t1.vals.begin(), t1.vals.end());
+    TEST_EXPECT(out == OUTPUT_STRING);
+
+    /* clean up. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == newline_preserving_whitespace_filter_release(filter));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
