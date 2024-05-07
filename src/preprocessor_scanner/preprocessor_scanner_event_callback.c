@@ -39,12 +39,14 @@ CPARSE_IMPORT_string_builder;
 CPARSE_IMPORT_string_utils;
 
 typedef int (*simple_event_ctor)(event*, const cursor*);
+typedef int (*scanner_variable_updater)(preprocessor_scanner*);
 typedef int (*bsearch_compare_func)(const void*, const void*);
 typedef struct keyword_ctor keyword_ctor;
 struct keyword_ctor
 {
     const char* keyword;
     simple_event_ctor ctor;
+    scanner_variable_updater var_update;
 };
 
 static int process_eof_event(
@@ -1878,68 +1880,68 @@ static int continue_integer(
  * \brief This is the list of C keywords with event constructors.
  */
 static const keyword_ctor keywords[] = {
-    { "_Alignas", &event_init_for_token_keyword__Alignas },
-    { "_Alignof", &event_init_for_token_keyword__Alignof },
-    { "_Atomic", &event_init_for_token_keyword__Atomic },
-    { "_Bool", &event_init_for_token_keyword__Bool },
-    { "_Complex", &event_init_for_token_keyword__Complex },
-    { "_Generic", &event_init_for_token_keyword__Generic },
-    { "_Imaginary", &event_init_for_token_keyword__Imaginary },
-    { "_Noreturn", &event_init_for_token_keyword__Noreturn },
-    { "_Static_assert", &event_init_for_token_keyword__Static_assert },
-    { "_Thread_local", &event_init_for_token_keyword__Thread_local },
-    { "auto", &event_init_for_token_keyword_auto },
-    { "break", &event_init_for_token_keyword_break },
-    { "case", &event_init_for_token_keyword_case },
-    { "char", &event_init_for_token_keyword_char },
-    { "const", &event_init_for_token_keyword_const },
-    { "continue", &event_init_for_token_keyword_continue },
-    { "default", &event_init_for_token_keyword_default },
-    { "do", &event_init_for_token_keyword_do },
-    { "double", &event_init_for_token_keyword_double },
-    { "else", &event_init_for_token_keyword_else },
-    { "enum", &event_init_for_token_keyword_enum },
-    { "extern", &event_init_for_token_keyword_extern },
-    { "float", &event_init_for_token_keyword_float },
-    { "for", &event_init_for_token_keyword_for },
-    { "goto", &event_init_for_token_keyword_goto },
-    { "if", &event_init_for_token_keyword_if },
-    { "inline", &event_init_for_token_keyword_inline },
-    { "int", &event_init_for_token_keyword_int },
-    { "long", &event_init_for_token_keyword_long },
-    { "register", &event_init_for_token_keyword_register },
-    { "restrict", &event_init_for_token_keyword_restrict },
-    { "return", &event_init_for_token_keyword_return },
-    { "short", &event_init_for_token_keyword_short },
-    { "signed", &event_init_for_token_keyword_signed },
-    { "sizeof", &event_init_for_token_keyword_sizeof },
-    { "static", &event_init_for_token_keyword_static },
-    { "struct", &event_init_for_token_keyword_struct },
-    { "switch", &event_init_for_token_keyword_switch },
-    { "typedef", &event_init_for_token_keyword_typedef },
-    { "union", &event_init_for_token_keyword_union },
-    { "unsigned", &event_init_for_token_keyword_unsigned },
-    { "void", &event_init_for_token_keyword_void },
-    { "volatile", &event_init_for_token_keyword_volatile },
-    { "while", &event_init_for_token_keyword_while },
+    { "_Alignas", &event_init_for_token_keyword__Alignas, NULL },
+    { "_Alignof", &event_init_for_token_keyword__Alignof, NULL },
+    { "_Atomic", &event_init_for_token_keyword__Atomic, NULL },
+    { "_Bool", &event_init_for_token_keyword__Bool, NULL },
+    { "_Complex", &event_init_for_token_keyword__Complex, NULL },
+    { "_Generic", &event_init_for_token_keyword__Generic, NULL },
+    { "_Imaginary", &event_init_for_token_keyword__Imaginary, NULL },
+    { "_Noreturn", &event_init_for_token_keyword__Noreturn, NULL },
+    { "_Static_assert", &event_init_for_token_keyword__Static_assert, NULL },
+    { "_Thread_local", &event_init_for_token_keyword__Thread_local, NULL },
+    { "auto", &event_init_for_token_keyword_auto, NULL },
+    { "break", &event_init_for_token_keyword_break, NULL },
+    { "case", &event_init_for_token_keyword_case, NULL },
+    { "char", &event_init_for_token_keyword_char, NULL },
+    { "const", &event_init_for_token_keyword_const, NULL },
+    { "continue", &event_init_for_token_keyword_continue, NULL },
+    { "default", &event_init_for_token_keyword_default, NULL },
+    { "do", &event_init_for_token_keyword_do, NULL },
+    { "double", &event_init_for_token_keyword_double, NULL },
+    { "else", &event_init_for_token_keyword_else, NULL },
+    { "enum", &event_init_for_token_keyword_enum, NULL },
+    { "extern", &event_init_for_token_keyword_extern, NULL },
+    { "float", &event_init_for_token_keyword_float, NULL },
+    { "for", &event_init_for_token_keyword_for, NULL },
+    { "goto", &event_init_for_token_keyword_goto, NULL },
+    { "if", &event_init_for_token_keyword_if, NULL },
+    { "inline", &event_init_for_token_keyword_inline, NULL },
+    { "int", &event_init_for_token_keyword_int, NULL },
+    { "long", &event_init_for_token_keyword_long, NULL },
+    { "register", &event_init_for_token_keyword_register, NULL },
+    { "restrict", &event_init_for_token_keyword_restrict, NULL },
+    { "return", &event_init_for_token_keyword_return, NULL },
+    { "short", &event_init_for_token_keyword_short, NULL },
+    { "signed", &event_init_for_token_keyword_signed, NULL },
+    { "sizeof", &event_init_for_token_keyword_sizeof, NULL },
+    { "static", &event_init_for_token_keyword_static, NULL },
+    { "struct", &event_init_for_token_keyword_struct, NULL },
+    { "switch", &event_init_for_token_keyword_switch, NULL },
+    { "typedef", &event_init_for_token_keyword_typedef, NULL },
+    { "union", &event_init_for_token_keyword_union, NULL },
+    { "unsigned", &event_init_for_token_keyword_unsigned, NULL },
+    { "void", &event_init_for_token_keyword_void, NULL },
+    { "volatile", &event_init_for_token_keyword_volatile, NULL },
+    { "while", &event_init_for_token_keyword_while, NULL },
 };
 
 /**
  * \brief This is the list of C preprocessor keywords with event constructors.
  */
 static const keyword_ctor preprocessor_keywords[] = {
-    { "define", &event_init_for_token_preprocessor_id_define },
-    { "elif", &event_init_for_token_preprocessor_id_elif },
-    { "else", &event_init_for_token_preprocessor_id_else },
-    { "endif", &event_init_for_token_preprocessor_id_endif },
-    { "error", &event_init_for_token_preprocessor_id_error },
-    { "if", &event_init_for_token_preprocessor_id_if },
-    { "ifdef", &event_init_for_token_preprocessor_id_ifdef },
-    { "ifndef", &event_init_for_token_preprocessor_id_ifndef },
-    { "include", &event_init_for_token_preprocessor_id_include },
-    { "line", &event_init_for_token_preprocessor_id_line },
-    { "pragma", &event_init_for_token_preprocessor_id_pragma },
-    { "undef", &event_init_for_token_preprocessor_id_undef },
+    { "define", &event_init_for_token_preprocessor_id_define, NULL },
+    { "elif", &event_init_for_token_preprocessor_id_elif, NULL },
+    { "else", &event_init_for_token_preprocessor_id_else, NULL },
+    { "endif", &event_init_for_token_preprocessor_id_endif, NULL },
+    { "error", &event_init_for_token_preprocessor_id_error, NULL },
+    { "if", &event_init_for_token_preprocessor_id_if, NULL },
+    { "ifdef", &event_init_for_token_preprocessor_id_ifdef, NULL },
+    { "ifndef", &event_init_for_token_preprocessor_id_ifndef, NULL },
+    { "include", &event_init_for_token_preprocessor_id_include, NULL },
+    { "line", &event_init_for_token_preprocessor_id_line, NULL },
+    { "pragma", &event_init_for_token_preprocessor_id_pragma, NULL },
+    { "undef", &event_init_for_token_preprocessor_id_undef, NULL },
 };
 
 /**
@@ -2075,6 +2077,16 @@ static int keyword_event_broadcast(
     if (STATUS_SUCCESS != retval)
     {
         goto done;
+    }
+
+    /* update scanner variables if updater set. */
+    if (NULL != keyword_entry->var_update)
+    {
+        retval = (keyword_entry->var_update)(scanner);
+        if (STATUS_SUCCESS != retval)
+        {
+            goto cleanup_ev;
+        }
     }
 
     /* broadcast this event. */
