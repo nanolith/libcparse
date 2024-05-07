@@ -103,6 +103,8 @@ static int keyword_event_broadcast(
     const cursor* pos);
 static int preprocessor_keyword_search(
     const keyword_ctor** keyword_entry, const char* str);
+static int preprocessor_include_update_state(
+    preprocessor_scanner* scanner);
 
 /**
  * \brief Event handler callback for \ref preprocessor_scanner_event_callback.
@@ -1938,7 +1940,8 @@ static const keyword_ctor preprocessor_keywords[] = {
     { "if", &event_init_for_token_preprocessor_id_if, NULL },
     { "ifdef", &event_init_for_token_preprocessor_id_ifdef, NULL },
     { "ifndef", &event_init_for_token_preprocessor_id_ifndef, NULL },
-    { "include", &event_init_for_token_preprocessor_id_include, NULL },
+    { "include", &event_init_for_token_preprocessor_id_include,
+      &preprocessor_include_update_state },
     { "line", &event_init_for_token_preprocessor_id_line, NULL },
     { "pragma", &event_init_for_token_preprocessor_id_pragma, NULL },
     { "undef", &event_init_for_token_preprocessor_id_undef, NULL },
@@ -2827,4 +2830,23 @@ done:
 
     /* if we succeed, then recursively process the new event on the way out. */
     return preprocessor_scanner_event_callback(scanner, ev);
+}
+
+/**
+ * \brief Update the scanner preprocessor state to show that we are in an
+ * include directive.
+ *
+ * \param scanner           The scanner for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int preprocessor_include_update_state(
+    preprocessor_scanner* scanner)
+{
+    scanner->preprocessor_state =
+        CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE;
+
+    return STATUS_SUCCESS;
 }
