@@ -95,6 +95,7 @@ enum CPARSE_SYM(preprocessor_directive_state)
     CPARSE_PREPROCESSOR_DIRECTIVE_STATE_MAYBE =                         1,
     CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED =                       2,
     CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE =               3,
+    CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE_SYSTEM_STRING = 4,
 };
 
 /******************************************************************************/
