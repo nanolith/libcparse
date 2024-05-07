@@ -131,6 +131,7 @@ int CPARSE_SYM(preprocessor_scanner_event_callback)(
         {
             case CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED:
             case CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE:
+            case CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE_SYSTEM_STRING:
                 retval = broadcast_pp_end(scanner);
                 if (STATUS_SUCCESS != retval)
                 {
@@ -745,10 +746,21 @@ static int process_raw_character(
                                 CPARSE_PREPROCESSOR_SCANNER_STATE_IN_NOT);
 
                     case '<':
-                        return
-                            start_state(
-                                scanner, ev,
-                                CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT);
+                        if (
+                            CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE
+                                == scanner->preprocessor_state)
+                        {
+                            scanner->preprocessor_state =
+                                CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE_SYSTEM_STRING;
+                            return start_string(scanner, ev, ch);
+                        }
+                        else
+                        {
+                            return
+                                start_state(
+                                    scanner, ev,
+                                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_LT);
+                        }
 
                     case '>':
                         return
@@ -1053,7 +1065,28 @@ static int process_raw_character(
                     return continue_string(scanner, ev, ch);
 
                 case '"':
-                    return end_string(scanner, ev, ch);
+                    if (
+                        CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE_SYSTEM_STRING
+                            == scanner->preprocessor_state)
+                    {
+                        return continue_string(scanner, ev, ch);
+                    }
+                    else
+                    {
+                      return end_string(scanner, ev, ch);
+                    }
+
+                case '>':
+                    if (
+                        CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE_SYSTEM_STRING
+                            == scanner->preprocessor_state)
+                    {
+                        return end_string(scanner, ev, ch);
+                    }
+                    else
+                    {
+                        return continue_string(scanner, ev, ch);
+                    }
 
                 default:
                     return continue_string(scanner, ev, ch);
@@ -2412,11 +2445,30 @@ static int end_string(preprocessor_scanner* scanner, const event* ev, int ch)
         goto done;
     }
 
-    /* initialize the raw string event. */
-    retval = event_raw_string_token_init(&sev, pos, str);
-    if (STATUS_SUCCESS != retval)
+    /* is this a system include string? */
+    if (
+        CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE_SYSTEM_STRING
+            == scanner->preprocessor_state)
     {
-        goto cleanup_str;
+        /* initialize the raw system string event. */
+        retval = event_raw_string_token_init_for_system_string(&sev, pos, str);
+        if (STATUS_SUCCESS != retval)
+        {
+            goto cleanup_str;
+        }
+
+        /* fall back to the include state. */
+        scanner->preprocessor_state =
+            CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE;
+    }
+    else
+    {
+        /* initialize the raw string event. */
+        retval = event_raw_string_token_init(&sev, pos, str);
+        if (STATUS_SUCCESS != retval)
+        {
+            goto cleanup_str;
+        }
     }
 
     /* broadcast this event. */
