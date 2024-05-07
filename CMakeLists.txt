@@ -175,3 +175,6 @@ INSTALL(TARGETS cparse
 
 #Examples
 ADD_SUBDIRECTORY(examples)
+
+#Tools
+ADD_SUBDIRECTORY(tools)
