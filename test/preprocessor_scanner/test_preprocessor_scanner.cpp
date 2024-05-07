@@ -407,6 +407,9 @@ static int dummy_callback(void* context, const CPARSE_SYM(event)* ev)
         case CPARSE_EVENT_TYPE_TOKEN_PP_ID_ENDIF:
             ctx->vals.push_back(make_pair(token_type, "#endif"));
             break;
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_PRAGMA:
+            ctx->vals.push_back(make_pair(token_type, "#pragma"));
+            break;
         case CPARSE_EVENT_TYPE_TOKEN_PP_ID_UNDEF:
             ctx->vals.push_back(make_pair(token_type, "#undef"));
             break;
@@ -17320,6 +17323,81 @@ TEST(pp_error_foo_string_tokens)
     /* the second value is a raw string. */
     TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_STRING == f->first);
     TEST_EXPECT("\"foo\"" == f->second);
+
+    ++f;
+
+    /* the third value is an end preprocessor event. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_PP_END == f->first);
+
+    /* clean up. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == preprocessor_scanner_release(scanner));
+    TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
+}
+
+/**
+ * Test that we can scan #pragma once expression tokens.
+ */
+TEST(pp_pragma_once_tokens)
+{
+    preprocessor_scanner* scanner;
+    input_stream* stream;
+    event_handler eh;
+    test_context t1;
+    const char* INPUT_STRING = R"(#pragma once)";
+
+    /* Create the scanner instance. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == preprocessor_scanner_create(&scanner));
+
+    /* create an event handler. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1));
+
+    /* get the abstract parser. */
+    auto ap = preprocessor_scanner_upcast(scanner);
+
+    /* subscribe to the scanner. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_preprocessor_scanner_subscribe(ap, &eh));
+
+    /* create an input stream. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == input_stream_create_from_string(&stream, INPUT_STRING));
+
+    /* add the input stream to the parser. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == abstract_parser_push_input_stream(ap, "stdin", stream));
+
+    /* precondition: eof is false. */
+    TEST_ASSERT(!t1.eof);
+
+    /* precondition: vals is empty. */
+    TEST_ASSERT(t1.vals.empty());
+
+    /* run the filter. */
+    TEST_ASSERT(STATUS_SUCCESS == abstract_parser_run(ap));
+
+    /* postcondition: eof is true. */
+    TEST_EXPECT(t1.eof);
+
+    /* postcondition: there are two values in vals. */
+    TEST_ASSERT(3 == t1.vals.size());
+    auto f = t1.vals.begin();
+    TEST_ASSERT(f != t1.vals.end());
+
+    /* the first value is an error token. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_PP_ID_PRAGMA == f->first);
+    TEST_EXPECT("#pragma" == f->second);
+
+    ++f;
+
+    /* the second value is an identifier. */
+    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_IDENTIFIER == f->first);
+    TEST_EXPECT("once" == f->second);
 
     ++f;
 
