@@ -43,6 +43,14 @@ int main(int argc, char* argv[])
 
     log_config(config);
 
+    /* create the scanner and files. */
+    retval = create_scanner_and_files(config);
+    if (STATUS_SUCCESS != retval)
+    {
+        retval = 1;
+        goto cleanup;
+    }
+
     /* TODO - fill out. */
     retval = STATUS_SUCCESS;
     goto cleanup;
