@@ -9,6 +9,11 @@
 
 #pragma once
 
+/* C++ compatibility. */
+# ifdef   __cplusplus
+extern "C" {
+# endif /*__cplusplus*/
+
 typedef struct import_enum_config import_enum_config;
 
 struct import_enum_config
@@ -18,3 +23,24 @@ struct import_enum_config
     char* enumeration;
     long count;
 };
+
+/**
+ * \brief Read command-line options, creating an import_enum_config instance on
+ * success.
+ *
+ * \param config        Pointer to the config pointer to populate with the
+ *                      created config on success.
+ * \param argc          Pointer to argc, to be updated on success.
+ * \param argv          Pointer to argv, to be updated on success.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int import_enum_config_create(
+    import_enum_config* config, int* argc, char*** argv);
+
+/* C++ compatibility. */
+# ifdef   __cplusplus
+}
+# endif /*__cplusplus*/
