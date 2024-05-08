@@ -18,6 +18,8 @@
 
 #include "import_enum_internal.h"
 
+static void log_config(const import_enum_config* config);
+
 /**
  * \brief Main entry point for import_enum.
  *
@@ -39,11 +41,10 @@ int main(int argc, char* argv[])
         goto done;
     }
 
-    fprintf(stderr, "Input file: %s\n", config->input);
-    fprintf(stderr, "Output file: %s\n", config->output);
-    fprintf(stderr, "Enumeration name: %s\n", config->enumeration);
-    fprintf(stderr, "Enumeration count: %ld\n", config->count);
-    retval = 0;
+    log_config(config);
+
+    /* TODO - fill out. */
+    retval = STATUS_SUCCESS;
     goto cleanup;
 
 cleanup:
@@ -55,4 +56,17 @@ cleanup:
 
 done:
     return retval;
+}
+
+/**
+ * \brief Log config values to stderr.
+ *
+ * \params config       The config to log.
+ */
+static void log_config(const import_enum_config* config)
+{
+    fprintf(stderr, "Input file: %s\n", config->input);
+    fprintf(stderr, "Output file: %s\n", config->output);
+    fprintf(stderr, "Enumeration name: %s\n", config->enumeration);
+    fprintf(stderr, "Enumeration count: %ld\n", config->count);
 }
