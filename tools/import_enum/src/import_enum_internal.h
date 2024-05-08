@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <libcparse/preprocessor_scanner.h>
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 extern "C" {
@@ -22,6 +24,7 @@ struct import_enum_config
     char* output;
     char* enumeration;
     long count;
+    CPARSE_SYM(preprocessor_scanner)* scanner;
 };
 
 /**
