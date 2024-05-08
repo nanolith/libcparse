@@ -40,6 +40,17 @@ struct import_enum_config
 int import_enum_config_create(
     import_enum_config* config, int* argc, char*** argv);
 
+/**
+ * \brief Release an import_enum_config instance.
+ *
+ * \param config        The instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int import_enum_config_release(import_enum_config* config);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
