@@ -38,7 +38,7 @@ struct import_enum_config
  *      - a non-zero error code on failure.
  */
 int import_enum_config_create(
-    import_enum_config* config, int* argc, char*** argv);
+    import_enum_config** config, int* argc, char*** argv);
 
 /**
  * \brief Release an import_enum_config instance.
