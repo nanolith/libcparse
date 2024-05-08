@@ -26,6 +26,9 @@
  */
 int import_enum_config_release(import_enum_config* config)
 {
+    int retval = STATUS_SUCCESS;
+    int release_retval;
+
     if (NULL != config->input)
     {
         free(config->input);
@@ -41,7 +44,16 @@ int import_enum_config_release(import_enum_config* config)
         free(config->enumeration);
     }
 
+    if (NULL != config->out)
+    {
+        release_retval = fclose(config->out);
+        if (0 != release_retval)
+        {
+            retval = ERROR_LIBCPARSE_FILE_CLOSE_ERROR;
+        }
+    }
+
     free(config);
 
-    return STATUS_SUCCESS;
+    return retval;
 }
