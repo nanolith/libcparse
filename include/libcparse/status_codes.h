@@ -33,3 +33,4 @@
 #define ERROR_LIBCPARSE_BAD_INTEGER_CONVERSION                  1020
 #define ERROR_LIBCPARSE_ENTRY_NOT_FOUND                         1021
 #define ERROR_LIBCPARSE_FILE_CLOSE_ERROR                        1022
+#define ERROR_LIBCPARSE_FILE_OPEN_ERROR                         1023
