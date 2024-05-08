@@ -11,6 +11,8 @@
 
 #include <libcparse/abstract_parser.h>
 #include <libcparse/preprocessor_scanner.h>
+#include <libcparse/preprocessor_scanner.h>
+#include <stdio.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -27,6 +29,7 @@ struct import_enum_config
     long count;
     CPARSE_SYM(preprocessor_scanner)* scanner;
     CPARSE_SYM(abstract_parser)* ap;
+    FILE* out;
 };
 
 /**
