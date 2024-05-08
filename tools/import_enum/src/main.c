@@ -16,6 +16,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "import_enum_internal.h"
+
 static int readopts(
     int* argc, char*** argv, char** input, char** output, char** enumeration,
     long* count);
