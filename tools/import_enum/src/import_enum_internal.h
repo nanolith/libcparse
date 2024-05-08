@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <libcparse/abstract_parser.h>
 #include <libcparse/preprocessor_scanner.h>
 
 /* C++ compatibility. */
@@ -25,6 +26,7 @@ struct import_enum_config
     char* enumeration;
     long count;
     CPARSE_SYM(preprocessor_scanner)* scanner;
+    CPARSE_SYM(abstract_parser)* ap;
 };
 
 /**
