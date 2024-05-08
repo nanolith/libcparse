@@ -70,6 +70,17 @@ int import_enum_config_release(import_enum_config* config);
  */
 int create_scanner_and_files(import_enum_config* config);
 
+/**
+ * \brief Scan the input file, writing enumeration details to the output file.
+ *
+ * \param config        The config instance for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int scan_input_and_write_output(import_enum_config* config);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
