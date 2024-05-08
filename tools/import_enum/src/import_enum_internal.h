@@ -59,6 +59,17 @@ int import_enum_config_create(
  */
 int import_enum_config_release(import_enum_config* config);
 
+/**
+ * \brief Open input file and output file, creating the preprocessor scanner.
+ *
+ * \param config        The config instance for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int create_scanner_and_files(import_enum_config* config);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
