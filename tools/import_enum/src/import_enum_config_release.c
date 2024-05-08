@@ -15,6 +15,8 @@
 
 #include "import_enum_internal.h"
 
+CPARSE_IMPORT_preprocessor_scanner;
+
 /**
  * \brief Release an import_enum_config instance.
  *
@@ -29,27 +31,41 @@ int import_enum_config_release(import_enum_config* config)
     int retval = STATUS_SUCCESS;
     int release_retval;
 
+    /* free input filename if set. */
     if (NULL != config->input)
     {
         free(config->input);
     }
 
+    /* free output filename if set. */
     if (NULL != config->output)
     {
         free(config->output);
     }
 
+    /* free enumeration name if set. */
     if (NULL != config->enumeration)
     {
         free(config->enumeration);
     }
 
+    /* close output file if open. */
     if (NULL != config->out)
     {
         release_retval = fclose(config->out);
         if (0 != release_retval)
         {
             retval = ERROR_LIBCPARSE_FILE_CLOSE_ERROR;
+        }
+    }
+
+    /* Release scanner if created. */
+    if (NULL != config->scanner)
+    {
+        release_retval = preprocessor_scanner_release(config->scanner);
+        if (STATUS_SUCCESS != release_retval)
+        {
+            retval = release_retval;
         }
     }
 
