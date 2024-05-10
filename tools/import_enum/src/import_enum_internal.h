@@ -107,13 +107,13 @@ int enum_item_list_insert(
 /**
  * \brief Reverse the enum item list, so it is ready for output.
  *
- * \param config        The config instance for this operation.
+ * \param list          The enum item list to reverse.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int enum_item_list_reverse(import_enum_config* config);
+int enum_item_list_reverse(enum_item* list);
 
 /**
  * \brief Release an enum item.
@@ -124,7 +124,18 @@ int enum_item_list_reverse(import_enum_config* config);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int enum_item_release(import_enum_config* config);
+int enum_item_release(enum_item* item);
+
+/**
+ * \brief Release an enum item list.
+ *
+ * \param list          The enum item list to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int enum_item_list_release(enum_item* list);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
