@@ -114,6 +114,17 @@ int enum_item_insert(import_enum_config* config, const char* name, long value);
  */
 int enum_item_reverse(import_enum_config* config);
 
+/**
+ * \brief Release an enum item.
+ *
+ * \param item          The enum item to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int enum_item_release(import_enum_config* config);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
