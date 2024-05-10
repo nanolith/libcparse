@@ -20,6 +20,7 @@ extern "C" {
 # endif /*__cplusplus*/
 
 typedef struct import_enum_config import_enum_config;
+typedef struct enum_item enum_item;
 
 struct import_enum_config
 {
@@ -30,6 +31,13 @@ struct import_enum_config
     CPARSE_SYM(preprocessor_scanner)* scanner;
     CPARSE_SYM(abstract_parser)* ap;
     FILE* out;
+};
+
+struct enum_item
+{
+    enum_item* next;
+    char* enum_name;
+    long enum_value;
 };
 
 /**
