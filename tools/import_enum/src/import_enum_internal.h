@@ -113,7 +113,7 @@ int enum_item_list_insert(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int enum_item_reverse(import_enum_config* config);
+int enum_item_list_reverse(import_enum_config* config);
 
 /**
  * \brief Release an enum item.
