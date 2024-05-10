@@ -90,6 +90,19 @@ int create_scanner_and_files(import_enum_config* config);
  */
 int scan_input_and_write_output(import_enum_config* config);
 
+/**
+ * \brief Insert an enum item onto the enum list.
+ *
+ * \param config        The config instance for this operation.
+ * \param name          The name of this enum item.
+ * \param value         The value of this enum item.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int enum_item_insert(import_enum_config* config, const char* name, long value);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
