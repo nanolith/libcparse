@@ -103,6 +103,17 @@ int scan_input_and_write_output(import_enum_config* config);
  */
 int enum_item_insert(import_enum_config* config, const char* name, long value);
 
+/**
+ * \brief Reverse the enum item list, so it is ready for output.
+ *
+ * \param config        The config instance for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int enum_item_reverse(import_enum_config* config);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
