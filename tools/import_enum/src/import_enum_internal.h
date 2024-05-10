@@ -31,6 +31,7 @@ struct import_enum_config
     CPARSE_SYM(preprocessor_scanner)* scanner;
     CPARSE_SYM(abstract_parser)* ap;
     FILE* out;
+    enum_item* head;
 };
 
 struct enum_item
