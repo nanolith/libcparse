@@ -101,7 +101,8 @@ int scan_input_and_write_output(import_enum_config* config);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int enum_item_insert(import_enum_config* config, const char* name, long value);
+int enum_item_list_insert(
+    import_enum_config* config, const char* name, long value);
 
 /**
  * \brief Reverse the enum item list, so it is ready for output.
