@@ -51,6 +51,14 @@ int main(int argc, char* argv[])
         goto cleanup;
     }
 
+    /* scan the input file and create the output file. */
+    if (STATUS_SUCCESS != retval)
+    {
+        fprintf(stderr, "Error parsing %s.\n", config->input);
+        retval = 1;
+        goto cleanup;
+    }
+
     /* TODO - fill out. */
     retval = STATUS_SUCCESS;
     goto cleanup;
