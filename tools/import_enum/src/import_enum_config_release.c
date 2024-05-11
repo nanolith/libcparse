@@ -69,6 +69,16 @@ int import_enum_config_release(import_enum_config* config)
         }
     }
 
+    /* release enum list if set. */
+    if (NULL != config->head)
+    {
+        release_retval = enum_item_list_release(config->head);
+        if (STATUS_SUCCESS != release_retval)
+        {
+            retval = release_retval;
+        }
+    }
+
     free(config);
 
     return retval;
