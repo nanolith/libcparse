@@ -32,6 +32,7 @@ struct import_enum_config
     CPARSE_SYM(abstract_parser)* ap;
     FILE* out;
     enum_item* head;
+    char* enum_name;
 };
 
 struct enum_item
