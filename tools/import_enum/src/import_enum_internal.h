@@ -46,6 +46,7 @@ struct enum_item
 enum enum_parse_state
 {
     ENUM_PARSE_STATE_INIT                                           = 0,
+    ENUM_PARSE_STATE_IN_PREPROCESSOR_DIRECTIVE                      = 1,
 };
 
 /**
