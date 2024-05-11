@@ -43,6 +43,11 @@ struct enum_item
     long enum_value;
 };
 
+enum enum_parse_state
+{
+    ENUM_PARSE_STATE_INIT                                           = 0,
+};
+
 /**
  * \brief Read command-line options, creating an import_enum_config instance on
  * success.
