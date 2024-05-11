@@ -79,6 +79,12 @@ int import_enum_config_release(import_enum_config* config)
         }
     }
 
+    /* release the enum name if set. */
+    if (NULL != config->enum_name)
+    {
+        free(config->enum_name);
+    }
+
     free(config);
 
     return retval;
