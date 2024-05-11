@@ -33,6 +33,7 @@ struct import_enum_config
     FILE* out;
     enum_item* head;
     char* enum_name;
+    long enum_value;
 };
 
 struct enum_item
