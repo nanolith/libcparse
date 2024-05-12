@@ -50,6 +50,7 @@ enum enum_parse_state
     ENUM_PARSE_STATE_IN_ENUM                                        = 2,
     ENUM_PARSE_STATE_IN_ENUM_BLOCK                                  = 3,
     ENUM_PARSE_STATE_IN_ENUM_BLOCK_ENUM                             = 4,
+    ENUM_PARSE_STATE_IN_ENUM_BLOCK_ENUM_ASSIGN                      = 5,
 };
 
 /**
