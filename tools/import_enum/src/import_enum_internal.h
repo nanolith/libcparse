@@ -28,6 +28,7 @@ struct import_enum_config
     char* output;
     char* enumeration;
     long count;
+    int state;
     CPARSE_SYM(preprocessor_scanner)* scanner;
     CPARSE_SYM(abstract_parser)* ap;
     FILE* out;
