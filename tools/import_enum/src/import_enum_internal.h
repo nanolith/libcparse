@@ -56,6 +56,11 @@ enum enum_parse_state
     ENUM_PARSE_STATE_IGNORE                                         = 7,
 };
 
+enum import_enum_error_codes
+{
+    ERROR_IMPORT_ENUM_EXPECTING_PREPROCESSOR_END                    = 2000,
+};
+
 /**
  * \brief Read command-line options, creating an import_enum_config instance on
  * success.
