@@ -49,11 +49,12 @@ enum enum_parse_state
     ENUM_PARSE_STATE_INIT                                           = 0,
     ENUM_PARSE_STATE_IN_PREPROCESSOR_DIRECTIVE                      = 1,
     ENUM_PARSE_STATE_IN_ENUM                                        = 2,
-    ENUM_PARSE_STATE_IN_ENUM_BLOCK                                  = 3,
-    ENUM_PARSE_STATE_IN_ENUM_BLOCK_ENUM                             = 4,
-    ENUM_PARSE_STATE_IN_ENUM_BLOCK_ENUM_ASSIGN                      = 5,
-    ENUM_PARSE_STATE_IN_ENUM_BLOCK_ENUM_END                         = 6,
-    ENUM_PARSE_STATE_IGNORE                                         = 7,
+    ENUM_PARSE_STATE_IN_ENUM_IDENTIFIER                             = 3,
+    ENUM_PARSE_STATE_IN_ENUM_BLOCK                                  = 4,
+    ENUM_PARSE_STATE_IN_ENUM_BLOCK_ENUM                             = 5,
+    ENUM_PARSE_STATE_IN_ENUM_BLOCK_ENUM_ASSIGN                      = 6,
+    ENUM_PARSE_STATE_IN_ENUM_BLOCK_ENUM_END                         = 7,
+    ENUM_PARSE_STATE_IGNORE                                         = 8,
 };
 
 enum import_enum_error_codes
