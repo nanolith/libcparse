@@ -61,6 +61,7 @@ enum import_enum_error_codes
 {
     ERROR_IMPORT_ENUM_EXPECTING_PREPROCESSOR_END                    = 2000,
     ERROR_IMPORT_ENUM_EXPECTING_IDENTIFIER                          = 2001,
+    ERROR_IMPORT_ENUM_EXPECTING_LEFT_BRACE                          = 2002,
 };
 
 /**
