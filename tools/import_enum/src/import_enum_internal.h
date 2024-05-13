@@ -64,6 +64,7 @@ enum import_enum_error_codes
     ERROR_IMPORT_ENUM_EXPECTING_LEFT_BRACE                          = 2002,
     ERROR_IMPORT_ENUM_EXPECTING_RIGHT_BRACE                         = 2003,
     ERROR_IMPORT_ENUM_EXPECTING_EQUAL_RIGHT_BRACE_OR_COMMA          = 2004,
+    ERROR_IMPORT_ENUM_EXPECTING_INTEGER                             = 2005,
 };
 
 /**
