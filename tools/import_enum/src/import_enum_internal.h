@@ -69,6 +69,7 @@ enum import_enum_error_codes
     ERROR_IMPORT_ENUM_UNKNOWN_STATE                                 = 2007,
     ERROR_IMPORT_ENUM_NESTED_PREPROCESSOR_DIRECTIVES                = 2008,
     ERROR_IMPORT_ENUM_UNSUPPORTED_DIRECTIVE_LOCATION                = 2009,
+    ERROR_IMPORT_ENUM_UNEXPECTED_PREPROCESSOR_END                   = 2010,
 };
 
 /**
