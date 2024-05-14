@@ -48,6 +48,7 @@ static int process_unknown_event(import_enum_config* config, const event* ev);
 static int insert_enum(import_enum_config* config);
 static int save_identifier(import_enum_config* config, const event* ev);
 static int save_integer(import_enum_config* config, const event* ev);
+static void log_enums(const import_enum_config* config);
 
 /**
  * \brief Scan the input file, writing enumeration details to the output file.
@@ -94,13 +95,7 @@ int scan_input_and_write_output(import_enum_config* config)
     }
  
     /* display all of the enums. */
-    enum_item* tmp = config->head;
-    while (NULL != tmp)
-    {
-        fprintf(
-            stderr, "Found enum %s : %ld.\n", tmp->enum_name, tmp->enum_value);
-        tmp = tmp->next;
-    }
+    log_enums(config);
 
     /* success. */
     retval = STATUS_SUCCESS;
@@ -898,4 +893,26 @@ static int save_integer(import_enum_config* config, const event* ev)
 
     /* success. */
     return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Log enums to standard error.
+ *
+ * \param config        The config for this instance.
+ * \param ev            The event to process.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static void log_enums(const import_enum_config* config)
+{
+    /* display all of the enums. */
+    enum_item* tmp = config->head;
+    while (NULL != tmp)
+    {
+        fprintf(
+            stderr, "Found enum %s : %ld.\n", tmp->enum_name, tmp->enum_value);
+        tmp = tmp->next;
+    }
 }
