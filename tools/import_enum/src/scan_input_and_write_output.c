@@ -49,6 +49,7 @@ static int insert_enum(import_enum_config* config);
 static int save_identifier(import_enum_config* config, const event* ev);
 static int save_integer(import_enum_config* config, const event* ev);
 static void log_enums(const import_enum_config* config);
+static int generate_output(const import_enum_config* config);
 
 /**
  * \brief Scan the input file, writing enumeration details to the output file.
@@ -96,6 +97,13 @@ int scan_input_and_write_output(import_enum_config* config)
  
     /* display all of the enums. */
     log_enums(config);
+
+    /* output this enumeration to the lean file. */
+    retval = generate_output(config);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_eh;
+    }
 
     /* success. */
     retval = STATUS_SUCCESS;
@@ -899,11 +907,6 @@ static int save_integer(import_enum_config* config, const event* ev)
  * \brief Log enums to standard error.
  *
  * \param config        The config for this instance.
- * \param ev            The event to process.
- *
- * \returns a status code indicating success or failure.
- *      - STATUS_SUCCESS on success.
- *      - a non-zero error code on failure.
  */
 static void log_enums(const import_enum_config* config)
 {
@@ -915,4 +918,66 @@ static void log_enums(const import_enum_config* config)
             stderr, "Found enum %s : %ld.\n", tmp->enum_name, tmp->enum_value);
         tmp = tmp->next;
     }
+}
+
+/**
+ * \brief Generate a lean output file.
+ *
+ * \param config        The config for this instance.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int generate_output(const import_enum_config* config)
+{
+    /* create the inductive type. */
+    fprintf(config->out, "inductive %s\n", config->enumeration);
+    for (enum_item* tmp = config->head; NULL != tmp; tmp = tmp->next)
+    {
+        fprintf(config->out, "  | %s\n", tmp->enum_name);
+    }
+
+    /* add spacing. */
+    fprintf(config->out, "\n");
+
+    /* create the numberOf function for this enumeration. */
+    fprintf(
+        config->out, "def numberOf%s (e : %s) : Nat :=\n", config->enumeration,
+        config->enumeration);
+    fprintf(config->out, "  match e with\n");
+    for (enum_item* tmp = config->head; NULL != tmp; tmp = tmp->next)
+    {
+        fprintf(
+            config->out, "  | %s.%s => %ld\n", config->enumeration,
+            tmp->enum_name, tmp->enum_value);
+    }
+
+    /* add spacing. */
+    fprintf(config->out, "\n");
+
+    /* for each enumerated value, */
+    for (enum_item* tmp = config->head; NULL != tmp; tmp = tmp->next)
+    {
+        /* add a basic theorem to protect the uniqueness of this value. */
+        fprintf(
+            config->out, "theorem unique%s_%s\n", config->enumeration,
+            tmp->enum_name);
+        fprintf(config->out, "  (m : %s) :\n", config->enumeration);
+        fprintf(
+            config->out,
+            "  ¬ (%s.%s = m) → ¬ (numberOf%s %s.%s = numberOf%s m) :=\n",
+            config->enumeration, tmp->enum_name, config->enumeration,
+            config->enumeration, tmp->enum_name, config->enumeration);
+        fprintf(config->out, "  by\n");
+        fprintf(config->out, "    simp [numberOf%s]\n", config->enumeration);
+        fprintf(
+            config->out,
+            "    split <;> first | simp | contradiction\n");
+
+        /* add spacing. */
+        fprintf(config->out, "\n");
+    }
+
+    return STATUS_SUCCESS;
 }
