@@ -54,7 +54,7 @@ int enum_item_list_insert(
 
     /* insert item. */
     tmp->next = config->head;
-    config->head = tmp->next;
+    config->head = tmp;
 
     /* success. */
     retval = STATUS_SUCCESS;
