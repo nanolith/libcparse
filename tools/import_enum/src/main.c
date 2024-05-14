@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
     retval = scan_input_and_write_output(config);
     if (STATUS_SUCCESS != retval)
     {
-        fprintf(stderr, "Error parsing %s.\n", config->input);
+        fprintf(stderr, "Error parsing %s:%d.\n", config->input, retval);
         retval = 1;
         goto cleanup;
     }

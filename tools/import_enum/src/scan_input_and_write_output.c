@@ -602,8 +602,18 @@ static int process_enum_keyword_event(
             return STATUS_SUCCESS;
 
         case ENUM_PARSE_STATE_INIT:
-            config->state = ENUM_PARSE_STATE_IN_ENUM;
-            return STATUS_SUCCESS;
+            if (config->count)
+            {
+                /* skip this enumeration. */
+                config->count -= 1;
+                return STATUS_SUCCESS;
+            }
+            else
+            {
+                /* capture the enum when the count reaches zero. */
+                config->state = ENUM_PARSE_STATE_IN_ENUM;
+                return STATUS_SUCCESS;
+            }
 
         case ENUM_PARSE_STATE_IN_ENUM_BLOCK:
             fprintf(
