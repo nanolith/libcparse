@@ -52,6 +52,7 @@ int main(int argc, char* argv[])
     }
 
     /* scan the input file and create the output file. */
+    retval = scan_input_and_write_output(config);
     if (STATUS_SUCCESS != retval)
     {
         fprintf(stderr, "Error parsing %s.\n", config->input);
