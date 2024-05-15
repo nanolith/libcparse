@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <libcparse/cursor.h>
 #include <libcparse/function_decl.h>
 
 /* C++ compatibility. */
@@ -23,6 +24,27 @@ extern "C" {
  */
 typedef struct CPARSE_SYM(event_raw_character_literal)
 CPARSE_SYM(event_raw_character_literal);
+
+/******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Perform an in-place initialization of an
+ * \ref event_raw_character_literal instance.
+ * instance.
+ *
+ * \param ev                Pointer to the event to initialize.
+ * \param cursor            The event cursor.
+ * \param val               The raw string representation of this token.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero failure code on failure.
+ */
+int CPARSE_SYM(event_raw_character_literal_init)(
+    CPARSE_SYM(event_raw_character_literal)* ev,
+    const CPARSE_SYM(cursor)* cursor, const char* val);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
