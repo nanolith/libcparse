@@ -48,6 +48,12 @@ struct CPARSE_SYM(event_raw_string_token)
     const char* str;
 };
 
+struct CPARSE_SYM(event_raw_character_literal)
+{
+    CPARSE_SYM(event) hdr;
+    const char* val;
+};
+
 struct CPARSE_SYM(event_identifier)
 {
     CPARSE_SYM(event) hdr;
