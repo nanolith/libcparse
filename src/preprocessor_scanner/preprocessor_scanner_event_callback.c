@@ -105,6 +105,8 @@ static int preprocessor_keyword_search(
     const keyword_ctor** keyword_entry, const char* str);
 static int preprocessor_include_update_state(
     preprocessor_scanner* scanner);
+static int broadcast_double_hash_token(
+    preprocessor_scanner* scanner, const event* ev);
 
 /**
  * \brief Event handler callback for \ref preprocessor_scanner_event_callback.
@@ -771,6 +773,19 @@ static int process_raw_character(
                     case '"':
                         return start_string(scanner, ev, ch);
 
+                    case '#':
+                        retval = start_hash(scanner, ev);
+                        if (STATUS_SUCCESS != retval)
+                        {
+                            return retval;
+                        }
+
+                        /* We aren't in a preprocessor directive here. */
+                        scanner->preprocessor_state =
+                            CPARSE_PREPROCESSOR_DIRECTIVE_STATE_DISABLED;
+
+                        return STATUS_SUCCESS;
+
                     default:
                         return
                             ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
@@ -781,13 +796,21 @@ static int process_raw_character(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HASH:
             if (char_is_alpha_underscore(ch))
             {
-                /* we might be in a preprocessor directive. */
-                scanner->preprocessor_state =
-                    CPARSE_PREPROCESSOR_DIRECTIVE_STATE_MAYBE;
+                if (
+                    CPARSE_PREPROCESSOR_DIRECTIVE_STATE_INIT
+                        == scanner->preprocessor_state)
+                {
+                    /* we might be in a preprocessor directive. */
+                    scanner->preprocessor_state =
+                        CPARSE_PREPROCESSOR_DIRECTIVE_STATE_MAYBE;
+                }
 
                 return start_identifier(scanner, ev, ch);
             }
-            /* TODO - handle double hash. */
+            else if ('#' == ch)
+            {
+                return broadcast_double_hash_token(scanner, ev);
+            }
             else
             {
                 return end_hash(scanner, ev, true);
@@ -2257,6 +2280,71 @@ done:
 
     /* if we succeed, then recursively process the new event on the way out. */
     return preprocessor_scanner_event_callback(scanner, ev);
+}
+
+/**
+ * \brief Broadcast a double hash token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event for the second hash.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int broadcast_double_hash_token(
+    preprocessor_scanner* scanner, const event* ev)
+{
+    int retval, release_retval;
+    event tev;
+    const cursor* pos;
+
+    /* extend the cached position to cover this character. */
+    retval = file_position_cache_position_extend(scanner->hash_cache, ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* get the cached hash position. */
+    retval = file_position_cache_position_get(scanner->hash_cache, &pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* initialize the string concat token event. */
+    retval = event_init_for_token_preprocessor_string_concat(&tev, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* broadcast this event. */
+    retval = event_reactor_broadcast(scanner->reactor, &tev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tev;
+    }
+
+    /* we are now in the init state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+    /* reset the hash cache. */
+    file_position_cache_clear(scanner->hash_cache);
+
+    /* success. */
+    goto cleanup_tev;
+
+cleanup_tev:
+    release_retval = event_dispose(&tev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    return retval;
 }
 
 /**
