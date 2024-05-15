@@ -59,6 +59,20 @@ int CPARSE_SYM(event_raw_character_literal_init)(
 int CPARSE_SYM(event_raw_character_literal_dispose)(
     CPARSE_SYM(event_raw_character_literal)* ev);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the raw character literal value.
+ *
+ * \param ev                The event for this operation.
+ *
+ * \returns the string representation of the raw integer value.
+ */
+const char* CPARSE_SYM(event_raw_character_literal_get)(
+    const CPARSE_SYM(event_raw_character_literal)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
