@@ -74,7 +74,6 @@ int CPARSE_SYM(event_raw_character_literal_dispose)(
 const char* CPARSE_SYM(event_raw_character_literal_get)(
     const CPARSE_SYM(event_raw_character_literal)* ev);
 
-
 /**
  * \brief Attempt to downcast an \ref event to an
  * \ref event_raw_character_literal.
@@ -109,6 +108,10 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_character_literal_upcast)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_raw_character_literal) \
     sym ## event_raw_character_literal; \
+    static inline int sym ## event_raw_character_literal_init( \
+        CPARSE_SYM(event_raw_character_literal)* x, \
+        const CPARSE_SYM(cursor)* y, const char* z) { \
+            return CPARSE_SYM(event_raw_character_literal_init)(x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_raw_character_literal_as(sym) \
