@@ -123,6 +123,10 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_character_literal_upcast)(
             return \
                 CPARSE_SYM(event_downcast_to_event_raw_character_literal)( \
                     x, y); } \
+    static inline CPARSE_SYM(event)* \
+    sym ## event_raw_character_literal_upcast( \
+        CPARSE_SYM(event_raw_character_literal)* x) { \
+            return CPARSE_SYM(event_raw_character_literal_upcast)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_raw_character_literal_as(sym) \
