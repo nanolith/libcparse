@@ -118,6 +118,11 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_character_literal_upcast)(
     static inline const char* sym ## event_raw_character_literal_get( \
         const CPARSE_SYM(event_raw_character_literal)* x) { \
             return CPARSE_SYM(event_raw_character_literal_get)(x); } \
+    static inline int sym ## event_downcast_to_event_raw_character_literal( \
+        CPARSE_SYM(event_raw_character_literal)** x, CPARSE_SYM(event)* y) { \
+            return \
+                CPARSE_SYM(event_downcast_to_event_raw_character_literal)( \
+                    x, y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_raw_character_literal_as(sym) \
