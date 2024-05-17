@@ -47,3 +47,32 @@ TEST(event_raw_character_literal_init)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_character_literal_dispose(&ev));
 }
+
+/**
+ * Test that we can get the raw character value of this event.
+ */
+TEST(event_raw_character_literal_get)
+{
+    event_raw_character_literal ev;
+    cursor c;
+    const char* TEST_STRING = "'x'";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_raw_character_literal_init(&ev, &c, TEST_STRING));
+
+    auto str = event_raw_character_literal_get(&ev);
+
+    /* this value is not NULL. */
+    TEST_ASSERT(nullptr != str);
+
+    /* this value matches our test string. */
+    TEST_EXPECT(!strcmp(str, TEST_STRING));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_character_literal_dispose(&ev));
+}
