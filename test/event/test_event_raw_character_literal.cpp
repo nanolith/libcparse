@@ -76,3 +76,36 @@ TEST(event_raw_character_literal_get)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_character_literal_dispose(&ev));
 }
+
+/**
+ * Test that we can downcast a raw character literal event.
+ */
+TEST(event_downcast_to_event_raw_character_literal)
+{
+    event_raw_character_literal ev;
+    event_raw_character_literal* ev2;
+    cursor c;
+    const char* TEST_STRING = "'y'";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_raw_character_literal_init(&ev, &c, TEST_STRING));
+
+    /* get the base event type. */
+    auto bev = event_raw_character_literal_upcast(&ev);
+
+    /* attempt to downcast this event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_downcast_to_event_raw_character_literal(&ev2, bev));
+
+    /* this value should match our original event pointer. */
+    TEST_EXPECT(ev2 == &ev);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_character_literal_dispose(&ev));
+}
