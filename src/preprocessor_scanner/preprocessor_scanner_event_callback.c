@@ -12,6 +12,7 @@
 #include <libcparse/event.h>
 #include <libcparse/event/identifier.h>
 #include <libcparse/event/raw_character.h>
+#include <libcparse/event/raw_character_literal.h>
 #include <libcparse/event/raw_integer.h>
 #include <libcparse/event/raw_string.h>
 #include <libcparse/event_reactor.h>
@@ -29,6 +30,7 @@ CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_identifier;
 CPARSE_IMPORT_event_raw_character;
+CPARSE_IMPORT_event_raw_character_literal;
 CPARSE_IMPORT_event_raw_integer;
 CPARSE_IMPORT_event_raw_string;
 CPARSE_IMPORT_event_reactor;
@@ -78,6 +80,11 @@ static int start_string(
 static int continue_string(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int end_string(preprocessor_scanner* scanner, const event* ev, int ch);
+static int start_char(
+    preprocessor_scanner* scanner, const event* ev, int ch);
+static int continue_char(
+    preprocessor_scanner* scanner, const event* ev, int ch);
+static int end_char(preprocessor_scanner* scanner, const event* ev, int ch);
 static int start_decimal_integer(
     preprocessor_scanner* scanner, const event* ev, int ch);
 static int start_zero_integer(
@@ -203,6 +210,7 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U5:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U6:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U7:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -316,6 +324,7 @@ static int process_whitespace_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_SLASH:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_1:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_2:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_HEX:
@@ -773,6 +782,9 @@ static int process_raw_character(
                     case '"':
                         return start_string(scanner, ev, ch);
 
+                    case '\'':
+                        return start_char(scanner, ev, ch);
+
                     case '#':
                         retval = start_hash(scanner, ev);
                         if (STATUS_SUCCESS != retval)
@@ -1113,6 +1125,16 @@ static int process_raw_character(
 
                 default:
                     return continue_string(scanner, ev, ch);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR:
+            switch (ch)
+            {
+                case '\'':
+                    return end_char(scanner, ev, ch);
+
+                default:
+                    return continue_char(scanner, ev, ch);
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_SLASH:
@@ -1758,6 +1780,45 @@ static int start_string(
 }
 
 /**
+ * \brief Start a char token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The character for this character literal.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int start_char(
+    preprocessor_scanner* scanner, const event* ev, int ch)
+{
+    int retval;
+
+    /* get the cursor for this event. */
+    const cursor* pos = event_get_cursor(ev);
+
+    /* cache the location for the start of this event. */
+    retval = file_position_cache_set(scanner->cache, pos->file, pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* add this character to the string builder. */
+    retval = string_builder_add_character(scanner->builder, ch);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the char state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR;
+
+    return STATUS_SUCCESS;
+}
+
+/**
  * \brief Start a decimal integer token.
  *
  * \param scanner           The scanner for this operation.
@@ -1880,6 +1941,39 @@ static int continue_identifier(
  *      - a non-zero error code on failure.
  */
 static int continue_string(
+    preprocessor_scanner* scanner, const event* ev, int ch)
+{
+    int retval;
+
+    /* extend the cached position to cover this character. */
+    retval = file_position_cache_position_extend(scanner->cache, ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+    
+    /* add this character to the string builder. */
+    retval = string_builder_add_character(scanner->builder, ch);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Continue a char token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event to process.
+ * \param ch                The character for this character literal.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int continue_char(
     preprocessor_scanner* scanner, const event* ev, int ch)
 {
     int retval;
@@ -2583,6 +2677,88 @@ static int end_string(preprocessor_scanner* scanner, const event* ev, int ch)
 
 cleanup_sev:
     release_retval = event_raw_string_token_dispose(&sev);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+cleanup_str:
+    string_utils_string_release(str);
+
+done:
+    return retval;
+}
+
+/**
+ * \brief End a char token.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The raw character event that ends this literal.
+ * \param ch                The raw character that ends this literal.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int end_char(preprocessor_scanner* scanner, const event* ev, int ch)
+{
+    int retval, release_retval;
+    const cursor* pos;
+    char* str;
+    event_raw_character_literal cev;
+
+    /* append the character to the raw character literal. */
+    retval = continue_char(scanner, ev, ch);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* get the cached position. */
+    retval = file_position_cache_position_get(scanner->cache, &pos);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* Build a string for the raw character literal. */
+    retval = string_builder_build(&str, scanner->builder);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* initialize the raw character literal event. */
+    retval = event_raw_character_literal_init(&cev, pos, str);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_str;
+    }
+
+    /* broadcast this event. */
+    retval =
+        event_reactor_broadcast(
+            scanner->reactor, event_raw_character_literal_upcast(&cev));
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_cev;
+    }
+
+    /* clear the file / position cache. */
+    file_position_cache_clear(scanner->cache);
+
+    /* clear the string builder. */
+    string_builder_clear(scanner->builder);
+
+    /* we are now in the init state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_INIT;
+
+    /* success. */
+    retval = STATUS_SUCCESS;
+    goto cleanup_cev;
+
+cleanup_cev:
+    release_retval = event_raw_character_literal_dispose(&cev);
     if (STATUS_SUCCESS != release_retval)
     {
         retval = release_retval;
