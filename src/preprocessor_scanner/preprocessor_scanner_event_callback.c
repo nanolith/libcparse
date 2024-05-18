@@ -1200,6 +1200,7 @@ static int process_raw_character(
             switch (ch)
             {
                 case '\'':
+                case '"':
                 case '\\':
                 case 'a':
                     scanner->state =
