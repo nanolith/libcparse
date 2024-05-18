@@ -1199,6 +1199,7 @@ static int process_raw_character(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_SLASH:
             switch (ch)
             {
+                case '\'':
                 case '\\':
                 case 'a':
                     scanner->state =
