@@ -1201,6 +1201,7 @@ static int process_raw_character(
             {
                 case '\'':
                 case '"':
+                case '?':
                 case '\\':
                 case 'a':
                     scanner->state =
