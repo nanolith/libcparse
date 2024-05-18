@@ -211,6 +211,7 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U6:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U7:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_SLASH:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -324,7 +325,6 @@ static int process_whitespace_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_SLASH:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING:
-        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_1:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_2:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_HEX:
@@ -341,6 +341,8 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U5:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U6:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U7:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_SLASH:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -481,6 +483,8 @@ static int process_newline_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U5:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U6:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_BIG_U7:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_SLASH:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -1130,6 +1134,11 @@ static int process_raw_character(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR:
             switch (ch)
             {
+                case '\\':
+                    scanner->state =
+                        CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_SLASH;
+                    return continue_char(scanner, ev, ch);
+
                 case '\'':
                     return end_char(scanner, ev, ch);
 
@@ -1182,6 +1191,18 @@ static int process_raw_character(
                     scanner->state =
                         CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING_OCTAL_1;
                     return continue_string(scanner, ev, ch);
+
+                default:
+                    return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_SLASH:
+            switch (ch)
+            {
+                case '\\':
+                    scanner->state =
+                        CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR;
+                    return continue_char(scanner, ev, ch);
 
                 default:
                     return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
