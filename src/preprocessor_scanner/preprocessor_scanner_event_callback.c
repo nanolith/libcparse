@@ -1200,6 +1200,7 @@ static int process_raw_character(
             switch (ch)
             {
                 case '\\':
+                case 'a':
                     scanner->state =
                         CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR;
                     return continue_char(scanner, ev, ch);
