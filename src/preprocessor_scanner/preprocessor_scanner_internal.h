@@ -88,6 +88,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HASH =                        45,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_SINGLE_HASH =                 46,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR =                        47,
+    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_SLASH =                  48,
 };
 
 enum CPARSE_SYM(preprocessor_directive_state)
