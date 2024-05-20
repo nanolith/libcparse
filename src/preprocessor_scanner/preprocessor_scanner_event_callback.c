@@ -1472,7 +1472,7 @@ static int process_raw_character(
 
                 default:
                     scanner->state =
-                        CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STRING;
+                        CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR;
                     return continue_char(scanner, ev, ch);
             }
 
