@@ -92,6 +92,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_OCTAL_1 =                49,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_OCTAL_2 =                50,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_HEX =                    51,
+    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_HEX_OPT =                52,
 };
 
 enum CPARSE_SYM(preprocessor_directive_state)
