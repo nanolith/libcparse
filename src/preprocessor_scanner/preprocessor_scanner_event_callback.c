@@ -220,6 +220,14 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U1:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U2:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U3:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U1:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U2:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U3:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U4:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U5:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U6:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U7:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -359,6 +367,14 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U1:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U2:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U3:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U1:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U2:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U3:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U4:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U5:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U6:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U7:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -509,6 +525,14 @@ static int process_newline_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U1:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U2:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U3:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U1:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U2:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U3:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U4:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U5:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U6:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U7:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -1249,6 +1273,11 @@ static int process_raw_character(
                         CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U;
                     return continue_char(scanner, ev, ch);
 
+                case 'U':
+                    scanner->state =
+                        CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U;
+                    return continue_char(scanner, ev, ch);
+
                 case '0':
                 case '1':
                 case '2':
@@ -1610,6 +1639,102 @@ static int process_raw_character(
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_LITTLE_U3:
+            if (isxdigit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR;
+                return continue_char(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U:
+            if (isxdigit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U1;
+                return continue_char(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U1:
+            if (isxdigit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U2;
+                return continue_char(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U2:
+            if (isxdigit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U3;
+                return continue_char(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U3:
+            if (isxdigit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U4;
+                return continue_char(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U4:
+            if (isxdigit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U5;
+                return continue_char(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U5:
+            if (isxdigit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U6;
+                return continue_char(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U6:
+            if (isxdigit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U7;
+                return continue_char(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U7:
             if (isxdigit(ch))
             {
                 scanner->state =
