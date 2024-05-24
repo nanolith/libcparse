@@ -2447,6 +2447,7 @@ static const char* string_prefixes[] = {
  */
 static const char* char_prefixes[] = {
     "L",
+    "u",
 };
 
 /**
