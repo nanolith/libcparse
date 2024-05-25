@@ -1176,6 +1176,29 @@ TEST(token_not)
 }
 
 /**
+ * Test that we can create a token ellipsis event.
+ */
+TEST(token_ellipsis)
+{
+    event ev;
+    cursor c;
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_init_for_token_ellipsis(&ev, &c));
+
+    /* The event type is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_TYPE_TOKEN_ELLIPSIS == event_get_type(&ev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
+}
+
+/**
  * Test that we can create a token preprocessor id if event.
  */
 TEST(token_preprocessor_id_if)
