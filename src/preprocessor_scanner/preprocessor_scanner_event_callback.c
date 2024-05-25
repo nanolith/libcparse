@@ -230,6 +230,7 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U5:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U6:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U7:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT_DOT:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -242,6 +243,11 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_LL:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_END:
             return end_integer(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_dot);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
             return
@@ -377,6 +383,7 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U5:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U6:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U7:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT_DOT:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -389,6 +396,11 @@ static int process_whitespace_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_LL:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_END:
             return end_integer(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_dot);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
             return
@@ -535,6 +547,7 @@ static int process_newline_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U5:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U6:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CHAR_BIG_U7:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT_DOT:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
@@ -547,6 +560,11 @@ static int process_newline_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_LL:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_END:
             return end_integer(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_dot);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
             return
@@ -736,8 +754,9 @@ static int process_raw_character(
 
                     case '.':
                         return
-                            broadcast_simple_token(
-                                scanner, ev, &event_init_for_token_dot);
+                            start_state(
+                                scanner, ev,
+                                CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT);
 
                     case '-':
                         return
@@ -880,6 +899,34 @@ static int process_raw_character(
             else
             {
                 return end_hash(scanner, ev, true);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
+            switch (ch)
+            {
+                case '.':
+                    return
+                        transition_state(
+                            scanner, ev,
+                            CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT_DOT);
+
+                default:
+                    return
+                        broadcast_cached_token_and_continue(
+                            scanner, ev, &event_init_for_token_dot);
+            }
+            break;
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT_DOT:
+            switch (ch)
+            {
+                case '.':
+                    return
+                        broadcast_compound_token(
+                            scanner, ev, &event_init_for_token_ellipsis);
+
+                default:
+                    return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DASH:
