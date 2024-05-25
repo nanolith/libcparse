@@ -107,6 +107,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_INCREMENT =                                 0x009C,
     CPARSE_EVENT_TYPE_TOKEN_DECREMENT =                                 0x009D,
     CPARSE_EVENT_TYPE_TOKEN_NOT =                                       0x009E,
+    CPARSE_EVENT_TYPE_TOKEN_ELLIPSIS =                                  0x009F,
 
     /* Preprocessor keyword token events. */
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_IF =                                  0x0120,
