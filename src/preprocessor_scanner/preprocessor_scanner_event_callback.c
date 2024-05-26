@@ -1159,6 +1159,11 @@ static int process_raw_character(
                         broadcast_compound_token(
                             scanner, ev, &event_init_for_token_left_bracket);
 
+                case '%':
+                    return
+                        broadcast_compound_token(
+                            scanner, ev, &event_init_for_token_left_brace);
+
                 default:
                     return
                         broadcast_cached_token_and_continue(
