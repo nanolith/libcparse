@@ -254,6 +254,11 @@ static int process_eof_event(
                 broadcast_cached_token_and_continue(
                     scanner, ev, &event_init_for_token_minus);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_COLON:
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_colon);
+
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
             return
                 broadcast_cached_token_and_continue(
@@ -406,6 +411,11 @@ static int process_whitespace_event(
             return
                 broadcast_cached_token_and_continue(
                     scanner, ev, &event_init_for_token_minus);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_COLON:
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_colon);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
             return
@@ -570,6 +580,11 @@ static int process_newline_event(
             return
                 broadcast_cached_token_and_continue(
                     scanner, ev, &event_init_for_token_minus);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_COLON:
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_colon);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
             return
@@ -744,8 +759,9 @@ static int process_raw_character(
 
                     case ':':
                         return
-                            broadcast_simple_token(
-                                scanner, ev, &event_init_for_token_colon);
+                            start_state(
+                                scanner, ev,
+                                CPARSE_PREPROCESSOR_SCANNER_STATE_IN_COLON);
 
                     case ';':
                         return
@@ -953,6 +969,20 @@ static int process_raw_character(
                             scanner, ev, &event_init_for_token_minus);
             }
             break;
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_COLON:
+            switch (ch)
+            {
+                case '>':
+                    return
+                        broadcast_compound_token(
+                            scanner, ev, &event_init_for_token_right_bracket);
+
+                default:
+                    return
+                        broadcast_cached_token_and_continue(
+                            scanner, ev, &event_init_for_token_colon);
+            }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PLUS:
             switch (ch)
