@@ -47,6 +47,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_STAR =                         4,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_SLASH =                        5,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT =                      6,
+    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON =                7,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_AMPERSAND =                    9,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PIPE =                        10,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_CARET =                       11,
