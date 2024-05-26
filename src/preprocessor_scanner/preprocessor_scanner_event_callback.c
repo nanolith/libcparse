@@ -1124,6 +1124,11 @@ static int process_raw_character(
                         broadcast_compound_token(
                             scanner, ev, &event_init_for_token_less_than_equal);
 
+                case ':':
+                    return
+                        broadcast_compound_token(
+                            scanner, ev, &event_init_for_token_left_bracket);
+
                 default:
                     return
                         broadcast_cached_token_and_continue(
