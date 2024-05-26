@@ -279,6 +279,15 @@ static int process_eof_event(
                 broadcast_cached_token_and_continue(
                     scanner, ev, &event_init_for_token_percent);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON:
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_preprocessor_hash);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON_PERCENT:
+            return
+                ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
+
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_AMPERSAND:
             return
                 broadcast_cached_token_and_continue(
@@ -436,6 +445,15 @@ static int process_whitespace_event(
             return
                 broadcast_cached_token_and_continue(
                     scanner, ev, &event_init_for_token_percent);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON:
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_preprocessor_hash);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON_PERCENT:
+            return
+                ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_AMPERSAND:
             return
@@ -605,6 +623,15 @@ static int process_newline_event(
             return
                 broadcast_cached_token_and_continue(
                     scanner, ev, &event_init_for_token_percent);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON:
+            return
+                broadcast_cached_token_and_continue(
+                    scanner, ev, &event_init_for_token_preprocessor_hash);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON_PERCENT:
+            return
+                ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_AMPERSAND:
             return
@@ -1046,14 +1073,44 @@ static int process_raw_character(
 
                 case ':':
                     return
-                        broadcast_compound_token(
+                        transition_state(
                             scanner, ev,
-                            &event_init_for_token_preprocessor_hash);
+                            CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON);
 
                 default:
                     return
                         broadcast_cached_token_and_continue(
                             scanner, ev, &event_init_for_token_percent);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON:
+            switch (ch)
+            {
+                case '%':
+                    return
+                        transition_state(
+                            scanner, ev,
+                            CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON_PERCENT);
+
+                default:
+                    return
+                        broadcast_cached_token_and_continue(
+                            scanner, ev,
+                            &event_init_for_token_preprocessor_hash);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_PERCENT_COLON_PERCENT:
+            switch (ch)
+            {
+                case ':':
+                    return
+                        broadcast_compound_token(
+                            scanner, ev,
+                            &event_init_for_token_preprocessor_string_concat);
+
+                default:
+                    return
+                        ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_CHARACTER;
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_AMPERSAND:
