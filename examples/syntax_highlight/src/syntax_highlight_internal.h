@@ -11,6 +11,7 @@
 #pragma once
 
 #include <libcparse/abstract_parser.h>
+#include <libcparse/cursor.h>
 #include <libcparse/preprocessor_scanner.h>
 #include <libcparse/preprocessor_scanner.h>
 #include <stdio.h>
@@ -21,6 +22,7 @@ extern "C" {
 # endif /*__cplusplus*/
 
 typedef struct syntax_highlight_config syntax_highlight_config;
+typedef struct highlight_item highlight_item;
 
 struct syntax_highlight_config
 {
@@ -31,6 +33,13 @@ struct syntax_highlight_config
     CPARSE_SYM(abstract_parser)* ap;
     FILE* out;
     long count;
+};
+
+struct highlight_item
+{
+    highlight_item* next;
+    int priority;
+    CPARSE_SYM(cursor) pos;
 };
 
 /* C++ compatibility. */
