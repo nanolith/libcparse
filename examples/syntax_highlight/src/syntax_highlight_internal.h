@@ -61,6 +61,17 @@ struct highlight_item
 int syntax_highlight_config_create(
     syntax_highlight_config** config, int* argc, char*** argv);
 
+/**
+ * \brief Release a syntax_highlight_config instance.
+ *
+ * \param config        The instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int syntax_highlight_config_release(syntax_highlight_config* config);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
