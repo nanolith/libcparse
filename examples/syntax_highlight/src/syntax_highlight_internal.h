@@ -31,6 +31,7 @@ struct syntax_highlight_config
     int state;
     CPARSE_SYM(preprocessor_scanner)* scanner;
     CPARSE_SYM(abstract_parser)* ap;
+    char* input_string;
     FILE* out;
     long count;
     highlight_item* head;
