@@ -12,6 +12,8 @@
 
 #include <stdio.h>
 
+#include "syntax_highlight_internal.h"
+
 /**
  * \brief Main entry point for comment_strip.
  *
