@@ -58,7 +58,7 @@ struct highlight_item
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int import_enum_config_create(
+int syntax_highlight_config_create(
     syntax_highlight_config** config, int* argc, char*** argv);
 
 /* C++ compatibility. */
