@@ -33,6 +33,7 @@ struct syntax_highlight_config
     CPARSE_SYM(abstract_parser)* ap;
     FILE* out;
     long count;
+    highlight_item* head;
 };
 
 struct highlight_item
