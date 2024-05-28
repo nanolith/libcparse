@@ -22,7 +22,7 @@ extern "C" {
 # endif /*__cplusplus*/
 
 typedef struct syntax_highlight_config syntax_highlight_config;
-typedef struct highlight_item highlight_item;
+typedef struct source_line source_line;
 
 struct syntax_highlight_config
 {
@@ -34,16 +34,16 @@ struct syntax_highlight_config
     char* input_string;
     FILE* out;
     long count;
-    highlight_item* head;
+    source_line* head;
     long snip_begin;
     long snip_end;
 };
 
-struct highlight_item
+struct source_line
 {
-    highlight_item* next;
-    int priority;
-    CPARSE_SYM(cursor) pos;
+    source_line* next;
+    size_t length;
+    char* line;
 };
 
 /**
