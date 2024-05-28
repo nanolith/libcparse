@@ -35,6 +35,7 @@ struct syntax_highlight_config
     long count;
     highlight_item* head;
     long snip_begin;
+    long snip_end;
 };
 
 struct highlight_item
