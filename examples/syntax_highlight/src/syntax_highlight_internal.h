@@ -44,6 +44,7 @@ struct source_line
     source_line* next;
     size_t length;
     char* line;
+    int* highlight_line;
 };
 
 /**
