@@ -50,6 +50,7 @@ struct source_line
 enum highlight_type
 {
     HIGHLIGHT_TYPE_NORMAL = 0,
+    HIGHLIGHT_TYPE_COMMENT = 1,
 };
 
 /**
