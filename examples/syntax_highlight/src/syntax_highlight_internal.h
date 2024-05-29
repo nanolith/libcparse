@@ -55,6 +55,7 @@ enum highlight_type
     HIGHLIGHT_TYPE_TYPE = 3,
     HIGHLIGHT_TYPE_CHAR_LITERAL = 4,
     HIGHLIGHT_TYPE_STRING = 5,
+    HIGHLIGHT_TYPE_NUMBER = 6,
 };
 
 /**
