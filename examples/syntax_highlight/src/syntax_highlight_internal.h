@@ -57,6 +57,7 @@ enum highlight_type
     HIGHLIGHT_TYPE_STRING = 5,
     HIGHLIGHT_TYPE_NUMBER = 6,
     HIGHLIGHT_TYPE_KEYWORD = 7,
+    HIGHLIGHT_TYPE_MODIFIER = 8,
 };
 
 /**
