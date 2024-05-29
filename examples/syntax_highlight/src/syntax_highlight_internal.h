@@ -52,6 +52,7 @@ enum highlight_type
     HIGHLIGHT_TYPE_NORMAL = 0,
     HIGHLIGHT_TYPE_COMMENT = 1,
     HIGHLIGHT_TYPE_PREPROCESSOR = 2,
+    HIGHLIGHT_TYPE_TYPE = 3,
 };
 
 /**
