@@ -47,6 +47,11 @@ struct source_line
     int* highlight_line;
 };
 
+enum highlight_type
+{
+    HIGHLIGHT_TYPE_NORMAL = 0,
+};
+
 /**
  * \brief Read command-line options, creating a syntax_highlight_config instance
  * on success.
