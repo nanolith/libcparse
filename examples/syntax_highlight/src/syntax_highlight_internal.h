@@ -158,6 +158,17 @@ int source_list_reverse(syntax_highlight_config* config);
  */
 int source_line_release(source_line* line);
 
+/**
+ * \brief Release a source list.
+ *
+ * \param list          The source list to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int source_list_release(source_line* list);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
