@@ -136,6 +136,17 @@ int scan_input_and_write_output(syntax_highlight_config* config);
 int source_list_insert(
     syntax_highlight_config* config, const char* line, size_t size);
 
+/**
+ * \brief Reverse the source list.
+ *
+ * \param config        The config instance for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int source_list_reverse(syntax_highlight_config* config);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
