@@ -147,6 +147,17 @@ int source_list_insert(
  */
 int source_list_reverse(syntax_highlight_config* config);
 
+/**
+ * \brief Release a source line.
+ *
+ * \param line          The source line to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int source_line_release(source_line* line);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
