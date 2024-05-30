@@ -122,6 +122,20 @@ int syntax_highlight_create_scanner_and_output(syntax_highlight_config* config);
  */
 int scan_input_and_write_output(syntax_highlight_config* config);
 
+/**
+ * \brief Insert a line into the source list.
+ *
+ * \param config        The config instance for this operation.
+ * \param line          The line to insert. It is copied.
+ * \param size          The size of the line in bytes.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int source_list_insert(
+    syntax_highlight_config* config, const char* line, size_t size);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
