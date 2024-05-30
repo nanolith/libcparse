@@ -100,6 +100,17 @@ int syntax_highlight_config_release(syntax_highlight_config* config);
  */
 int syntax_highlight_read_input(syntax_highlight_config* config);
 
+/**
+ * \brief Create scanner and output file.
+ *
+ * \param config        The config instance for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int syntax_highlight_create_scanner_and_output(syntax_highlight_config* config);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
