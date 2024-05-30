@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
         goto cleanup;
     }
 
-    /* TODO - fill out. */
+    /* success. */
     retval = STATUS_SUCCESS;
     goto cleanup;
 
