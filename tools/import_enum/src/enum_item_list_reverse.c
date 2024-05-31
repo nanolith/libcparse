@@ -30,10 +30,10 @@ int enum_item_list_reverse(import_enum_config* config)
     if (NULL != list)
     {
         tmp = list->next;
-    }
 
-    /* the current list is now the tail of the list. */
-    list->next = NULL;
+        /* the current list is now the tail of the list. */
+        list->next = NULL;
+    }
 
     while (NULL != list)
     {
