@@ -80,6 +80,7 @@ int import_enum_config_create(
                     retval = 1;
                     goto cleanup;
                 }
+                break;
         }
     }
 
