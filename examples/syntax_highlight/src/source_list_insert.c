@@ -80,6 +80,7 @@ int source_list_insert(
     /* push this onto the list. */
     tmp->next = config->head;
     config->head = tmp;
+    ++config->count;
 
     /* success. */
     retval = STATUS_SUCCESS;
