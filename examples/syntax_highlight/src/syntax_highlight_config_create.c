@@ -48,7 +48,7 @@ int syntax_highlight_config_create(
     memset(tmp, 0, sizeof(*tmp));
 
     /* read options. */
-    while ((ch = getopt(*argc, *argv, "i:o:b:e:")) != -1)
+    while ((ch = getopt(*argc, *argv, "i:o:b:e:d")) != -1)
     {
         switch (ch)
         {
@@ -86,6 +86,10 @@ int syntax_highlight_config_create(
                     goto cleanup;
                 }
                 snip_end_populated = true;
+                break;
+
+            case 'd':
+                tmp->debug = true;
                 break;
         }
     }
