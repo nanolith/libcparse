@@ -32,13 +32,19 @@ int source_list_insert(
     int* tmphighlight = NULL;
     source_line* tmp = NULL;
 
-    /* duplicate the line. */
-    tmpline = strdup(line);
+    /* allocate memory for the line. */
+    tmpline = (char*)malloc(size + 1);
     if (NULL == tmpline)
     {
         retval = ERROR_LIBCPARSE_OUT_OF_MEMORY;
         goto done;
     }
+
+    /* clear the line. */
+    memset(tmpline, 0, size + 1);
+
+    /* copy the line. */
+    memcpy(tmpline, line, size);
 
     /* create a blank highlight line. */
     tmphighlight = (int*)malloc(size * sizeof(*tmphighlight));
@@ -65,6 +71,7 @@ int source_list_insert(
     /* assign variables to this item. */
     tmp->line = tmpline;
     tmp->highlight_line = tmphighlight;
+    tmp->length = size;
 
     /* these values are now owned by the item. */
     tmpline = NULL;
