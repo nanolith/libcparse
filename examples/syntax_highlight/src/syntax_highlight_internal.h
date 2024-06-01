@@ -34,7 +34,7 @@ struct syntax_highlight_config
     CPARSE_SYM(abstract_parser)* ap;
     char* input_string;
     FILE* out;
-    long count;
+    size_t count;
     source_line* head;
     long snip_begin;
     long snip_end;
