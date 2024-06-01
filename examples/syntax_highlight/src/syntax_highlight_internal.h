@@ -36,6 +36,7 @@ struct syntax_highlight_config
     FILE* out;
     size_t count;
     source_line* head;
+    source_line** lines;
     long snip_begin;
     long snip_end;
     bool debug;
