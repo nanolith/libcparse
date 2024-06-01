@@ -40,6 +40,15 @@ int main(int argc, char* argv[])
 
     log_config(config);
 
+    /* read the input file. */
+    retval = syntax_highlight_read_input(config);
+    if (STATUS_SUCCESS != retval)
+    {
+        fprintf(stderr, "Error reading %s.\n", config->input);
+        retval = 1;
+        goto cleanup;
+    }
+
     fprintf(stderr, "Not yet implemented.\n");
     retval = 1;
     goto cleanup;
