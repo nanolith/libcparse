@@ -14,6 +14,7 @@
 
 static int read_input_file(syntax_highlight_config* config);
 static int read_input_lines(syntax_highlight_config* config);
+static void debug_output_parsed_lines(syntax_highlight_config* config);
 
 /**
  * \brief Open input file and read input file into an input string and source
@@ -43,13 +44,18 @@ int syntax_highlight_read_input(syntax_highlight_config* config)
         return retval;
     }
 
+    /* if the debug flag is set, output the parsed lines. */
+    if (config->debug)
+    {
+        debug_output_parsed_lines(config);
+    }
+
     /* success. */
     return STATUS_SUCCESS;
 }
 
 /**
  * \brief Split the input into lines.
- * lines.
  *
  * \param config        The config instance for this operation.
  *
@@ -109,7 +115,6 @@ static int read_input_lines(syntax_highlight_config* config)
 
 /**
  * \brief Read the input file.
- * lines.
  *
  * \param config        The config instance for this operation.
  *
@@ -184,4 +189,21 @@ cleanup_in:
 
 done:
     return retval;
+}
+
+/**
+ * \brief Output the parsed lines for debugging.
+ *
+ * \param config        The config instance for this operation.
+ */
+static void debug_output_parsed_lines(syntax_highlight_config* config)
+{
+    source_line* tmp = config->head;
+
+    fprintf(stderr, "\n\nInput lines:\n");
+
+    for (source_line* tmp = config->head; NULL != tmp; tmp = tmp->next)
+    {
+        fprintf(stderr, "%s\n", tmp->line);
+    }
 }
