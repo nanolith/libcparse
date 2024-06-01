@@ -14,6 +14,7 @@
 #include <libcparse/cursor.h>
 #include <libcparse/preprocessor_scanner.h>
 #include <libcparse/preprocessor_scanner.h>
+#include <stdbool.h>
 #include <stdio.h>
 
 /* C++ compatibility. */
@@ -37,6 +38,7 @@ struct syntax_highlight_config
     source_line* head;
     long snip_begin;
     long snip_end;
+    bool debug;
 };
 
 struct source_line
