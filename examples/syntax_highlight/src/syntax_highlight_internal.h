@@ -41,6 +41,7 @@ struct syntax_highlight_config
     long snip_end;
     bool debug;
     CPARSE_SYM(cursor) comment_scanner_pos;
+    CPARSE_SYM(cursor) preprocessor_scanner_pos;
 };
 
 struct source_line
