@@ -165,10 +165,39 @@ static int comment_scanner_event_callback(
 static int preprocessor_scanner_event_callback(
     syntax_highlight_config* config, const event* ev)
 {
-    /* TODO - fill out. */
-    (void)config;
-    (void)ev;
-    return STATUS_SUCCESS;
+    int retval;
+    const cursor* pos = event_get_cursor(ev);
+
+    switch (event_get_type(ev))
+    {
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_IF:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_IFDEF:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_IFNDEF:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_ELIF:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_ELSE:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_ENDIF:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_INCLUDE:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_DEFINE:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_UNDEF:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_LINE:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_ERROR:
+        case CPARSE_EVENT_TYPE_TOKEN_PP_ID_PRAGMA:
+            memcpy(&config->preprocessor_scanner_pos, pos, sizeof(*pos));
+            return STATUS_SUCCESS;
+
+        case CPARSE_EVENT_TYPE_PP_END:
+            config->preprocessor_scanner_pos.end_line = pos->end_line;
+            config->preprocessor_scanner_pos.end_col = pos->end_col;
+
+            return
+                markup_position(
+                    config, &config->preprocessor_scanner_pos,
+                    HIGHLIGHT_TYPE_PREPROCESSOR);
+
+        /* ignore everything else. */
+        default:
+            return STATUS_SUCCESS;
+    }
 }
 
 /**
