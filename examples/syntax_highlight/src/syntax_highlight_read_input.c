@@ -9,11 +9,13 @@
 
 #include <libcparse/status_codes.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "syntax_highlight_internal.h"
 
 static int read_input_file(syntax_highlight_config* config);
 static int read_input_lines(syntax_highlight_config* config);
+static int create_lines_array(syntax_highlight_config* config);
 static void debug_output_parsed_lines(syntax_highlight_config* config);
 
 /**
@@ -48,6 +50,47 @@ int syntax_highlight_read_input(syntax_highlight_config* config)
     if (config->debug)
     {
         debug_output_parsed_lines(config);
+    }
+
+    /* create the lines array. */
+    retval = create_lines_array(config);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* success. */
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief For O(1) access to source file lines, create a lines array.
+ *
+ * \param config        The config instance for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int create_lines_array(syntax_highlight_config* config)
+{
+    size_t lines_size = config->count * sizeof(source_line*);
+
+    /* allocate memory for the array. */
+    config->lines = (source_line**)malloc(lines_size);
+    if (NULL == config->lines)
+    {
+        return ERROR_LIBCPARSE_OUT_OF_MEMORY;
+    }
+
+    /* clear this array. */
+    memset(config->lines, 0, lines_size);
+
+    /* populate this array. */
+    size_t offset = 0;
+    for (source_line* i = config->head; NULL != i; i = i->next, ++offset)
+    {
+        config->lines[offset] = i;
     }
 
     /* success. */
