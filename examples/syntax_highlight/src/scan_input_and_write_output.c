@@ -28,6 +28,7 @@ static int markup_position(
     syntax_highlight_config* config, const cursor* pos, int syntax_type);
 static int generate_output(syntax_highlight_config* config);
 static const char* decode_style(int style);
+static void write_decoded_char(syntax_highlight_config* config, char ch);
 
 /**
  * \brief Scan the input file, writing HTML markup to the output file.
@@ -237,7 +238,15 @@ static int markup_position(
 static int generate_output(syntax_highlight_config* config)
 {
     /* start the HTML file. */
-    fprintf(config->out, "<html><body><div style=\"codelisting\">\n");
+    fprintf(config->out, "<html>\n");
+
+    /* include a stylesheet. */
+    fprintf(
+        config->out,
+        "<head><link rel=\"stylesheet\" href=\"codelisting.css\"/></head>\n");
+
+    /* start the body. */
+    fprintf(config->out, "<body><div class=\"codelisting\">\n");
 
     /* iterate over each line of the source file. */
     for (source_line* i = config->head; NULL != i; i = i->next)
@@ -245,9 +254,9 @@ static int generate_output(syntax_highlight_config* config)
         int prev_style = 0;
 
         /* start the source line. */
-        fprintf(config->out, "<div style=\"codelisting_line\">");
+        fprintf(config->out, "<div class=\"codelisting_line\">");
         /* start a normal span. */
-        fprintf(config->out, "<span style=\"codestyle_normal\">");
+        fprintf(config->out, "<span class=\"codestyle_normal\">");
 
         /* iterate over each character in the line. */
         for (size_t offset = 0; offset < i->length; ++offset)
@@ -257,13 +266,13 @@ static int generate_output(syntax_highlight_config* config)
             {
                 /* change the style. */
                 fprintf(
-                    config->out, "</span><span style=\"codestyle_%s\">",
+                    config->out, "</span><span class=\"codestyle_%s\">",
                     decode_style(i->highlight_line[offset]));
                 prev_style = i->highlight_line[offset];
             }
 
             /* output this character. */
-            fprintf(config->out, "%c", i->line[offset]);
+            write_decoded_char(config, i->line[offset]);
         }
 
         /* end the source line. */
@@ -317,5 +326,37 @@ static const char* decode_style(int style)
         case HIGHLIGHT_TYPE_NORMAL:
         default:
             return "normal";
+    }
+}
+
+/**
+ * \brief Write a character safe for HTML output.
+ *
+ * \param config            The config for this operation.
+ * \param ch                The character to decode.
+ *
+ * \returns a symbolic name for the given style.
+ */
+static void write_decoded_char(syntax_highlight_config* config, char ch)
+{
+    switch (ch)
+    {
+        case '\t':
+            fprintf(config->out, "&nbsp;&nbsp;");
+            break;
+
+        case ' ':
+            fprintf(config->out, "&nbsp;");
+            break;
+
+        case '<':
+            fprintf(config->out, "&lt;");
+            break;
+
+        case '>':
+            fprintf(config->out, "&gt;");
+
+        default:
+            fprintf(config->out, "%c", ch);
     }
 }
