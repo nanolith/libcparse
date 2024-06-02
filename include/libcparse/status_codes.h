@@ -40,4 +40,5 @@ enum CPARSE_SYM(status_code)
     ERROR_LIBCPARSE_FILE_OPEN_ERROR =                                   1023,
     ERROR_LIBCPARSE_FILE_SEEK =                                         1024,
     ERROR_LIBCPARSE_FILE_TELL =                                         1025,
+    ERROR_LIBCPARSE_OUT_OF_BOUNDS =                                     1026,
 };
