@@ -355,6 +355,7 @@ static void write_decoded_char(syntax_highlight_config* config, char ch)
 
         case '>':
             fprintf(config->out, "&gt;");
+            break;
 
         default:
             fprintf(config->out, "%c", ch);
