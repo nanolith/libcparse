@@ -74,6 +74,12 @@ int syntax_highlight_config_release(syntax_highlight_config* config)
         }
     }
 
+    /* release the lines array if set. */
+    if (NULL != config->lines)
+    {
+        free(config->lines);
+    }
+
     /* free the config. */
     free(config);
 
