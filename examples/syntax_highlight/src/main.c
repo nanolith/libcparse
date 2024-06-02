@@ -49,8 +49,25 @@ int main(int argc, char* argv[])
         goto cleanup;
     }
 
-    fprintf(stderr, "Not yet implemented.\n");
-    retval = 1;
+    /* create the scanner and output file. */
+    retval = syntax_highlight_create_scanner_and_output(config);
+    if (STATUS_SUCCESS != retval)
+    {
+        retval = 1;
+        goto cleanup;
+    }
+
+    /* scan the input and write the output. */
+    retval = scan_input_and_write_output(config);
+    if (STATUS_SUCCESS != retval)
+    {
+        fprintf(stderr, "Error scanning %s.\n", config->input);
+        retval = 1;
+        goto cleanup;
+    }
+
+    /* success. */
+    retval = 0;
     goto cleanup;
 
 cleanup:
