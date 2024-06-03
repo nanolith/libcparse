@@ -314,6 +314,12 @@ static int markup_position(
             end_col_offset = l->length;
         }
 
+        /* clamp this offset. */
+        if (end_col_offset >= l->length)
+        {
+            end_col_offset = l->length;
+        }
+
         /* mark all characters between the two offsets. */
         for (size_t i = col_offset; i < end_col_offset; ++i)
         {
