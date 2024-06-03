@@ -342,6 +342,8 @@ static int markup_position(
  */
 static int generate_output(syntax_highlight_config* config)
 {
+    long line = 1;
+
     /* start the HTML file. */
     fprintf(config->out, "<html>\n");
 
@@ -354,7 +356,7 @@ static int generate_output(syntax_highlight_config* config)
     fprintf(config->out, "<body><div class=\"codelisting\">\n");
 
     /* iterate over each line of the source file. */
-    for (source_line* i = config->head; NULL != i; i = i->next)
+    for (source_line* i = config->head; NULL != i; i = i->next, ++line)
     {
         int prev_style = 0;
 
