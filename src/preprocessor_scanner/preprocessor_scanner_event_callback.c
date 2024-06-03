@@ -3549,6 +3549,7 @@ static int broadcast_pp_end(preprocessor_scanner* scanner)
     int retval, release_retval;
     event pev;
     const cursor* pos;
+    cursor bpos;
 
     /* get the cached position. */
     retval = file_position_cache_position_get(scanner->newline_cache, &pos);
@@ -3557,8 +3558,18 @@ static int broadcast_pp_end(preprocessor_scanner* scanner)
         goto done;
     }
 
+    /* set up the broadcast token position. */
+    memcpy(&bpos, pos, sizeof(bpos));
+
+    /* truncate the position to only cover the newline. */
+    if (bpos.end_line != bpos.begin_line)
+    {
+        bpos.end_line = bpos.begin_line;
+        bpos.end_col = bpos.begin_col;
+    }
+
     /* initialize the token event. */
-    retval = event_init_for_preprocessor_directive_end(&pev, pos);
+    retval = event_init_for_preprocessor_directive_end(&pev, &bpos);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
