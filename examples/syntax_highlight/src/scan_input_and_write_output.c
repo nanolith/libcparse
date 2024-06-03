@@ -7,6 +7,7 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <ctype.h>
 #include <libcparse/abstract_parser.h>
 #include <libcparse/event.h>
 #include <libcparse/event_handler.h>
@@ -288,6 +289,7 @@ static int generate_output(syntax_highlight_config* config)
         fprintf(config->out, "<span class=\"codestyle_normal\">");
 
         /* iterate over each character in the line. */
+        bool nonspace_found = false;
         for (size_t offset = 0; offset < i->length; ++offset)
         {
             /* do we need to change styles? */
@@ -302,6 +304,18 @@ static int generate_output(syntax_highlight_config* config)
 
             /* output this character. */
             write_decoded_char(config, i->line[offset]);
+
+            /* if non-whitespace is found, we don't need to buffer the line. */
+            if (!isspace(i->line[offset]))
+            {
+                nonspace_found = true;
+            }
+        }
+
+        /* add some nbsp if only whitespace is on the line. */
+        if (!nonspace_found)
+        {
+            fprintf(config->out, "&nbsp;");
         }
 
         /* end the source line. */
