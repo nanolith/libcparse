@@ -260,7 +260,7 @@ static int preprocessor_scanner_event_callback(
         case CPARSE_EVENT_TYPE_TOKEN_KEYWORD__GENERIC:
         case CPARSE_EVENT_TYPE_TOKEN_KEYWORD__STATIC_ASSERT:
         default:
-            return STATUS_SUCCESS;
+            return markup_position(config, pos, HIGHLIGHT_TYPE_NORMAL);
     }
 }
 
@@ -285,6 +285,12 @@ static int markup_position(
     /* bounds check. */
     if (begin_offset >= config->count || end_offset >= config->count)
     {
+        /* ignore bounds check for EOF. */
+        if (begin_offset == config->count && end_offset == config->count)
+        {
+            return STATUS_SUCCESS;
+        }
+
         return ERROR_LIBCPARSE_OUT_OF_BOUNDS;
     }
 
