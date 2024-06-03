@@ -40,6 +40,7 @@ struct syntax_highlight_config
     long snip_begin;
     long snip_end;
     bool debug;
+    bool line_numbers;
     CPARSE_SYM(cursor) comment_scanner_pos;
     CPARSE_SYM(cursor) preprocessor_scanner_pos;
 };
