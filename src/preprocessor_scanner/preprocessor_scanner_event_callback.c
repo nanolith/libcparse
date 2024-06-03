@@ -3034,9 +3034,25 @@ static int end_identifier(preprocessor_scanner* scanner, const event* ev)
             scanner->preprocessor_state =
                 CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED;
 
+            /* get the hash position. */
+            const cursor* hash_pos;
+            retval =
+                file_position_cache_position_get(
+                    scanner->hash_cache, &hash_pos);
+            if (STATUS_SUCCESS != retval)
+            {
+                goto cleanup_str;
+            }
+
+            /* update the position to include the hash begin. */
+            cursor broadcast_pos;
+            memcpy(&broadcast_pos, pos, sizeof(broadcast_pos));
+            broadcast_pos.begin_line = hash_pos->begin_line;
+            broadcast_pos.begin_col = hash_pos->begin_col;
+
             /* send the keyword event. */
-            /* TODO - use the complete pos. */
-            retval = keyword_event_broadcast(scanner, keyword_entry, pos);
+            retval =
+                keyword_event_broadcast(scanner, keyword_entry, &broadcast_pos);
 
             /* reset the hash cache. */
             file_position_cache_clear(scanner->hash_cache);
