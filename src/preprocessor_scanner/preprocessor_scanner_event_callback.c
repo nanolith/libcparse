@@ -908,9 +908,15 @@ static int process_raw_character(
                             return retval;
                         }
 
-                        /* We aren't in a preprocessor directive here. */
-                        scanner->preprocessor_state =
-                            CPARSE_PREPROCESSOR_DIRECTIVE_STATE_DISABLED;
+                        /* If we aren't yet in a preprocessor directive... */
+                        if (
+                            CPARSE_PREPROCESSOR_DIRECTIVE_STATE_INIT
+                                == scanner->preprocessor_state)
+                        {
+                            /* Then we can't be. */
+                            scanner->preprocessor_state =
+                                CPARSE_PREPROCESSOR_DIRECTIVE_STATE_DISABLED;
+                        }
 
                         return STATUS_SUCCESS;
 
