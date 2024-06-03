@@ -360,6 +360,18 @@ static int generate_output(syntax_highlight_config* config)
     {
         int prev_style = 0;
 
+        /* skip to the start of the snip if set. */
+        if (0 != config->snip_begin && line < config->snip_begin)
+        {
+            continue;
+        }
+    
+        /* stop if we have exceeded the snip end. */
+        if (0 != config->snip_end && line > config->snip_end)
+        {
+            break;
+        }
+
         /* start the source line. */
         fprintf(config->out, "<div class=\"codelisting_line\">");
         /* start a normal span. */
