@@ -344,16 +344,21 @@ static int generate_output(syntax_highlight_config* config)
 {
     long line = 1;
 
-    /* start the HTML file. */
-    fprintf(config->out, "<html>\n");
+    /* only output HTML root elements if fragment mode is disabled. */
+    if (!config->fragment)
+    {
+        /* start the HTML file. */
+        fprintf(config->out, "<html>\n");
 
-    /* include a stylesheet. */
-    fprintf(
-        config->out,
-        "<head><link rel=\"stylesheet\" href=\"codelisting.css\"/></head>\n");
+        /* include a stylesheet. */
+        fprintf(
+            config->out,
+            "<head><link rel=\"stylesheet\" href=\"codelisting.css\"/>"
+            "</head>\n");
 
-    /* start the body. */
-    fprintf(config->out, "<body>");
+        /* start the body. */
+        fprintf(config->out, "<body>");
+    }
 
     /* start the code listing. */
     fprintf(config->out, "<div class=\"codelisting\">\n");
@@ -417,8 +422,12 @@ static int generate_output(syntax_highlight_config* config)
     /* end the code listing. */
     fprintf(config->out, "</div>");
 
-    /* end the HTML file. */
-    fprintf(config->out, "</body></html>\n");
+    /* only output HTML end root elements if fragment mode is disabled. */
+    if (!config->fragment)
+    {
+        /* end the HTML file. */
+        fprintf(config->out, "</body></html>\n");
+    }
 
     return STATUS_SUCCESS;
 }
