@@ -353,7 +353,10 @@ static int generate_output(syntax_highlight_config* config)
         "<head><link rel=\"stylesheet\" href=\"codelisting.css\"/></head>\n");
 
     /* start the body. */
-    fprintf(config->out, "<body><div class=\"codelisting\">\n");
+    fprintf(config->out, "<body>");
+
+    /* start the code listing. */
+    fprintf(config->out, "<div class=\"codelisting\">\n");
 
     /* iterate over each line of the source file. */
     for (source_line* i = config->head; NULL != i; i = i->next, ++line)
@@ -411,8 +414,11 @@ static int generate_output(syntax_highlight_config* config)
         fprintf(config->out, "</span></div>\n");
     }
 
+    /* end the code listing. */
+    fprintf(config->out, "</div>");
+
     /* end the HTML file. */
-    fprintf(config->out, "</div></body></html>\n");
+    fprintf(config->out, "</body></html>\n");
 
     return STATUS_SUCCESS;
 }
