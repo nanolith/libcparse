@@ -178,6 +178,26 @@ int CPARSE_SYM(file_position_cache_whitespace_token_broadcast)(
 int CPARSE_SYM(file_position_cache_newline_token_broadcast)(
     CPARSE_SYM(file_position_cache)* cache, CPARSE_SYM(event_reactor)* reactor);
 
+/**
+ * \brief Given a cache and event reactor, send the final cached newline token
+ * event to the event reactor subscribers.
+ *
+ * This event is triggered by an EOF event, so this function will automatically
+ * adjust the end line and column to reflect one line "past" the EOF in the
+ * position to assist with newline positioning logic in downstream event
+ * handlers that care about token position.
+ *
+ * \param cache             The \ref file_position_cache instance for this
+ *                          operation.
+ * \param reactor           The \ref event_reactor for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(file_position_cache_final_newline_token_broadcast)(
+    CPARSE_SYM(file_position_cache)* cache, CPARSE_SYM(event_reactor)* reactor);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
