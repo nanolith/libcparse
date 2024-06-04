@@ -96,8 +96,4 @@ static void log_config(const syntax_highlight_config* config)
         fprintf(stderr, "Snip begin: %ld\n", config->snip_begin);
         fprintf(stderr, "Snip end: %ld\n", config->snip_end);
     }
-
-    fprintf(
-        stderr, "Line numbers: %s\n",
-        config->line_numbers ? "enabled" : "disabled");
 }
