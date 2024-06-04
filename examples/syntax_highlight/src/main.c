@@ -96,4 +96,9 @@ static void log_config(const syntax_highlight_config* config)
         fprintf(stderr, "Snip begin: %ld\n", config->snip_begin);
         fprintf(stderr, "Snip end: %ld\n", config->snip_end);
     }
+
+    if (config->fragment)
+    {
+        fprintf(stderr, "Generating HTML fragment.\n");
+    }
 }
