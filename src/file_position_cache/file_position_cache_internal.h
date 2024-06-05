@@ -52,6 +52,27 @@ int CPARSE_SYM(file_position_cache_newline_token_broadcast_internal)(
     CPARSE_SYM(file_position_cache)* cache, CPARSE_SYM(event_reactor)* reactor,
     const CPARSE_SYM(cursor)* pos);
 
+/******************************************************************************/
+/* Start of privote exports.                                                  */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_file_position_cache_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    static inline int \
+    sym ## file_position_cache_newline_token_broadcast_internal( \
+        CPARSE_SYM(file_position_cache)* x, CPARSE_SYM(event_reactor)* y, \
+        const CPARSE_SYM(cursor)* z) { \
+            return \
+                CPARSE_SYM( \
+                    file_position_cache_newline_token_broadcast_internal)( \
+                        x,y,z); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_file_position_cache_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_file_position_cache_internal_sym(sym ## _)
+#define CPARSE_IMPORT_file_position_cache_internal \
+    __INTERNAL_CPARSE_IMPORT_file_position_cache_internal_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
