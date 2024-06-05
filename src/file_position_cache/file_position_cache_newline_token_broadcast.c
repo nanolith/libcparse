@@ -15,6 +15,7 @@
 
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_reactor;
+CPARSE_IMPORT_file_position_cache_internal;
 
 /**
  * \brief Given a cache and event reactor, send a cached newline token event to
@@ -31,34 +32,7 @@ CPARSE_IMPORT_event_reactor;
 int CPARSE_SYM(file_position_cache_newline_token_broadcast)(
     CPARSE_SYM(file_position_cache)* cache, CPARSE_SYM(event_reactor)* reactor)
 {
-    int retval, release_retval;
-    event ev;
-
-    /* initialize the event. */
-    retval = event_init_for_newline_token(&ev, &cache->pos);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto done;
-    }
-
-    /* broadcast this message. */
-    retval = event_reactor_broadcast(reactor, &ev);
-    if (STATUS_SUCCESS != retval)
-    {
-        goto cleanup_ev;
-    }
-
-    /* success. */
-    retval = STATUS_SUCCESS;
-    goto cleanup_ev;
-
-cleanup_ev:
-    release_retval = event_dispose(&ev);
-    if (STATUS_SUCCESS != release_retval)
-    {
-        retval = release_retval;
-    }
-
-done:
-    return retval;
+    return
+        file_position_cache_newline_token_broadcast_internal(
+            reactor, &cache->pos);
 }
