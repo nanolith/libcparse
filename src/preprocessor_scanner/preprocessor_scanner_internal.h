@@ -156,7 +156,7 @@ int CPARSE_SYM(preprocessor_scanner_event_callback)(
     void* context, const CPARSE_SYM(event)* ev);
 
 /******************************************************************************/
-/* Start of public exports.                                                   */
+/* Start of privote exports.                                                  */
 /******************************************************************************/
 
 #define __INTERNAL_CPARSE_IMPORT_preprocessor_scanner_internal_sym(sym) \
