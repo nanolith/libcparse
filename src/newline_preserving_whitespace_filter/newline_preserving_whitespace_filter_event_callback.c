@@ -644,7 +644,7 @@ static int newline_eof_transition(
 
     /* broadcast newline event. */
     retval =
-        file_position_cache_newline_token_broadcast(
+        file_position_cache_final_newline_token_broadcast(
             filter->cache, filter->reactor);
     if (STATUS_SUCCESS != retval)
     {
