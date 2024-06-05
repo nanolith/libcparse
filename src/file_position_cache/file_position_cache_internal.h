@@ -39,8 +39,6 @@ struct CPARSE_SYM(file_position_cache)
  * position to assist with newline positioning logic in downstream event
  * handlers that care about token position.
  *
- * \param cache             The \ref file_position_cache instance for this
- *                          operation.
  * \param reactor           The \ref event_reactor for this operation.
  * \param pos               The position to use for this token.
  *
@@ -49,8 +47,7 @@ struct CPARSE_SYM(file_position_cache)
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(file_position_cache_newline_token_broadcast_internal)(
-    CPARSE_SYM(file_position_cache)* cache, CPARSE_SYM(event_reactor)* reactor,
-    const CPARSE_SYM(cursor)* pos);
+    CPARSE_SYM(event_reactor)* reactor, const CPARSE_SYM(cursor)* pos);
 
 /******************************************************************************/
 /* Start of privote exports.                                                  */
@@ -60,12 +57,11 @@ int CPARSE_SYM(file_position_cache_newline_token_broadcast_internal)(
     CPARSE_BEGIN_EXPORT \
     static inline int \
     sym ## file_position_cache_newline_token_broadcast_internal( \
-        CPARSE_SYM(file_position_cache)* x, CPARSE_SYM(event_reactor)* y, \
-        const CPARSE_SYM(cursor)* z) { \
+        CPARSE_SYM(event_reactor)* x, const CPARSE_SYM(cursor)* y) { \
             return \
                 CPARSE_SYM( \
                     file_position_cache_newline_token_broadcast_internal)( \
-                        x,y,z); } \
+                        x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_file_position_cache_internal_as(sym) \
