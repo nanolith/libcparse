@@ -112,6 +112,21 @@ int CPARSE_SYM(event_downcast_to_event_raw_float_token)(
 CPARSE_SYM(event)* CPARSE_SYM(event_raw_float_token_upcast)(
     CPARSE_SYM(event_raw_float_token)* ev);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_event_raw_float_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(event_raw_float_token) \
+    sym ## event_raw_float_token; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_event_raw_float_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_event_raw_float_sym(sym ## _)
+#define CPARSE_IMPORT_event_raw_float \
+    __INTERNAL_CPARSE_IMPORT_event_raw_float_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
