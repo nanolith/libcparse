@@ -13,7 +13,6 @@
 #include <libcparse/cursor.h>
 #include <libcparse/event.h>
 #include <libcparse/function_decl.h>
-#include <libcparse/event/integer.h>
 #include <stdint.h>
 
 /* C++ compatibility. */
@@ -74,6 +73,19 @@ int CPARSE_SYM(event_raw_float_token_dispose)(
  */
 const char* CPARSE_SYM(event_raw_float_token_string_get)(
     const CPARSE_SYM(event_raw_float_token)* ev);
+
+/**
+ * \brief Set the sign flag.
+ *
+ * \param ev                The event for this operation.
+ * \param sign              The sign flag.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_raw_float_token_sign_set)(
+    CPARSE_SYM(event_raw_float_token)* ev, bool sign);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
