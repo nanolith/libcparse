@@ -61,6 +61,20 @@ int CPARSE_SYM(event_raw_float_token_init)(
 int CPARSE_SYM(event_raw_float_token_dispose)(
     CPARSE_SYM(event_raw_float_token)* ev);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get the raw float value.
+ *
+ * \param ev                The event for this operation.
+ *
+ * \returns the string representation of the raw float value.
+ */
+const char* CPARSE_SYM(event_raw_float_token_string_get)(
+    const CPARSE_SYM(event_raw_float_token)* ev);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
