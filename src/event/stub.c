@@ -1,4 +1,2 @@
-#include <libcparse/event/raw_character_literal.h>
+#include <libcparse/event/raw_float.h>
 #include <stdio.h>
-
-CPARSE_IMPORT_event_raw_character_literal;
