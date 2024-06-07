@@ -78,6 +78,13 @@ struct CPARSE_SYM(event_raw_integer_token)
     const char* digits;
 };
 
+struct CPARSE_SYM(event_raw_float_token)
+{
+    CPARSE_SYM(event) hdr;
+    bool has_sign;
+    const char* val;
+};
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
