@@ -42,3 +42,31 @@ TEST(init_dispose)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_float_token_dispose(&ev));
 }
+
+/**
+ * Test that we can get the raw float string value.
+ */
+TEST(string_get)
+{
+    cursor pos;
+    event_raw_float_token ev;
+    const char* TEST_FLOAT = "123.0";
+
+    /* set up the position. */
+    memset(&pos, 0, sizeof(pos));
+    pos.file = "stdin";
+    pos.begin_line = pos.end_line = 1;
+    pos.begin_col = pos.end_col = 1;
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_raw_float_token_init(&ev, &pos, TEST_FLOAT));
+
+    /* the string value should match our constructor value. */
+    auto val = event_raw_float_token_string_get(&ev);
+    TEST_ASSERT(nullptr != val);
+    TEST_EXPECT(!strcmp(TEST_FLOAT, val));
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_float_token_dispose(&ev));
+}
