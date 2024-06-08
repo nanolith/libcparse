@@ -42,3 +42,32 @@ TEST(init_dispose)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can get the raw integer string value.
+ */
+TEST(get)
+{
+    cursor pos;
+    event_raw_integer_token ev;
+    const char* TEST_INT = "123";
+
+    /* set up the position. */
+    memset(&pos, 0, sizeof(pos));
+    pos.file = "stdin";
+    pos.begin_line = pos.end_line = 1;
+    pos.begin_col = pos.end_col = 1;
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_raw_integer_token_init(&ev, &pos, TEST_INT));
+
+    /* the string value should match our constructor value. */
+    auto val = event_raw_integer_token_string_get(&ev);
+    TEST_ASSERT(nullptr != val);
+    TEST_EXPECT(!strcmp(TEST_INT, val));
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_integer_token_dispose(&ev));
+}
+
