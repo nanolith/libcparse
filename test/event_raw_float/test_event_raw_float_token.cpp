@@ -96,3 +96,34 @@ TEST(sign_set)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_float_token_dispose(&ev));
 }
+
+/**
+ * Test that we can upcast and downcast the raw float token event.
+ */
+TEST(upcast_downcast)
+{
+    cursor pos;
+    event_raw_float_token ev;
+    event_raw_float_token* rev;
+    const char* TEST_FLOAT = "123.0";
+
+    /* set up the position. */
+    memset(&pos, 0, sizeof(pos));
+    pos.file = "stdin";
+    pos.begin_line = pos.end_line = 1;
+    pos.begin_col = pos.end_col = 1;
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_raw_float_token_init(&ev, &pos, TEST_FLOAT));
+
+    /* upcast the event. */
+    auto oev = event_raw_float_token_upcast(&ev);
+
+    /* we can downcast this event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_downcast_to_event_raw_float_token(&rev, oev));
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_float_token_dispose(&ev));
+}
