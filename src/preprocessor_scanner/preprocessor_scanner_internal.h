@@ -110,6 +110,7 @@ enum CPARSE_SYM(preprocessor_scanner_state)
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT =                         67,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT_DOT =                     68,
     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_COLON =                       69,
+    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT =                       70,
 };
 
 enum CPARSE_SYM(preprocessor_directive_state)
