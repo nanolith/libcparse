@@ -9,6 +9,7 @@
 
 #include <libcparse/event/identifier.h>
 #include <libcparse/event/raw_character_literal.h>
+#include <libcparse/event/raw_float.h>
 #include <libcparse/event/raw_integer.h>
 #include <libcparse/event/raw_string.h>
 #include <libcparse/event_type.h>
@@ -22,6 +23,7 @@ using namespace test_preprocessor_scanner_helper;
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_identifier;
 CPARSE_IMPORT_event_raw_character_literal;
+CPARSE_IMPORT_event_raw_float;
 CPARSE_IMPORT_event_raw_integer;
 CPARSE_IMPORT_event_raw_string;
 
@@ -103,6 +105,19 @@ int test_preprocessor_scanner_helper::dummy_callback(
         }
 
         auto str = event_raw_integer_token_string_get(iev);
+
+        ctx->vals.push_back(make_pair(token_type, str));
+    }
+    else if (CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_FLOAT == token_type)
+    {
+        event_raw_float_token* fev;
+        retval = event_downcast_to_event_raw_float_token(&fev, (event*)ev);
+        if (STATUS_SUCCESS != retval)
+        {
+            return retval;
+        }
+
+        auto str = event_raw_float_token_string_get(fev);
 
         ctx->vals.push_back(make_pair(token_type, str));
     }
