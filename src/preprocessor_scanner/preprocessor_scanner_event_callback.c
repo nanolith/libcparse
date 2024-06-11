@@ -121,6 +121,8 @@ static int broadcast_double_hash_token(
     preprocessor_scanner* scanner, const event* ev);
 static bool is_string(const char* str, const event* ev, int* ch);
 static bool is_char(const char* str, const event* ev, int* ch);
+static int upgrade_dot_state_to_float(
+    preprocessor_scanner* scanner, const event* ev, int ch);
 
 /**
  * \brief Event handler callback for \ref preprocessor_scanner_event_callback.
@@ -965,6 +967,10 @@ static int process_raw_character(
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
+            if (char_is_decimal_digit(ch))
+            {
+                return upgrade_dot_state_to_float(scanner, ev, ch);
+            }
             switch (ch)
             {
                 case '.':
@@ -3894,6 +3900,49 @@ static int preprocessor_include_update_state(
 {
     scanner->preprocessor_state =
         CPARSE_PREPROCESSOR_DIRECTIVE_STATE_ENABLED_INCLUDE;
+
+    return STATUS_SUCCESS;
+}
+
+/**
+ * \brief Upgrade the dot state to the float state.
+ *
+ * \param scanner           The scanner for this operation.
+ * \param ev                The event for this operation.
+ * \param ch                The character for this operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int upgrade_dot_state_to_float(
+    preprocessor_scanner* scanner, const event* ev, int ch)
+{
+    int retval;
+
+    /* extend the cached position to cover this character. */
+    retval = file_position_cache_position_extend(scanner->cache, ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* add the dot character to the string builder. */
+    retval = string_builder_add_character(scanner->builder, '.');
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* add this character to the string builder. */
+    retval = string_builder_add_character(scanner->builder, ch);
+    if (STATUS_SUCCESS != retval)
+    {
+        return retval;
+    }
+
+    /* we are now in the floating point state. */
+    scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT;
 
     return STATUS_SUCCESS;
 }
