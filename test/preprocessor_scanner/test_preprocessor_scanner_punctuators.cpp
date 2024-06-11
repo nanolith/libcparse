@@ -24,6 +24,8 @@ CPARSE_IMPORT_event_handler;
 CPARSE_IMPORT_input_stream;
 CPARSE_IMPORT_preprocessor_scanner;
 
+TEST_SUITE(preprocessor_scanner_punctuators);
+
 /**
  * Test that we can scan a left parenthesis.
  */
