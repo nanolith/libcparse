@@ -1956,6 +1956,11 @@ static int process_raw_character(
                     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_L;
                 return continue_integer(scanner, ev, ch);
             }
+            else if ('.' == ch)
+            {
+                scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT;
+                return continue_float(scanner, ev, ch);
+            }
             else
             {
                 return end_integer(scanner, ev);
@@ -2046,8 +2051,7 @@ static int process_raw_character(
             }
             else if ('.' == ch)
             {
-                scanner->state =
-                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT;
+                scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT;
                 return continue_float(scanner, ev, ch);
             }
             else
