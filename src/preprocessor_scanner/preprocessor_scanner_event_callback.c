@@ -254,6 +254,9 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT:
             return end_float(scanner, ev);
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
+            return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
+
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
             return
                 broadcast_cached_token_and_continue(
@@ -423,6 +426,9 @@ static int process_whitespace_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT:
             return end_float(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
+            return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
             return
@@ -604,6 +610,9 @@ static int process_newline_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT:
             return end_float(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
+            return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
             return
@@ -1934,9 +1943,26 @@ static int process_raw_character(
             {
                 return continue_float(scanner, ev, ch);
             }
+            else if ('E' == ch || 'e' == ch)
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT;
+                return continue_float(scanner, ev, ch);
+            }
             else
             {
                 return end_float(scanner, ev);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
+            if (char_is_decimal_digit(ch))
+            {
+                /* TODO - add float exponent digit support here. */
+                return -1;
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
