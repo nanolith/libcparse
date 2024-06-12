@@ -256,6 +256,7 @@ static int process_eof_event(
             return end_float(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_SIGN_EXPECT_DIGIT:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
@@ -430,6 +431,7 @@ static int process_whitespace_event(
             return end_float(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_SIGN_EXPECT_DIGIT:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
@@ -615,6 +617,7 @@ static int process_newline_event(
             return end_float(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_SIGN_EXPECT_DIGIT:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
@@ -1958,6 +1961,24 @@ static int process_raw_character(
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
+            if (char_is_decimal_digit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_WITH_DIGIT;
+                return continue_float(scanner, ev, ch);
+            }
+            else if ('+' == ch || '-' == ch)
+            {
+                scanner->state =
+                 CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_SIGN_EXPECT_DIGIT;
+                return continue_float(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_SIGN_EXPECT_DIGIT:
             if (char_is_decimal_digit(ch))
             {
                 scanner->state =
