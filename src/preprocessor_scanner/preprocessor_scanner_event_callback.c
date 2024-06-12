@@ -252,6 +252,7 @@ static int process_eof_event(
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_WITH_DIGIT:
             return end_float(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
@@ -425,6 +426,7 @@ static int process_whitespace_event(
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_WITH_DIGIT:
             return end_float(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
@@ -609,6 +611,7 @@ static int process_newline_event(
             return end_integer(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_WITH_DIGIT:
             return end_float(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
@@ -1957,12 +1960,23 @@ static int process_raw_character(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
             if (char_is_decimal_digit(ch))
             {
-                /* TODO - add float exponent digit support here. */
-                return -1;
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_WITH_DIGIT;
+                return continue_float(scanner, ev, ch);
             }
             else
             {
                 return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_WITH_DIGIT:
+            if (char_is_decimal_digit(ch))
+            {
+                return continue_float(scanner, ev, ch);
+            }
+            else
+            {
+                return end_float(scanner, ev);
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER:
