@@ -259,5 +259,3 @@ TEST(identifier3)
         STATUS_SUCCESS == preprocessor_scanner_release(scanner));
     TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh));
 }
-
-
