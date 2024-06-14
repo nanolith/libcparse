@@ -259,6 +259,14 @@ static int process_eof_event(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_SIGN_EXPECT_DIGIT:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
 
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_WITH_DIGIT:
+            return end_float(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_EXPECT_DIGIT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_S_EXPECT_DIGIT:
+            return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
+
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
             return
                 broadcast_cached_token_and_continue(
@@ -432,6 +440,14 @@ static int process_whitespace_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_SIGN_EXPECT_DIGIT:
+            return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_WITH_DIGIT:
+            return end_float(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_EXPECT_DIGIT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_S_EXPECT_DIGIT:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
@@ -618,6 +634,14 @@ static int process_newline_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_SIGN_EXPECT_DIGIT:
+            return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_WITH_DIGIT:
+            return end_float(scanner, ev);
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_EXPECT_DIGIT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_S_EXPECT_DIGIT:
             return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DOT:
@@ -2147,6 +2171,12 @@ static int process_raw_character(
             {
                 return continue_integer(scanner, ev, ch);
             }
+            else if ('.' == ch)
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT;
+                return continue_float(scanner, ev, ch);
+            }
             else if (char_is_unsigned_specifier(ch))
             {
                 scanner->state =
@@ -2162,6 +2192,62 @@ static int process_raw_character(
             else
             {
                 return end_integer(scanner, ev);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT:
+            if (isxdigit(ch))
+            {
+                return continue_float(scanner, ev, ch);
+            }
+            else if ('p' == ch || 'P' == ch)
+            {
+                scanner->state =
+                  CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_EXPECT_DIGIT;
+                return continue_float(scanner, ev, ch);
+            }
+            else
+            {
+                return end_float(scanner, ev);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_EXPECT_DIGIT:
+            if (isxdigit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_WITH_DIGIT;
+                return continue_float(scanner, ev, ch);
+            }
+            else if ('+' == ch || '-' == ch)
+            {
+                scanner->state =
+                CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_S_EXPECT_DIGIT;
+                return continue_float(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_S_EXPECT_DIGIT:
+            if (isxdigit(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_WITH_DIGIT;
+                return continue_float(scanner, ev, ch);
+            }
+            else
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_WITH_DIGIT:
+            if (isxdigit(ch))
+            {
+                return continue_float(scanner, ev, ch);
+            }
+            else
+            {
+                return end_float(scanner, ev);
             }
 
         default:
