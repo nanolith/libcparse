@@ -107,6 +107,7 @@ FLOAT_TEST_EXPECT_SUCCESS(float_1_dot_4e_minus_7,       "1.4e-7");
 FLOAT_TEST_EXPECT_SUCCESS(float_1_dot_4E7,              "1.4E7");
 FLOAT_TEST_EXPECT_SUCCESS(float_1_dot_4E_plus_7,        "1.4E+7");
 FLOAT_TEST_EXPECT_SUCCESS(float_1_dot_4E_minus_7,       "1.4E-7");
+FLOAT_TEST_EXPECT_SUCCESS(hex_float_zero_dot_p0,        "0x0.p0");
 
 #define expect_digit ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT
 
