@@ -2175,13 +2175,21 @@ static int process_raw_character(
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
             if (isxdigit(ch))
             {
+                scanner->has_hex_digit = true;
                 return continue_integer(scanner, ev, ch);
             }
             else if ('p' == ch || 'P' == ch)
             {
-                scanner->state =
+                if (scanner->has_hex_digit)
+                {
+                  scanner->state =
                   CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_EXPECT_DIGIT;
-                return continue_float(scanner, ev, ch);
+                  return continue_float(scanner, ev, ch);
+                }
+                else
+                {
+                    return ERROR_LIBCPARSE_PP_SCANNER_HEX_P_EXPECTING_DIGIT;
+                }
             }
             else if ('.' == ch)
             {
@@ -2587,6 +2595,9 @@ static int start_zero_integer(
 
     /* we are now in the zero integer state. */
     scanner->state = CPARSE_PREPROCESSOR_SCANNER_STATE_IN_0_INTEGER;
+
+    /* reset the hex digit state. */
+    scanner->has_hex_digit = false;
 
     return STATUS_SUCCESS;
 }
