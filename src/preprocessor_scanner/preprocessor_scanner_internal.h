@@ -36,6 +36,7 @@ struct CPARSE_SYM(preprocessor_scanner)
     int state;
     int preprocessor_state;
     bool state_reset;
+    bool has_hex_digit;
 };
 
 enum CPARSE_SYM(preprocessor_scanner_state)
