@@ -2177,6 +2177,12 @@ static int process_raw_character(
             {
                 return continue_integer(scanner, ev, ch);
             }
+            else if ('p' == ch || 'P' == ch)
+            {
+                scanner->state =
+                  CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_EXPECT_DIGIT;
+                return continue_float(scanner, ev, ch);
+            }
             else if ('.' == ch)
             {
                 scanner->state =
