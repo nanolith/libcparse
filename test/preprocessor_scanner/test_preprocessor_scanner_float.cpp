@@ -149,3 +149,4 @@ FLOAT_TEST_EXPECT_FAILURE(hex_no_P_digit,       "0x1.P",    expect_digit);
 FLOAT_TEST_EXPECT_FAILURE(hex_no_pos_P_digit,   "0x1.P+",   expect_digit);
 FLOAT_TEST_EXPECT_FAILURE(hex_no_neg_P_digit,   "0x1.P-",   expect_digit);
 FLOAT_TEST_EXPECT_FAILURE(hex_float_p0,         "0xp0",     p_digit);
+FLOAT_TEST_EXPECT_FAILURE(hex_float_P0,         "0xP0",     p_digit);
