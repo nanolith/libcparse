@@ -67,6 +67,7 @@ TEST_SUITE(preprocessor_scanner_integer);
 INT_TEST_EXPECT_SUCCESS(decimal,    "1234");
 INT_TEST_EXPECT_SUCCESS(octal,      "07654321");
 INT_TEST_EXPECT_SUCCESS(hex,        "0x01abc");
+INT_TEST_EXPECT_SUCCESS(HEX,        "0X01abc");
 INT_TEST_EXPECT_SUCCESS(zero,       "0");
 INT_TEST_EXPECT_SUCCESS(du,         "1234u");
 INT_TEST_EXPECT_SUCCESS(dU,         "1234U");
