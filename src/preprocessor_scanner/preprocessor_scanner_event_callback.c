@@ -2134,7 +2134,7 @@ static int process_raw_character(
                     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_DECIMAL_INTEGER_L;
                 return continue_integer(scanner, ev, ch);
             }
-            else if ('x' == ch)
+            else if ('x' == ch || 'X' == ch)
             {
                 scanner->state =
                     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER;
