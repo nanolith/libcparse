@@ -127,6 +127,7 @@ FLOAT_TEST_EXPECT_SUCCESS(hex_float_1_1_p_pos_5,        "0x11p+5");
 FLOAT_TEST_EXPECT_SUCCESS(hex_float_zero_P0,            "0x0P0");
 FLOAT_TEST_EXPECT_SUCCESS(hex_float_one_P0,             "0x1P0");
 FLOAT_TEST_EXPECT_SUCCESS(hex_float_one_one_P0,         "0x11P0");
+FLOAT_TEST_EXPECT_SUCCESS(hex_float_1_1_P_neg_5,        "0x11P-5");
 
 #define expect_digit ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT
 #define expect_p     ERROR_LIBCPARSE_PP_SCANNER_HEX_FLOAT_EXPECTING_P
