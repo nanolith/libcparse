@@ -127,6 +127,7 @@ FLOAT_TEST_EXPECT_SUCCESS(hex_float_1_1_p_pos_5,        "0x11p+5");
 
 #define expect_digit ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT
 #define expect_p     ERROR_LIBCPARSE_PP_SCANNER_HEX_FLOAT_EXPECTING_P
+#define p_digit      ERROR_LIBCPARSE_PP_SCANNER_HEX_P_EXPECTING_DIGIT
 
 /* Invalid float tokens. */
 FLOAT_TEST_EXPECT_FAILURE(no_exp_digit,         "1.4e",     expect_digit);
@@ -142,3 +143,4 @@ FLOAT_TEST_EXPECT_FAILURE(hex_no_neg_p_digit,   "0x1.p-",   expect_digit);
 FLOAT_TEST_EXPECT_FAILURE(hex_no_P_digit,       "0x1.P",    expect_digit);
 FLOAT_TEST_EXPECT_FAILURE(hex_no_pos_P_digit,   "0x1.P+",   expect_digit);
 FLOAT_TEST_EXPECT_FAILURE(hex_no_neg_P_digit,   "0x1.P-",   expect_digit);
+FLOAT_TEST_EXPECT_FAILURE(hex_float_p0,         "0xp0",     p_digit);
