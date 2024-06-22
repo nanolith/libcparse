@@ -68,6 +68,7 @@ static bool char_is_octal_digit(const int ch);
 static bool char_is_non_zero_digit(const int ch);
 static bool char_is_unsigned_specifier(const int ch);
 static bool char_is_long_specifier(const int ch);
+static bool is_hex_state(const preprocessor_scanner* scanner);
 static int start_hash(
     preprocessor_scanner* scanner, const event* ev);
 static int end_hash(
@@ -3592,6 +3593,25 @@ done:
 }
 
 /**
+ * \brief Return true if the scanner is in a hex state.
+ *
+ * \param scanner           The scanner for this prop.
+ *
+ * \returns true if the scanner is in a hex state and false otherwise.
+ */
+static bool is_hex_state(const preprocessor_scanner* scanner)
+{
+    switch (scanner->state)
+    {
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_INTEGER:
+            return true;
+
+        default:
+            return false;
+    }
+}
+
+/**
  * \brief End an integer token.
  *
  * \param scanner           The scanner for this operation.
@@ -3607,6 +3627,13 @@ static int end_integer(preprocessor_scanner* scanner, const event* ev)
     const cursor* pos;
     char* str;
     event_raw_integer_token iev;
+
+    /* verify that a hex sequence contains at least one hex digit. */
+    if (is_hex_state(scanner) && !scanner->has_hex_digit)
+    {
+        retval = ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT;
+        goto done;
+    }
 
     /* get the cached position. */
     retval = file_position_cache_position_get(scanner->cache, &pos);
