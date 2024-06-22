@@ -245,3 +245,4 @@ INT_TEST_EXPECT_SUCCESS(oLLU,       "07LLU");
 #define expect_digit ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT
 
 INT_TEST_EXPECT_FAILURE(x_no_digit,                "0x",     expect_digit);
+INT_TEST_EXPECT_FAILURE(X_no_digit,                "0X",     expect_digit);
