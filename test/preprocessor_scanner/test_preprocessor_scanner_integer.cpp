@@ -63,6 +63,37 @@ TEST_SUITE(preprocessor_scanner_integer);
     } \
     REQUIRE_SEMICOLON_HERE
 
+#define INT_TEST_EXPECT_FAILURE(name, constant, error) \
+    TEST(name) \
+    { \
+        preprocessor_scanner* scanner; \
+        input_stream* stream; \
+        event_handler eh; \
+        test_context t1; \
+        const char* INPUT_STRING = constant; \
+        TEST_ASSERT( \
+            STATUS_SUCCESS == preprocessor_scanner_create(&scanner)); \
+        TEST_ASSERT( \
+            STATUS_SUCCESS == event_handler_init(&eh, &dummy_callback, &t1)); \
+        auto ap = preprocessor_scanner_upcast(scanner); \
+        TEST_ASSERT( \
+            STATUS_SUCCESS \
+                == abstract_parser_preprocessor_scanner_subscribe(ap, &eh)); \
+        TEST_ASSERT( \
+            STATUS_SUCCESS \
+                == input_stream_create_from_string(&stream, INPUT_STRING)); \
+        TEST_ASSERT( \
+            STATUS_SUCCESS \
+                == abstract_parser_push_input_stream(ap, "stdin", stream)); \
+        TEST_ASSERT(!t1.eof); \
+        TEST_ASSERT(t1.vals.empty()); \
+        TEST_ASSERT(error == abstract_parser_run(ap)); \
+        TEST_ASSERT( \
+            STATUS_SUCCESS == preprocessor_scanner_release(scanner)); \
+        TEST_ASSERT(STATUS_SUCCESS == event_handler_dispose(&eh)); \
+    } \
+    REQUIRE_SEMICOLON_HERE
+
 /* Valid integer tokens. */
 INT_TEST_EXPECT_SUCCESS(decimal,    "1234");
 INT_TEST_EXPECT_SUCCESS(octal,      "07654321");
@@ -208,4 +239,9 @@ INT_TEST_EXPECT_SUCCESS(oLlu,       "07Llu");
 INT_TEST_EXPECT_SUCCESS(oLlU,       "07LlU");
 INT_TEST_EXPECT_SUCCESS(oLLu,       "07LLu");
 INT_TEST_EXPECT_SUCCESS(oLLU,       "07LLU");
-/* TODO - add invalid token tests. */
+
+/* TODO - add missing invalid token tests. */
+
+#define expect_digit ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT
+
+INT_TEST_EXPECT_FAILURE(x_no_digit,                "0x",     expect_digit);
