@@ -2386,6 +2386,7 @@ static bool char_is_float_suffix(const int ch)
     {
         case 'F':
         case 'f':
+        case 'l':
             return true;
 
         default:
