@@ -68,6 +68,7 @@ static bool char_is_octal_digit(const int ch);
 static bool char_is_non_zero_digit(const int ch);
 static bool char_is_unsigned_specifier(const int ch);
 static bool char_is_long_specifier(const int ch);
+static bool char_is_float_suffix(const int ch);
 static bool is_hex_state(const preprocessor_scanner* scanner);
 static int start_hash(
     preprocessor_scanner* scanner, const event* ev);
@@ -254,6 +255,7 @@ static int process_eof_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_WITH_DIGIT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_SUFFIX:
             return end_float(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
@@ -439,6 +441,7 @@ static int process_whitespace_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_WITH_DIGIT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_SUFFIX:
             return end_float(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
@@ -635,6 +638,7 @@ static int process_newline_event(
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT:
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_WITH_DIGIT:
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_SUFFIX:
             return end_float(scanner, ev);
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT:
@@ -1986,6 +1990,22 @@ static int process_raw_character(
                     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_E_EXPECT_DIGIT;
                 return continue_float(scanner, ev, ch);
             }
+            else if (char_is_float_suffix(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_SUFFIX;
+                return continue_float(scanner, ev, ch);
+            }
+            else
+            {
+                return end_float(scanner, ev);
+            }
+
+        case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_SUFFIX:
+            if (isxdigit(ch) || isalpha(ch))
+            {
+                return ERROR_LIBCPARSE_PP_SCANNER_UNEXPECTED_CHARACTER;
+            }
             else
             {
                 return end_float(scanner, ev);
@@ -2350,6 +2370,21 @@ static bool char_is_long_specifier(const int ch)
     {
         case 'L':
         case 'l':
+            return true;
+
+        default:
+            return false;
+    }
+}
+
+/**
+ * \brief Return true if this is a float suffix.
+ */
+static bool char_is_float_suffix(const int ch)
+{
+    switch (ch)
+    {
+        case 'f':
             return true;
 
         default:
