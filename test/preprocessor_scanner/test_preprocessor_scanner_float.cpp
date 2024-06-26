@@ -159,6 +159,7 @@ FLOAT_TEST_EXPECT_SUCCESS(float_zero_dot_suffix_f,      "0.f");
 FLOAT_TEST_EXPECT_SUCCESS(float_zero_dot_suffix_F,      "0.F");
 FLOAT_TEST_EXPECT_SUCCESS(float_zero_dot_suffix_l,      "0.l");
 FLOAT_TEST_EXPECT_SUCCESS(float_zero_dot_suffix_L,      "0.L");
+FLOAT_TEST_EXPECT_SUCCESS(float_dot_zero_suffix_f,      ".0f");
 
 #define expect_digit ERROR_LIBCPARSE_PP_SCANNER_EXPECTING_DIGIT
 #define expect_p     ERROR_LIBCPARSE_PP_SCANNER_HEX_FLOAT_EXPECTING_P
