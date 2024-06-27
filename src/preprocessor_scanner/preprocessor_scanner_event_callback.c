@@ -2046,6 +2046,12 @@ static int process_raw_character(
             {
                 return continue_float(scanner, ev, ch);
             }
+            else if (char_is_float_suffix(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_SUFFIX;
+                return continue_float(scanner, ev, ch);
+            }
             else
             {
                 return end_float(scanner, ev);
