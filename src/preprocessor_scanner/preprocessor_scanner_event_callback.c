@@ -2258,7 +2258,7 @@ static int process_raw_character(
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_EXPECT_DIGIT:
-            if (isxdigit(ch))
+            if (isdigit(ch))
             {
                 scanner->state =
                     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_WITH_DIGIT;
@@ -2276,7 +2276,7 @@ static int process_raw_character(
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_S_EXPECT_DIGIT:
-            if (isxdigit(ch))
+            if (isdigit(ch))
             {
                 scanner->state =
                     CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_WITH_DIGIT;
@@ -2288,8 +2288,14 @@ static int process_raw_character(
             }
 
         case CPARSE_PREPROCESSOR_SCANNER_STATE_IN_HEX_FLOAT_P_WITH_DIGIT:
-            if (isxdigit(ch))
+            if (isdigit(ch))
             {
+                return continue_float(scanner, ev, ch);
+            }
+            else if (char_is_float_suffix(ch))
+            {
+                scanner->state =
+                    CPARSE_PREPROCESSOR_SCANNER_STATE_IN_FLOAT_SUFFIX;
                 return continue_float(scanner, ev, ch);
             }
             else
