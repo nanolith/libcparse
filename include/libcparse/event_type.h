@@ -197,6 +197,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_DOT_MEMBER_DEREF_END =                        0x020B,
     CPARSE_EVENT_TYPE_EXP_ARROW_MEMBER_DEREF_BEGIN =                    0x020C,
     CPARSE_EVENT_TYPE_EXP_ARROW_MEMBER_DEREF_END =                      0x020D,
+    CPARSE_EVENT_TYPE_EXP_POSTFIX_INCREMENT_BEGIN =                     0x020E,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
