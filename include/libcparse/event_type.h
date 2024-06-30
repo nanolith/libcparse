@@ -193,6 +193,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_ARRAY_SUBSCRIPT_END =                         0x0207,
     CPARSE_EVENT_TYPE_EXP_FUNCTION_CALL_BEGIN =                         0x0208,
     CPARSE_EVENT_TYPE_EXP_FUNCTION_CALL_END =                           0x0209,
+    CPARSE_EVENT_TYPE_EXP_DOT_MEMBER_DEREF_BEGIN =                      0x020A,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
