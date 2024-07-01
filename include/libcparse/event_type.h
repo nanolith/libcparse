@@ -200,6 +200,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_POSTFIX_INCREMENT_BEGIN =                     0x020E,
     CPARSE_EVENT_TYPE_EXP_POSTFIX_INCREMENT_END =                       0x020F,
     CPARSE_EVENT_TYPE_EXP_POSTFIX_DECREMENT_BEGIN =                     0x0210,
+    CPARSE_EVENT_TYPE_EXP_POSTFIX_DECREMENT_END =                       0x0211,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
