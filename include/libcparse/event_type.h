@@ -183,6 +183,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_VOLATILE =                          0x017A,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_WHILE =                             0x017B,
 
+    /* primary expressions. */
     CPARSE_EVENT_TYPE_EXPRESSION_BEGIN =                                0x0200,
     CPARSE_EVENT_TYPE_EXPRESSION_END =                                  0x0201,
     CPARSE_EVENT_TYPE_PRIMARY_EXPRESSION_BEGIN =                        0x0202,
