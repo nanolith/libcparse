@@ -207,6 +207,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_COMPOUND_LITERAL_BEGIN =                      0x0212,
     CPARSE_EVENT_TYPE_EXP_COMPOUND_LITERAL_END =                        0x0213,
 
+    /* unary expressions. */
+    CPARSE_EVENT_TYPE_EXP_PREFIX_INCREMENT_BEGIN =                      0x0220,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
 
