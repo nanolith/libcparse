@@ -213,6 +213,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_PREFIX_DECREMENT_BEGIN =                      0x0222,
     CPARSE_EVENT_TYPE_EXP_PREFIX_DECREMENT_END =                        0x0223,
     CPARSE_EVENT_TYPE_EXP_UNARY_OPERATION_BEGIN =                       0x0224,
+    CPARSE_EVENT_TYPE_EXP_UNARY_OPERATION_END =                         0x0225,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
