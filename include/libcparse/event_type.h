@@ -221,6 +221,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_ALIGNOF_TYPE_BEGIN =                          0x022A,
     CPARSE_EVENT_TYPE_EXP_ALIGNOF_TYPE_END =                            0x022B,
 
+    /* cast expressions. */
+    CPARSE_EVENT_TYPE_EXP_CAST_BEGIN =                                  0x0230,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
 
