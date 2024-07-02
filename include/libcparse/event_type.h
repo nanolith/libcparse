@@ -218,6 +218,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_SIZEOF_EXP_END =                              0x0227,
     CPARSE_EVENT_TYPE_EXP_SIZEOF_TYPE_BEGIN =                           0x0228,
     CPARSE_EVENT_TYPE_EXP_SIZEOF_TYPE_END =                             0x0229,
+    CPARSE_EVENT_TYPE_EXP_ALIGNOF_TYPE_BEGIN =                          0x022A,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
