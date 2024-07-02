@@ -225,6 +225,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_CAST_BEGIN =                                  0x0230,
     CPARSE_EVENT_TYPE_EXP_CAST_END =                                    0x0231,
 
+    /* multiplicative expressions. */
+    CPARSE_EVENT_TYPE_EXP_MULTIPLY_BEGIN =                              0x0240,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
 
