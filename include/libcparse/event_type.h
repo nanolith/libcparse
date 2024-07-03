@@ -231,6 +231,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_DIVIDE_BEGIN =                                0x0242,
     CPARSE_EVENT_TYPE_EXP_DIVIDE_END =                                  0x0243,
     CPARSE_EVENT_TYPE_EXP_MODULO_BEGIN =                                0x0244,
+    CPARSE_EVENT_TYPE_EXP_MODULO_END =                                  0x0245,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
