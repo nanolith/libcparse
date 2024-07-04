@@ -242,6 +242,7 @@ enum CPARSE_SYM(event_type)
     /* bitshift expressions. */
     CPARSE_EVENT_TYPE_EXP_BITSHIFT_LEFT_BEGIN =                         0x0260,
     CPARSE_EVENT_TYPE_EXP_BITSHIFT_LEFT_END =                           0x0261,
+    CPARSE_EVENT_TYPE_EXP_BITSHIFT_RIGHT_BEGIN =                        0x0262,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
