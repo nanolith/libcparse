@@ -245,6 +245,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_BITSHIFT_RIGHT_BEGIN =                        0x0262,
     CPARSE_EVENT_TYPE_EXP_BITSHIFT_RIGHT_END =                          0x0263,
 
+    /* relational expressions. */
+    CPARSE_EVENT_TYPE_EXP_LESS_THAN_BEGIN =                             0x0270,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
 
