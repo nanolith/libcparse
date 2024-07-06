@@ -255,6 +255,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_GREATER_THAN_EQUAL_BEGIN =                    0x0276,
     CPARSE_EVENT_TYPE_EXP_GREATER_THAN_EQUAL_END =                      0x0277,
 
+    /* equality expressions. */
+    CPARSE_EVENT_TYPE_EXP_EQUAL_TO_BEGIN =                              0x0280,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
 
