@@ -261,6 +261,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_NOT_EQUAL_TO_BEGIN =                          0x0282,
     CPARSE_EVENT_TYPE_EXP_NOT_EQUAL_TO_END =                            0x0283,
 
+    /* bitwise expressions. */
+    CPARSE_EVENT_TYPE_EXP_BITWISE_AND_BEGIN =                           0x0290,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
 
