@@ -253,6 +253,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_LESS_THAN_EQUAL_BEGIN =                       0x0274,
     CPARSE_EVENT_TYPE_EXP_LESS_THAN_EQUAL_END =                         0x0275,
     CPARSE_EVENT_TYPE_EXP_GREATER_THAN_EQUAL_BEGIN =                    0x0276,
+    CPARSE_EVENT_TYPE_EXP_GREATER_THAN_EQUAL_END =                      0x0277,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
