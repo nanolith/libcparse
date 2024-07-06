@@ -257,6 +257,7 @@ enum CPARSE_SYM(event_type)
 
     /* equality expressions. */
     CPARSE_EVENT_TYPE_EXP_EQUAL_TO_BEGIN =                              0x0280,
+    CPARSE_EVENT_TYPE_EXP_EQUAL_TO_END =                                0x0281,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
