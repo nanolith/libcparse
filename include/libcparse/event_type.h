@@ -277,6 +277,9 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_CONDITIONAL_BEGIN =                           0x02A4,
     CPARSE_EVENT_TYPE_EXP_CONDITIONAL_END =                             0x02A5,
 
+    /* assignment expressions. */
+    CPARSE_EVENT_TYPE_EXP_ASSIGNMENT_BEGIN =                            0x02B0,
+
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
 
