@@ -274,6 +274,7 @@ enum CPARSE_SYM(event_type)
     CPARSE_EVENT_TYPE_EXP_LOGICAL_AND_END =                             0x02A1,
     CPARSE_EVENT_TYPE_EXP_LOGICAL_OR_BEGIN =                            0x02A2,
     CPARSE_EVENT_TYPE_EXP_LOGICAL_OR_END =                              0x02A3,
+    CPARSE_EVENT_TYPE_EXP_CONDITIONAL_BEGIN =                           0x02A4,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
