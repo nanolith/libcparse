@@ -271,6 +271,7 @@ enum CPARSE_SYM(event_type)
 
     /* logical expressions. */
     CPARSE_EVENT_TYPE_EXP_LOGICAL_AND_BEGIN =                           0x02A0,
+    CPARSE_EVENT_TYPE_EXP_LOGICAL_AND_END =                             0x02A1,
 
     CPARSE_EVENT_TYPE_UNKNOWN =                                         0xFFFF,
 };
