@@ -1596,7 +1596,7 @@ int CPARSE_SYM(event_init_for_preprocessor_directive_end)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
- * \brief Perform an in-place initialization of a expression begin event
+ * \brief Perform an in-place initialization of an expression begin event
  * instance.
  *
  * \param ev                    Pointer to the event to initialize.
@@ -1610,7 +1610,7 @@ int CPARSE_SYM(event_init_for_expression_begin)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
- * \brief Perform an in-place initialization of a expression end event
+ * \brief Perform an in-place initialization of an expression end event
  * instance.
  *
  * \param ev                    Pointer to the event to initialize.
@@ -1621,6 +1621,20 @@ int CPARSE_SYM(event_init_for_expression_begin)(
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(event_init_for_expression_end)(
+    CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
+
+/**
+ * \brief Perform an in-place initialization of a primary expression begin event
+ * instance.
+ *
+ * \param ev                    Pointer to the event to initialize.
+ * \param cursor                The event cursor.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_init_for_primary_expression_begin)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
