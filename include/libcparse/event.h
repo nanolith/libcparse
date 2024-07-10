@@ -1778,6 +1778,20 @@ int CPARSE_SYM(event_init_for_exp_arrow_member_deref_begin)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
+ * \brief Perform an in-place initialization of an arrow member deref end
+ * expression event instance.
+ *
+ * \param ev                    Pointer to the event to initialize.
+ * \param cursor                The event cursor.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_init_for_exp_arrow_member_deref_end)(
+    CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
+
+/**
  * \brief Perform an in-place disposal of an event instance.
  *
  * \param ev                    Pointer to the event to dispose.
