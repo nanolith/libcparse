@@ -2016,7 +2016,7 @@ int CPARSE_SYM(event_init_for_exp_sizeof_type_end)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
- * \brief Perform an in-place initialization of a _Alignof type begin
+ * \brief Perform an in-place initialization of an _Alignof type begin
  * expression event instance.
  *
  * \param ev                    Pointer to the event to initialize.
@@ -2030,7 +2030,7 @@ int CPARSE_SYM(event_init_for_exp_alignof_type_begin)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
- * \brief Perform an in-place initialization of a _Alignof type end
+ * \brief Perform an in-place initialization of an _Alignof type end
  * expression event instance.
  *
  * \param ev                    Pointer to the event to initialize.
