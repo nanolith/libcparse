@@ -18,26 +18,24 @@ CPARSE_IMPORT_event;
 
 TEST_SUITE(event);
 
-/**
- * Test that we can create an EOF event.
- */
-TEST(eof)
-{
-    event ev;
-    cursor c;
+#define EVENT_INIT_TYPE_TEST(ctor, type) \
+    TEST(ctor) \
+    { \
+        event ev; \
+        cursor c; \
+        \
+        memset(&c, 0, sizeof(c)); \
+        \
+        TEST_ASSERT(STATUS_SUCCESS == event_init_for_eof(&ev, &c)); \
+        \
+        TEST_EXPECT(CPARSE_EVENT_TYPE_EOF == event_get_type(&ev)); \
+        \
+        TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev)); \
+    } \
+    REQUIRE_SEMICOLON_HERE
 
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init_for_eof(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(CPARSE_EVENT_TYPE_EOF == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+/* token tests. */
+EVENT_INIT_TYPE_TEST(event_init_for_eof, CPARSE_EVENT_TYPE_EOF);
 
 /**
  * Test that we can create a whitespace token event.
