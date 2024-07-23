@@ -12,8 +12,6 @@
 #include <minunit/minunit.h>
 #include <string.h>
 
-using namespace std;
-
 CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_file_position_cache;
 
