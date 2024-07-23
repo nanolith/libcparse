@@ -13,8 +13,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-using namespace std;
-
 CPARSE_IMPORT_string_builder;
 
 TEST_SUITE(string_builder);
