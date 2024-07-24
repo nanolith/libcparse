@@ -36,27 +36,8 @@ TEST_SUITE(event);
 
 /* token tests. */
 EVENT_INIT_TYPE_TEST(event_init_for_eof, CPARSE_EVENT_TYPE_EOF);
-
-/**
- * Test that we can create a whitespace token event.
- */
-TEST(token_whitespace)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init_for_whitespace_token(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_WHITESPACE == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_whitespace_token, CPARSE_EVENT_TYPE_TOKEN_WHITESPACE);
 
 /**
  * Test that we can create a newline token event.
