@@ -44,27 +44,8 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_comment_block_begin, CPARSE_EVENT_TYPE_COMMENT_BLOCK_BEGIN);
 EVENT_INIT_TYPE_TEST(
     event_init_for_comment_block_end, CPARSE_EVENT_TYPE_COMMENT_BLOCK_END);
-
-/**
- * Test that we can create a comment line begin event.
- */
-TEST(comment_line_begin)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init_for_comment_line_begin(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(CPARSE_EVENT_TYPE_COMMENT_LINE_BEGIN == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_comment_line_begin, CPARSE_EVENT_TYPE_COMMENT_LINE_BEGIN);
 
 /**
  * Test that we can create a comment line end event.
