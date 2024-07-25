@@ -65,27 +65,7 @@ EVENT_INIT_TYPE_TEST(event_init_for_token_colon, CPARSE_EVENT_TYPE_TOKEN_COLON);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_semicolon, CPARSE_EVENT_TYPE_TOKEN_SEMICOLON);
 EVENT_INIT_TYPE_TEST(event_init_for_token_dot, CPARSE_EVENT_TYPE_TOKEN_DOT);
-
-/**
- * Test that we can create a token arrow event.
- */
-TEST(token_arrow)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init_for_token_arrow(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_ARROW == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(event_init_for_token_arrow, CPARSE_EVENT_TYPE_TOKEN_ARROW);
 
 /**
  * Test that we can create a token plus event.
