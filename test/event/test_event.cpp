@@ -56,27 +56,8 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_token_left_brace, CPARSE_EVENT_TYPE_TOKEN_LEFT_BRACE);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_right_brace, CPARSE_EVENT_TYPE_TOKEN_RIGHT_BRACE);
-
-/**
- * Test that we can create a token left bracket event.
- */
-TEST(token_left_bracket)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init_for_token_left_bracket(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_LEFT_BRACKET == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_left_bracket, CPARSE_EVENT_TYPE_TOKEN_LEFT_BRACKET);
 
 /**
  * Test that we can create a token right bracket event.
