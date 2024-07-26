@@ -71,27 +71,8 @@ EVENT_INIT_TYPE_TEST(event_init_for_token_minus, CPARSE_EVENT_TYPE_TOKEN_MINUS);
 EVENT_INIT_TYPE_TEST(event_init_for_token_star, CPARSE_EVENT_TYPE_TOKEN_STAR);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_forward_slash, CPARSE_EVENT_TYPE_TOKEN_FORWARD_SLASH);
-
-/**
- * Test that we can create a token percent event.
- */
-TEST(token_percent)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init_for_token_percent(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_PERCENT == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_percent, CPARSE_EVENT_TYPE_TOKEN_PERCENT);
 
 /**
  * Test that we can create a token logical and event.
