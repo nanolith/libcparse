@@ -79,27 +79,7 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_token_logical_or, CPARSE_EVENT_TYPE_TOKEN_LOGICAL_OR);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_ampersand, CPARSE_EVENT_TYPE_TOKEN_AMPERSAND);
-
-/**
- * Test that we can create a token pipe event.
- */
-TEST(token_pipe)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(STATUS_SUCCESS == event_init_for_token_pipe(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_PIPE == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(event_init_for_token_pipe, CPARSE_EVENT_TYPE_TOKEN_PIPE);
 
 /**
  * Test that we can create a token caret event.
