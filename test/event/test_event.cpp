@@ -97,29 +97,8 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_token_minus_equal, CPARSE_EVENT_TYPE_TOKEN_MINUS_EQUAL);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_times_equal, CPARSE_EVENT_TYPE_TOKEN_TIMES_EQUAL);
-
-/**
- * Test that we can create a token div equal event.
- */
-TEST(token_div_equal)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_div_equal(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_DIV_EQUAL == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_div_equal, CPARSE_EVENT_TYPE_TOKEN_DIV_EQUAL);
 
 /**
  * Test that we can create a token mod equal event.
