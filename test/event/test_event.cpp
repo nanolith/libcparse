@@ -91,29 +91,8 @@ EVENT_INIT_TYPE_TEST(
     CPARSE_EVENT_TYPE_TOKEN_NOT_EQUAL_COMPARE);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_equal_assign, CPARSE_EVENT_TYPE_TOKEN_EQUAL_ASSIGN);
-
-/**
- * Test that we can create a token plus equal event.
- */
-TEST(token_plus_equal)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_plus_equal(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_PLUS_EQUAL == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_plus_equal, CPARSE_EVENT_TYPE_TOKEN_PLUS_EQUAL);
 
 /**
  * Test that we can create a token minus equal event.
