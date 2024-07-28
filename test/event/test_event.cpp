@@ -120,29 +120,8 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_bitshift_right,
     CPARSE_EVENT_TYPE_TOKEN_BITSHIFT_RIGHT);
-
-/**
- * Test that we can create a token less than event.
- */
-TEST(token_less_than)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_less_than(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_LESS_THAN == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_less_than, CPARSE_EVENT_TYPE_TOKEN_LESS_THAN);
 
 /**
  * Test that we can create a token greater than event.
