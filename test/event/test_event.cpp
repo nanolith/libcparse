@@ -107,29 +107,8 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_token_or_equal, CPARSE_EVENT_TYPE_TOKEN_OR_EQUAL);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_xor_equal, CPARSE_EVENT_TYPE_TOKEN_XOR_EQUAL);
-
-/**
- * Test that we can create a token compl equal event.
- */
-TEST(token_compl_equal)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_compl_equal(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_COMPL_EQUAL == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_compl_equal, CPARSE_EVENT_TYPE_TOKEN_COMPL_EQUAL);
 
 /**
  * Test that we can create a token left shift equal event.
