@@ -174,29 +174,8 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword__Thread_local,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__THREAD_LOCAL);
-
-/**
- * Test that we can create an auto keyword token event.
- */
-TEST(auto_keyword_token)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_keyword_auto(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_KEYWORD_AUTO == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_keyword_auto, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_AUTO);
 
 /**
  * Test that we can create a break keyword token event.
