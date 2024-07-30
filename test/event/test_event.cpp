@@ -156,29 +156,9 @@ EVENT_INIT_TYPE_TEST(
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__ATOMIC);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword__Bool, CPARSE_EVENT_TYPE_TOKEN_KEYWORD__BOOL);
-
-/**
- * Test that we can create a _Complex keyword token event.
- */
-TEST(_Complex_keyword_token)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_keyword__Complex(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_KEYWORD__COMPLEX == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_keyword__Complex,
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD__COMPLEX);
 
 /**
  * Test that we can create a _Generic keyword token event.
