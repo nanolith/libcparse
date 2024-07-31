@@ -204,29 +204,8 @@ EVENT_INIT_TYPE_TEST(
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_EXTERN);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_float, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_FLOAT);
-
-/**
- * Test that we can create a for keyword token event.
- */
-TEST(for_keyword_token)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_keyword_for(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_KEYWORD_FOR == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_keyword_for, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_FOR);
 
 /**
  * Test that we can create a goto keyword token event.
