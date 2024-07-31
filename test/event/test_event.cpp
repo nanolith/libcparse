@@ -199,29 +199,9 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_else, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_ELSE);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_enum, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_ENUM);
-
-/**
- * Test that we can create an extern keyword token event.
- */
-TEST(extern_keyword_token)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_keyword_extern(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_KEYWORD_EXTERN == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_keyword_extern,
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD_EXTERN);
 
 /**
  * Test that we can create a float keyword token event.
