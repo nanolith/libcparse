@@ -192,29 +192,9 @@ EVENT_INIT_TYPE_TEST(
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_DEFAULT);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_do, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_DO);
-
-/**
- * Test that we can create a double keyword token event.
- */
-TEST(double_keyword_token)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_keyword_double(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_KEYWORD_DOUBLE == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_keyword_double,
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD_DOUBLE);
 
 /**
  * Test that we can create an else keyword token event.
