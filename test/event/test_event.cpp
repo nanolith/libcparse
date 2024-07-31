@@ -182,29 +182,8 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_case, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_CASE);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_char, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_CHAR);
-
-/**
- * Test that we can create a const keyword token event.
- */
-TEST(const_keyword_token)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_keyword_const(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_KEYWORD_CONST == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_keyword_const, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_CONST);
 
 /**
  * Test that we can create a continue keyword token event.
