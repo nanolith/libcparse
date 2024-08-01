@@ -217,29 +217,9 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_int, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_INT);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_long, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_LONG);
-
-/**
- * Test that we can create a register keyword token event.
- */
-TEST(register_keyword_token)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_keyword_register(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_KEYWORD_REGISTER == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_keyword_register,
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD_REGISTER);
 
 /**
  * Test that we can create a restrict keyword token event.
