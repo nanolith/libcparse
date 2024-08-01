@@ -223,29 +223,9 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_restrict,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_RESTRICT);
-
-/**
- * Test that we can create a return keyword token event.
- */
-TEST(return_keyword_token)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_keyword_return(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_KEYWORD_RETURN == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_keyword_return,
+    CPARSE_EVENT_TYPE_TOKEN_KEYWORD_RETURN);
 
 /**
  * Test that we can create a short keyword token event.
