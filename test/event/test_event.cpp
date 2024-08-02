@@ -256,29 +256,8 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_volatile,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_VOLATILE);
-
-/**
- * Test that we can create a while keyword token event.
- */
-TEST(while_keyword_token)
-{
-    event ev;
-    cursor c;
-
-    /* clear the cursor. */
-    memset(&c, 0, sizeof(c));
-
-    /* Initialize an event. */
-    TEST_ASSERT(
-        STATUS_SUCCESS == event_init_for_token_keyword_while(&ev, &c));
-
-    /* The event type is correct. */
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_TOKEN_KEYWORD_WHILE == event_get_type(&ev));
-
-    /* clean up. */
-    TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev));
-}
+EVENT_INIT_TYPE_TEST(
+    event_init_for_token_keyword_while, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_WHILE);
 
 /**
  * Test that we can create a preprocessor directive end event.
