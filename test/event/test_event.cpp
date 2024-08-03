@@ -260,3 +260,5 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_while, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_WHILE);
 EVENT_INIT_TYPE_TEST(
     event_init_for_preprocessor_directive_end, CPARSE_EVENT_TYPE_PP_END);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_expression_begin, CPARSE_EVENT_TYPE_EXPRESSION_BEGIN);
