@@ -267,3 +267,6 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_primary_expression_begin,
     CPARSE_EVENT_TYPE_PRIMARY_EXPRESSION_BEGIN);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_primary_expression_end,
+    CPARSE_EVENT_TYPE_PRIMARY_EXPRESSION_END);
