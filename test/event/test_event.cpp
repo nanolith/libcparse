@@ -278,3 +278,6 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_array_subscript_begin,
     CPARSE_EVENT_TYPE_EXP_ARRAY_SUBSCRIPT_BEGIN);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_array_subscript_end,
+    CPARSE_EVENT_TYPE_EXP_ARRAY_SUBSCRIPT_END);
