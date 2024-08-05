@@ -293,3 +293,6 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_dot_member_deref_end,
     CPARSE_EVENT_TYPE_EXP_DOT_MEMBER_DEREF_END);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_arrow_member_deref_begin,
+    CPARSE_EVENT_TYPE_EXP_ARROW_MEMBER_DEREF_BEGIN);
