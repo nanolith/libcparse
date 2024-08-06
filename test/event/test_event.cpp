@@ -26,9 +26,9 @@ TEST_SUITE(event);
         \
         memset(&c, 0, sizeof(c)); \
         \
-        TEST_ASSERT(STATUS_SUCCESS == event_init_for_eof(&ev, &c)); \
+        TEST_ASSERT(STATUS_SUCCESS == ctor(&ev, &c)); \
         \
-        TEST_EXPECT(CPARSE_EVENT_TYPE_EOF == event_get_type(&ev)); \
+        TEST_EXPECT(type == event_get_type(&ev)); \
         \
         TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev)); \
     } \
