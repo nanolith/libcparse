@@ -323,3 +323,6 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_prefix_increment_end,
     CPARSE_EVENT_TYPE_EXP_PREFIX_INCREMENT_END);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_prefix_decrement_begin,
+    CPARSE_EVENT_TYPE_EXP_PREFIX_DECREMENT_BEGIN);
