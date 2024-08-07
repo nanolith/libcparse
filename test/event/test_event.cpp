@@ -314,3 +314,6 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_compound_literal_begin,
     CPARSE_EVENT_TYPE_EXP_COMPOUND_LITERAL_BEGIN);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_compound_literal_end,
+    CPARSE_EVENT_TYPE_EXP_COMPOUND_LITERAL_END);
