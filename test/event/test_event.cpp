@@ -335,3 +335,6 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_unary_operation_end,
     CPARSE_EVENT_TYPE_EXP_UNARY_OPERATION_END);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_sizeof_exp_begin,
+    CPARSE_EVENT_TYPE_EXP_SIZEOF_EXP_BEGIN);
