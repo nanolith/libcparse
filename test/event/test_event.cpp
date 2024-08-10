@@ -355,3 +355,5 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_exp_cast_begin, CPARSE_EVENT_TYPE_EXP_CAST_BEGIN);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_cast_end, CPARSE_EVENT_TYPE_EXP_CAST_END);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_multiply_begin, CPARSE_EVENT_TYPE_EXP_MULTIPLY_BEGIN);
