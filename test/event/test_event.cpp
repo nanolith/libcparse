@@ -359,3 +359,5 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_exp_multiply_begin, CPARSE_EVENT_TYPE_EXP_MULTIPLY_BEGIN);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_multiply_end, CPARSE_EVENT_TYPE_EXP_MULTIPLY_END);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_divide_begin, CPARSE_EVENT_TYPE_EXP_DIVIDE_BEGIN);
