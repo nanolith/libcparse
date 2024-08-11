@@ -365,3 +365,5 @@ EVENT_INIT_TYPE_TEST(
     event_init_for_exp_divide_end, CPARSE_EVENT_TYPE_EXP_DIVIDE_END);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_modulo_begin, CPARSE_EVENT_TYPE_EXP_MODULO_BEGIN);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_modulo_end, CPARSE_EVENT_TYPE_EXP_MODULO_END);
