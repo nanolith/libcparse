@@ -370,3 +370,5 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_add_begin, CPARSE_EVENT_TYPE_EXP_ADD_BEGIN);
 EVENT_INIT_TYPE_TEST(event_init_for_exp_add_end, CPARSE_EVENT_TYPE_EXP_ADD_END);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_sub_begin, CPARSE_EVENT_TYPE_EXP_SUB_BEGIN);
