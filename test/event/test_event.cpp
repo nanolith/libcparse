@@ -379,3 +379,6 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_bitshift_left_end,
     CPARSE_EVENT_TYPE_EXP_BITSHIFT_LEFT_END);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_bitshift_right_begin,
+    CPARSE_EVENT_TYPE_EXP_BITSHIFT_RIGHT_BEGIN);
