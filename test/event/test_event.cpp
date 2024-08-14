@@ -398,3 +398,6 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_less_than_equal_begin,
     CPARSE_EVENT_TYPE_EXP_LESS_THAN_EQUAL_BEGIN);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_less_than_equal_end,
+    CPARSE_EVENT_TYPE_EXP_LESS_THAN_EQUAL_END);
