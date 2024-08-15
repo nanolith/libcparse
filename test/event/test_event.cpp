@@ -420,3 +420,5 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_bitwise_and_begin,
     CPARSE_EVENT_TYPE_EXP_BITWISE_AND_BEGIN);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_bitwise_and_end, CPARSE_EVENT_TYPE_EXP_BITWISE_AND_END);
