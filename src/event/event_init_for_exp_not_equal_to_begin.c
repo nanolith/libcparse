@@ -1,5 +1,5 @@
 /**
- * \file src/event/event_init_for_exp_not_equal_to_end.c
+ * \file src/event/event_init_for_exp_not_equal_to_begin.c
  *
  * \brief Initialize an event instance for a not equal to begin event.
  *
