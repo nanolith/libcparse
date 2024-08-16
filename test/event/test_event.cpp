@@ -425,3 +425,5 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_bitwise_xor_begin,
     CPARSE_EVENT_TYPE_EXP_BITWISE_XOR_BEGIN);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_bitwise_xor_end, CPARSE_EVENT_TYPE_EXP_BITWISE_XOR_END);
