@@ -445,3 +445,5 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_conditional_begin,
     CPARSE_EVENT_TYPE_EXP_CONDITIONAL_BEGIN);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_conditional_end, CPARSE_EVENT_TYPE_EXP_CONDITIONAL_END);
