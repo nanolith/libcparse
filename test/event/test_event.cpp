@@ -435,3 +435,5 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_logical_and_begin,
     CPARSE_EVENT_TYPE_EXP_LOGICAL_AND_BEGIN);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_logical_and_end, CPARSE_EVENT_TYPE_EXP_LOGICAL_AND_END);
