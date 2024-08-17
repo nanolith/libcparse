@@ -450,3 +450,5 @@ EVENT_INIT_TYPE_TEST(
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_assignment_begin,
     CPARSE_EVENT_TYPE_EXP_ASSIGNMENT_BEGIN);
+EVENT_INIT_TYPE_TEST(
+    event_init_for_exp_assignment_end, CPARSE_EVENT_TYPE_EXP_ASSIGNMENT_END);
