@@ -16,6 +16,15 @@
 extern "C" {
 # endif /*__cplusplus*/
 
+/**
+ * \brief The event category is used for determining the structural data found
+ * in an event.
+ */
+enum CPARSE_SYM(event_category)
+{
+    CPARSE_EVENT_CATEGORY_EVENT =                                       0x0000,
+};
+
 /******************************************************************************/
 /* Start of constructors.                                                     */
 /******************************************************************************/
