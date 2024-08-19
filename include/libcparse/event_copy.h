@@ -41,6 +41,17 @@ typedef struct CPARSE_SYM(event_copy) CPARSE_SYM(event_copy);
 int CPARSE_SYM(event_copy_create)(
     CPARSE_SYM(event_copy)** cpy, const CPARSE_SYM(event)* ev);
 
+/**
+ * \brief Release an \ref event_copy instance.
+ *
+ * \param cpy                   Pointer to the \ref event_copy to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(event_copy_release)(CPARSE_SYM(event_copy)* cpy);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
