@@ -76,6 +76,9 @@ const CPARSE_SYM(event)*  CPARSE_SYM(event_copy_get_event)(
     static inline int sym ## event_copy_create( \
         CPARSE_SYM(event_copy)** x, const CPARSE_SYM(event)* y) { \
             return CPARSE_SYM(event_copy_create)(x,y); } \
+    static inline int sym ## event_copy_release( \
+        CPARSE_SYM(event_copy)* x) { \
+            return CPARSE_SYM(event_copy_release)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_copy_as(sym) \
