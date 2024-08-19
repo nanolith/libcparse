@@ -66,6 +66,20 @@ int CPARSE_SYM(event_copy_release)(CPARSE_SYM(event_copy)* cpy);
 const CPARSE_SYM(event)*  CPARSE_SYM(event_copy_get_event)(
     const CPARSE_SYM(event_copy)* cpy);
 
+/******************************************************************************/
+/* Start of public exports.                                                   */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_event_copy_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    typedef CPARSE_SYM(event_copy) sym ## event_copy; \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_event_copy_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_event_copy_sym(sym ## _)
+#define CPARSE_IMPORT_event_copy \
+    __INTERNAL_CPARSE_IMPORT_event_copy_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
