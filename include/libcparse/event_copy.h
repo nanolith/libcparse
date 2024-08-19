@@ -52,6 +52,20 @@ int CPARSE_SYM(event_copy_create)(
  */
 int CPARSE_SYM(event_copy_release)(CPARSE_SYM(event_copy)* cpy);
 
+/******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Get a pointer to the \ref event for this \ref event_copy.
+ *
+ * \param cpy                   The \ref event_copy to query.
+ *
+ * \returns the \ref event for this copy.
+ */
+const CPARSE_SYM(event)*  CPARSE_SYM(event_copy_get_event)(
+    const CPARSE_SYM(event_copy)* cpy);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
