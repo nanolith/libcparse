@@ -23,6 +23,7 @@ extern "C" {
 enum CPARSE_SYM(event_category)
 {
     CPARSE_EVENT_CATEGORY_BASE =                                        0x0000,
+    CPARSE_EVENT_CATEGORY_IDENTIFIER =                                  0x0001,
 };
 
 /******************************************************************************/
