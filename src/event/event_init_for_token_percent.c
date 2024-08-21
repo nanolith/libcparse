@@ -26,5 +26,8 @@ CPARSE_IMPORT_event_internal;
 int CPARSE_SYM(event_init_for_token_percent)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor)
 {
-    return event_init(ev, CPARSE_EVENT_TYPE_TOKEN_PERCENT, cursor);
+    return
+        event_init(
+            ev, CPARSE_EVENT_TYPE_TOKEN_PERCENT, CPARSE_EVENT_CATEGORY_BASE,
+            cursor);
 }

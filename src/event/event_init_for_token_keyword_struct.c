@@ -27,5 +27,8 @@ CPARSE_IMPORT_event_internal;
 int CPARSE_SYM(event_init_for_token_keyword_struct)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor)
 {
-    return event_init(ev, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_STRUCT, cursor);
+    return
+        event_init(
+            ev, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_STRUCT,
+            CPARSE_EVENT_CATEGORY_BASE, cursor);
 }

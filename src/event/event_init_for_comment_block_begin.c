@@ -27,5 +27,8 @@ CPARSE_IMPORT_event_internal;
 int CPARSE_SYM(event_init_for_comment_block_begin)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor)
 {
-    return event_init(ev, CPARSE_EVENT_TYPE_COMMENT_BLOCK_BEGIN, cursor);
+    return
+        event_init(
+            ev, CPARSE_EVENT_TYPE_COMMENT_BLOCK_BEGIN,
+            CPARSE_EVENT_CATEGORY_BASE, cursor);
 }

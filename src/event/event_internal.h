@@ -44,6 +44,7 @@ enum CPARSE_SYM(event_category)
  *
  * \param ev                    Pointer to the event to initialize.
  * \param event_type            The type of the event.
+ * \param event_category        The category of the event.
  * \param cursor                The event cursor.
  *
  * \returns a status code indicating success or failure.
@@ -51,7 +52,8 @@ enum CPARSE_SYM(event_category)
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(event_init)(
-    CPARSE_SYM(event)* ev, int event_type, const CPARSE_SYM(cursor)* cursor);
+    CPARSE_SYM(event)* ev, int event_type, int event_category,
+    const CPARSE_SYM(cursor)* cursor);
 
 /******************************************************************************/
 /* Start of public exports.                                                   */
@@ -60,8 +62,8 @@ int CPARSE_SYM(event_init)(
 #define __INTERNAL_CPARSE_IMPORT_event_internal_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     static inline int sym ## event_init( \
-        CPARSE_SYM(event)* x, int y, const CPARSE_SYM(cursor)* z) { \
-            return CPARSE_SYM(event_init)(x,y,z); } \
+        CPARSE_SYM(event)* w, int x, int y, const CPARSE_SYM(cursor)* z) { \
+            return CPARSE_SYM(event_init)(w,x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_internal_as(sym) \

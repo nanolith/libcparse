@@ -27,5 +27,8 @@ CPARSE_IMPORT_event_internal;
 int CPARSE_SYM(event_init_for_expression_part_begin)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor)
 {
-    return event_init(ev, CPARSE_EVENT_TYPE_EXPRESSION_PART_BEGIN, cursor);
+    return
+        event_init(
+            ev, CPARSE_EVENT_TYPE_EXPRESSION_PART_BEGIN,
+            CPARSE_EVENT_CATEGORY_BASE, cursor);
 }
