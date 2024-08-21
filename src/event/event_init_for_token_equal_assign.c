@@ -27,5 +27,8 @@ CPARSE_IMPORT_event_internal;
 int CPARSE_SYM(event_init_for_token_equal_assign)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor)
 {
-    return event_init(ev, CPARSE_EVENT_TYPE_TOKEN_EQUAL_ASSIGN, cursor);
+    return
+        event_init(
+            ev, CPARSE_EVENT_TYPE_TOKEN_EQUAL_ASSIGN,
+            CPARSE_EVENT_CATEGORY_BASE, cursor);
 }

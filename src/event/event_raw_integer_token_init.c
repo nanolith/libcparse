@@ -39,7 +39,9 @@ int CPARSE_SYM(event_raw_integer_token_init)(
 
     /* initialize the base event. */
     retval =
-        event_init(&ev->hdr, CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_INTEGER, cursor);
+        event_init(
+            &ev->hdr, CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_INTEGER,
+            CPARSE_EVENT_CATEGORY_RAW_INTEGER_TOKEN, cursor);
     if (STATUS_SUCCESS != retval)
     {
         return retval;

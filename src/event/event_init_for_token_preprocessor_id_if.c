@@ -27,5 +27,8 @@ CPARSE_IMPORT_event_internal;
 int CPARSE_SYM(event_init_for_token_preprocessor_id_if)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor)
 {
-    return event_init(ev, CPARSE_EVENT_TYPE_TOKEN_PP_ID_IF, cursor);
+    return
+        event_init(
+            ev, CPARSE_EVENT_TYPE_TOKEN_PP_ID_IF, CPARSE_EVENT_CATEGORY_BASE,
+            cursor);
 }

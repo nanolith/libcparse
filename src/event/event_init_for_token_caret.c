@@ -26,5 +26,8 @@ CPARSE_IMPORT_event_internal;
 int CPARSE_SYM(event_init_for_token_caret)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor)
 {
-    return event_init(ev, CPARSE_EVENT_TYPE_TOKEN_CARET, cursor);
+    return
+        event_init(
+            ev, CPARSE_EVENT_TYPE_TOKEN_CARET, CPARSE_EVENT_CATEGORY_BASE,
+            cursor);
 }

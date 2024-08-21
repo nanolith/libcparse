@@ -28,5 +28,7 @@ int CPARSE_SYM(event_init_for_exp_postfix_increment_begin)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor)
 {
     return
-        event_init(ev, CPARSE_EVENT_TYPE_EXP_POSTFIX_INCREMENT_BEGIN, cursor);
+        event_init(
+            ev, CPARSE_EVENT_TYPE_EXP_POSTFIX_INCREMENT_BEGIN,
+            CPARSE_EVENT_CATEGORY_BASE, cursor);
 }

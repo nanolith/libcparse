@@ -38,7 +38,10 @@ int CPARSE_SYM(event_raw_string_token_init_internal)(
     memset(ev, 0, sizeof(*ev));
 
     /* initialize base type. */
-    retval = event_init(&ev->hdr, event_type, cursor);
+    retval =
+        event_init(
+            &ev->hdr, event_type, CPARSE_EVENT_CATEGORY_RAW_STRING_TOKEN,
+            cursor);
     if (STATUS_SUCCESS != retval)
     {
         goto done;

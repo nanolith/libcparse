@@ -29,5 +29,7 @@ int CPARSE_SYM(event_init_for_token_keyword__Static_assert)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor)
 {
     return
-        event_init(ev, CPARSE_EVENT_TYPE_TOKEN_KEYWORD__STATIC_ASSERT, cursor);
+        event_init(
+            ev, CPARSE_EVENT_TYPE_TOKEN_KEYWORD__STATIC_ASSERT,
+            CPARSE_EVENT_CATEGORY_BASE, cursor);
 }

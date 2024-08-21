@@ -40,7 +40,8 @@ int CPARSE_SYM(event_raw_character_literal_init)(
     /* initialize base type. */
     retval =
         event_init(
-            &ev->hdr, CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_CHARACTER, cursor);
+            &ev->hdr, CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_CHARACTER,
+            CPARSE_EVENT_CATEGORY_RAW_CHARACTER_LITERAL, cursor);
     if (STATUS_SUCCESS != retval)
     {
         goto done;
