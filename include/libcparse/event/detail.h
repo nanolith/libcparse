@@ -21,6 +21,7 @@ extern "C" {
 struct CPARSE_SYM(event)
 {
     int event_type;
+    int event_category;
     CPARSE_SYM(cursor) event_cursor;
 };
 
