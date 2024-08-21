@@ -13,8 +13,11 @@
 #include <minunit/minunit.h>
 #include <string.h>
 
+#include "../../src/event/event_internal.h"
+
 CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
+CPARSE_IMPORT_event_internal;
 
 TEST_SUITE(event);
 
@@ -34,8 +37,27 @@ TEST_SUITE(event);
     } \
     REQUIRE_SEMICOLON_HERE
 
+#define EVENT_INIT_CAT_TYPE_TEST(ctor, cat, type) \
+    TEST(ctor) \
+    { \
+        event ev; \
+        cursor c; \
+        \
+        memset(&c, 0, sizeof(c)); \
+        \
+        TEST_ASSERT(STATUS_SUCCESS == ctor(&ev, &c)); \
+        \
+        TEST_EXPECT(type == event_get_type(&ev)); \
+        \
+        TEST_EXPECT(cat == event_get_category(&ev)); \
+        \
+        TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev)); \
+    } \
+    REQUIRE_SEMICOLON_HERE
+
 /* token tests. */
-EVENT_INIT_TYPE_TEST(event_init_for_eof, CPARSE_EVENT_TYPE_EOF);
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_eof, CPARSE_EVENT_CATEGORY_BASE, CPARSE_EVENT_TYPE_EOF);
 EVENT_INIT_TYPE_TEST(
     event_init_for_whitespace_token, CPARSE_EVENT_TYPE_TOKEN_WHITESPACE);
 EVENT_INIT_TYPE_TEST(
