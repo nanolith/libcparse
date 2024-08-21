@@ -32,6 +32,7 @@ enum CPARSE_SYM(event_category)
     CPARSE_EVENT_CATEGORY_RAW_INTEGER_TOKEN =                           0x0007,
     CPARSE_EVENT_CATEGORY_RAW_LINE =                                    0x0008,
     CPARSE_EVENT_CATEGORY_RAW_STRING_TOKEN =                            0x0009,
+    CPARSE_EVENT_CATEGORY_STRING =                                      0x000A,
 };
 
 /******************************************************************************/
