@@ -2684,6 +2684,15 @@ int CPARSE_SYM(event_dispose)(CPARSE_SYM(event)* ev);
 int CPARSE_SYM(event_get_type)(const CPARSE_SYM(event)* ev);
 
 /**
+ * \brief Get the event category for the given event.
+ *
+ * \param ev                    The event to query.
+ *
+ * \returns the \ref event_type for this event.
+ */
+int CPARSE_SYM(event_get_category)(const CPARSE_SYM(event)* ev);
+
+/**
  * \brief Get the cursor for the given event.
  *
  * \param ev                    The event to query.
