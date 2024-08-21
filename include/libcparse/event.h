@@ -3342,6 +3342,8 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
             return CPARSE_SYM(event_dispose)(x); } \
     static inline int sym ## event_get_type(const CPARSE_SYM(event)* x) { \
         return CPARSE_SYM(event_get_type)(x); } \
+    static inline int sym ## event_get_category(const CPARSE_SYM(event)* x) { \
+        return CPARSE_SYM(event_get_category)(x); } \
     static inline const CPARSE_SYM(cursor)* \
     sym ## event_get_cursor(const CPARSE_SYM(event)* x) { \
         return CPARSE_SYM(event_get_cursor)(x); } \
