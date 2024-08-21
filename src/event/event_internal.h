@@ -56,6 +56,19 @@ int CPARSE_SYM(event_init)(
     const CPARSE_SYM(cursor)* cursor);
 
 /******************************************************************************/
+/* Start of protected methods.                                                */
+/******************************************************************************/
+
+/**
+ * \brief Get the event category for the given event.
+ *
+ * \param ev                    The event to query.
+ *
+ * \returns the \ref event_type for this event.
+ */
+int CPARSE_SYM(event_get_category)(const CPARSE_SYM(event)* ev);
+
+/******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
 
@@ -64,6 +77,8 @@ int CPARSE_SYM(event_init)(
     static inline int sym ## event_init( \
         CPARSE_SYM(event)* w, int x, int y, const CPARSE_SYM(cursor)* z) { \
             return CPARSE_SYM(event_init)(w,x,y,z); } \
+    static inline int sym ## event_get_category(const CPARSE_SYM(event)* x) { \
+        return CPARSE_SYM(event_get_category)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_event_internal_as(sym) \
