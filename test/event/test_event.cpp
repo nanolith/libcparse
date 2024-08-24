@@ -148,8 +148,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_equal_compare, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_EQUAL_COMPARE);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_not_equal_compare,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_not_equal_compare, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_NOT_EQUAL_COMPARE);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_equal_assign, CPARSE_EVENT_TYPE_TOKEN_EQUAL_ASSIGN);
