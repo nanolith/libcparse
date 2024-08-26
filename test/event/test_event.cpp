@@ -199,8 +199,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_greater_than, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_GREATER_THAN);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_less_than_equal,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_less_than_equal, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_LESS_THAN_EQUAL);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_greater_than_equal,
