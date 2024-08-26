@@ -190,8 +190,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_bitshift_left, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_BITSHIFT_LEFT);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_bitshift_right,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_bitshift_right, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_BITSHIFT_RIGHT);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_less_than, CPARSE_EVENT_TYPE_TOKEN_LESS_THAN);
