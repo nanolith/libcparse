@@ -220,8 +220,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_preprocessor_id_if, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_IF);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_preprocessor_id_ifdef,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_preprocessor_id_ifdef, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_IFDEF);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_preprocessor_id_ifndef,
