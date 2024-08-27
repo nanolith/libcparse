@@ -223,8 +223,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_preprocessor_id_ifdef, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_IFDEF);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_preprocessor_id_ifndef,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_preprocessor_id_ifndef, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_PP_ID_IFNDEF);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword__Alignas,
