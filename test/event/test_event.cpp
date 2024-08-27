@@ -229,8 +229,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_keyword__Alignas, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__ALIGNAS);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_keyword__Alignof,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_keyword__Alignof, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__ALIGNOF);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword__Atomic,
