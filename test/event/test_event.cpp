@@ -247,8 +247,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_keyword__Imaginary, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__IMAGINARY);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_keyword__Noreturn,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_keyword__Noreturn, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__NORETURN);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword__Static_assert,
