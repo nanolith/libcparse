@@ -250,8 +250,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_keyword__Noreturn, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__NORETURN);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_keyword__Static_assert,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_keyword__Static_assert, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__STATIC_ASSERT);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword__Thread_local,
