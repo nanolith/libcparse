@@ -253,8 +253,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_keyword__Static_assert, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__STATIC_ASSERT);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_keyword__Thread_local,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_keyword__Thread_local, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD__THREAD_LOCAL);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_auto, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_AUTO);
