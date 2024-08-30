@@ -316,8 +316,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_keyword_register, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_REGISTER);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_keyword_restrict,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_keyword_restrict, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_RESTRICT);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_return,
