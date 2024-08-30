@@ -328,8 +328,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_keyword_signed, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_SIGNED);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_keyword_sizeof,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_keyword_sizeof, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_SIZEOF);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_static,
