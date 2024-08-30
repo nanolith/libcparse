@@ -304,8 +304,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_keyword_if, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_IF);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_keyword_inline,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_keyword_inline, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_INLINE);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_int, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_INT);
