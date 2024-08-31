@@ -346,8 +346,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_keyword_union, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_UNION);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_keyword_unsigned,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_keyword_unsigned, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_UNSIGNED);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_void, CPARSE_EVENT_TYPE_TOKEN_KEYWORD_VOID);
