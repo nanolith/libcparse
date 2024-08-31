@@ -334,8 +334,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_token_keyword_static, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_STATIC);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_token_keyword_struct,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_token_keyword_struct, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_TOKEN_KEYWORD_STRUCT);
 EVENT_INIT_TYPE_TEST(
     event_init_for_token_keyword_switch,
