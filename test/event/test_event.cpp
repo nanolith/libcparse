@@ -391,8 +391,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_exp_array_subscript_end, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_ARRAY_SUBSCRIPT_END);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_exp_function_call_begin,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_exp_function_call_begin, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_FUNCTION_CALL_BEGIN);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_function_call_end,
