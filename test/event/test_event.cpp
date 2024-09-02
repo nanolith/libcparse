@@ -415,8 +415,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_exp_postfix_increment_end, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_POSTFIX_INCREMENT_END);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_exp_postfix_decrement_begin,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_exp_postfix_decrement_begin, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_POSTFIX_DECREMENT_BEGIN);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_postfix_decrement_end,
