@@ -427,8 +427,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_exp_compound_literal_end, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_COMPOUND_LITERAL_END);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_exp_prefix_increment_begin,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_exp_prefix_increment_begin, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_PREFIX_INCREMENT_BEGIN);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_prefix_increment_end,
