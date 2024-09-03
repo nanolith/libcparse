@@ -436,8 +436,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_exp_prefix_decrement_begin, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_PREFIX_DECREMENT_BEGIN);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_exp_prefix_decrement_end,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_exp_prefix_decrement_end, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_PREFIX_DECREMENT_END);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_unary_operation_begin,
