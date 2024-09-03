@@ -442,8 +442,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_exp_unary_operation_begin, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_UNARY_OPERATION_BEGIN);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_exp_unary_operation_end,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_exp_unary_operation_end, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_UNARY_OPERATION_END);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_sizeof_exp_begin,
