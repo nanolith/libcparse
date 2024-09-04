@@ -460,8 +460,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_exp_alignof_type_begin, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_ALIGNOF_TYPE_BEGIN);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_exp_alignof_type_end,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_exp_alignof_type_end, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_ALIGNOF_TYPE_END);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_cast_begin, CPARSE_EVENT_TYPE_EXP_CAST_BEGIN);
