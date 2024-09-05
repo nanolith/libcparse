@@ -502,8 +502,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_exp_bitshift_left_begin, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_BITSHIFT_LEFT_BEGIN);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_exp_bitshift_left_end,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_exp_bitshift_left_end, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_BITSHIFT_LEFT_END);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_bitshift_right_begin,
