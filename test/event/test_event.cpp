@@ -532,8 +532,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_exp_greater_than_equal_begin, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_GREATER_THAN_EQUAL_BEGIN);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_exp_greater_than_equal_end,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_exp_greater_than_equal_end, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_GREATER_THAN_EQUAL_END);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_equal_to_begin, CPARSE_EVENT_TYPE_EXP_EQUAL_TO_BEGIN);
