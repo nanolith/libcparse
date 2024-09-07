@@ -565,8 +565,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_exp_bitwise_or_end, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_BITWISE_OR_END);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_exp_logical_and_begin,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_exp_logical_and_begin, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_LOGICAL_AND_BEGIN);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_logical_and_end, CPARSE_EVENT_TYPE_EXP_LOGICAL_AND_END);
