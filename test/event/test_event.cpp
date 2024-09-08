@@ -577,8 +577,8 @@ EVENT_INIT_CAT_TYPE_TEST(
 EVENT_INIT_CAT_TYPE_TEST(
     event_init_for_exp_logical_or_end, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_LOGICAL_OR_END);
-EVENT_INIT_TYPE_TEST(
-    event_init_for_exp_conditional_begin,
+EVENT_INIT_CAT_TYPE_TEST(
+    event_init_for_exp_conditional_begin, CPARSE_EVENT_CATEGORY_BASE,
     CPARSE_EVENT_TYPE_EXP_CONDITIONAL_BEGIN);
 EVENT_INIT_TYPE_TEST(
     event_init_for_exp_conditional_end, CPARSE_EVENT_TYPE_EXP_CONDITIONAL_END);
