@@ -47,3 +47,30 @@ TEST(event_raw_character_init)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_character_dispose(&ev));
 }
+
+/**
+ * Test that we can get the raw character value of this event.
+ */
+TEST(event_raw_character_get)
+{
+    event_raw_character ev;
+    cursor c;
+    const int ch = 'x';
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_raw_character_init(&ev, &c, ch));
+
+    /* get the raw character value. */
+    int gc = event_raw_character_get(&ev);
+
+    /* this value matches our test value. */
+    TEST_EXPECT(ch == gc);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_character_dispose(&ev));
+}
