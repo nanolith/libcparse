@@ -107,6 +107,38 @@ TEST(event_system_include_file)
 }
 
 /**
+ * Test that we can downcast a system include event.
+ */
+TEST(event_system_include_downcast)
+{
+    event_include ev;
+    event_include* ev2;
+    cursor c;
+    const char* file = "stdio.h";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_include_init_for_system_include(&ev, &c, file));
+
+    /* get the base event type. */
+    auto bev = event_include_upcast(&ev);
+
+    /* attemp to downcast this event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_downcast_to_event_include(&ev2, bev));
+
+    /* these events should match. */
+    TEST_EXPECT(ev2 == &ev);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
+}
+
+/**
  * Test that we can create a local include event.
  */
 TEST(event_local_include_init)
