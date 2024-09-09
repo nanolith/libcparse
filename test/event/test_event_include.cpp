@@ -50,3 +50,31 @@ TEST(event_system_include_init)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
 }
+
+/**
+ * Test that we can create a local include event.
+ */
+TEST(event_local_include_init)
+{
+    event_include ev;
+    cursor c;
+    const char* file = "localheader.h";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_include_init_for_local_include(&ev, &c, file));
+
+    /* get the base event type. */
+    auto bev = event_include_upcast(&ev);
+
+    /* the event type is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_TYPE_PREPROCESSOR_LOCAL_INCLUDE == event_get_type(bev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
+}
