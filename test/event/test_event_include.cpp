@@ -161,3 +161,30 @@ TEST(event_local_include_category)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
 }
+
+/**
+ * Test that we can get the local include file.
+ */
+TEST(event_local_include_file)
+{
+    event_include ev;
+    cursor c;
+    const char* file = "localheader.h";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_include_init_for_local_include(&ev, &c, file));
+
+    /* get the include file. */
+    const char* ifile = event_include_file_get(&ev);
+
+    /* it should match. */
+    TEST_EXPECT(ifile == file);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
+}
