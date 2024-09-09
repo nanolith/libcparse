@@ -74,3 +74,35 @@ TEST(event_raw_character_get)
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_character_dispose(&ev));
 }
+
+/**
+ * Test that we can downcast a raw character event.
+ */
+TEST(event_downcast_to_event_raw_character)
+{
+    event_raw_character ev;
+    event_raw_character* ev2;
+    cursor c;
+    const int ch = 'x';
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_raw_character_init(&ev, &c, ch));
+
+    /* get the base event type. */
+    auto bev = event_raw_character_upcast(&ev);
+
+    /* attempt to downcast this event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_downcast_to_event_raw_character(&ev2, bev));
+
+    /* these events should match. */
+    TEST_EXPECT(ev2 == &ev);
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_character_dispose(&ev));
+}
