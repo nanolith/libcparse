@@ -14,8 +14,11 @@
 #include <minunit/minunit.h>
 #include <string.h>
 
+#include "../../src/event/event_internal.h"
+
 CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
+CPARSE_IMPORT_event_internal;
 CPARSE_IMPORT_event_raw_character;
 
 TEST_SUITE(event_raw_character);
@@ -43,6 +46,34 @@ TEST(event_raw_character_init)
     /* The event type is correct. */
     TEST_EXPECT(
         CPARSE_EVENT_TYPE_RAW_CHARACTER == event_get_type(bev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_character_dispose(&ev));
+}
+
+/**
+ * Test that we can get the right category for this event.
+ */
+TEST(event_raw_character_category_get)
+{
+    event_raw_character ev;
+    cursor c;
+    const int ch = 'x';
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_raw_character_init(&ev, &c, ch));
+
+    /* get the base event type. */
+    auto bev = event_raw_character_upcast(&ev);
+
+    /* The event category is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_CATEGORY_RAW_CHARACTER == event_get_category(bev));
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_raw_character_dispose(&ev));
