@@ -52,6 +52,34 @@ TEST(event_system_include_init)
 }
 
 /**
+ * Test that the system include event category is correct.
+ */
+TEST(event_system_include_event_category)
+{
+    event_include ev;
+    cursor c;
+    const char* file = "stdio.h";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_include_init_for_system_include(&ev, &c, file));
+
+    /* get the base event type. */
+    auto bev = event_include_upcast(&ev);
+
+    /* the event category is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_CATEGORY_INCLUDE == event_get_category(bev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&ev));
+}
+
+/**
  * Test that we can create a local include event.
  */
 TEST(event_local_include_init)
