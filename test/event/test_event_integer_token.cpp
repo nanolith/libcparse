@@ -141,3 +141,32 @@ TEST(unsigned_long_long_init_dispose)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can convert a signed integer token to a char.
+ */
+TEST(signed_integer_to_char)
+{
+    cursor pos;
+    event_integer_token ev;
+    const int TEST_VAL = 12;
+    char val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_unsigned_long_long(
+                    &ev, &pos, TEST_VAL));
+
+    /* we can convert this value to a char. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_integer_token_convert_to_char(&val, &ev));
+
+    /* the char value matches. */
+    TEST_EXPECT(TEST_VAL == val);
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
