@@ -157,7 +157,7 @@ TEST(signed_integer_to_char)
     /* we can initialize the event. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == event_integer_token_init_for_unsigned_long_long(
+            == event_integer_token_init_for_signed_int(
                     &ev, &pos, TEST_VAL));
 
     /* we can convert this value to a char. */
