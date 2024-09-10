@@ -14,8 +14,11 @@
 #include <minunit/minunit.h>
 #include <string.h>
 
+#include "../../src/event/event_internal.h"
+
 CPARSE_IMPORT_cursor;
 CPARSE_IMPORT_event;
+CPARSE_IMPORT_event_internal;
 CPARSE_IMPORT_event_string;
 
 TEST_SUITE(event_string);
@@ -40,6 +43,31 @@ TEST(event_string_init)
 
     /* The event type is correct. */
     TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_VALUE_STRING == event_get_type(bev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_string_dispose(&ev));
+}
+
+/**
+ * Test that we can get the category for a string event.
+ */
+TEST(event_string_category)
+{
+    event_string ev;
+    cursor c;
+    const char* TEST_STRING = "test";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_string_init(&ev, &c, TEST_STRING));
+
+    /* get the base event type. */
+    auto bev = event_string_upcast(&ev);
+
+    /* The event category is correct. */
+    TEST_EXPECT(CPARSE_EVENT_CATEGORY_STRING == event_get_category(bev));
 
     /* clean up. */
     TEST_ASSERT(STATUS_SUCCESS == event_string_dispose(&ev));
