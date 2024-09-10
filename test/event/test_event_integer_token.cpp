@@ -39,3 +39,23 @@ TEST(signed_int_init_dispose)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can init and dispose an unsigned int token event.
+ */
+TEST(unsigned_int_init_dispose)
+{
+    cursor pos;
+    event_integer_token ev;
+    const int TEST_VAL = 12;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_unsigned_int(&ev, &pos, TEST_VAL));
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
