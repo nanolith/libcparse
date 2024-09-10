@@ -102,6 +102,34 @@ TEST(event_string_init_for_system_string)
 }
 
 /**
+ * Test that we can get a system string category.
+ */
+TEST(event_system_string_category)
+{
+    event_string ev;
+    cursor c;
+    const char* TEST_STRING = "test";
+
+    /* clear the cursor. */
+    memset(&c, 0, sizeof(c));
+
+    /* Initialize an event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_string_init_for_system_string(&ev, &c, TEST_STRING));
+
+    /* get the base event type. */
+    auto bev = event_string_upcast(&ev);
+
+    /* The event category is correct. */
+    TEST_EXPECT(
+        CPARSE_EVENT_CATEGORY_STRING == event_get_category(bev));
+
+    /* clean up. */
+    TEST_ASSERT(STATUS_SUCCESS == event_string_dispose(&ev));
+}
+
+/**
  * Test that we can get the string value of this event.
  */
 TEST(event_string_get)
