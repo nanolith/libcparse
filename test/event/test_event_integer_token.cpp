@@ -79,3 +79,23 @@ TEST(signed_long_init_dispose)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can init and dispose an unsigned long token event.
+ */
+TEST(unsigned_long_init_dispose)
+{
+    cursor pos;
+    event_integer_token ev;
+    const unsigned long TEST_VAL = 12;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_unsigned_long(&ev, &pos, TEST_VAL));
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
