@@ -394,3 +394,30 @@ TEST(unsigned_integer_to_unsigned_char)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * We get a conversion error if the unsigned value is > UCHAR_MAX.
+ */
+TEST(unsigned_integer_to_unsigned_char_positive_conversion_error)
+{
+    cursor pos;
+    event_integer_token ev;
+    const unsigned int TEST_VAL = 256;
+    unsigned char val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_unsigned_int(
+                    &ev, &pos, TEST_VAL));
+
+    /* conversion fails. */
+    TEST_ASSERT(
+        ERROR_LIBCPARSE_BAD_INTEGER_CONVERSION
+            == event_integer_token_convert_to_unsigned_char(&val, &ev));
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
