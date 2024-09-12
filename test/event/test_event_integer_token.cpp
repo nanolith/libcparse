@@ -512,7 +512,7 @@ TEST(unsigned_integer_to_short)
 {
     cursor pos;
     event_integer_token ev;
-    const int TEST_VAL = 12;
+    const unsigned int TEST_VAL = 12;
     short val = 0;
 
     memset(&pos, 0, sizeof(pos));
@@ -520,7 +520,7 @@ TEST(unsigned_integer_to_short)
     /* we can initialize the event. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == event_integer_token_init_for_signed_int(
+            == event_integer_token_init_for_unsigned_int(
                     &ev, &pos, TEST_VAL));
 
     /* we can convert this value to a short. */
