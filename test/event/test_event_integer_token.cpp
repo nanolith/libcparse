@@ -718,7 +718,7 @@ TEST(signed_long_to_int)
     /* we can initialize the event. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == event_integer_token_init_for_signed_int(
+            == event_integer_token_init_for_signed_long(
                     &ev, &pos, TEST_VAL));
 
     /* we can convert this value to an int. */
