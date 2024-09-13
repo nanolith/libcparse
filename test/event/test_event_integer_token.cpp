@@ -793,7 +793,7 @@ TEST(unsigned_long_to_int)
 {
     cursor pos;
     event_integer_token ev;
-    const long TEST_VAL = 12;
+    const unsigned long TEST_VAL = 12;
     int val = 0;
 
     memset(&pos, 0, sizeof(pos));
@@ -801,7 +801,7 @@ TEST(unsigned_long_to_int)
     /* we can initialize the event. */
     TEST_ASSERT(
         STATUS_SUCCESS
-            == event_integer_token_init_for_signed_long(
+            == event_integer_token_init_for_unsigned_long(
                     &ev, &pos, TEST_VAL));
 
     /* we can convert this value to an int. */
