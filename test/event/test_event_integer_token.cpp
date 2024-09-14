@@ -982,3 +982,32 @@ TEST(unsigned_long_to_unsigned_int_positive_conversion_error)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can convert a signed long long token to a long.
+ */
+TEST(signed_long_long_to_long)
+{
+    cursor pos;
+    event_integer_token ev;
+    const long long TEST_VAL = 12;
+    long val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_signed_long_long(
+                    &ev, &pos, TEST_VAL));
+
+    /* we can convert this value to an int. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_integer_token_convert_to_long(&val, &ev));
+
+    /* the char value matches. */
+    TEST_EXPECT(TEST_VAL == val);
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
