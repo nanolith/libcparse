@@ -1001,7 +1001,7 @@ TEST(signed_long_long_to_long)
             == event_integer_token_init_for_signed_long_long(
                     &ev, &pos, TEST_VAL));
 
-    /* we can convert this value to an int. */
+    /* we can convert this value to a long. */
     TEST_ASSERT(
         STATUS_SUCCESS == event_integer_token_convert_to_long(&val, &ev));
 
