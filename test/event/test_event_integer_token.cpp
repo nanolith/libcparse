@@ -925,3 +925,33 @@ TEST(signed_long_to_unsigned_int_positive_conversion_error)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can convert an unsigned long token to an unsigned short.
+ */
+TEST(unsigned_long_to_unsigned_int)
+{
+    cursor pos;
+    event_integer_token ev;
+    const unsigned long TEST_VAL = 12;
+    unsigned int val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_unsigned_long(
+                    &ev, &pos, TEST_VAL));
+
+    /* we can convert this value to an unsigned int. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_convert_to_unsigned_int(&val, &ev));
+
+    /* the unsigned int value matches. */
+    TEST_EXPECT(TEST_VAL == val);
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
