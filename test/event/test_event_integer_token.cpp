@@ -1215,3 +1215,34 @@ TEST(signed_long_long_to_unsigned_long_long)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can convert an unsigned long long token to an unsigned long
+ * long.
+ */
+TEST(unsigned_long_long_to_unsigned_long_long)
+{
+    cursor pos;
+    event_integer_token ev;
+    const unsigned long long TEST_VAL = 12;
+    unsigned long long val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_unsigned_long_long(
+                    &ev, &pos, TEST_VAL));
+
+    /* we can convert this value to an unsigned long long. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_convert_to_unsigned_long_long(&val, &ev));
+
+    /* the char value matches. */
+    TEST_EXPECT(TEST_VAL == val);
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
