@@ -1246,3 +1246,32 @@ TEST(unsigned_long_long_to_unsigned_long_long)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can convert a signed integer token to an int8.
+ */
+TEST(signed_integer_to_int8)
+{
+    cursor pos;
+    event_integer_token ev;
+    const int TEST_VAL = 12;
+    int8_t val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_signed_int(
+                    &ev, &pos, TEST_VAL));
+
+    /* we can convert this value to an int8. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_integer_token_convert_to_int8(&val, &ev));
+
+    /* the int8 value matches. */
+    TEST_EXPECT(TEST_VAL == val);
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
