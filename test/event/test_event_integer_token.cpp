@@ -1607,3 +1607,32 @@ TEST(signed_integer_to_int16_positive_conversion_error)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can convert an unsigned integer token to an int16.
+ */
+TEST(unsigned_integer_to_int16)
+{
+    cursor pos;
+    event_integer_token ev;
+    const unsigned int TEST_VAL = 12;
+    int16_t val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_unsigned_int(
+                    &ev, &pos, TEST_VAL));
+
+    /* we can convert this value to an int16. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_integer_token_convert_to_int16(&val, &ev));
+
+    /* the int16 value matches. */
+    TEST_EXPECT(TEST_VAL == val);
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
