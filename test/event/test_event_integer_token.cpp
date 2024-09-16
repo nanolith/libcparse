@@ -1561,7 +1561,7 @@ TEST(signed_integer_to_int16_negative_conversion_error)
 {
     cursor pos;
     event_integer_token ev;
-    const int TEST_VAL = -20000;
+    const int TEST_VAL = -40000;
     int16_t val = 0;
 
     memset(&pos, 0, sizeof(pos));
