@@ -1970,3 +1970,30 @@ TEST(signed_long_to_uint32)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * We get a conversion error if the signed value is < 0.
+ */
+TEST(signed_long_to_uint32_negative_conversion_error)
+{
+    cursor pos;
+    event_integer_token ev;
+    const long TEST_VAL = -5;
+    uint32_t val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_signed_long(
+                    &ev, &pos, TEST_VAL));
+
+    /* conversion error. */
+    TEST_ASSERT(
+        ERROR_LIBCPARSE_BAD_INTEGER_CONVERSION
+            == event_integer_token_convert_to_uint32(&val, &ev));
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
