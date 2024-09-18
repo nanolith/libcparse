@@ -2364,3 +2364,31 @@ TEST(unsigned_integer_coerce_to_short)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can coerce a signed integer to unsigned short.
+ */
+TEST(signed_integer_coerce_to_unsigned_short)
+{
+    cursor pos;
+    event_integer_token ev;
+    const int TEST_VAL = 12;
+    unsigned short val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_signed_int(
+                    &ev, &pos, TEST_VAL));
+
+    /* we can convert this value to an unsigned short. */
+    val = event_integer_token_coerce_unsigned_short(&ev);
+
+    /* the unsigned short value matches. */
+    TEST_EXPECT(TEST_VAL == val);
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
