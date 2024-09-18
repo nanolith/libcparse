@@ -2053,3 +2053,30 @@ TEST(unsigned_long_to_uint32)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * We get a conversion error if the unsigned value is > UINT32_MAX.
+ */
+TEST(unsigned_long_to_uint32_positive_conversion_error)
+{
+    cursor pos;
+    event_integer_token ev;
+    const unsigned long TEST_VAL = ((unsigned long)UINT32_MAX) + 1000;
+    uint32_t val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_unsigned_long(
+                    &ev, &pos, TEST_VAL));
+
+    /* conversion error. */
+    TEST_ASSERT(
+        ERROR_LIBCPARSE_BAD_INTEGER_CONVERSION
+            == event_integer_token_convert_to_uint32(&val, &ev));
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
