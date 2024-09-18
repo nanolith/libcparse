@@ -2138,3 +2138,32 @@ TEST(unsigned_long_to_int64)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can convert a signed long token to a uint64.
+ */
+TEST(signed_long_to_uint64)
+{
+    cursor pos;
+    event_integer_token ev;
+    const long TEST_VAL = 12;
+    uint64_t val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_signed_long(
+                    &ev, &pos, TEST_VAL));
+
+    /* we can convert this value to a uint64. */
+    TEST_ASSERT(
+        STATUS_SUCCESS == event_integer_token_convert_to_uint64(&val, &ev));
+
+    /* the uint64 value matches. */
+    TEST_EXPECT(TEST_VAL == val);
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
