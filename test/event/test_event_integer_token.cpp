@@ -2644,3 +2644,31 @@ TEST(unsigned_integer_coerce_to_unsigned_long)
     /* we can dispose the event. */
     TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
 }
+
+/**
+ * Test that we can coerce an integer to a long long.
+ */
+TEST(signed_integer_coerce_to_long_long)
+{
+    cursor pos;
+    event_integer_token ev;
+    const int TEST_VAL = 12;
+    long long val = 0;
+
+    memset(&pos, 0, sizeof(pos));
+
+    /* we can initialize the event. */
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_signed_int(
+                    &ev, &pos, TEST_VAL));
+
+    /* we can convert this value to a long long. */
+    val = event_integer_token_coerce_long_long(&ev);
+
+    /* the unsigned short value matches. */
+    TEST_EXPECT(TEST_VAL == val);
+
+    /* we can dispose the event. */
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&ev));
+}
