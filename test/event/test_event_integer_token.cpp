@@ -2470,7 +2470,7 @@ TEST(unsigned_integer_coerce_to_int)
     /* we can convert this value to an int. */
     val = event_integer_token_coerce_int(&ev);
 
-    /* the unsigned short value matches. */
+    /* the int value matches. */
     TEST_EXPECT(TEST_VAL == val);
 
     /* we can dispose the event. */
