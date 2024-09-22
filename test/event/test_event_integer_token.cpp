@@ -2862,7 +2862,7 @@ TEST(unsigned_integer_coerce_to_uint8)
     /* we can convert this value to a uint8_t. */
     val = event_integer_token_coerce_uint8(&ev);
 
-    /* the unsigned short value matches. */
+    /* the uint8_t value matches. */
     TEST_EXPECT(TEST_VAL == val);
 
     /* we can dispose the event. */
