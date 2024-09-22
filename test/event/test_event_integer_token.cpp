@@ -2778,7 +2778,7 @@ TEST(signed_integer_coerce_to_int8)
     /* we can convert this value to an int8_t. */
     val = event_integer_token_coerce_int8(&ev);
 
-    /* the unsigned short value matches. */
+    /* the int8_t value matches. */
     TEST_EXPECT(TEST_VAL == val);
 
     /* we can dispose the event. */
