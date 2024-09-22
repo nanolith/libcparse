@@ -2694,7 +2694,7 @@ TEST(unsigned_integer_coerce_to_long_long)
     /* we can convert this value to a long long. */
     val = event_integer_token_coerce_long_long(&ev);
 
-    /* the unsigned short value matches. */
+    /* the long long value matches. */
     TEST_EXPECT(TEST_VAL == val);
 
     /* we can dispose the event. */
