@@ -2877,7 +2877,7 @@ TEST(signed_integer_coerce_to_int16)
     cursor pos;
     event_integer_token ev;
     const int TEST_VAL = 12;
-    uint8_t val = 0;
+    int16_t val = 0;
 
     memset(&pos, 0, sizeof(pos));
 
