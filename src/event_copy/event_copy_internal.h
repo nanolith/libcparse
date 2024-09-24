@@ -10,6 +10,7 @@
 #pragma once
 
 #include <libcparse/event/detail.h>
+#include <libcparse/event/include.h>
 #include <libcparse/event/raw_character.h>
 #include <libcparse/event_copy.h>
 
@@ -22,5 +23,6 @@ struct CPARSE_SYM(event_copy)
     {
         CPARSE_SYM(event) event;
         CPARSE_SYM(event_raw_character) event_raw_character;
+        CPARSE_SYM(event_include) event_include;
     } detail;
 };
