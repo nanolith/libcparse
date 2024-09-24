@@ -10,6 +10,8 @@
 #include <libcparse/event_copy.h>
 #include <libcparse/status_codes.h>
 
+#include "event_copy_internal.h"
+
 /**
  * \brief Create an event copy from the given event.
  *
