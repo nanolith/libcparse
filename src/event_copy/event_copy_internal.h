@@ -10,6 +10,7 @@
 #pragma once
 
 #include <libcparse/event/detail.h>
+#include <libcparse/event/identifier.h>
 #include <libcparse/event/include.h>
 #include <libcparse/event/raw_character.h>
 #include <libcparse/event/raw_character_literal.h>
@@ -30,5 +31,6 @@ struct CPARSE_SYM(event_copy)
         CPARSE_SYM(event_string) event_string;
         CPARSE_SYM(event_raw_string_token) event_raw_string_token;
         CPARSE_SYM(event_raw_character_literal) event_raw_character_literal;
+        CPARSE_SYM(event_identifier) event_identifier;
     } detail;
 };
