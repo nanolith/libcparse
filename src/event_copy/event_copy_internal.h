@@ -21,6 +21,7 @@
 #include <libcparse/event/raw_float.h>
 #include <libcparse/event/string.h>
 #include <libcparse/event_copy.h>
+#include <stdbool.h>
 
 /**
  * \brief The event copy type abstracts cloned events.
@@ -42,6 +43,7 @@ struct CPARSE_SYM(event_copy)
     } detail;
 
     int category;
+    bool initialized;
     char* field1;
     CPARSE_SYM(cursor) cursor;
 };
