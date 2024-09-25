@@ -41,6 +41,7 @@ struct CPARSE_SYM(event_copy)
         CPARSE_SYM(event_raw_float_token) event_raw_float_token;
     } detail;
 
+    int category;
     char* field1;
     CPARSE_SYM(cursor) cursor;
 };
