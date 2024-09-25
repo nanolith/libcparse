@@ -15,6 +15,7 @@
 #include <libcparse/event/integer.h>
 #include <libcparse/event/raw_character.h>
 #include <libcparse/event/raw_character_literal.h>
+#include <libcparse/event/raw_integer.h>
 #include <libcparse/event/raw_string.h>
 #include <libcparse/event/string.h>
 #include <libcparse/event_copy.h>
@@ -34,5 +35,6 @@ struct CPARSE_SYM(event_copy)
         CPARSE_SYM(event_raw_character_literal) event_raw_character_literal;
         CPARSE_SYM(event_identifier) event_identifier;
         CPARSE_SYM(event_integer_token) event_integer_token;
+        CPARSE_SYM(event_raw_integer_token) event_raw_integer_token;
     } detail;
 };
