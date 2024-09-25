@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <libcparse/cursor.h>
 #include <libcparse/event/detail.h>
 #include <libcparse/event/identifier.h>
 #include <libcparse/event/include.h>
@@ -41,4 +42,5 @@ struct CPARSE_SYM(event_copy)
     } detail;
 
     char* field1;
+    CPARSE_SYM(cursor) cursor;
 };
