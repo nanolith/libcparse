@@ -44,6 +44,7 @@ struct CPARSE_SYM(event_copy)
 
     int category;
     bool initialized;
+    char* file;
     char* field1;
     CPARSE_SYM(cursor) cursor;
 };
