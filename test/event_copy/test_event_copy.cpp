@@ -62,3 +62,4 @@ EVENT_BASE_COPY_TEST(event_init_for_eof);
 EVENT_BASE_COPY_TEST(event_init_for_whitespace_token);
 EVENT_BASE_COPY_TEST(event_init_for_newline_token);
 EVENT_BASE_COPY_TEST(event_init_for_comment_block_begin);
+EVENT_BASE_COPY_TEST(event_init_for_comment_block_end);
