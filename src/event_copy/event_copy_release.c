@@ -40,9 +40,11 @@ int CPARSE_SYM(event_copy_release)(CPARSE_SYM(event_copy)* cpy)
         {
             case CPARSE_EVENT_CATEGORY_BASE:
                 release_retval = event_copy_dispose_base(cpy);
+                break;
             default:
                 release_retval =
                     ERROR_LIBCPARSE_EVENT_COPY_UNSUPPORTED_EVENT_CATEGORY;
+                break;
         }
 
         if (STATUS_SUCCESS != release_retval)
