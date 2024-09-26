@@ -59,3 +59,4 @@ static const char* TESTFILE = "test.c";
     }
 
 EVENT_BASE_COPY_TEST(event_init_for_eof);
+EVENT_BASE_COPY_TEST(event_init_for_whitespace_token);
