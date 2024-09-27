@@ -74,3 +74,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_right_bracket);
 EVENT_BASE_COPY_TEST(event_init_for_token_comma);
 EVENT_BASE_COPY_TEST(event_init_for_token_colon);
 EVENT_BASE_COPY_TEST(event_init_for_token_semicolon);
+EVENT_BASE_COPY_TEST(event_init_for_token_dot);
