@@ -79,3 +79,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_arrow);
 EVENT_BASE_COPY_TEST(event_init_for_token_plus);
 EVENT_BASE_COPY_TEST(event_init_for_token_minus);
 EVENT_BASE_COPY_TEST(event_init_for_token_star);
+EVENT_BASE_COPY_TEST(event_init_for_token_forward_slash);
