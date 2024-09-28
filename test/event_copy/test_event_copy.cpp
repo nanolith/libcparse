@@ -82,3 +82,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_star);
 EVENT_BASE_COPY_TEST(event_init_for_token_forward_slash);
 EVENT_BASE_COPY_TEST(event_init_for_token_percent);
 EVENT_BASE_COPY_TEST(event_init_for_token_logical_and);
+EVENT_BASE_COPY_TEST(event_init_for_token_logical_or);
