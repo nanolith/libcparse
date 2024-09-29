@@ -85,3 +85,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_logical_and);
 EVENT_BASE_COPY_TEST(event_init_for_token_logical_or);
 EVENT_BASE_COPY_TEST(event_init_for_token_ampersand);
 EVENT_BASE_COPY_TEST(event_init_for_token_pipe);
+EVENT_BASE_COPY_TEST(event_init_for_token_caret);
