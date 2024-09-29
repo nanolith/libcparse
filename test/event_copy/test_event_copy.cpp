@@ -92,3 +92,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_equal_compare);
 EVENT_BASE_COPY_TEST(event_init_for_token_not_equal_compare);
 EVENT_BASE_COPY_TEST(event_init_for_token_equal_assign);
 EVENT_BASE_COPY_TEST(event_init_for_token_plus_equal);
+EVENT_BASE_COPY_TEST(event_init_for_token_minus_equal);
