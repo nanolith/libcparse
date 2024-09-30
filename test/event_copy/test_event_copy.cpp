@@ -103,3 +103,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_compl_equal);
 EVENT_BASE_COPY_TEST(event_init_for_token_left_shift_equal);
 EVENT_BASE_COPY_TEST(event_init_for_token_right_shift_equal);
 EVENT_BASE_COPY_TEST(event_init_for_token_bitshift_left);
+EVENT_BASE_COPY_TEST(event_init_for_token_bitshift_right);
