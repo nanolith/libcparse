@@ -100,3 +100,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_and_equal);
 EVENT_BASE_COPY_TEST(event_init_for_token_or_equal);
 EVENT_BASE_COPY_TEST(event_init_for_token_xor_equal);
 EVENT_BASE_COPY_TEST(event_init_for_token_compl_equal);
+EVENT_BASE_COPY_TEST(event_init_for_token_left_shift_equal);
