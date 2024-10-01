@@ -110,3 +110,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_less_than_equal);
 EVENT_BASE_COPY_TEST(event_init_for_token_greater_than_equal);
 EVENT_BASE_COPY_TEST(event_init_for_token_increment);
 EVENT_BASE_COPY_TEST(event_init_for_token_decrement);
+EVENT_BASE_COPY_TEST(event_init_for_token_not);
