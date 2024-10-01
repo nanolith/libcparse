@@ -105,3 +105,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_right_shift_equal);
 EVENT_BASE_COPY_TEST(event_init_for_token_bitshift_left);
 EVENT_BASE_COPY_TEST(event_init_for_token_bitshift_right);
 EVENT_BASE_COPY_TEST(event_init_for_token_less_than);
+EVENT_BASE_COPY_TEST(event_init_for_token_greater_than);
