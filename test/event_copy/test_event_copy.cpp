@@ -115,3 +115,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_ellipsis);
 EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_id_if);
 EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_id_ifdef);
 EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_id_ifndef);
+EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_id_elif);
