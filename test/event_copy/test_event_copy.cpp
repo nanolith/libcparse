@@ -121,3 +121,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_id_endif);
 EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_id_include);
 EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_id_define);
 EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_id_undef);
+EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_id_line);
