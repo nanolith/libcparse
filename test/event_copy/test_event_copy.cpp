@@ -127,3 +127,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_id_pragma);
 EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_string_concat);
 EVENT_BASE_COPY_TEST(event_init_for_token_preprocessor_hash);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Alignas);
+EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Alignof);
