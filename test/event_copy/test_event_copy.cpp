@@ -130,3 +130,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Alignas);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Alignof);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Atomic);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Bool);
+EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Complex);
