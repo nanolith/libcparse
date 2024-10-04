@@ -138,3 +138,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Static_assert);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Thread_local);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_auto);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_break);
+EVENT_BASE_COPY_TEST(event_init_for_token_keyword_case);
