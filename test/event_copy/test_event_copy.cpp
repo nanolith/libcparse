@@ -136,3 +136,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Imaginary);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Noreturn);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Static_assert);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword__Thread_local);
+EVENT_BASE_COPY_TEST(event_init_for_token_keyword_auto);
