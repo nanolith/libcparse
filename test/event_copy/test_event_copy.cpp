@@ -148,3 +148,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_keyword_double);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_else);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_enum);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_extern);
+EVENT_BASE_COPY_TEST(event_init_for_token_keyword_float);
