@@ -157,3 +157,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_keyword_int);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_long);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_register);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_restrict);
+EVENT_BASE_COPY_TEST(event_init_for_token_keyword_return);
