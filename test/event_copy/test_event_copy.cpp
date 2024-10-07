@@ -168,3 +168,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_keyword_typedef);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_union);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_unsigned);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_void);
+EVENT_BASE_COPY_TEST(event_init_for_token_keyword_volatile);
