@@ -170,3 +170,4 @@ EVENT_BASE_COPY_TEST(event_init_for_token_keyword_unsigned);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_void);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_volatile);
 EVENT_BASE_COPY_TEST(event_init_for_token_keyword_while);
+EVENT_BASE_COPY_TEST(event_init_for_preprocessor_directive_end);
