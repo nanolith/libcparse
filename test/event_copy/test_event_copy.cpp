@@ -181,3 +181,4 @@ EVENT_BASE_COPY_TEST(event_init_for_exp_array_subscript_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_array_subscript_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_function_call_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_function_call_end);
+EVENT_BASE_COPY_TEST(event_init_for_exp_dot_member_deref_begin);
