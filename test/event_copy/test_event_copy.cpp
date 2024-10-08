@@ -178,3 +178,4 @@ EVENT_BASE_COPY_TEST(event_init_for_primary_expression_end);
 EVENT_BASE_COPY_TEST(event_init_for_expression_part_begin);
 EVENT_BASE_COPY_TEST(event_init_for_expression_part_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_array_subscript_begin);
+EVENT_BASE_COPY_TEST(event_init_for_exp_array_subscript_end);
