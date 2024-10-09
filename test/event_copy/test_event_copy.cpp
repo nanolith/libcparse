@@ -197,3 +197,4 @@ EVENT_BASE_COPY_TEST(event_init_for_exp_prefix_decrement_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_prefix_decrement_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_unary_operation_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_unary_operation_end);
+EVENT_BASE_COPY_TEST(event_init_for_exp_sizeof_exp_begin);
