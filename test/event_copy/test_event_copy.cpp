@@ -200,3 +200,4 @@ EVENT_BASE_COPY_TEST(event_init_for_exp_unary_operation_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_sizeof_exp_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_sizeof_exp_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_sizeof_type_begin);
+EVENT_BASE_COPY_TEST(event_init_for_exp_sizeof_type_end);
