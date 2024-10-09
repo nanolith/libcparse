@@ -204,3 +204,4 @@ EVENT_BASE_COPY_TEST(event_init_for_exp_sizeof_type_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_alignof_type_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_alignof_type_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_cast_begin);
+EVENT_BASE_COPY_TEST(event_init_for_exp_cast_end);
