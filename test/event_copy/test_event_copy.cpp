@@ -189,3 +189,4 @@ EVENT_BASE_COPY_TEST(event_init_for_exp_postfix_increment_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_postfix_increment_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_postfix_decrement_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_postfix_decrement_end);
+EVENT_BASE_COPY_TEST(event_init_for_exp_compound_literal_begin);
