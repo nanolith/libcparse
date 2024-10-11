@@ -214,3 +214,4 @@ EVENT_BASE_COPY_TEST(event_init_for_exp_modulo_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_add_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_add_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_sub_begin);
+EVENT_BASE_COPY_TEST(event_init_for_exp_sub_end);
