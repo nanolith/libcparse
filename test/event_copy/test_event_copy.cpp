@@ -226,3 +226,4 @@ EVENT_BASE_COPY_TEST(event_init_for_exp_greater_than_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_less_than_equal_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_less_than_equal_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_greater_than_equal_begin);
+EVENT_BASE_COPY_TEST(event_init_for_exp_greater_than_equal_end);
