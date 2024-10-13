@@ -231,3 +231,4 @@ EVENT_BASE_COPY_TEST(event_init_for_exp_equal_to_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_equal_to_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_not_equal_to_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_not_equal_to_end);
+EVENT_BASE_COPY_TEST(event_init_for_exp_bitwise_and_begin);
