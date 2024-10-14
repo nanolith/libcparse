@@ -238,3 +238,4 @@ EVENT_BASE_COPY_TEST(event_init_for_exp_bitwise_xor_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_bitwise_or_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_bitwise_or_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_logical_and_begin);
+EVENT_BASE_COPY_TEST(event_init_for_exp_logical_and_end);
