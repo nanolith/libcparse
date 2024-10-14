@@ -243,3 +243,4 @@ EVENT_BASE_COPY_TEST(event_init_for_exp_logical_or_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_logical_or_end);
 EVENT_BASE_COPY_TEST(event_init_for_exp_conditional_begin);
 EVENT_BASE_COPY_TEST(event_init_for_exp_conditional_end);
+EVENT_BASE_COPY_TEST(event_init_for_exp_assignment_begin);
