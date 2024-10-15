@@ -8,6 +8,7 @@
  */
 
 #include <libcparse/event.h>
+#include <libcparse/event/identifier.h>
 #include <libcparse/status_codes.h>
 #include <stdlib.h>
 
@@ -16,8 +17,10 @@
 
 CPARSE_IMPORT_event;
 CPARSE_IMPORT_event_copy;
+CPARSE_IMPORT_event_identifier;
 
 static int event_copy_dispose_base(event_copy* cpy);
+static int event_copy_dispose_identifier(event_copy* cpy);
 
 /**
  * \brief Release an \ref event_copy instance.
@@ -41,6 +44,11 @@ int CPARSE_SYM(event_copy_release)(CPARSE_SYM(event_copy)* cpy)
             case CPARSE_EVENT_CATEGORY_BASE:
                 release_retval = event_copy_dispose_base(cpy);
                 break;
+
+            case CPARSE_EVENT_CATEGORY_IDENTIFIER:
+                release_retval = event_copy_dispose_identifier(cpy);
+                break;
+
             default:
                 release_retval =
                     ERROR_LIBCPARSE_EVENT_COPY_UNSUPPORTED_EVENT_CATEGORY;
@@ -84,4 +92,18 @@ int CPARSE_SYM(event_copy_release)(CPARSE_SYM(event_copy)* cpy)
 static int event_copy_dispose_base(event_copy* cpy)
 {
     return event_dispose(&cpy->detail.event);
+}
+
+/**
+ * \brief Dispose an identifier event from this event copy.
+ *
+ * \param cpy                   Pointer to the \ref event_copy to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int event_copy_dispose_identifier(event_copy* cpy)
+{
+    return event_identifier_dispose(&cpy->detail.event_identifier);
 }
