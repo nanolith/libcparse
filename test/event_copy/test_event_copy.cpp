@@ -29,6 +29,7 @@ static const char* TESTFILE = "test.c";
         event_copy* cpy; \
         const event* clone; \
         const cursor* clone_c; \
+        int type; \
         \
         memset(&c, 0, sizeof(c)); \
         c.begin_line = 23; \
@@ -40,10 +41,14 @@ static const char* TESTFILE = "test.c";
         TEST_ASSERT(STATUS_SUCCESS == ctor(&ev, &c)); \
         TEST_ASSERT(STATUS_SUCCESS == event_copy_create(&cpy, &ev)); \
         \
+        type = event_get_type(&ev); \
+        \
+        TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev)); \
+        \
         clone = event_copy_get_event(cpy); \
         TEST_ASSERT(NULL != clone); \
         \
-        TEST_EXPECT(event_get_type(&ev) == event_get_type(clone)); \
+        TEST_EXPECT(type == event_get_type(clone)); \
         \
         clone_c = event_get_cursor(clone); \
         TEST_ASSERT(NULL != clone_c); \
@@ -55,7 +60,6 @@ static const char* TESTFILE = "test.c";
         TEST_EXPECT(!strcmp(c.file, clone_c->file)); \
         \
         TEST_ASSERT(STATUS_SUCCESS == event_copy_release(cpy)); \
-        TEST_ASSERT(STATUS_SUCCESS == event_dispose(&ev)); \
     }
 
 EVENT_BASE_COPY_TEST(event_init_for_eof);
