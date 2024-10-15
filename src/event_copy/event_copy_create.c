@@ -292,7 +292,7 @@ static int event_copy_create_include(event_copy** cpy, const event* ev)
 
         case CPARSE_EVENT_TYPE_PREPROCESSOR_LOCAL_INCLUDE:
             retval =
-                event_include_init_for_system_include(
+                event_include_init_for_local_include(
                     &(tmp->detail.event_include), &(tmp->cursor),
                     tmp->field1);
             break;
