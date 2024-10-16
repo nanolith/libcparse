@@ -359,55 +359,9 @@ TEST(event_identifier_init)
         TEST_ASSERT(STATUS_SUCCESS == event_copy_release(cpy)); \
     } \
 
-TEST(event_include_init_for_system_include)
-{
-    event_include iev;
-    event* ev;
-    event_include* clone_iev;
-    cursor c;
-    event_copy* cpy;
-    const event* clone;
-    const cursor* clone_c;
-    const char* INCLUDE = "foo.h";
-
-    memset(&c, 0, sizeof(c));
-    c.begin_line = 23;
-    c.end_line = 24;
-    c.begin_col = 1;
-    c.end_col = 5;
-    c.file = TESTFILE;
-
-    TEST_ASSERT(
-        STATUS_SUCCESS
-            == event_include_init_for_system_include(&iev, &c, INCLUDE));
-    ev = event_include_upcast(&iev);
-    TEST_ASSERT(STATUS_SUCCESS == event_copy_create(&cpy, ev));
-
-    TEST_ASSERT(STATUS_SUCCESS == event_include_dispose(&iev));
-
-    clone = event_copy_get_event(cpy);
-    TEST_ASSERT(NULL != clone);
-
-    TEST_EXPECT(
-        CPARSE_EVENT_TYPE_PREPROCESSOR_SYSTEM_INCLUDE == event_get_type(clone));
-
-    clone_c = event_get_cursor(clone);
-    TEST_ASSERT(NULL != clone_c);
-    TEST_EXPECT(clone_c->begin_line == c.begin_line);
-    TEST_EXPECT(clone_c->end_line == c.end_line);
-    TEST_EXPECT(clone_c->begin_col == c.begin_col);
-    TEST_EXPECT(clone_c->end_col == c.end_col);
-    TEST_ASSERT(NULL != clone_c->file);
-    TEST_EXPECT(!strcmp(c.file, clone_c->file));
-
-    TEST_ASSERT(
-        STATUS_SUCCESS
-            == event_downcast_to_event_include(&clone_iev, (event*)clone));
-    TEST_ASSERT(NULL != event_include_file_get(clone_iev));
-    TEST_EXPECT(!strcmp(INCLUDE, event_include_file_get(clone_iev)));
-
-    TEST_ASSERT(STATUS_SUCCESS == event_copy_release(cpy));
-}
+EVENT_INCLUDE_COPY_TEST(
+    event_include_init_for_system_include,
+    CPARSE_EVENT_TYPE_PREPROCESSOR_SYSTEM_INCLUDE);
 
 TEST(event_include_init_for_local_include)
 {
