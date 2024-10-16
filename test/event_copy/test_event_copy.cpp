@@ -416,3 +416,52 @@ TEST(event_integer_token_init_for_signed_int)
 
     TEST_ASSERT(STATUS_SUCCESS == event_copy_release(cpy));
 }
+
+TEST(event_integer_token_init_for_unsigned_int)
+{
+    event_integer_token iev;
+    event_integer_token* iev_clone;
+    event* ev;
+    cursor c;
+    event_copy* cpy;
+    const event* clone;
+    const cursor* clone_c;
+    const unsigned int VAL = 1999;
+
+    memset(&c, 0, sizeof(c));
+    c.begin_line = 23;
+    c.end_line = 24;
+    c.begin_col = 1;
+    c.end_col = 5;
+    c.file = TESTFILE;
+
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_integer_token_init_for_unsigned_int(&iev, &c, VAL));
+    ev = event_integer_token_upcast(&iev);
+    TEST_ASSERT(STATUS_SUCCESS == event_copy_create(&cpy, ev));
+
+    TEST_ASSERT(STATUS_SUCCESS == event_integer_token_dispose(&iev));
+
+    clone = event_copy_get_event(cpy);
+    TEST_ASSERT(NULL != clone);
+
+    TEST_EXPECT(CPARSE_EVENT_TYPE_TOKEN_VALUE_INTEGER == event_get_type(clone));
+
+    clone_c = event_get_cursor(clone);
+    TEST_ASSERT(NULL != clone_c);
+    TEST_EXPECT(clone_c->begin_line == c.begin_line);
+    TEST_EXPECT(clone_c->end_line == c.end_line);
+    TEST_EXPECT(clone_c->begin_col == c.begin_col);
+    TEST_EXPECT(clone_c->end_col == c.end_col);
+    TEST_ASSERT(NULL != clone_c->file);
+    TEST_EXPECT(!strcmp(c.file, clone_c->file));
+
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_downcast_to_event_integer_token(
+                    &iev_clone, (event*)clone));
+    TEST_ASSERT(VAL == event_integer_token_coerce_unsigned_int(iev_clone));
+
+    TEST_ASSERT(STATUS_SUCCESS == event_copy_release(cpy));
+}
