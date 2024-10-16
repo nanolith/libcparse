@@ -41,7 +41,7 @@ int CPARSE_SYM(event_integer_init_for_signed_internal)(
     retval =
         event_init(
             &ev->hdr, CPARSE_EVENT_TYPE_TOKEN_VALUE_INTEGER,
-            CPARSE_EVENT_CATEGORY_RAW_INTEGER_TOKEN, cursor);
+            CPARSE_EVENT_CATEGORY_INTEGER_TOKEN, cursor);
     if (STATUS_SUCCESS != retval)
     {
         return retval;
