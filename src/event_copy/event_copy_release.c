@@ -11,6 +11,7 @@
 #include <libcparse/event/identifier.h>
 #include <libcparse/event/include.h>
 #include <libcparse/event/integer.h>
+#include <libcparse/event/raw_character.h>
 #include <libcparse/status_codes.h>
 #include <stdlib.h>
 
@@ -22,11 +23,13 @@ CPARSE_IMPORT_event_copy;
 CPARSE_IMPORT_event_identifier;
 CPARSE_IMPORT_event_include;
 CPARSE_IMPORT_event_integer;
+CPARSE_IMPORT_event_raw_character;
 
 static int event_copy_dispose_base(event_copy* cpy);
 static int event_copy_dispose_identifier(event_copy* cpy);
-static int event_copy_dispose_integer(event_copy* cpy);
 static int event_copy_dispose_include(event_copy* cpy);
+static int event_copy_dispose_integer(event_copy* cpy);
+static int event_copy_dispose_raw_character(event_copy* cpy);
 
 /**
  * \brief Release an \ref event_copy instance.
@@ -55,12 +58,16 @@ int CPARSE_SYM(event_copy_release)(CPARSE_SYM(event_copy)* cpy)
                 release_retval = event_copy_dispose_identifier(cpy);
                 break;
 
+            case CPARSE_EVENT_CATEGORY_INCLUDE:
+                release_retval = event_copy_dispose_include(cpy);
+                break;
+
             case CPARSE_EVENT_CATEGORY_INTEGER_TOKEN:
                 release_retval = event_copy_dispose_integer(cpy);
                 break;
 
-            case CPARSE_EVENT_CATEGORY_INCLUDE:
-                release_retval = event_copy_dispose_include(cpy);
+            case CPARSE_EVENT_CATEGORY_RAW_CHARACTER:
+                release_retval = event_copy_dispose_raw_character(cpy);
                 break;
 
             default:
@@ -148,4 +155,18 @@ static int event_copy_dispose_include(event_copy* cpy)
 static int event_copy_dispose_integer(event_copy* cpy)
 {
     return event_integer_token_dispose(&cpy->detail.event_integer_token);
+}
+
+/**
+ * \brief Dispose a raw character event from this event copy.
+ *
+ * \param cpy                   Pointer to the \ref event_copy to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int event_copy_dispose_raw_character(event_copy* cpy)
+{
+    return event_raw_character_dispose(&cpy->detail.event_raw_character);
 }
