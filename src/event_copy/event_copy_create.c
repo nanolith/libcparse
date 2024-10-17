@@ -10,6 +10,7 @@
 #include <libcparse/event_copy.h>
 #include <libcparse/event/identifier.h>
 #include <libcparse/event/integer.h>
+#include <libcparse/event/raw_character.h>
 #include <libcparse/status_codes.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,11 +25,13 @@ CPARSE_IMPORT_event_identifier;
 CPARSE_IMPORT_event_include;
 CPARSE_IMPORT_event_internal;
 CPARSE_IMPORT_event_integer;
+CPARSE_IMPORT_event_raw_character;
 
 static int event_copy_create_base(event_copy** cpy, const event* ev);
 static int event_copy_create_identifier(event_copy** cpy, const event* ev);
 static int event_copy_create_include(event_copy** cpy, const event* ev);
 static int event_copy_create_integer(event_copy** cpy, const event* ev);
+static int event_copy_create_raw_character(event_copy** cpy, const event* ev);
 static int event_copy_create_internal(
     event_copy** cpy, int category, const char* field, const cursor* cursor);
 
@@ -59,6 +62,9 @@ int CPARSE_SYM(event_copy_create)(
 
         case CPARSE_EVENT_CATEGORY_INTEGER_TOKEN:
             return event_copy_create_integer(cpy, ev);
+
+        case CPARSE_EVENT_CATEGORY_RAW_CHARACTER:
+            return event_copy_create_raw_character(cpy, ev);
 
         default:
             return ERROR_LIBCPARSE_EVENT_COPY_UNSUPPORTED_EVENT_CATEGORY;
@@ -367,6 +373,53 @@ static int event_copy_create_integer(event_copy** cpy, const event* ev)
 
     /* initialize the integer event. */
     memcpy(&tmp->detail.event_integer_token, iev, sizeof(*iev));
+
+    /* success. */
+    tmp->initialized = true;
+    *cpy = tmp;
+    retval = STATUS_SUCCESS;
+    goto done;
+
+done:
+    return retval;
+}
+
+/**
+ * \brief Copy a raw character event.
+ *
+ * \param cpy                   Pointer to the \ref event_copy pointer to
+ *                              receive this \ref event_copy on success.
+ * \param ev                    The event to copy.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int event_copy_create_raw_character(event_copy** cpy, const event* ev)
+{
+    event_copy* tmp = NULL;
+    event_raw_character* cev;
+    int retval;
+
+    /* downcast the event. */
+    retval = event_downcast_to_event_raw_character(&cev, (event*)ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* create the copy. */
+    retval =
+        event_copy_create_internal(
+            &tmp, CPARSE_EVENT_CATEGORY_INTEGER_TOKEN, NULL,
+            event_get_cursor(ev));
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* initialize the raw character event. */
+    memcpy(&tmp->detail.event_raw_character, cev, sizeof(*cev));
 
     /* success. */
     tmp->initialized = true;
