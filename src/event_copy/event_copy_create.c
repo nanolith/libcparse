@@ -14,6 +14,7 @@
 #include <libcparse/event/raw_character_literal.h>
 #include <libcparse/event/raw_float.h>
 #include <libcparse/event/raw_integer.h>
+#include <libcparse/event/raw_string.h>
 #include <libcparse/status_codes.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,6 +33,7 @@ CPARSE_IMPORT_event_raw_character;
 CPARSE_IMPORT_event_raw_character_literal;
 CPARSE_IMPORT_event_raw_float;
 CPARSE_IMPORT_event_raw_integer;
+CPARSE_IMPORT_event_raw_string;
 
 static int event_copy_create_base(event_copy** cpy, const event* ev);
 static int event_copy_create_identifier(event_copy** cpy, const event* ev);
@@ -42,6 +44,7 @@ static int event_copy_create_raw_character_literal(
     event_copy** cpy, const event* ev);
 static int event_copy_create_raw_float(event_copy** cpy, const event* ev);
 static int event_copy_create_raw_integer(event_copy** cpy, const event* ev);
+static int event_copy_create_raw_string(event_copy** cpy, const event* ev);
 static int event_copy_create_internal(
     event_copy** cpy, int category, const char* field, const cursor* cursor);
 
@@ -84,6 +87,9 @@ int CPARSE_SYM(event_copy_create)(
 
         case CPARSE_EVENT_CATEGORY_RAW_INTEGER_TOKEN:
             return event_copy_create_raw_integer(cpy, ev);
+
+        case CPARSE_EVENT_CATEGORY_RAW_STRING_TOKEN:
+            return event_copy_create_raw_string(cpy, ev);
 
         default:
             return ERROR_LIBCPARSE_EVENT_COPY_UNSUPPORTED_EVENT_CATEGORY;
@@ -613,6 +619,68 @@ static int event_copy_create_raw_integer(
     retval =
         event_raw_integer_token_init(
             &(tmp->detail.event_raw_integer_token), &(tmp->cursor),
+            tmp->field1);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto cleanup_tmp;
+    }
+
+    /* success. */
+    tmp->initialized = true;
+    *cpy = tmp;
+    retval = STATUS_SUCCESS;
+    goto done;
+
+cleanup_tmp:
+    release_retval = event_copy_release(tmp);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
+
+done:
+    return retval;
+}
+
+/**
+ * \brief Copy a raw string token event.
+ *
+ * \param cpy                   Pointer to the \ref event_copy pointer to
+ *                              receive this \ref event_copy on success.
+ * \param ev                    The event to copy.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int event_copy_create_raw_string(
+    event_copy** cpy, const event* ev)
+{
+    event_copy* tmp = NULL;
+    event_raw_string_token* iev;
+    int retval, release_retval;
+
+    /* downcast the event. */
+    retval = event_downcast_to_event_raw_string_token(&iev, (event*)ev);
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* create the copy. */
+    retval =
+        event_copy_create_internal(
+            &tmp, CPARSE_EVENT_CATEGORY_RAW_STRING_TOKEN,
+            event_raw_string_token_get(iev), event_get_cursor(ev));
+    if (STATUS_SUCCESS != retval)
+    {
+        goto done;
+    }
+
+    /* initialize the raw string token event. */
+    retval =
+        event_raw_string_token_init(
+            &(tmp->detail.event_raw_string_token), &(tmp->cursor),
             tmp->field1);
     if (STATUS_SUCCESS != retval)
     {
