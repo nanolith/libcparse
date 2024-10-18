@@ -16,6 +16,7 @@
 #include <libcparse/event/raw_character_literal.h>
 #include <libcparse/event/raw_float.h>
 #include <libcparse/event/raw_integer.h>
+#include <libcparse/event/raw_string.h>
 #include <libcparse/status_codes.h>
 #include <minunit/minunit.h>
 #include <string.h>
@@ -30,6 +31,7 @@ CPARSE_IMPORT_event_raw_character;
 CPARSE_IMPORT_event_raw_character_literal;
 CPARSE_IMPORT_event_raw_float;
 CPARSE_IMPORT_event_raw_integer;
+CPARSE_IMPORT_event_raw_string;
 
 TEST_SUITE(event_copy);
 
@@ -669,6 +671,56 @@ TEST(event_raw_integer_token_init)
             == event_downcast_to_event_raw_integer_token(
                     &iev_clone, (event*)clone));
     TEST_ASSERT(!strcmp(VAL, event_raw_integer_token_string_get(iev_clone)));
+
+    TEST_ASSERT(STATUS_SUCCESS == event_copy_release(cpy));
+}
+
+TEST(event_raw_string_token_init)
+{
+    event_raw_string_token sev;
+    event_raw_string_token* sev_clone;
+    event* ev;
+    cursor c;
+    event_copy* cpy;
+    const event* clone;
+    const cursor* clone_c;
+    const char* VAL = "\"foo bar\"";
+
+    memset(&c, 0, sizeof(c));
+    c.begin_line = 23;
+    c.end_line = 24;
+    c.begin_col = 1;
+    c.end_col = 5;
+    c.file = TESTFILE;
+
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_raw_string_token_init(&sev, &c, VAL));
+    ev = event_raw_string_token_upcast(&sev);
+    TEST_ASSERT(STATUS_SUCCESS == event_copy_create(&cpy, ev));
+
+    TEST_ASSERT(STATUS_SUCCESS == event_raw_string_token_dispose(&sev));
+
+    clone = event_copy_get_event(cpy);
+    TEST_ASSERT(NULL != clone);
+
+    TEST_EXPECT(
+        CPARSE_EVENT_TYPE_TOKEN_VALUE_RAW_STRING == event_get_type(clone));
+
+    clone_c = event_get_cursor(clone);
+    TEST_ASSERT(NULL != clone_c);
+    TEST_EXPECT(clone_c->begin_line == c.begin_line);
+    TEST_EXPECT(clone_c->end_line == c.end_line);
+    TEST_EXPECT(clone_c->begin_col == c.begin_col);
+    TEST_EXPECT(clone_c->end_col == c.end_col);
+    TEST_ASSERT(NULL != clone_c->file);
+    TEST_EXPECT(!strcmp(c.file, clone_c->file));
+
+    TEST_ASSERT(
+        STATUS_SUCCESS
+            == event_downcast_to_event_raw_string_token(
+                    &sev_clone, (event*)clone));
+    TEST_ASSERT(!strcmp(VAL, event_raw_string_token_get(sev_clone)));
 
     TEST_ASSERT(STATUS_SUCCESS == event_copy_release(cpy));
 }
