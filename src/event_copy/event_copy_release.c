@@ -16,6 +16,7 @@
 #include <libcparse/event/raw_float.h>
 #include <libcparse/event/raw_integer.h>
 #include <libcparse/event/raw_string.h>
+#include <libcparse/event/string.h>
 #include <libcparse/status_codes.h>
 #include <stdlib.h>
 
@@ -32,6 +33,7 @@ CPARSE_IMPORT_event_raw_character_literal;
 CPARSE_IMPORT_event_raw_float;
 CPARSE_IMPORT_event_raw_integer;
 CPARSE_IMPORT_event_raw_string;
+CPARSE_IMPORT_event_string;
 
 static int event_copy_dispose_base(event_copy* cpy);
 static int event_copy_dispose_identifier(event_copy* cpy);
@@ -42,6 +44,7 @@ static int event_copy_dispose_raw_character_literal(event_copy* cpy);
 static int event_copy_dispose_raw_float(event_copy* cpy);
 static int event_copy_dispose_raw_integer(event_copy* cpy);
 static int event_copy_dispose_raw_string(event_copy* cpy);
+static int event_copy_dispose_string(event_copy* cpy);
 
 /**
  * \brief Release an \ref event_copy instance.
@@ -96,6 +99,10 @@ int CPARSE_SYM(event_copy_release)(CPARSE_SYM(event_copy)* cpy)
 
             case CPARSE_EVENT_CATEGORY_RAW_STRING_TOKEN:
                 release_retval = event_copy_dispose_raw_string(cpy);
+                break;
+
+            case CPARSE_EVENT_CATEGORY_STRING:
+                release_retval = event_copy_dispose_string(cpy);
                 break;
 
             default:
@@ -261,4 +268,18 @@ static int event_copy_dispose_raw_string(event_copy* cpy)
     return
         event_raw_string_token_dispose(
             &cpy->detail.event_raw_string_token);
+}
+
+/**
+ * \brief Dispose a string event from this event copy.
+ *
+ * \param cpy                   Pointer to the \ref event_copy to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+static int event_copy_dispose_string(event_copy* cpy)
+{
+    return event_string_dispose(&cpy->detail.event_string);
 }
