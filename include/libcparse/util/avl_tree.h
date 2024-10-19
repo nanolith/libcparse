@@ -49,6 +49,27 @@ typedef const void* (*CPARSE_SYM(avl_tree_key_fn))(
     void* context, const void* elem);
 
 /******************************************************************************/
+/* Start of constructors.                                                     */
+/******************************************************************************/
+
+/**
+ * \brief Create a new \ref avl_tree instance.
+ *
+ * \param tree                  Pointer to the \ref avl_tree pointer to set to
+ *                              the created instance on success.
+ * \param compare               The comparison function to use for this tree.
+ * \param key                   The key function to use for this tree.
+ * \param context               The user context to use for this tree.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(avl_tree_create)(
+    CPARSE_SYM(avl_tree)** tree, CPARSE_SYM(avl_tree_compare_fn) compare,
+    CPARSE_SYM(avl_tree_key_fn) key, void* context);
+
+/******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
 
