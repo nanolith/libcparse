@@ -44,6 +44,7 @@ typedef int (*CPARSE_SYM(avl_tree_compare_fn))(
 #define __INTERNAL_CPARSE_IMPORT_util_avl_tree_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(avl_tree) sym ## avl_tree; \
+    typedef CPARSE_SYM(avl_tree_compare_fn) sym ## avl_tree_compare_fn; \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_util_avl_tree_as(sym) \
