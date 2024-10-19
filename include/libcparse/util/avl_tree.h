@@ -72,6 +72,8 @@ typedef int (*CPARSE_SYM(avl_tree_element_release_fn))(
  *                              the created instance on success.
  * \param compare               The comparison function to use for this tree.
  * \param key                   The key function to use for this tree.
+ * \param release               The element release function to use for this
+ *                              tree.
  * \param context               The user context to use for this tree.
  *
  * \returns a status code indicating success or failure.
@@ -80,7 +82,8 @@ typedef int (*CPARSE_SYM(avl_tree_element_release_fn))(
  */
 int CPARSE_SYM(avl_tree_create)(
     CPARSE_SYM(avl_tree)** tree, CPARSE_SYM(avl_tree_compare_fn) compare,
-    CPARSE_SYM(avl_tree_key_fn) key, void* context);
+    CPARSE_SYM(avl_tree_key_fn) key,
+    CPARSE_SYM(avl_tree_element_release_fn) release, void* context);
 
 /******************************************************************************/
 /* Start of public exports.                                                   */
@@ -91,10 +94,13 @@ int CPARSE_SYM(avl_tree_create)(
     typedef CPARSE_SYM(avl_tree) sym ## avl_tree; \
     typedef CPARSE_SYM(avl_tree_compare_fn) sym ## avl_tree_compare_fn; \
     typedef CPARSE_SYM(avl_tree_key_fn) sym ## avl_tree_key_fn; \
+    typedef CPARSE_SYM(avl_tree_element_release_fn) \
+    sym ## avl_tree_element_release_fn; \
     static inline int sym ## avl_tree_create( \
-        CPARSE_SYM(avl_tree)** w, CPARSE_SYM(avl_tree_compare_fn) x, \
-        CPARSE_SYM(avl_tree_key_fn) y, void* z) { \
-            return CPARSE_SYM(avl_tree_create)(w,x,y,z); } \
+        CPARSE_SYM(avl_tree)** v, CPARSE_SYM(avl_tree_compare_fn) w, \
+        CPARSE_SYM(avl_tree_key_fn) x, \
+        CPARSE_SYM(avl_tree_element_release_fn) y, void* z) { \
+            return CPARSE_SYM(avl_tree_create)(v,w,x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_util_avl_tree_as(sym) \
