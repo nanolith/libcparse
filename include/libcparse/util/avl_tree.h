@@ -56,6 +56,7 @@ typedef const void* (*CPARSE_SYM(avl_tree_key_fn))(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(avl_tree) sym ## avl_tree; \
     typedef CPARSE_SYM(avl_tree_compare_fn) sym ## avl_tree_compare_fn; \
+    typedef CPARSE_SYM(avl_tree_key_fn) sym ## avl_tree_key_fn; \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_util_avl_tree_as(sym) \
