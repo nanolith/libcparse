@@ -37,6 +37,17 @@ typedef struct CPARSE_SYM(avl_tree) CPARSE_SYM(avl_tree);
 typedef int (*CPARSE_SYM(avl_tree_compare_fn))(
     void* context, const void* lhs, const void* rhs);
 
+/**
+ * \brief Given an avl tree element, return the key for this element.
+ *
+ * \param context       Context data to be passed to the accessor function.
+ * \param elem          The element.
+ *
+ * \returns the key for this element.
+ */
+typedef const void* (*CPARSE_SYM(avl_tree_key_fn))(
+    void* context, const void* elem);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
