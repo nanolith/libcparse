@@ -22,6 +22,21 @@ extern "C" {
  */
 typedef struct CPARSE_SYM(avl_tree) CPARSE_SYM(avl_tree);
 
+/**
+ * \brief Comparison function type for comparing two avl tree elements.
+ *
+ * \param context       Context data to be passed to the comparison function.
+ * \param lhs           The left-hand side of the comparison.
+ * \param rhs           The right-hand side of the comparison.
+ *
+ * \returns an integer value representing the comparison result.
+ *      - < 0 if \p lhs &lt; \p rhs.
+ *      - 0 if \p lhs == \p rhs.
+ *      - > 0 if \p lhs &gt; \p rhs.
+ */
+typedef int (*CPARSE_SYM(avl_tree_compare_fn))(
+    void* context, const void* lhs, const void* rhs);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
