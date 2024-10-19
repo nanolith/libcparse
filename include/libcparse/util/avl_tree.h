@@ -78,6 +78,10 @@ int CPARSE_SYM(avl_tree_create)(
     typedef CPARSE_SYM(avl_tree) sym ## avl_tree; \
     typedef CPARSE_SYM(avl_tree_compare_fn) sym ## avl_tree_compare_fn; \
     typedef CPARSE_SYM(avl_tree_key_fn) sym ## avl_tree_key_fn; \
+    static inline int sym ## avl_tree_create( \
+        CPARSE_SYM(avl_tree)** w, CPARSE_SYM(avl_tree_compare_fn) x, \
+        CPARSE_SYM(avl_tree_key_fn) y, void* z) { \
+            return CPARSE_SYM(avl_tree_create)(w,x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_util_avl_tree_as(sym) \
