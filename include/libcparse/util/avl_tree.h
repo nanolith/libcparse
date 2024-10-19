@@ -48,6 +48,19 @@ typedef int (*CPARSE_SYM(avl_tree_compare_fn))(
 typedef const void* (*CPARSE_SYM(avl_tree_key_fn))(
     void* context, const void* elem);
 
+/**
+ * \brief Given an avl tree element, release it.
+ *
+ * \param context       Context data to be passed to the release function.
+ * \param elem          The element to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+typedef int (*CPARSE_SYM(avl_tree_element_release_fn))(
+    void* context, const void* elem);
+
 /******************************************************************************/
 /* Start of constructors.                                                     */
 /******************************************************************************/
