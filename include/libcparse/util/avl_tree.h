@@ -156,6 +156,9 @@ int CPARSE_SYM(avl_tree_find)(
     static inline int sym ## avl_tree_insert( \
         CPARSE_SYM(avl_tree)* x, void* y) { \
             return CPARSE_SYM(avl_tree_insert)(x,y); } \
+    static inline int sym ## avl_tree_find( \
+        void** x, const CPARSE_SYM(avl_tree)* y, const void* z) { \
+            return CPARSE_SYM(avl_tree_find)(x,y,z); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_util_avl_tree_as(sym) \
