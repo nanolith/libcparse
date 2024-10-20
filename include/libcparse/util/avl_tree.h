@@ -85,6 +85,18 @@ int CPARSE_SYM(avl_tree_create)(
     CPARSE_SYM(avl_tree_key_fn) key,
     CPARSE_SYM(avl_tree_element_release_fn) release, void* context);
 
+/**
+ * \brief Release a \ref avl_tree instance, calling the user release function on
+ * any elements in the tree.
+ *
+ * \param tree                  The \ref avl_tree instance to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(avl_tree_release)(CPARSE_SYM(avl_tree)* tree);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
