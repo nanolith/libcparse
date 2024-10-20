@@ -23,6 +23,11 @@ extern "C" {
 typedef struct CPARSE_SYM(avl_tree) CPARSE_SYM(avl_tree);
 
 /**
+ * \brief The avl_tree_node is an opaque structure used for traversing the tree.
+ */
+typedef struct CPARSE_SYM(avl_tree_node) CPARSE_SYM(avl_tree_node);
+
+/**
  * \brief Comparison function type for comparing two avl tree elements.
  *
  * \param context       Context data to be passed to the comparison function.
