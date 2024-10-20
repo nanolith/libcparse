@@ -109,6 +109,7 @@ int CPARSE_SYM(avl_tree_release)(CPARSE_SYM(avl_tree)* tree);
 #define __INTERNAL_CPARSE_IMPORT_util_avl_tree_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(avl_tree) sym ## avl_tree; \
+    typedef CPARSE_SYM(avl_tree_node) sym ## avl_tree_node; \
     typedef CPARSE_SYM(avl_tree_compare_fn) sym ## avl_tree_compare_fn; \
     typedef CPARSE_SYM(avl_tree_key_fn) sym ## avl_tree_key_fn; \
     typedef CPARSE_SYM(avl_tree_element_release_fn) \
