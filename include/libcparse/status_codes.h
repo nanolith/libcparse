@@ -45,4 +45,5 @@ enum CPARSE_SYM(status_code)
     ERROR_LIBCPARSE_FILE_TELL =                                         1028,
     ERROR_LIBCPARSE_OUT_OF_BOUNDS =                                     1029,
     ERROR_LIBCPARSE_EVENT_COPY_UNSUPPORTED_EVENT_CATEGORY =             1030,
+    ERROR_LIBCPARSE_AVL_TREE_ELEMENT_NOT_FOUND =                        1031,
 };
