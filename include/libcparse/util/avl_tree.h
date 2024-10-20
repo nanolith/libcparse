@@ -119,7 +119,7 @@ int CPARSE_SYM(avl_tree_release)(CPARSE_SYM(avl_tree)* tree);
 int CPARSE_SYM(avl_tree_insert)(CPARSE_SYM(avl_tree)* tree, void* elem);
 
 /**
- * \brief Find an element in the \ref avl_tree instance using the given
+ * \brief Find an element in the \ref avl_tree instance matching the given
  * user-defined key.
  *
  * \param elem          Pointer to the elem pointer to set to the found element.
@@ -132,6 +132,23 @@ int CPARSE_SYM(avl_tree_insert)(CPARSE_SYM(avl_tree)* tree, void* elem);
  */
 int CPARSE_SYM(avl_tree_find)(
     void** elem, const CPARSE_SYM(avl_tree)* tree, const void* key);
+
+/**
+ * \brief Delete an element in the \ref avl_tree instance matching the given
+ * user-defined key.
+ *
+ * \param elem          Pointer to the elem pointer to be set to the deleted
+ *                      element. Set to NULL to call the user release method on
+ *                      this deleted element instead.
+ * \param tree          The \ref avl_tree for this delete operation.
+ * \param key           The user-defined key for this delete operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(avl_tree_delete)(
+    void** elem, CPARSE_SYM(avl_tree)* tree, const void* key);
 
 /******************************************************************************/
 /* Start of public exports.                                                   */
