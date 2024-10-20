@@ -103,6 +103,22 @@ int CPARSE_SYM(avl_tree_create)(
 int CPARSE_SYM(avl_tree_release)(CPARSE_SYM(avl_tree)* tree);
 
 /******************************************************************************/
+/* Start of public methods.                                                   */
+/******************************************************************************/
+
+/**
+ * \brief Insert an element into the \ref avl_tree instance.
+ *
+ * \param tree          The \ref avl_tree instance for this insert operation.
+ * \param elem          The user-define element to insert.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(avl_tree_insert)(CPARSE_SYM(avl_tree)* tree, void* elem);
+
+/******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
 
