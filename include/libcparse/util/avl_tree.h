@@ -110,13 +110,28 @@ int CPARSE_SYM(avl_tree_release)(CPARSE_SYM(avl_tree)* tree);
  * \brief Insert an element into the \ref avl_tree instance.
  *
  * \param tree          The \ref avl_tree instance for this insert operation.
- * \param elem          The user-define element to insert.
+ * \param elem          The user-defined element to insert.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(avl_tree_insert)(CPARSE_SYM(avl_tree)* tree, void* elem);
+
+/**
+ * \brief Find an element in the \ref avl_tree instance using the given
+ * user-defined key.
+ *
+ * \param elem          Pointer to the elem pointer to set to the found element.
+ * \param tree          The \ref avl_tree for this find operation.
+ * \param key           The user-defined key for this find operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(avl_tree_find)(
+    void** elem, const CPARSE_SYM(avl_tree)* tree, const void* key);
 
 /******************************************************************************/
 /* Start of public exports.                                                   */
