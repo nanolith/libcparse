@@ -207,6 +207,9 @@ void CPARSE_SYM(avl_tree_swap)(
     static inline int sym ## avl_tree_clear( \
         CPARSE_SYM(avl_tree)* x) { \
             return CPARSE_SYM(avl_tree_clear)(x); } \
+    static inline void sym ## avl_tree_swap( \
+        CPARSE_SYM(avl_tree)* x, CPARSE_SYM(avl_tree)* y) { \
+            CPARSE_SYM(avl_tree_swap)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_util_avl_tree_as(sym) \
