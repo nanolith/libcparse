@@ -128,6 +128,8 @@ int CPARSE_SYM(avl_tree_insert)(CPARSE_SYM(avl_tree)* tree, void* elem);
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
+ *      - ERROR_LIBCPARSE_AVL_TREE_ELEMENT_NOT_FOUND if the element was not
+ *        found.
  *      - a non-zero error code on failure.
  */
 int CPARSE_SYM(avl_tree_find)(
