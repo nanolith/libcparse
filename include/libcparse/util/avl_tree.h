@@ -166,6 +166,15 @@ int CPARSE_SYM(avl_tree_delete)(
  */
 int CPARSE_SYM(avl_tree_clear)(CPARSE_SYM(avl_tree)* tree);
 
+/**
+ * \brief Swap the contents of two \ref avl_tree instances.
+ *
+ * \param left          The left \ref avl_tree instance for the swap.
+ * \param right         The right \ref avl_tree instance for the swap.
+ */
+void CPARSE_SYM(avl_tree_swap)(
+    CPARSE_SYM(avl_tree)* left, CPARSE_SYM(avl_tree)* right);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
