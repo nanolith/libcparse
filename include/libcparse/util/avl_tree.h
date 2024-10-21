@@ -175,6 +175,19 @@ int CPARSE_SYM(avl_tree_clear)(CPARSE_SYM(avl_tree)* tree);
 void CPARSE_SYM(avl_tree_swap)(
     CPARSE_SYM(avl_tree)* left, CPARSE_SYM(avl_tree)* right);
 
+/**
+ * \brief Return the minimum node in a \ref avl_tree subtree.
+ *
+ * \param tree          The \ref avl_tree instance.
+ * \param x             The \ref avl_tree_node from which the search should
+ *                      start.
+ *
+ * \returns the minimum node in this subtree.
+ */
+CPARSE_SYM(avl_tree_node)*
+CPARSE_SYM(avl_tree_minimum_node)(
+    CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* x);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
