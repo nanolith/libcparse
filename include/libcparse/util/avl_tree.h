@@ -188,6 +188,19 @@ CPARSE_SYM(avl_tree_node)*
 CPARSE_SYM(avl_tree_minimum_node)(
     CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* x);
 
+/**
+ * \brief Return the maximum node in a \ref avl_tree subtree.
+ *
+ * \param tree          The \ref avl_tree instance.
+ * \param x             The \ref avl_tree_node from which the search should
+ *                      start.
+ *
+ * \returns the maximum node in this subtree.
+ */
+CPARSE_SYM(avl_tree_node)*
+CPARSE_SYM(avl_tree_maximum_node)(
+    CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* x);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
