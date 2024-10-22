@@ -10,6 +10,7 @@
 #pragma once
 
 #include <libcparse/function_decl.h>
+#include <stddef.h>
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
@@ -248,6 +249,16 @@ CPARSE_SYM(avl_tree_root_node)(CPARSE_SYM(avl_tree)* tree);
 void*
 CPARSE_SYM(avl_tree_node_value)(
     CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* node);
+
+/**
+ * \brief Return the count of elements currently in this \ref avl_tree instance.
+ *
+ * \param tree          The \ref avl_tree instance.
+ *
+ * \returns the count of elements in the \ref avl_tree instance.
+ */
+size_t
+CPARSE_SYM(avl_tree_count)(CPARSE_SYM(avl_tree)* tree);
 
 /******************************************************************************/
 /* Start of public exports.                                                   */
