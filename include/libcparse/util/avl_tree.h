@@ -237,6 +237,18 @@ CPARSE_SYM(avl_tree_predecessor_node)(
 CPARSE_SYM(avl_tree_node)*
 CPARSE_SYM(avl_tree_root_node)(CPARSE_SYM(avl_tree)* tree);
 
+/**
+ * \brief Return the value associated with a given \ref avl_tree_node.
+ *
+ * \param tree          The \ref avl_tree instance.
+ * \param node          The \ref avl_tree_node accessed.
+ *
+ * \returns the value associated with this node.
+ */
+void*
+CPARSE_SYM(avl_tree_node_value)(
+    CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* node);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
