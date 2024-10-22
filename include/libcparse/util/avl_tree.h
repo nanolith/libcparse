@@ -214,6 +214,19 @@ CPARSE_SYM(avl_tree_node)*
 CPARSE_SYM(avl_tree_successor_node)(
     CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* x);
 
+/**
+ * \brief Return the in-order predecessor node of the given node.
+ *
+ * \param tree          The \ref avl_tree instance.
+ * \param x             The \ref avl_tree_node from which the predecessor is
+ *                      found.
+ *
+ * \returns the predecessor node of this node, or NULL if none is found.
+ */
+CPARSE_SYM(avl_tree_node)*
+CPARSE_SYM(avl_tree_predecessor_node)(
+    CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* x);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
