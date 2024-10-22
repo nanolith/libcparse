@@ -201,6 +201,19 @@ CPARSE_SYM(avl_tree_node)*
 CPARSE_SYM(avl_tree_maximum_node)(
     CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* x);
 
+/**
+ * \brief Return the in-order successor node of the given node.
+ *
+ * \param tree          The \ref avl_tree instance.
+ * \param x             The \ref avl_tree_node from which the successor is
+ *                      found.
+ *
+ * \returns the successor node of this node, or NULL if none is found.
+ */
+CPARSE_SYM(avl_tree_node)*
+CPARSE_SYM(avl_tree_successor_node)(
+    CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* x);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
