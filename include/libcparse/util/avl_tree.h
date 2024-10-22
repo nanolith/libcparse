@@ -227,6 +227,16 @@ CPARSE_SYM(avl_tree_node)*
 CPARSE_SYM(avl_tree_predecessor_node)(
     CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* x);
 
+/**
+ * \brief Return the root node pointer for this tree.
+ *
+ * \param tree          The \ref avl_tree instance.
+ *
+ * \returns the root pointer for this tree.
+ */
+CPARSE_SYM(avl_tree_node)*
+CPARSE_SYM(avl_tree_root_node)(CPARSE_SYM(avl_tree)* tree);
+
 /******************************************************************************/
 /* Start of public exports.                                                   */
 /******************************************************************************/
