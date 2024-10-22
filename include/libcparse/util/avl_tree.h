@@ -288,6 +288,9 @@ CPARSE_SYM(avl_tree_root_node)(CPARSE_SYM(avl_tree)* tree);
     sym ## avl_tree_predecessor_node( \
         CPARSE_SYM(avl_tree)* x, CPARSE_SYM(avl_tree_node)* y) { \
             return CPARSE_SYM(avl_tree_predecessor_node)(x,y); } \
+    static inline CPARSE_SYM(avl_tree_node)* \
+    sym ## avl_tree_root_node(CPARSE_SYM(avl_tree)* x) { \
+            return CPARSE_SYM(avl_tree_root_node)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_util_avl_tree_as(sym) \
