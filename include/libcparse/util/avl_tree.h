@@ -240,6 +240,10 @@ CPARSE_SYM(avl_tree_maximum_node)(
     sym ## avl_tree_minimum_node( \
         CPARSE_SYM(avl_tree)* x, CPARSE_SYM(avl_tree_node)* y) { \
             return CPARSE_SYM(avl_tree_minimum_node)(x,y); } \
+    static inline CPARSE_SYM(avl_tree_node)* \
+    sym ## avl_tree_maximum_node( \
+        CPARSE_SYM(avl_tree)* x, CPARSE_SYM(avl_tree_node)* y) { \
+            return CPARSE_SYM(avl_tree_maximum_node)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_util_avl_tree_as(sym) \
