@@ -233,7 +233,7 @@ CPARSE_SYM(avl_tree_predecessor_node)(
  *
  * \param tree          The \ref avl_tree instance.
  *
- * \returns the root pointer for this tree.
+ * \returns the root pointer for this tree, or NULL if the tree is empty.
  */
 CPARSE_SYM(avl_tree_node)*
 CPARSE_SYM(avl_tree_root_node)(CPARSE_SYM(avl_tree)* tree);
