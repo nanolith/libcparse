@@ -21,7 +21,7 @@ struct CPARSE_SYM(avl_tree_node)
     CPARSE_SYM(avl_tree_node)* parent;
     CPARSE_SYM(avl_tree_node)* left;
     CPARSE_SYM(avl_tree_node)* right;
-    int bf;
+    int height;
     void* element;
 };
 
