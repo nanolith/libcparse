@@ -318,6 +318,9 @@ CPARSE_SYM(avl_tree_count)(CPARSE_SYM(avl_tree)* tree);
     sym ## avl_tree_node_value( \
         CPARSE_SYM(avl_tree)* x, CPARSE_SYM(avl_tree_node)* y) { \
             return CPARSE_SYM(avl_tree_node_value)(x,y); } \
+    static size_t \
+    sym ## avl_tree_count(CPARSE_SYM(avl_tree)* x) { \
+            return CPARSE_SYM(avl_tree_count)(x); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_util_avl_tree_as(sym) \
