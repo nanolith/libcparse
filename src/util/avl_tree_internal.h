@@ -32,8 +32,6 @@ struct CPARSE_SYM(avl_tree)
     CPARSE_SYM(avl_tree_element_release_fn) release_fn;
     void* context;
     CPARSE_SYM(avl_tree_node)* root;
-    CPARSE_SYM(avl_tree_node) nil_impl;
-    CPARSE_SYM(avl_tree_node)* nil;
     size_t count;
 };
 
