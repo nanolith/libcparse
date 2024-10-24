@@ -82,6 +82,9 @@ int CPARSE_SYM(avl_tree_delete_nodes)(
         CPARSE_SYM(avl_tree_node)** x, const CPARSE_SYM(avl_tree)* y, \
         const void* z) { \
             return CPARSE_SYM(avl_tree_find_node)(x,y,z); } \
+    static inline int sym ## avl_tree_delete_nodes( \
+        CPARSE_SYM(avl_tree)* x, CPARSE_SYM(avl_tree_node)* y) { \
+            return CPARSE_SYM(avl_tree_delete_nodes)(x,y); } \
     CPARSE_END_EXPORT \
     REQUIRE_SEMICOLON_HERE
 #define CPARSE_IMPORT_util_avl_tree_internal_as(sym) \
