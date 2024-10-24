@@ -58,6 +58,20 @@ int CPARSE_SYM(avl_tree_find_node)(
     CPARSE_SYM(avl_tree_node)** node, const CPARSE_SYM(avl_tree)* tree,
     const void* key);
 
+/**
+ * \brief Recursively delete all nodes under the given node and the given node
+ * in a tree.
+ *
+ * \param tree          The \ref avl_tree for this delete operation.
+ * \param n             The node to recursively delete.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(avl_tree_delete_nodes)(
+    CPARSE_SYM(avl_tree)* tree, CPARSE_SYM(avl_tree_node)* n);
+
 /******************************************************************************/
 /* Start of private exports.                                                  */
 /******************************************************************************/
