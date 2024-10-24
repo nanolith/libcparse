@@ -58,6 +58,23 @@ int CPARSE_SYM(avl_tree_find_node)(
     CPARSE_SYM(avl_tree_node)** node, const CPARSE_SYM(avl_tree)* tree,
     const void* key);
 
+/******************************************************************************/
+/* Start of private exports.                                                  */
+/******************************************************************************/
+
+#define __INTERNAL_CPARSE_IMPORT_util_avl_tree_internal_sym(sym) \
+    CPARSE_BEGIN_EXPORT \
+    static inline int sym ## avl_tree_find_node( \
+        CPARSE_SYM(avl_tree_node)** x, const CPARSE_SYM(avl_tree)* y, \
+        const void* z) { \
+            return CPARSE_SYM(avl_tree_find_node)(x,y,z); } \
+    CPARSE_END_EXPORT \
+    REQUIRE_SEMICOLON_HERE
+#define CPARSE_IMPORT_util_avl_tree_internal_as(sym) \
+    __INTERNAL_CPARSE_IMPORT_util_avl_tree_internal_sym(sym ## _)
+#define CPARSE_IMPORT_util_avl_tree_internal \
+    __INTERNAL_CPARSE_IMPORT_util_avl_tree_internal_sym()
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
