@@ -35,6 +35,29 @@ struct CPARSE_SYM(avl_tree)
     size_t count;
 };
 
+/******************************************************************************/
+/* Start of private methods.                                                  */
+/******************************************************************************/
+
+/**
+ * \brief Find an \ref avl_tree_node matching the given key in a \ref avl_tree
+ * instance.
+ *
+ * \param node          Pointer to the node pointer to receive the
+ *                      \ref avl_tree_node on success.
+ * \param tree          The \ref avl_tree for this find operation.
+ * \param key           The user-defined key for this find operation.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - ERROR_LIBCPARSE_AVL_TREE_ELEMENT_NOT_FOUND if the element was not
+ *        found.
+ *      - a non-zero error code on failure.
+ */
+int CPARSE_SYM(avl_tree_find_node)(
+    CPARSE_SYM(avl_tree_node)** node, const CPARSE_SYM(avl_tree)* tree,
+    const void* key);
+
 /* C++ compatibility. */
 # ifdef   __cplusplus
 }
