@@ -40,7 +40,7 @@ typedef struct CPARSE_SYM(abstract_parser) CPARSE_SYM(abstract_parser);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(abstract_parser_init)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(abstract_parser_init)(
     CPARSE_SYM(abstract_parser)* ap, const CPARSE_SYM(message_handler)* mh);
 
 /**
