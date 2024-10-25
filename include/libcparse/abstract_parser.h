@@ -70,7 +70,8 @@ CPARSE_SYM(abstract_parser_dispose)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(abstract_parser_run)(CPARSE_SYM(abstract_parser)* ap);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(abstract_parser_run)(CPARSE_SYM(abstract_parser)* ap);
 
 /**
  * \brief Get the message handler for this abstract parser.
