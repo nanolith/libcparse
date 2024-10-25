@@ -122,7 +122,7 @@ CPARSE_SYM(abstract_parser_message_handler_override)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int
+int FN_DECL_MUST_CHECK
 CPARSE_SYM(abstract_parser_push_input_stream)(
     CPARSE_SYM(abstract_parser)* ap, const char* name,
     CPARSE_SYM(input_stream)* input_stream);
