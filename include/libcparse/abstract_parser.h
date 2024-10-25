@@ -102,7 +102,7 @@ CPARSE_SYM(abstract_parser_message_handler_get)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int
+int FN_DECL_MUST_CHECK
 CPARSE_SYM(abstract_parser_message_handler_override)(
     CPARSE_SYM(message_handler)* old_handler,
     CPARSE_SYM(abstract_parser)* ap,
