@@ -249,7 +249,8 @@ CPARSE_SYM(abstract_parser_file_line_override)(
 #define __INTERNAL_CPARSE_IMPORT_abstract_parser_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(abstract_parser) sym ## abstract_parser; \
-    static inline int sym ## abstract_parser_init( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## abstract_parser_init( \
         CPARSE_SYM(abstract_parser)* x, const CPARSE_SYM(message_handler)* y) {\
             return CPARSE_SYM(abstract_parser_init)(x,y); } \
     static inline int sym ## abstract_parser_dispose( \
