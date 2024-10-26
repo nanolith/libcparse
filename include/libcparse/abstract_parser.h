@@ -239,7 +239,7 @@ CPARSE_SYM(abstract_parser_preprocessor_scanner_subscribe)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int
+int FN_DECL_MUST_CHECK
 CPARSE_SYM(abstract_parser_file_line_override)(
     CPARSE_SYM(abstract_parser)* ap, unsigned int line, const char* file);
 
