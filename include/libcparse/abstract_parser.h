@@ -221,7 +221,7 @@ CPARSE_SYM(abstract_parser_newline_preserving_whitespace_filter_subscribe)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int
+int FN_DECL_MUST_CHECK
 CPARSE_SYM(abstract_parser_preprocessor_scanner_subscribe)(
     CPARSE_SYM(abstract_parser)* ap, CPARSE_SYM(event_handler)* eh);
 
