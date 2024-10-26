@@ -137,7 +137,7 @@ CPARSE_SYM(abstract_parser_push_input_stream)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int
+int FN_DECL_MUST_CHECK
 CPARSE_SYM(abstract_parser_raw_stack_scanner_subscribe)(
     CPARSE_SYM(abstract_parser)* ap, CPARSE_SYM(event_handler)* eh);
 
