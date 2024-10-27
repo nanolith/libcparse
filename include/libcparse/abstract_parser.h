@@ -265,7 +265,8 @@ CPARSE_SYM(abstract_parser_file_line_override)(
     sym ## abstract_parser_message_handler_get( \
         CPARSE_SYM(abstract_parser)* x) { \
             return CPARSE_SYM(abstract_parser_message_handler_get)(x); } \
-    static inline int sym ## abstract_parser_message_handler_override( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## abstract_parser_message_handler_override( \
         CPARSE_SYM(message_handler)* x, CPARSE_SYM(abstract_parser)* y, \
         CPARSE_SYM(message_handler)* z) { \
             return \
