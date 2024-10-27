@@ -282,7 +282,7 @@ CPARSE_SYM(abstract_parser_file_line_override)(
             return \
                 CPARSE_SYM(abstract_parser_raw_stack_scanner_subscribe)( \
                     x,y); } \
-    static inline int \
+    static inline int FN_DECL_MUST_CHECK \
     sym ## abstract_parser_raw_file_line_override_filter_subscribe( \
         CPARSE_SYM(abstract_parser)* x, CPARSE_SYM(event_handler)* y) { \
             return \
