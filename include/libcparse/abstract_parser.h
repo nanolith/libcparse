@@ -271,7 +271,8 @@ CPARSE_SYM(abstract_parser_file_line_override)(
         CPARSE_SYM(message_handler)* z) { \
             return \
                 CPARSE_SYM(abstract_parser_message_handler_override)(x,y,z); } \
-    static inline int sym ## abstract_parser_push_input_stream( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## abstract_parser_push_input_stream( \
         CPARSE_SYM(abstract_parser)* x, const char* y, \
         CPARSE_SYM(input_stream)* z) { \
             return CPARSE_SYM(abstract_parser_push_input_stream)(x,y,z); } \
