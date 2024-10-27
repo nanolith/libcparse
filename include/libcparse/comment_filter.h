@@ -87,7 +87,8 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(comment_filter_upcast)(
     sym ## comment_filter_create( \
         CPARSE_SYM(comment_filter)** x) { \
             return CPARSE_SYM(comment_filter_create)(x); } \
-    static inline int sym ## comment_filter_release( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## comment_filter_release( \
         CPARSE_SYM(comment_filter)* x) { \
             return CPARSE_SYM(comment_filter_release)(x); } \
     static inline CPARSE_SYM(abstract_parser)* sym ## comment_filter_upcast( \
