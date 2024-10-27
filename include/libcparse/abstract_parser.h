@@ -257,7 +257,8 @@ CPARSE_SYM(abstract_parser_file_line_override)(
     sym ## abstract_parser_dispose( \
         CPARSE_SYM(abstract_parser)* x) { \
             return CPARSE_SYM(abstract_parser_dispose)(x); } \
-    static inline int sym ## abstract_parser_run( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## abstract_parser_run( \
         CPARSE_SYM(abstract_parser)* x) { \
             return CPARSE_SYM(abstract_parser_run)(x); } \
     static inline CPARSE_SYM(message_handler)* \
