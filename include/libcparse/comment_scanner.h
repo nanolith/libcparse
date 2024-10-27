@@ -78,7 +78,8 @@ CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(comment_scanner_release)(CPARSE_SYM(comment_scanner)* scanner);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
