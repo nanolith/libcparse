@@ -46,7 +46,8 @@ CPARSE_SYM(comment_filter);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(comment_filter_create)(CPARSE_SYM(comment_filter)** filter);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(comment_filter_create)(CPARSE_SYM(comment_filter)** filter);
 
 /**
  * \brief Release a comment filter instance, releasing any internal resources
