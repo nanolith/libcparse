@@ -106,7 +106,8 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(comment_scanner_upcast)(
     sym ## comment_scanner_create( \
         CPARSE_SYM(comment_scanner)** x) { \
             return CPARSE_SYM(comment_scanner_create)(x); } \
-    static inline int sym ## comment_scanner_release( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## comment_scanner_release( \
         CPARSE_SYM(comment_scanner)* x) { \
             return CPARSE_SYM(comment_scanner_release)(x); } \
     static inline CPARSE_SYM(abstract_parser)* sym ## comment_scanner_upcast( \
