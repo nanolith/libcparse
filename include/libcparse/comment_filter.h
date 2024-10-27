@@ -83,7 +83,8 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(comment_filter_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_comment_filter_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(comment_filter) sym ## comment_filter; \
-    static inline int sym ## comment_filter_create( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## comment_filter_create( \
         CPARSE_SYM(comment_filter)** x) { \
             return CPARSE_SYM(comment_filter_create)(x); } \
     static inline int sym ## comment_filter_release( \
