@@ -65,7 +65,8 @@ CPARSE_SYM(comment_scanner);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(comment_scanner_create)(CPARSE_SYM(comment_scanner)** scanner);
 
 /**
  * \brief Release a comment scanner instance, releasing any internal resources
