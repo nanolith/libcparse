@@ -318,7 +318,8 @@ CPARSE_SYM(abstract_parser_file_line_override)(
             CPARSE_SYM( \
               abstract_parser_preprocessor_scanner_subscribe)( \
                     x,y); } \
-    static inline int sym ## abstract_parser_file_line_override( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## abstract_parser_file_line_override( \
         CPARSE_SYM(abstract_parser)* x, unsigned int y, const char* z) { \
             return CPARSE_SYM(abstract_parser_file_line_override)(x,y,z); } \
     CPARSE_END_EXPORT \
