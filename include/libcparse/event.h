@@ -245,7 +245,8 @@ CPARSE_SYM(event_init_for_token_comma)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_init_for_token_colon)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_init_for_token_colon)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
