@@ -404,7 +404,8 @@ CPARSE_SYM(event_init_for_token_logical_or)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_init_for_token_ampersand)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_init_for_token_ampersand)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
