@@ -418,7 +418,8 @@ CPARSE_SYM(event_init_for_token_ampersand)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_init_for_token_pipe)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_init_for_token_pipe)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
