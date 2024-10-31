@@ -595,7 +595,8 @@ CPARSE_SYM(event_init_for_token_mod_equal)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_init_for_token_and_equal)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_init_for_token_and_equal)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
