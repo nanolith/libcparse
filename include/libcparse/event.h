@@ -2154,7 +2154,8 @@ CPARSE_SYM(event_init_for_exp_sizeof_type_begin)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_init_for_exp_sizeof_type_end)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_init_for_exp_sizeof_type_end)(
     CPARSE_SYM(event)* ev, const CPARSE_SYM(cursor)* cursor);
 
 /**
