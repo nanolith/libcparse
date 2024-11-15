@@ -2857,7 +2857,8 @@ CPARSE_SYM(event_init_for_exp_comma_end)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_dispose)(CPARSE_SYM(event)* ev);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_dispose)(CPARSE_SYM(event)* ev);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
