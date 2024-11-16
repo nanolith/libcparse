@@ -2890,7 +2890,8 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
 #define __INTERNAL_CPARSE_IMPORT_event_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event) sym ## event; \
-    static inline int sym ## event_init_for_eof( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_init_for_eof( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_eof)(x,y); } \
     static inline int sym ## event_init_for_whitespace_token( \
