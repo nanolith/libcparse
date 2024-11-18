@@ -2982,7 +2982,8 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
     sym ## event_init_for_token_percent( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_percent)(x,y); } \
-    static inline int sym ## event_init_for_token_logical_and( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_init_for_token_logical_and( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_logical_and)(x,y); } \
     static inline int sym ## event_init_for_token_logical_or( \
