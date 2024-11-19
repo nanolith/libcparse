@@ -3018,7 +3018,8 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
     sym ## event_init_for_token_not_equal_compare( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_not_equal_compare)(x,y); } \
-    static inline int sym ## event_init_for_token_equal_assign( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_init_for_token_equal_assign( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_equal_assign)(x,y); } \
     static inline int sym ## event_init_for_token_plus_equal( \
