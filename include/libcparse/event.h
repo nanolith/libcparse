@@ -3187,7 +3187,8 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
     sym ## event_init_for_token_keyword__Alignof( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_keyword__Alignof)(x,y); } \
-    static inline int sym ## event_init_for_token_keyword__Atomic( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_init_for_token_keyword__Atomic( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_keyword__Atomic)(x,y); } \
     static inline int sym ## event_init_for_token_keyword__Bool( \
