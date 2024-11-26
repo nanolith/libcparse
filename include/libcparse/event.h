@@ -3354,7 +3354,8 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
     sym ## event_init_for_token_keyword_volatile( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_keyword_volatile)(x,y); } \
-    static inline int sym ## event_init_for_token_keyword_while( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_init_for_token_keyword_while( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_token_keyword_while)(x,y); } \
     static inline int sym ## event_init_for_preprocessor_directive_end( \
