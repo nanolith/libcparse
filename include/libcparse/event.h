@@ -3434,7 +3434,8 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return \
                 CPARSE_SYM(event_init_for_exp_postfix_increment_begin)(x,y); } \
-    static inline int sym ## event_init_for_exp_postfix_increment_end( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_init_for_exp_postfix_increment_end( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return \
                 CPARSE_SYM(event_init_for_exp_postfix_increment_end)(x,y); } \
