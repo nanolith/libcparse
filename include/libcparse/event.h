@@ -3454,7 +3454,8 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return \
                 CPARSE_SYM(event_init_for_exp_compound_literal_begin)(x,y); } \
-    static inline int sym ## event_init_for_exp_compound_literal_end( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_init_for_exp_compound_literal_end( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return \
                 CPARSE_SYM(event_init_for_exp_compound_literal_end)(x,y); } \
