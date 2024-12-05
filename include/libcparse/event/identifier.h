@@ -54,7 +54,8 @@ CPARSE_SYM(event_identifier_init)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_identifier_dispose)(CPARSE_SYM(event_identifier)* ev);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_identifier_dispose)(CPARSE_SYM(event_identifier)* ev);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
