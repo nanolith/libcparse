@@ -42,7 +42,7 @@ CPARSE_SYM(event_include);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero failure code on failure.
  */
-int CPARSE_SYM(event_include_init_for_system_include)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_include_init_for_system_include)(
     CPARSE_SYM(event_include)* ev, const CPARSE_SYM(cursor)* cursor,
     const char* file);
 
