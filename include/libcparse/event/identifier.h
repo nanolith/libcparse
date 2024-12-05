@@ -109,7 +109,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_identifier_upcast)(
         CPARSE_SYM(event_identifier)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
             return CPARSE_SYM(event_identifier_init)(x,y,z); } \
-    static inline int sym ## event_identifier_dispose( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_identifier_dispose( \
         CPARSE_SYM(event_identifier)* x) { \
             return CPARSE_SYM(event_identifier_dispose)(x); } \
     static inline const char* sym ## event_identifier_get( \
