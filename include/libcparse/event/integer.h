@@ -41,7 +41,7 @@ typedef struct CPARSE_SYM(event_integer_token) CPARSE_SYM(event_integer_token);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero failure code on failure.
  */
-int CPARSE_SYM(event_integer_token_init_for_signed_int)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_integer_token_init_for_signed_int)(
     CPARSE_SYM(event_integer_token)* ev, const CPARSE_SYM(cursor)* cursor,
     int val);
 
