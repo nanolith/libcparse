@@ -71,7 +71,8 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_include_init_for_local_include)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_include_dispose)(CPARSE_SYM(event_include)* ev);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_include_dispose)(CPARSE_SYM(event_include)* ev);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
