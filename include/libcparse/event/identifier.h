@@ -40,7 +40,8 @@ typedef struct CPARSE_SYM(event_identifier) CPARSE_SYM(event_identifier);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero failure code on failure.
  */
-int CPARSE_SYM(event_identifier_init)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_identifier_init)(
     CPARSE_SYM(event_identifier)* ev, const CPARSE_SYM(cursor)* cursor,
     const char* id);
 
