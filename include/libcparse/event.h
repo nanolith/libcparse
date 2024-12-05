@@ -2871,8 +2871,7 @@ CPARSE_SYM(event_dispose)(CPARSE_SYM(event)* ev);
  *
  * \returns the \ref event_type for this event.
  */
-int FN_DECL_MUST_CHECK
-CPARSE_SYM(event_get_type)(const CPARSE_SYM(event)* ev);
+int CPARSE_SYM(event_get_type)(const CPARSE_SYM(event)* ev);
 
 /**
  * \brief Get the cursor for the given event.
