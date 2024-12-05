@@ -137,7 +137,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_include_upcast)(
     static inline const char* sym ## event_include_file_get( \
         const CPARSE_SYM(event_include)* x) { \
             return CPARSE_SYM(event_include_file_get)(x); } \
-    static inline int sym ## event_downcast_to_event_include( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_downcast_to_event_include( \
         CPARSE_SYM(event_include)** x, CPARSE_SYM(event)* y) { \
             return CPARSE_SYM(event_downcast_to_event_include)(x,y); } \
     static inline CPARSE_SYM(event)* sym ## event_include_upcast( \
