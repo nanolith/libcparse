@@ -3708,7 +3708,8 @@ CPARSE_SYM(event_get_cursor)(const CPARSE_SYM(event)* ev);
     sym ## event_init_for_exp_comma_end( \
         CPARSE_SYM(event)* x, const CPARSE_SYM(cursor)* y) { \
             return CPARSE_SYM(event_init_for_exp_comma_end)(x,y); } \
-    static inline int sym ## event_dispose( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_dispose( \
         CPARSE_SYM(event)* x) { \
             return CPARSE_SYM(event_dispose)(x); } \
     static inline int sym ## event_get_type(const CPARSE_SYM(event)* x) { \
