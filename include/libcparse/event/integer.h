@@ -73,7 +73,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_integer_token_init_for_unsigned_int)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero failure code on failure.
  */
-int CPARSE_SYM(event_integer_token_init_for_signed_long)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_integer_token_init_for_signed_long)(
     CPARSE_SYM(event_integer_token)* ev, const CPARSE_SYM(cursor)* cursor,
     long val);
 
