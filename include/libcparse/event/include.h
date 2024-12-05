@@ -120,7 +120,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_include_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_event_include_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_include) sym ## event_include; \
-    static inline int sym ## event_include_init_for_system_include( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_include_init_for_system_include( \
         CPARSE_SYM(event_include)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
             return CPARSE_SYM(event_include_init_for_system_include)(x,y,z); } \
