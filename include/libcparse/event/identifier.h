@@ -104,7 +104,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_identifier_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_event_identifier_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_identifier) sym ## event_identifier; \
-    static inline int sym ## event_identifier_init( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_identifier_init( \
         CPARSE_SYM(event_identifier)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
             return CPARSE_SYM(event_identifier_init)(x,y,z); } \
