@@ -83,7 +83,8 @@ const char* CPARSE_SYM(event_identifier_get)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_downcast_to_event_identifier)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_downcast_to_event_identifier)(
     CPARSE_SYM(event_identifier)** i_ev, CPARSE_SYM(event)* ev);
 
 /**
