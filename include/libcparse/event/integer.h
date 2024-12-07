@@ -136,7 +136,7 @@ CPARSE_SYM(event_integer_token_init_for_unsigned_long_long)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_integer_token_dispose)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_integer_token_dispose)(
     CPARSE_SYM(event_integer_token)* ev);
 
 /******************************************************************************/
