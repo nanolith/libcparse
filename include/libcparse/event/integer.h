@@ -399,7 +399,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_integer_token_convert_to_uint32)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_integer_token_convert_to_int64)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_integer_token_convert_to_int64)(
     int64_t* val, const CPARSE_SYM(event_integer_token)* ev);
 
 /**
