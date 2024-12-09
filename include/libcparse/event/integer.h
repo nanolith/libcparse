@@ -709,7 +709,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
     sym ## event_integer_token_dispose( \
         CPARSE_SYM(event_integer_token)* x) { \
             return CPARSE_SYM(event_integer_token_dispose)(x); } \
-    static inline int sym ## event_integer_token_convert_to_char( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_integer_token_convert_to_char( \
         char* x, const CPARSE_SYM(event_integer_token)* y) { \
             return CPARSE_SYM(event_integer_token_convert_to_char)(x,y); } \
     static inline int sym ## event_integer_token_convert_to_unsigned_char( \
