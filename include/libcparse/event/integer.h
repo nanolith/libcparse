@@ -665,7 +665,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_event_integer_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_integer_token) sym ## event_integer_token; \
-    static inline int sym ## event_integer_token_init_for_signed_int( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_integer_token_init_for_signed_int( \
         CPARSE_SYM(event_integer_token)* x, const CPARSE_SYM(cursor)* y, \
         int z) { \
             return \
