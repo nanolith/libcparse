@@ -698,7 +698,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
             return \
                 CPARSE_SYM(event_integer_token_init_for_signed_long_long)( \
                     x,y,z); } \
-    static inline int sym ## event_integer_token_init_for_unsigned_long_long( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_integer_token_init_for_unsigned_long_long( \
         CPARSE_SYM(event_integer_token)* x, const CPARSE_SYM(cursor)* y, \
         unsigned long long z) { \
             return \
