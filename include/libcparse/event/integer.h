@@ -671,7 +671,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
         int z) { \
             return \
                 CPARSE_SYM(event_integer_token_init_for_signed_int)(x,y,z); } \
-    static inline int sym ## event_integer_token_init_for_unsigned_int( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_integer_token_init_for_unsigned_int( \
         CPARSE_SYM(event_integer_token)* x, const CPARSE_SYM(cursor)* y, \
         unsigned int z) { \
             return \
