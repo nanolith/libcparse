@@ -743,7 +743,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
     sym ## event_integer_token_convert_to_long( \
         long* x, const CPARSE_SYM(event_integer_token)* y) { \
             return CPARSE_SYM(event_integer_token_convert_to_long)(x,y); } \
-    static inline int sym ## event_integer_token_convert_to_unsigned_long( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_integer_token_convert_to_unsigned_long( \
         unsigned long* x, const CPARSE_SYM(event_integer_token)* y) { \
             return \
                 CPARSE_SYM(event_integer_token_convert_to_unsigned_long)( \
