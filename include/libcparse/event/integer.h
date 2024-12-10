@@ -760,7 +760,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
             return \
                 CPARSE_SYM(event_integer_token_convert_to_unsigned_long_long)( \
                     x,y); } \
-    static inline int sym ## event_integer_token_convert_to_int8( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_integer_token_convert_to_int8( \
         int8_t* x, const CPARSE_SYM(event_integer_token)* y) { \
             return CPARSE_SYM(event_integer_token_convert_to_int8)(x,y); } \
     static inline int sym ## event_integer_token_convert_to_uint8( \
