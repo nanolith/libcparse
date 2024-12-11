@@ -768,7 +768,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_integer_token_upcast)(
     sym ## event_integer_token_convert_to_uint8( \
         uint8_t* x, const CPARSE_SYM(event_integer_token)* y) { \
             return CPARSE_SYM(event_integer_token_convert_to_uint8)(x,y); } \
-    static inline int sym ## event_integer_token_convert_to_int16( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_integer_token_convert_to_int16( \
         int16_t* x, const CPARSE_SYM(event_integer_token)* y) { \
             return CPARSE_SYM(event_integer_token_convert_to_int16)(x,y); } \
     static inline int sym ## event_integer_token_convert_to_uint16( \
