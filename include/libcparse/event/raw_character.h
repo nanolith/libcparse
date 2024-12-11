@@ -54,7 +54,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_character_init)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_raw_character_dispose)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_character_dispose)(
     CPARSE_SYM(event_raw_character)* ev);
 
 /******************************************************************************/
