@@ -108,7 +108,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_character_upcast)(
         CPARSE_SYM(event_raw_character)* x, const CPARSE_SYM(cursor)* y, \
         int z) { \
             return CPARSE_SYM(event_raw_character_init)(x,y,z); } \
-    static inline int sym ## event_raw_character_dispose( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_raw_character_dispose( \
         CPARSE_SYM(event_raw_character)* x) { \
             return CPARSE_SYM(event_raw_character_dispose)(x); } \
     static inline int sym ## event_raw_character_get( \
