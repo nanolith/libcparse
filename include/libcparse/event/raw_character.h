@@ -115,7 +115,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_character_upcast)(
     static inline int sym ## event_raw_character_get( \
         const CPARSE_SYM(event_raw_character)* x) { \
             return CPARSE_SYM(event_raw_character_get)(x); } \
-    static inline int sym ## event_downcast_to_event_raw_character( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_downcast_to_event_raw_character( \
         CPARSE_SYM(event_raw_character)** x, CPARSE_SYM(event)* y) { \
             return CPARSE_SYM(event_downcast_to_event_raw_character)(x,y); } \
     static inline CPARSE_SYM(event)* \
