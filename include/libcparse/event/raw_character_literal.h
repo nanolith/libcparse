@@ -87,7 +87,8 @@ const char* CPARSE_SYM(event_raw_character_literal_get)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_downcast_to_event_raw_character_literal)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_downcast_to_event_raw_character_literal)(
     CPARSE_SYM(event_raw_character_literal)** c_ev, CPARSE_SYM(event)* ev);
 
 /**
