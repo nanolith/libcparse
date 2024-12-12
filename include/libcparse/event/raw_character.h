@@ -83,7 +83,7 @@ int CPARSE_SYM(event_raw_character_get)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_downcast_to_event_raw_character)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_downcast_to_event_raw_character)(
     CPARSE_SYM(event_raw_character)** rc_ev, CPARSE_SYM(event)* ev);
 
 /**
