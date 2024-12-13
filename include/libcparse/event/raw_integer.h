@@ -53,7 +53,7 @@ CPARSE_SYM(event_raw_integer_token);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero failure code on failure.
  */
-int CPARSE_SYM(event_raw_integer_token_init)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_integer_token_init)(
     CPARSE_SYM(event_raw_integer_token)* ev, const CPARSE_SYM(cursor)* cursor,
     const char* val);
 
