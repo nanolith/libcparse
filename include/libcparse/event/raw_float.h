@@ -125,7 +125,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_float_token_upcast)(
         CPARSE_SYM(event_raw_float_token)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
             return CPARSE_SYM(event_raw_float_token_init)(x,y,z); } \
-    static inline int sym ## event_raw_float_token_dispose( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_raw_float_token_dispose( \
         CPARSE_SYM(event_raw_float_token)* x) { \
             return CPARSE_SYM(event_raw_float_token_dispose)(x); } \
     static inline const char* sym ## event_raw_float_token_string_get( \
