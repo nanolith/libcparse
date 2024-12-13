@@ -57,7 +57,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_float_token_init)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_raw_float_token_dispose)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_float_token_dispose)(
     CPARSE_SYM(event_raw_float_token)* ev);
 
 /******************************************************************************/
