@@ -157,7 +157,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_integer_token_upcast)(
     static inline const char* sym ## event_raw_integer_token_string_get( \
         const CPARSE_SYM(event_raw_integer_token)* x) { \
             return CPARSE_SYM(event_raw_integer_token_string_get)(x); } \
-    static inline int sym ## event_raw_integer_token_sign_set( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_raw_integer_token_sign_set( \
         CPARSE_SYM(event_raw_integer_token)* x, bool y) { \
             return CPARSE_SYM(event_raw_integer_token_sign_set)(x,y); } \
     static inline int sym ## event_raw_integer_token_convert( \
