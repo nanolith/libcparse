@@ -94,7 +94,7 @@ const char* CPARSE_SYM(event_raw_integer_token_string_get)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_raw_integer_token_sign_set)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_integer_token_sign_set)(
     CPARSE_SYM(event_raw_integer_token)* ev, bool sign);
 
 /**
