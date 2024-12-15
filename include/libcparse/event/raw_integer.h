@@ -124,7 +124,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_integer_token_convert)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_downcast_to_event_raw_integer_token)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_downcast_to_event_raw_integer_token)(
     CPARSE_SYM(event_raw_integer_token)** s_ev, CPARSE_SYM(event)* ev);
 
 /**
