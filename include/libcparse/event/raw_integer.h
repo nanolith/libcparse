@@ -161,7 +161,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_integer_token_upcast)(
     sym ## event_raw_integer_token_sign_set( \
         CPARSE_SYM(event_raw_integer_token)* x, bool y) { \
             return CPARSE_SYM(event_raw_integer_token_sign_set)(x,y); } \
-    static inline int sym ## event_raw_integer_token_convert( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_raw_integer_token_convert( \
         CPARSE_SYM(event_integer_token)* x, \
         const CPARSE_SYM(event_raw_integer_token)* y) { \
             return CPARSE_SYM(event_raw_integer_token_convert)(x,y); } \
