@@ -145,7 +145,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_integer_token_upcast)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_raw_integer_token) \
     sym ## event_raw_integer_token; \
-    static inline int sym ## event_raw_integer_token_init( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_raw_integer_token_init( \
         CPARSE_SYM(event_raw_integer_token)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
             return CPARSE_SYM(event_raw_integer_token_init)(x,y,z); } \
