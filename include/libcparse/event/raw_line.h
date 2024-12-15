@@ -54,7 +54,8 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_line_init)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_raw_line_dispose)(CPARSE_SYM(event_raw_line)* ev);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_raw_line_dispose)(CPARSE_SYM(event_raw_line)* ev);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
