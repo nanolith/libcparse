@@ -60,7 +60,8 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_string_token_init)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero failure code on failure.
  */
-int CPARSE_SYM(event_raw_string_token_init_for_system_string)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_raw_string_token_init_for_system_string)(
     CPARSE_SYM(event_raw_string_token)* ev, const CPARSE_SYM(cursor)* cursor,
     const char* val);
 
