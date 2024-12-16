@@ -103,7 +103,7 @@ const char* CPARSE_SYM(event_raw_string_token_get)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_raw_string_token_convert)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_string_token_convert)(
     CPARSE_SYM(event_string)* s_ev,
     const CPARSE_SYM(event_raw_string_token)* ev);
 
