@@ -75,7 +75,7 @@ CPARSE_SYM(event_raw_string_token_init_for_system_string)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_raw_string_token_dispose)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_raw_string_token_dispose)(
     CPARSE_SYM(event_raw_string_token)* ev);
 
 /******************************************************************************/
