@@ -96,7 +96,7 @@ const char* CPARSE_SYM(event_string_get)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_downcast_to_event_string)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_downcast_to_event_string)(
     CPARSE_SYM(event_string)** s_ev, CPARSE_SYM(event)* ev);
 
 /**
