@@ -67,7 +67,8 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_string_init_for_system_string)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_string_dispose)(CPARSE_SYM(event_string)* ev);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_string_dispose)(CPARSE_SYM(event_string)* ev);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
