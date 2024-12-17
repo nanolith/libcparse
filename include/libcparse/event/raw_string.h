@@ -159,7 +159,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_raw_string_token_upcast)(
     static inline const char* sym ## event_raw_string_token_get( \
         const CPARSE_SYM(event_raw_string_token)* x) { \
             return CPARSE_SYM(event_raw_string_token_get)(x); } \
-    static inline int sym ## event_raw_string_token_convert( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_raw_string_token_convert( \
         CPARSE_SYM(event_string)* x, \
         const CPARSE_SYM(event_raw_string_token)* y) { \
             return CPARSE_SYM(event_raw_string_token_convert)(x,y); } \
