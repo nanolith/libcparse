@@ -120,7 +120,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_string_upcast)(
         CPARSE_SYM(event_string)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
             return CPARSE_SYM(event_string_init)(x,y,z); } \
-    static inline int sym ## event_string_init_for_system_string( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_string_init_for_system_string( \
         CPARSE_SYM(event_string)* x, const CPARSE_SYM(cursor)* y, \
         const char* z) { \
             return CPARSE_SYM(event_string_init_for_system_string)(x,y,z); } \
