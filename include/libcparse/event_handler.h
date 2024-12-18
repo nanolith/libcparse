@@ -81,7 +81,8 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_handler_init_copy)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_handler_dispose)(CPARSE_SYM(event_handler)* eh);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_handler_dispose)(CPARSE_SYM(event_handler)* eh);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
