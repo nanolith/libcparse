@@ -69,7 +69,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_handler_init)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_handler_init_copy)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_handler_init_copy)(
     CPARSE_SYM(event_handler)* eh, const CPARSE_SYM(event_handler)* ehc);
 
 /**
