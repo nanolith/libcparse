@@ -54,7 +54,7 @@ typedef struct CPARSE_SYM(event_handler) CPARSE_SYM(event_handler);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_handler_init)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_handler_init)(
     CPARSE_SYM(event_handler)* eh, CPARSE_SYM(event_callback_fn) ecb,
     void* ectx);
 
