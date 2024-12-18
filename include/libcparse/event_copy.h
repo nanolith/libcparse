@@ -77,7 +77,7 @@ const CPARSE_SYM(event)*  CPARSE_SYM(event_copy_get_event)(
     static inline int FN_DECL_MUST_CHECK sym ## event_copy_create( \
         CPARSE_SYM(event_copy)** x, const CPARSE_SYM(event)* y) { \
             return CPARSE_SYM(event_copy_create)(x,y); } \
-    static inline int sym ## event_copy_release( \
+    static inline int FN_DECL_MUST_CHECK sym ## event_copy_release( \
         CPARSE_SYM(event_copy)* x) { \
             return CPARSE_SYM(event_copy_release)(x); } \
     static inline const CPARSE_SYM(event)* sym ## event_copy_get_event( \
