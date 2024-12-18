@@ -131,7 +131,8 @@ CPARSE_SYM(event)* CPARSE_SYM(event_string_upcast)(
     static inline const char* sym ## event_string_get( \
         const CPARSE_SYM(event_string)* x) { \
             return CPARSE_SYM(event_string_get)(x); } \
-    static inline int sym ## event_downcast_to_event_string( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## event_downcast_to_event_string( \
         CPARSE_SYM(event_string)** x, CPARSE_SYM(event)* y) { \
             return CPARSE_SYM(event_downcast_to_event_string)(x,y); } \
     static inline CPARSE_SYM(event)* sym ## event_string_upcast( \
