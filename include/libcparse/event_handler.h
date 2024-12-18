@@ -98,7 +98,7 @@ CPARSE_SYM(event_handler_dispose)(CPARSE_SYM(event_handler)* eh);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_handler_send)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_handler_send)(
     CPARSE_SYM(event_handler)* eh, const CPARSE_SYM(event)* ev);
 
 /******************************************************************************/
