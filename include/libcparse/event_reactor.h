@@ -37,7 +37,8 @@ typedef struct CPARSE_SYM(event_reactor) CPARSE_SYM(event_reactor);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_reactor_create)(CPARSE_SYM(event_reactor)** er);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_reactor_create)(CPARSE_SYM(event_reactor)** er);
 
 /**
  * \brief Release an \ref event_reactor instance.
