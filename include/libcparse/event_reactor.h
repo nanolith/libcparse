@@ -66,7 +66,7 @@ CPARSE_SYM(event_reactor_release)(CPARSE_SYM(event_reactor)* er);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_reactor_add)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(event_reactor_add)(
     CPARSE_SYM(event_reactor)* er, const CPARSE_SYM(event_handler)* eh);
 
 /**
