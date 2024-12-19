@@ -89,7 +89,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_reactor_broadcast)(
 #define __INTERNAL_CPARSE_IMPORT_event_reactor_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_reactor) sym ## event_reactor; \
-    static inline int sym ## event_reactor_create( \
+    static inline int FN_DECL_MUST_CHECK sym ## event_reactor_create( \
         CPARSE_SYM(event_reactor)** x) { \
             return CPARSE_SYM(event_reactor_create)(x); } \
     static inline int sym ## event_reactor_release( \
