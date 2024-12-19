@@ -49,7 +49,8 @@ CPARSE_SYM(event_reactor_create)(CPARSE_SYM(event_reactor)** er);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(event_reactor_release)(CPARSE_SYM(event_reactor)* er);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(event_reactor_release)(CPARSE_SYM(event_reactor)* er);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
