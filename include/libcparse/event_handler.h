@@ -112,7 +112,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_handler_send)(
         CPARSE_SYM(event_handler)* x, CPARSE_SYM(event_callback_fn) y, \
         void* z) { \
             return CPARSE_SYM(event_handler_init)(x,y,z); } \
-    static inline int sym ## event_handler_init_copy( \
+    static inline int FN_DECL_MUST_CHECK sym ## event_handler_init_copy( \
         CPARSE_SYM(event_handler)* x, const CPARSE_SYM(event_handler)* y) { \
             return CPARSE_SYM(event_handler_init_copy)(x,y); } \
     static inline int sym ## event_handler_dispose( \
