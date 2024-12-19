@@ -108,7 +108,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_handler_send)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(event_callback_fn) sym ## event_callback_fn; \
     typedef CPARSE_SYM(event_handler) sym ## event_handler; \
-    static inline int sym ## event_handler_init( \
+    static inline int FN_DECL_MUST_CHECK sym ## event_handler_init( \
         CPARSE_SYM(event_handler)* x, CPARSE_SYM(event_callback_fn) y, \
         void* z) { \
             return CPARSE_SYM(event_handler_init)(x,y,z); } \
