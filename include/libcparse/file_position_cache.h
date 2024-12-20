@@ -73,7 +73,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(file_position_cache_release)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(file_position_cache_set)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(file_position_cache_set)(
     CPARSE_SYM(file_position_cache)* cache, const char* file,
     const CPARSE_SYM(cursor)* position);
 
