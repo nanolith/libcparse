@@ -54,7 +54,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(file_position_cache_create)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(file_position_cache_release)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(file_position_cache_release)(
     CPARSE_SYM(file_position_cache)* cache);
 
 /******************************************************************************/
