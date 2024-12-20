@@ -98,7 +98,7 @@ void CPARSE_SYM(file_position_cache_clear)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(file_position_cache_file_get)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(file_position_cache_file_get)(
     CPARSE_SYM(file_position_cache)* cache, const char** file);
 
 /**
