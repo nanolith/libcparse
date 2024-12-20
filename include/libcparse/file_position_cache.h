@@ -144,7 +144,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(file_position_cache_position_extend)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(file_position_cache_raw_character_broadcast)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(file_position_cache_raw_character_broadcast)(
     CPARSE_SYM(file_position_cache)* cache, CPARSE_SYM(event_reactor)* reactor,
     int ch);
 
