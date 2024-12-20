@@ -41,7 +41,7 @@ typedef struct CPARSE_SYM(file_position_cache) CPARSE_SYM(file_position_cache);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(file_position_cache_create)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(file_position_cache_create)(
     CPARSE_SYM(file_position_cache)** cache);
 
 /**
