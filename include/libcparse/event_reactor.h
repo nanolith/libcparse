@@ -98,7 +98,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(event_reactor_broadcast)(
     static inline int FN_DECL_MUST_CHECK sym ## event_reactor_add( \
         CPARSE_SYM(event_reactor)* x, const CPARSE_SYM(event_handler)* y) { \
             return CPARSE_SYM(event_reactor_add)(x,y); } \
-    static inline int sym ## event_reactor_broadcast( \
+    static inline int FN_DECL_MUST_CHECK sym ## event_reactor_broadcast( \
         CPARSE_SYM(event_reactor)* x, const CPARSE_SYM(event)* y) { \
             return CPARSE_SYM(event_reactor_broadcast)(x,y); } \
     CPARSE_END_EXPORT \
