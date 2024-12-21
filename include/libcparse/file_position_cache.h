@@ -213,7 +213,7 @@ CPARSE_SYM(file_position_cache_final_newline_token_broadcast)(
     static inline int FN_DECL_MUST_CHECK sym ## file_position_cache_release( \
         CPARSE_SYM(file_position_cache)* x) { \
             return CPARSE_SYM(file_position_cache_release)(x); } \
-    static inline int sym ## file_position_cache_set( \
+    static inline int FN_DECL_MUST_CHECK sym ## file_position_cache_set( \
         CPARSE_SYM(file_position_cache)* x, const char* y, \
         const CPARSE_SYM(cursor)* z) { \
             return CPARSE_SYM(file_position_cache_set)(x,y,z); } \
