@@ -207,7 +207,7 @@ CPARSE_SYM(file_position_cache_final_newline_token_broadcast)(
 #define __INTERNAL_CPARSE_IMPORT_file_position_cache_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(file_position_cache) sym ## file_position_cache; \
-    static inline int sym ## file_position_cache_create( \
+    static inline int FN_DECL_MUST_CHECK sym ## file_position_cache_create( \
         CPARSE_SYM(file_position_cache)** x) { \
             return CPARSE_SYM(file_position_cache_create)(x); } \
     static inline int sym ## file_position_cache_release( \
