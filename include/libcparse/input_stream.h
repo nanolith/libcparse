@@ -104,7 +104,8 @@ int CPARSE_SYM(input_stream_read)(CPARSE_SYM(input_stream)* stream, int* ch);
 #define __INTERNAL_CPARSE_IMPORT_input_stream_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(input_stream) sym ## input_stream; \
-    static inline int sym ## input_stream_create_from_descriptor( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## input_stream_create_from_descriptor( \
         CPARSE_SYM(input_stream)** x, int y) { \
             return CPARSE_SYM(input_stream_create_from_descriptor)(x,y); } \
     static inline int sym ## input_stream_create_from_string( \
