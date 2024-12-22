@@ -116,7 +116,8 @@ int CPARSE_SYM(input_stream_read)(CPARSE_SYM(input_stream)* stream, int* ch);
     sym ## input_stream_release( \
         CPARSE_SYM(input_stream)* x) { \
             return CPARSE_SYM(input_stream_release)(x); } \
-    static inline int sym ## input_stream_read( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## input_stream_read( \
         CPARSE_SYM(input_stream)* x, int* y) { \
             return CPARSE_SYM(input_stream_read)(x,y); } \
     CPARSE_END_EXPORT \
