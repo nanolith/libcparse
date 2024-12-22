@@ -43,7 +43,7 @@ typedef struct CPARSE_SYM(input_stream) CPARSE_SYM(input_stream);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(input_stream_create_from_descriptor)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(input_stream_create_from_descriptor)(
     CPARSE_SYM(input_stream)** stream, int desc);
 
 /**
