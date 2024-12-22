@@ -63,7 +63,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(input_stream_create_from_descriptor)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(input_stream_create_from_string)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(input_stream_create_from_string)(
     CPARSE_SYM(input_stream)** stream, const char* str);
 
 /**
