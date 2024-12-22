@@ -76,7 +76,8 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(input_stream_create_from_string)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(input_stream_release)(CPARSE_SYM(input_stream)* stream);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(input_stream_release)(CPARSE_SYM(input_stream)* stream);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
