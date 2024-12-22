@@ -108,7 +108,8 @@ int CPARSE_SYM(input_stream_read)(CPARSE_SYM(input_stream)* stream, int* ch);
     sym ## input_stream_create_from_descriptor( \
         CPARSE_SYM(input_stream)** x, int y) { \
             return CPARSE_SYM(input_stream_create_from_descriptor)(x,y); } \
-    static inline int sym ## input_stream_create_from_string( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## input_stream_create_from_string( \
         CPARSE_SYM(input_stream)** x, const char* y) { \
             return CPARSE_SYM(input_stream_create_from_string)(x,y); } \
     static inline int sym ## input_stream_release( \
