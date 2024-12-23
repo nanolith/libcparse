@@ -120,7 +120,8 @@ CPARSE_SYM(message)* CPARSE_SYM(message_file_line_override_upcast)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(message_file_line_override) \
     sym ## message_file_line_override; \
-    static inline int sym ## message_file_line_override_init( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## message_file_line_override_init( \
         CPARSE_SYM(message_file_line_override)* x, const char* y, \
         unsigned int z) { \
             return CPARSE_SYM(message_file_line_override_init)(x,y,z); } \
