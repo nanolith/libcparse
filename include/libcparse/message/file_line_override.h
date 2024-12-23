@@ -41,7 +41,7 @@ CPARSE_SYM(message_file_line_override);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_file_line_override_init)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(message_file_line_override_init)(
     CPARSE_SYM(message_file_line_override)* msg, const char* file,
     unsigned int line);
 
