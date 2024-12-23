@@ -61,7 +61,8 @@ CPARSE_SYM(line_wrap_filter_create)(CPARSE_SYM(line_wrap_filter)** filter);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(line_wrap_filter_release)(CPARSE_SYM(line_wrap_filter)* filter);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(line_wrap_filter_release)(CPARSE_SYM(line_wrap_filter)* filter);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
