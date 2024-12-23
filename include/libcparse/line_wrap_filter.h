@@ -88,7 +88,7 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(line_wrap_filter_upcast)(
     static inline int FN_DECL_MUST_CHECK sym ## line_wrap_filter_create( \
         CPARSE_SYM(line_wrap_filter)** x) { \
             return CPARSE_SYM(line_wrap_filter_create)(x); } \
-    static inline int sym ## line_wrap_filter_release( \
+    static inline int FN_DECL_MUST_CHECK sym ## line_wrap_filter_release( \
         CPARSE_SYM(line_wrap_filter)* x) { \
             return CPARSE_SYM(line_wrap_filter_release)(x); } \
     static inline CPARSE_SYM(abstract_parser)* sym ## line_wrap_filter_upcast( \
