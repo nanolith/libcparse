@@ -98,7 +98,8 @@ CPARSE_SYM(message_file_line_override_line_get)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_downcast_to_message_file_line_override)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(message_downcast_to_message_file_line_override)(
     CPARSE_SYM(message_file_line_override)** flo_msg, CPARSE_SYM(message)* msg);
 
 /**
