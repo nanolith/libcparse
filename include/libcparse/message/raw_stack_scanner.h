@@ -45,7 +45,7 @@ CPARSE_SYM(message_rss_add_input_stream);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_rss_add_input_stream_init)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(message_rss_add_input_stream_init)(
     CPARSE_SYM(message_rss_add_input_stream)* msg, const char* name,
     CPARSE_SYM(input_stream)* stream);
 
