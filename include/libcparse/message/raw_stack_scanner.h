@@ -105,7 +105,8 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(message_rss_add_input_stream_xfer)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_downcast_to_message_rss_add_input_stream)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(message_downcast_to_message_rss_add_input_stream)(
     CPARSE_SYM(message_rss_add_input_stream)** rss_msg,
     CPARSE_SYM(message)* msg);
 
