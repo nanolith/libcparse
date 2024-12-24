@@ -132,7 +132,8 @@ CPARSE_SYM(message)* CPARSE_SYM(message_rss_add_input_stream_upcast)(
         CPARSE_SYM(message_rss_add_input_stream)* x, const char* y, \
         CPARSE_SYM(input_stream)* z) { \
             return CPARSE_SYM(message_rss_add_input_stream_init)(x,y,z); } \
-    static inline int sym ## message_rss_add_input_stream_dispose( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## message_rss_add_input_stream_dispose( \
         CPARSE_SYM(message_rss_add_input_stream)* x) { \
             return CPARSE_SYM(message_rss_add_input_stream_dispose)(x); } \
     static inline const char* \
