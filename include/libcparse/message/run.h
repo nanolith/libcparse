@@ -48,7 +48,8 @@ CPARSE_SYM(message_run_init)(CPARSE_SYM(message_run)* msg);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_run_dispose)(CPARSE_SYM(message_run)* msg);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(message_run_dispose)(CPARSE_SYM(message_run)* msg);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
