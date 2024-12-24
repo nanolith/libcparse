@@ -145,7 +145,8 @@ CPARSE_SYM(message)* CPARSE_SYM(message_rss_add_input_stream_upcast)(
         CPARSE_SYM(input_stream)** x, \
         CPARSE_SYM(message_rss_add_input_stream)* y) { \
             return CPARSE_SYM(message_rss_add_input_stream_xfer)(x,y); } \
-    static inline int sym ## message_downcast_to_message_rss_add_input_stream( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## message_downcast_to_message_rss_add_input_stream( \
         CPARSE_SYM(message_rss_add_input_stream)** x, \
         CPARSE_SYM(message)* y) { \
             return \
