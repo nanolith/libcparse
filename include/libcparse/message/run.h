@@ -36,7 +36,8 @@ CPARSE_SYM(message_run);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_run_init)(CPARSE_SYM(message_run)* msg);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(message_run_init)(CPARSE_SYM(message_run)* msg);
 
 /**
  * \brief Dispose of a \ref message_run instance.
