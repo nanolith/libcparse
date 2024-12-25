@@ -81,7 +81,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(message_subscribe_init_for_line_wrap_filter)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_subscribe_init_for_nl_ws_filter)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(message_subscribe_init_for_nl_ws_filter)(
     CPARSE_SYM(message_subscribe)* msg, CPARSE_SYM(event_handler)* handler);
 
 /**
