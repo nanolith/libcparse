@@ -136,7 +136,8 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(message_subscribe_init_for_raw_stack_scanner)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_subscribe_dispose)(CPARSE_SYM(message_subscribe)* msg);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(message_subscribe_dispose)(CPARSE_SYM(message_subscribe)* msg);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
