@@ -39,7 +39,7 @@ CPARSE_SYM(message_subscribe);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_subscribe_init_for_comment_filter)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(message_subscribe_init_for_comment_filter)(
     CPARSE_SYM(message_subscribe)* msg, CPARSE_SYM(event_handler)* handler);
 
 /**
