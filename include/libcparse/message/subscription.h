@@ -95,7 +95,8 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(message_subscribe_init_for_nl_ws_filter)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_subscribe_init_for_preprocessor_scanner)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(message_subscribe_init_for_preprocessor_scanner)(
     CPARSE_SYM(message_subscribe)* msg, CPARSE_SYM(event_handler)* handler);
 
 /**
