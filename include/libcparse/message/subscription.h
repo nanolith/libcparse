@@ -110,7 +110,7 @@ CPARSE_SYM(message_subscribe_init_for_preprocessor_scanner)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_subscribe_init_for_rflo_filter)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(message_subscribe_init_for_rflo_filter)(
     CPARSE_SYM(message_subscribe)* msg, CPARSE_SYM(event_handler)* handler);
 
 /**
