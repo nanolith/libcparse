@@ -75,7 +75,7 @@ CPARSE_SYM(message)* CPARSE_SYM(message_run_upcast)(
     static inline int FN_DECL_MUST_CHECK sym ## message_run_init( \
         CPARSE_SYM(message_run)* x) { \
             return CPARSE_SYM(message_run_init)(x); } \
-    static inline int sym ## message_run_dispose( \
+    static inline int FN_DECL_MUST_CHECK sym ## message_run_dispose( \
         CPARSE_SYM(message_run)* x) { \
             return CPARSE_SYM(message_run_dispose)(x); } \
     static inline CPARSE_SYM(message)* \
