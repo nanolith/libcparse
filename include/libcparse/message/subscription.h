@@ -168,7 +168,7 @@ CPARSE_SYM(message_subscribe_event_handler_get)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_downcast_to_message_subscribe)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(message_downcast_to_message_subscribe)(
     CPARSE_SYM(message_subscribe)** sub_msg, CPARSE_SYM(message)* msg);
 
 /**
