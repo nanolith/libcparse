@@ -53,7 +53,7 @@ typedef struct CPARSE_SYM(message_handler) CPARSE_SYM(message_handler);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_handler_init)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(message_handler_init)(
     CPARSE_SYM(message_handler)* mh, CPARSE_SYM(message_callback_fn) mcb,
     void* mctx);
 
