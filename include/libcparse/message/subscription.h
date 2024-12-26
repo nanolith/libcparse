@@ -226,7 +226,8 @@ CPARSE_SYM(message)* CPARSE_SYM(message_subscribe_upcast)(
             return \
                 CPARSE_SYM(message_subscribe_init_for_raw_stack_scanner)( \
                     x,y); } \
-    static inline int sym ## message_subscribe_dispose(\
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## message_subscribe_dispose( \
         CPARSE_SYM(message_subscribe)* x) { \
             return CPARSE_SYM(message_subscribe_dispose)(x); } \
     static inline const CPARSE_SYM(event_handler)* \
