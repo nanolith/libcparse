@@ -234,7 +234,8 @@ CPARSE_SYM(message)* CPARSE_SYM(message_subscribe_upcast)(
     sym ## message_subscribe_event_handler_get( \
         const CPARSE_SYM(message_subscribe)* x) { \
             return CPARSE_SYM(message_subscribe_event_handler_get)(x); } \
-    static inline int sym ## message_downcast_to_message_subscribe( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## message_downcast_to_message_subscribe( \
         CPARSE_SYM(message_subscribe)** x, CPARSE_SYM(message)* y) { \
             return CPARSE_SYM(message_downcast_to_message_subscribe)(x,y); } \
     static inline CPARSE_SYM(message)* \
