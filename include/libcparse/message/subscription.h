@@ -188,7 +188,8 @@ CPARSE_SYM(message)* CPARSE_SYM(message_subscribe_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_message_subscription_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(message_subscribe) sym ## message_subscribe; \
-    static inline int sym ## message_subscribe_init_for_comment_filter(\
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## message_subscribe_init_for_comment_filter(\
         CPARSE_SYM(message_subscribe)* x, CPARSE_SYM(event_handler)* y) { \
             return \
                 CPARSE_SYM(message_subscribe_init_for_comment_filter)(x,y); } \
