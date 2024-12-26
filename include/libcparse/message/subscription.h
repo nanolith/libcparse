@@ -220,7 +220,8 @@ CPARSE_SYM(message)* CPARSE_SYM(message_subscribe_upcast)(
         CPARSE_SYM(message_subscribe)* x, CPARSE_SYM(event_handler)* y) { \
             return \
                 CPARSE_SYM(message_subscribe_init_for_rflo_filter)(x,y); } \
-    static inline int sym ## message_subscribe_init_for_raw_stack_scanner(\
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## message_subscribe_init_for_raw_stack_scanner(\
         CPARSE_SYM(message_subscribe)* x, CPARSE_SYM(event_handler)* y) { \
             return \
                 CPARSE_SYM(message_subscribe_init_for_raw_stack_scanner)( \
