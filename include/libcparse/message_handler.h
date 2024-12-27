@@ -117,7 +117,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(message_handler_send)(
     static inline int FN_DECL_MUST_CHECK sym ## message_handler_dispose( \
         CPARSE_SYM(message_handler)* x) { \
             return CPARSE_SYM(message_handler_dispose)(x); } \
-    static inline int sym ## message_handler_send(\
+    static inline int FN_DECL_MUST_CHECK sym ## message_handler_send(\
         CPARSE_SYM(message_handler)* x, const CPARSE_SYM(message)* y) { \
             return CPARSE_SYM(message_handler_send)(x,y); } \
     CPARSE_END_EXPORT \
