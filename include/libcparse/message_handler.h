@@ -107,7 +107,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(message_handler_send)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(message_callback_fn) sym ## message_callback_fn; \
     typedef CPARSE_SYM(message_handler) sym ## message_handler; \
-    static inline int sym ## message_handler_init(\
+    static inline int FN_DECL_MUST_CHECK sym ## message_handler_init(\
         CPARSE_SYM(message_handler)* x, CPARSE_SYM(message_callback_fn) y, \
         void* z) { \
             return CPARSE_SYM(message_handler_init)(x,y,z); } \
