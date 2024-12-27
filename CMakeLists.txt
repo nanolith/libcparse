@@ -175,9 +175,34 @@ FILE(APPEND ${CPARSE_PC} "\nLibs: -L\${libdir} -lcparse")
 FILE(APPEND ${CPARSE_PC} "\nCflags: -I\${includedir}")
 INSTALL(FILES ${CPARSE_PC} DESTINATION lib/pkgconfig)
 
-FILE(GLOB CPARSE_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/include/libcparse/*.h")
+FILE(GLOB CPARSE_INCLUDES
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/libcparse/*.h")
+FILE(GLOB CPARSE_ABSTRACT_PARSER_INCLUDES
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/libcparse/abstract_parser/*.h")
+FILE(GLOB CPARSE_EVENT_INCLUDES
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/libcparse/event/*.h")
+FILE(GLOB CPARSE_EVENT_HANDLER_INCLUDES
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/libcparse/event_handler/*.h")
+FILE(GLOB CPARSE_MESSAGE_INCLUDES
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/libcparse/message/*.h")
+FILE(GLOB CPARSE_MESSAGE_HANDLER_INCLUDES
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/libcparse/message_handler/*.h")
+FILE(GLOB CPARSE_UTIL_INCLUDES
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/libcparse/util/*.h")
 
 INSTALL(FILES ${CPARSE_INCLUDES} DESTINATION include/libcparse)
+INSTALL(FILES ${CPARSE_ABSTRACT_PARSER_INCLUDES}
+        DESTINATION include/libcparse/abstract_parser)
+INSTALL(FILES ${CPARSE_EVENT_INCLUDES}
+        DESTINATION include/libcparse/event)
+INSTALL(FILES ${CPARSE_EVENT_HANDLER_INCLUDES}
+        DESTINATION include/libcparse/event_handler)
+INSTALL(FILES ${CPARSE_MESSAGE_INCLUDES}
+        DESTINATION include/libcparse/message)
+INSTALL(FILES ${CPARSE_MESSAGE_HANDLER_INCLUDES}
+        DESTINATION include/libcparse/message_handler)
+INSTALL(FILES ${CPARSE_UTIL_INCLUDES}
+        DESTINATION include/libcparse/util)
 INSTALL(
     FILES ${CMAKE_BINARY_DIR}/include/libcparse/config.h
     DESTINATION include/libcparse)
