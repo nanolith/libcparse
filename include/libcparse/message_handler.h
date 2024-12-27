@@ -80,7 +80,8 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(message_handler_init_copy)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_handler_dispose)(CPARSE_SYM(message_handler)* mh);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(message_handler_dispose)(CPARSE_SYM(message_handler)* mh);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
