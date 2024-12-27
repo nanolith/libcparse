@@ -91,7 +91,8 @@ CPARSE_SYM(newline_preserving_whitespace_filter_upcast)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(newline_preserving_whitespace_filter) \
     sym ## newline_preserving_whitespace_filter; \
-    static inline int sym ## newline_preserving_whitespace_filter_create( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## newline_preserving_whitespace_filter_create( \
         CPARSE_SYM(newline_preserving_whitespace_filter)** x) { \
             return \
                 CPARSE_SYM(newline_preserving_whitespace_filter_create)(x); } \
