@@ -97,7 +97,7 @@ CPARSE_SYM(message_handler_dispose)(CPARSE_SYM(message_handler)* mh);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(message_handler_send)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(message_handler_send)(
     CPARSE_SYM(message_handler)* mh, const CPARSE_SYM(message)* msg);
 
 /******************************************************************************/
