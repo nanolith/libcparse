@@ -64,7 +64,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(newline_preserving_whitespace_filter_create)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(newline_preserving_whitespace_filter_release)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(newline_preserving_whitespace_filter_release)(
     CPARSE_SYM(newline_preserving_whitespace_filter)* filter);
 
 /******************************************************************************/
