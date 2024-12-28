@@ -84,7 +84,7 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(preprocessor_scanner_upcast)(
     sym ## preprocessor_scanner_create( \
         CPARSE_SYM(preprocessor_scanner)** x) { \
             return CPARSE_SYM(preprocessor_scanner_create)(x); } \
-    static inline int sym ## preprocessor_scanner_release( \
+    static inline int FN_DECL_MUST_CHECK sym ## preprocessor_scanner_release( \
         CPARSE_SYM(preprocessor_scanner)* x) { \
             return CPARSE_SYM(preprocessor_scanner_release)(x); } \
     static inline CPARSE_SYM(abstract_parser)* \
