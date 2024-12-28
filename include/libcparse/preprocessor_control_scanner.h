@@ -82,7 +82,8 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(preprocessor_control_scanner_upcast)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(preprocessor_control_scanner) \
     sym ## preprocessor_control_scanner; \
-    static inline int sym ## preprocessor_control_scanner_create( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## preprocessor_control_scanner_create( \
         CPARSE_SYM(preprocessor_control_scanner)** x) { \
             return CPARSE_SYM(preprocessor_control_scanner_create)(x); } \
     static inline int sym ## preprocessor_control_scanner_release( \
