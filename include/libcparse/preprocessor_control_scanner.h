@@ -56,7 +56,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(preprocessor_control_scanner_create)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(preprocessor_control_scanner_release)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(preprocessor_control_scanner_release)(
     CPARSE_SYM(preprocessor_control_scanner)* scanner);
 
 /******************************************************************************/
