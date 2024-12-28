@@ -43,7 +43,7 @@ CPARSE_SYM(preprocessor_scanner);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(preprocessor_scanner_create)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(preprocessor_scanner_create)(
     CPARSE_SYM(preprocessor_scanner)** scanner);
 
 /**
