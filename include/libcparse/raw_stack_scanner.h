@@ -44,7 +44,7 @@ typedef struct CPARSE_SYM(raw_stack_scanner) CPARSE_SYM(raw_stack_scanner);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(raw_stack_scanner_create)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(raw_stack_scanner_create)(
     CPARSE_SYM(raw_stack_scanner)** scanner);
 
 /**
