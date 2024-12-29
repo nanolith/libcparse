@@ -36,7 +36,8 @@ typedef struct CPARSE_SYM(string_builder) CPARSE_SYM(string_builder);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(string_builder_create)(CPARSE_SYM(string_builder)** builder);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(string_builder_create)(CPARSE_SYM(string_builder)** builder);
 
 /**
  * \brief Release a string builder instance, releasing any internal resources it
