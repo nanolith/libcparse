@@ -57,7 +57,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(raw_stack_scanner_create)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(raw_stack_scanner_release)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(raw_stack_scanner_release)(
     CPARSE_SYM(raw_stack_scanner)* scanner);
 
 /******************************************************************************/
