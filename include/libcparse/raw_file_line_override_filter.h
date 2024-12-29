@@ -86,7 +86,8 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(raw_file_line_override_filter_upcast)(
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(raw_file_line_override_filter) \
     sym ## raw_file_line_override_filter; \
-    static inline int sym ## raw_file_line_override_filter_create( \
+    static inline int FN_DECL_MUST_CHECK \
+    sym ## raw_file_line_override_filter_create( \
         CPARSE_SYM(raw_file_line_override_filter)** x) { \
             return CPARSE_SYM(raw_file_line_override_filter_create)(x); } \
     static inline int sym ## raw_file_line_override_filter_release( \
