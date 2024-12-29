@@ -60,7 +60,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(raw_file_line_override_filter_create)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(raw_file_line_override_filter_release)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(raw_file_line_override_filter_release)(
     CPARSE_SYM(raw_file_line_override_filter)* filter);
 
 /******************************************************************************/
