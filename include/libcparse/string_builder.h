@@ -49,7 +49,8 @@ CPARSE_SYM(string_builder_create)(CPARSE_SYM(string_builder)** builder);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(string_builder_release)(CPARSE_SYM(string_builder)* builder);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(string_builder_release)(CPARSE_SYM(string_builder)* builder);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
