@@ -80,7 +80,7 @@ CPARSE_SYM(abstract_parser)* CPARSE_SYM(raw_stack_scanner_upcast)(
 #define __INTERNAL_CPARSE_IMPORT_raw_stack_scanner_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(raw_stack_scanner) sym ## raw_stack_scanner; \
-    static inline int sym ## raw_stack_scanner_create( \
+    static inline int FN_DECL_MUST_CHECK sym ## raw_stack_scanner_create( \
         CPARSE_SYM(raw_stack_scanner)** x) { \
             return CPARSE_SYM(raw_stack_scanner_create)(x); } \
     static inline int sym ## raw_stack_scanner_release( \
