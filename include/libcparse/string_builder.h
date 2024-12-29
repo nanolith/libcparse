@@ -66,7 +66,7 @@ CPARSE_SYM(string_builder_release)(CPARSE_SYM(string_builder)* builder);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(string_builder_add_character)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(string_builder_add_character)(
     CPARSE_SYM(string_builder)* builder, int ch);
 
 /**
