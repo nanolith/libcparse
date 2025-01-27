@@ -190,7 +190,7 @@ static int run(raw_stack_scanner* scanner, const message* msg)
     cursor running_pos;
     raw_stack_entry* ent;
     int ch;
-    char name_cache[256];
+    char name_cache[257];
 
     /* initialize the running cursor. */
     memset(&running_pos, 0, sizeof(running_pos));
@@ -213,7 +213,7 @@ static int run(raw_stack_scanner* scanner, const message* msg)
         if (ERROR_LIBCPARSE_INPUT_STREAM_EOF == retval)
         {
             /* cache the current name. */
-            strlcpy(name_cache, ent->pos.file, sizeof(name_cache));
+            strncpy(name_cache, ent->pos.file, sizeof(name_cache)-1);
             running_pos.file = name_cache;
 
             /* pop this entry off of the stack. */
