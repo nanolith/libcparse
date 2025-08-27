@@ -102,7 +102,8 @@ CPARSE_SYM(avl_tree_create)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(avl_tree_release)(CPARSE_SYM(avl_tree)* tree);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(avl_tree_release)(CPARSE_SYM(avl_tree)* tree);
 
 /******************************************************************************/
 /* Start of public methods.                                                   */
