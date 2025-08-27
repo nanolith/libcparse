@@ -112,7 +112,7 @@ void CPARSE_SYM(string_builder_clear)(CPARSE_SYM(string_builder)* builder);
 #define __INTERNAL_CPARSE_IMPORT_string_builder_sym(sym) \
     CPARSE_BEGIN_EXPORT \
     typedef CPARSE_SYM(string_builder) sym ## string_builder; \
-    static inline int sym ## string_builder_create( \
+    static inline int FN_DECL_MUST_CHECK sym ## string_builder_create( \
         CPARSE_SYM(string_builder)** x) { \
             return CPARSE_SYM(string_builder_create)(x); } \
     static inline int sym ## string_builder_release( \
