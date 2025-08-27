@@ -79,7 +79,7 @@ int FN_DECL_MUST_CHECK CPARSE_SYM(string_builder_add_character)(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(string_builder_add_string)(
+int FN_DECL_MUST_CHECK CPARSE_SYM(string_builder_add_string)(
     CPARSE_SYM(string_builder)* builder, const char* ch);
 
 /**
