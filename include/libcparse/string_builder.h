@@ -124,7 +124,7 @@ void CPARSE_SYM(string_builder_clear)(CPARSE_SYM(string_builder)* builder);
     static inline int FN_DECL_MUST_CHECK sym ## string_builder_add_string( \
         CPARSE_SYM(string_builder)* x, const char* y) { \
             return CPARSE_SYM(string_builder_add_string)(x,y); } \
-    static inline int sym ## string_builder_build( \
+    static inline int FN_DECL_MUST_CHECK sym ## string_builder_build( \
         char** x, CPARSE_SYM(string_builder)* y) { \
             return CPARSE_SYM(string_builder_build)(x,y); } \
     static inline void sym ## string_builder_clear( \
