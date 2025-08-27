@@ -119,7 +119,8 @@ CPARSE_SYM(avl_tree_release)(CPARSE_SYM(avl_tree)* tree);
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(avl_tree_insert)(CPARSE_SYM(avl_tree)* tree, void* elem);
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(avl_tree_insert)(CPARSE_SYM(avl_tree)* tree, void* elem);
 
 /**
  * \brief Find an element in the \ref avl_tree instance matching the given
