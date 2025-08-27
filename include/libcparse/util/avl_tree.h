@@ -86,7 +86,8 @@ typedef int (*CPARSE_SYM(avl_tree_element_release_fn))(
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-int CPARSE_SYM(avl_tree_create)(
+int FN_DECL_MUST_CHECK
+CPARSE_SYM(avl_tree_create)(
     CPARSE_SYM(avl_tree)** tree, CPARSE_SYM(avl_tree_compare_fn) compare,
     CPARSE_SYM(avl_tree_key_fn) key,
     CPARSE_SYM(avl_tree_element_release_fn) release, void* context);
